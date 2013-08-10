@@ -1,4 +1,4 @@
-$(document).ready(function () {
+jQuery(function ($) {
 
 	({
 		initialize: function () {
@@ -7,7 +7,8 @@ $(document).ready(function () {
 				orientation: $.Storage.get('console.orientation') || 'vertical',
 				eastSize: $.Storage.get('console.eastSize') || '50%',
 				southSize: $.Storage.get('console.southSize') || '50%',
-				wrap: $.Storage.get('console.wrap') !== 'false'
+				wrap: $.Storage.get('console.wrap') !== 'false',
+                lastCode: $.Storage.get('console.lastCode')
 			};
 
 			this.initLayout();
@@ -21,11 +22,19 @@ $(document).ready(function () {
 			$('button.vertical').click($.proxy(function (event) { this.showOrientation('vertical'); }, this));
 			$('button.horizontal').click($.proxy(function (event) { this.showOrientation('horizontal'); }, this));
 
-			$(document).bind('keydown', 'Ctrl+return', $.proxy(this.executeCode, this));
-			$(document).bind('keydown', 'esc', $.proxy(this.clearResults, this));
+			$(document).on('keydown', 'Ctrl+return', $.proxy(this.executeCode, this));
+			$(document).on('keydown', 'esc', $.proxy(this.clearResults, this));
+
+            $(window).on('beforeunload', $.proxy(this.onBeforeunload, this));
 
 			this.showOrientation(this.settings.orientation);
 		},
+
+        onBeforeunload: function(e) {
+            if (this.settings.lastCode !== this.editor.getValue()) {
+                return 'You have unsaved changes.';
+            }
+        },
 
 		initLayout: function () {
 			this.layout = $('body').layout({
@@ -66,6 +75,9 @@ $(document).ready(function () {
 				}
 			});
 			this.editor.focus();
+            if (this.settings.lastCode) {
+                this.editor.setValue(this.settings.lastCode);
+            }
 		},
 
 		initWrap: function () {
@@ -85,6 +97,9 @@ $(document).ready(function () {
 		},
 
 		executeCode: function () {
+            this.settings.lastCode = this.editor.getValue();
+            this.storeSettings();
+
 			this.doExecute({
 				code: this.editor.getValue(),
 				captureStdout: 'on'
@@ -153,7 +168,8 @@ $(document).ready(function () {
 				'console.orientation': this.settings.orientation,
 				'console.eastSize': '' + this.settings.eastSize,
 				'console.southSize': '' + this.settings.southSize,
-				'console.wrap': '' + this.settings.wrap
+				'console.wrap': '' + this.settings.wrap,
+                'console.lastCode': this.settings.lastCode
 			});
 		}
 

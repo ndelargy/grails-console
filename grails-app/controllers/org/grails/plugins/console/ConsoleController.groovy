@@ -8,10 +8,9 @@ import org.codehaus.groovy.runtime.InvokerHelper
 class ConsoleController {
 
 	def consoleService
-	def pluginManager
 
 	def index = {
-		String code = session['_grails_console_last_code_'] ?: '''\
+		String code = '''\
 // Groovy Code here
 
 // Implicit variables include:
@@ -50,8 +49,6 @@ class ConsoleController {
 		else {
 			code = params.code
 		}
-
-		session['_grails_console_last_code_'] = code
 
 		Map results
 		if (error) {
