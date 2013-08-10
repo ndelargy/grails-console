@@ -30,10 +30,16 @@ class ConsoleTagLib {
 			out << r.layoutResources()
 		}
 		else {
-			for (name in ['jquery-1.7.1.min', 'jquery-ui-1.8.17.custom.min',
-			              'jquery.layout', 'jquery.Storage', 'jquery.hotkeys',
-			              'codemirror-3.15/lib/codemirror', 'codemirror-3.15/mode/groovy/groovy',
-			              'grails-console/console']) {
+			for (name in [
+                'jquery-1.7.1.min',
+                'jquery-ui-1.8.17.custom.min',
+                'jquery.layout',
+                'jquery.Storage',
+                'jquery.hotkeys',
+                'codemirror-3.15/lib/codemirror',
+                'codemirror-3.15/mode/groovy/groovy',
+                'grails-console/console'
+            ]) {
 				out << g.javascript(src: name + '.js', plugin: 'console')
 			}
 		}
