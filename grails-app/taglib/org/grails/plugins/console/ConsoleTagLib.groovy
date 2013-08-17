@@ -9,6 +9,28 @@ class ConsoleTagLib {
 
 	static namespace = 'con'
 
+    static List<List> CSS = [
+        ['css', 'bootstrap.min.css'],
+        ['font-awesome/css', 'font-awesome.min.css'],
+        ['js/codemirror-3.15/lib', 'codemirror.css'],
+        ['css', 'jquery.layout.css'],
+        ['css', 'grails-console.css']
+    ]
+
+    static List<List> JS = [
+        ['js', 'jquery-1.7.1.min.js'],
+        ['js', 'jquery-ui-1.8.17.custom.min.js'],
+        ['js', 'bootstrap.min.js'],
+        ['js', 'underscore-min.js'],
+        ['js', 'backbone-min.js'],
+        ['js', 'jquery.layout.js'],
+        ['js', 'jquery.Storage.js'],
+        ['js', 'jquery.hotkeys.js'],
+        ['js', 'codemirror-3.15/lib/codemirror.js'],
+        ['js', 'codemirror-3.15/mode/groovy/groovy.js'],
+        ['js', 'grails-console/console.js']
+    ]
+
 	def resources = { attrs ->
 		boolean hasResourcesPlugin = PluginManagerHolder.pluginManager.hasGrailsPlugin('resources')
 
@@ -17,9 +39,9 @@ class ConsoleTagLib {
 			out << r.layoutResources()
 		}
 		else {
-			out << """<link rel='stylesheet' media="screen" href='${resource(dir: 'js/CodeMirror-3.15/lib', file: 'codemirror.css', plugin: 'console')}' />"""
-			out << """<link rel='stylesheet' media="screen" href='${resource(dir: 'css', file: 'jquery.layout.css', plugin: 'console')}' />"""
-			out << """<link rel='stylesheet' media="screen" href='${resource(dir: 'css', file: 'grails-console.css', plugin: 'console')}' />"""
+            CSS.each {
+                out << """<link rel='stylesheet' media="screen" href='${resource(dir: it[0], file: it[1], plugin: 'console')}' />"""
+            }
 		}
 	}
 
@@ -30,18 +52,9 @@ class ConsoleTagLib {
 			out << r.layoutResources()
 		}
 		else {
-			for (name in [
-                'jquery-1.7.1.min',
-                'jquery-ui-1.8.17.custom.min',
-                'jquery.layout',
-                'jquery.Storage',
-                'jquery.hotkeys',
-                'codemirror-3.15/lib/codemirror',
-                'codemirror-3.15/mode/groovy/groovy',
-                'grails-console/console'
-            ]) {
-				out << g.javascript(src: name + '.js', plugin: 'console')
-			}
+            JS.each {
+                out << g.javascript(src: it[0] + '/' + it[1], plugin: 'console')
+            }
 		}
 	}
 }
