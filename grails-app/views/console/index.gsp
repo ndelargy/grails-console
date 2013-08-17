@@ -3,59 +3,108 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-	<title>Grails Console</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<con:resources/>
+  <title>Grails Debug Console</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <link rel="icon" type="image/png" href="${resource(dir: 'images', file: 'grails.logo.png', plugin: 'console')}" />
+  <con:resources/>
 </head>
 
 <body>
-
 <div id="header">
-	<h1>Grails Debug Console</h1>
-
-	<div class="buttons">
-		<div class="buttonset">
-			<button class="first selected horizontal button" title="Horizontal">
-				<img src="${resource(dir: 'images', file: 'h.png', plugin: 'console')}" alt="Vertical"/>
-			</button>
-			<button class="last vertical button" title="Vertical">
-				<img src="${resource(dir: 'images', file: 'v.png', plugin: 'console')}" alt="Horizontal"/>
-			</button>
-		</div>
-	</div>
+  <div class="navbar">
+    <a class="navbar-brand" href="#">Grails Debug Console</a>
+    <form class="navbar-form pull-right">
+      <div class="btn-group orientation" data-toggle="buttons">
+        <label class="btn vertical btn-default active">
+          <input type="radio" name="options">
+          <img src="${resource(dir: 'images', file: 'v.png', plugin: 'console')}" alt="Vertical"/>
+        </label>
+        <label class="btn horizontal btn-default">
+          <input type="radio" name="options">
+          <img src="${resource(dir: 'images', file: 'h.png', plugin: 'console')}" alt="Horizontal"/>
+        </label>
+      </div>
+    </form>
+  </div>
 </div>
 
 <div id="editor" style="display: none">
-	<div class="buttons">
-		<button class="submit button" title="(Ctrl + Enter)">Execute</button>
+  <div class="btn-toolbar">
+    <div class="btn-group">
+      <button class="submit btn btn-default" title="(Ctrl + Enter)"><i class="icon-play"></i></button>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-default"><i class="icon-file"></i></button>
+      <button class="btn btn-default"><i class="icon-folder-close"></i></button>
+      <button class="save btn btn-default"><i class="icon-save"></i></button>
+      <button class="btn btn-default"><i class="icon-code-fork"></i></button>
+    </div>
 
-		<input type='text' name='filename' id='filename' />
-		<button class='fromFile button'>Execute from file:</button>
-	</div>
+    <div class="btn-group">
+      %{--<input type='text' name='filename' id='filename' />--}%
+      <button class="help btn btn-default" data-toggle="modal" data-target="#helpModal"><i class="icon-question"></i></button>
+    </div>
+  </div>
 
-	<div id="code-wrapper">
-		<g:textArea name="code" value="${code}" rows="25" cols="100"/>
-	</div>
+  <div id="code-wrapper">
+    <g:textArea name="code" value="${code}" rows="25" cols="100"/>
+  </div>
 
 </div>
 
 <div class="east results" style="display: none">
-	<div class="buttons">
-		<button class="clear button" title="(Esc)">Clear</button>
-		<label class="wrap"><input type="checkbox" /> <span>Wrap text</span></label>
-	</div>
+  <div class="btn-toolbar">
+    <button class="clear btn btn-default" title="(Esc)"><i class="icon-eraser"></i></button>
 
-	<div id="result"><div class="inner"></div></div>
+    <form class="navbar-form pull-right">
+      <label class="checkbox-inline">
+        <input type="checkbox"> Wrap text
+      </label>
+    </form>
+  </div>
+
+  <div id="result"><div class="inner"></div></div>
 </div>
 
 <div class="south" style="display: none"></div>
 
+<div id="helpModal" class="modal fade" style="display: none">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Help</h4>
+      </div>
+
+      <div class="modal-body">
+        <h4>Implicit variables</h4>
+        <table class="table">
+          <tr><td>ctx</td><td>the Spring application context</td></tr>
+          <tr><td>grailsApplication</td><td>the Grails application</td></tr>
+          <tr><td>config</td><td>the Grails configuration</td></tr>
+          <tr><td>request</td><td>the HTTP request</td></tr>
+          <tr><td>session</td><td>the HTTP session</td></tr>
+        </table>
+        <h4>Shortcuts</h4>
+        <table class="table">
+          <tr><td>Execute</td><td>Ctrl-Enter</td></tr>
+          <tr><td>Clear</td><td>Esc</td></tr>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <con:layoutResources/>
 <script type="text/javascript" charset="utf-8">
-window.gconsole = {
-	pluginContext: "${resource(plugin: 'console')}",
-	executeLink: "${createLink(action: 'execute')}"
-}
+  window.gconsole = {
+    pluginContext: "${resource(plugin: 'console')}",
+    executeLink: "${createLink(action: 'execute')}"
+  }
 </script>
 
 </body>
