@@ -52,16 +52,8 @@ body, html {
     padding: 15px 15px 15px 37px;
 }
 
-.result_time {
-    color: black;
-    background: #ccc;
-    font-size: 10px;
-    float: right;
-    padding: 2px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
-    display: block;
+.result-time {
+    font-size: 100%;
 }
 
 #header {
@@ -97,6 +89,13 @@ body, html {
     overflow: auto;
     background: #f4f4f4;
     overflow: auto;
+}
+
+#editor .file-name-section {
+    margin: 0;
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
 }
 
 .ui-layout-pane {

@@ -10,6 +10,5 @@ modules = {
         ConsoleTagLib.JS.each {
             resource url: [dir: it[0], file: it[1], plugin: 'console']
         }
-        //
     }
 }

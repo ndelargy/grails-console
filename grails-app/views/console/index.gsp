@@ -41,15 +41,18 @@
     </div>
 
     <div class="btn-group">
-      %{--<input type='text' name='filename' id='filename' />--}%
       <button class="help btn btn-default" data-toggle="modal" data-target="#helpModal"><i class="icon-question"></i></button>
+    </div>
+  </div>
+  <div class="file-name-section">
+    <div class="pull-right saving" style="display: none">Saving</div>
+    <div class="file-name">
     </div>
   </div>
 
   <div id="code-wrapper">
-    <g:textArea name="code" value="${code}" rows="25" cols="100"/>
+    <textarea name="code" rows="25" cols="100"></textarea>
   </div>
-
 </div>
 
 <div class="east results" style="display: none">
@@ -101,10 +104,11 @@
 
 <con:layoutResources/>
 <script type="text/javascript" charset="utf-8">
-  window.gconsole = {
-    pluginContext: "${resource(plugin: 'console')}",
-    executeLink: "${createLink(action: 'execute')}"
-  }
+  jQuery(function($){
+    gconsole.start({
+      baseUrl: '${resource(plugin: 'none')}'
+    });
+  });
 </script>
 
 </body>

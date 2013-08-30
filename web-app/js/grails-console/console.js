@@ -1,4 +1,4 @@
-jQuery(function ($) {
+(function ($, Backbone) {
 
     function S4() {
         return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -56,7 +56,38 @@ jQuery(function ($) {
 
     });
 
+    var localFileStore = {
+        load: function(fileName) {
+            var string = localStorage.getItem('file.' + name);
+            var file;
+            if (string) {
+                var data = JSON.parse(string);
+                file = new File(data.name, data.text);
+            }
+            return file;
+        },
+        save: function(file) {
+            this.lastModified = new Date();
+            localStorage.setItem('file.' + file.name, JSON.stringify(file));
+        }
+    };
 
+    var remoteFileStore = {
+        load: function(fileName) {
+            var jqxhr = $.get(
+                gconsole.data.baseUrl + '/console/loadFile',
+                {filename: fileName}
+            );
+            jqxhr.done(function (response) {
+                var file = new File(fileName, response.text);
+                gconsole.showFile(file);
+            });
+        },
+        save: function(file) {
+            this.lastModified = new Date();
+            localStorage.setItem('file.' + file.name, JSON.stringify(file));
+        }
+    };
 
     Backbone.sync = function (method, model, options) {
 
@@ -93,23 +124,23 @@ jQuery(function ($) {
 
     });
 
-    var File = function(name, text) {
+    var File = function (name, text) {
         this.name = name;
         this.text = text;
     };
 
     _.extend(File.prototype, {
-        save: function() {
+        save: function () {
             this.lastModified = new Date();
             localStorage.setItem('file.' + this.name, JSON.stringify(this));
         },
-        toJSON: function() {
+        toJSON: function () {
             return {name: this.name, text: this.text, lastModified: this.lastModified};
         }
     });
 
     _.extend(File, {
-        load: function(name) {
+        load: function (name) {
             var string = localStorage.getItem('file.' + name);
             var file;
             if (string) {
@@ -118,37 +149,48 @@ jQuery(function ($) {
             }
             return file;
         },
-        list: function() {
+        list: function () {
             var prefix = 'file.';
             return _.chain(localStorage)
                 .keys()
-                .filter(function(key) {
+                .filter(function (key) {
                     return key.indexOf(prefix) == 0;
                 })
-                .map(function(key) {
+                .map(function (key) {
                     return key.substr(prefix.length);
                 })
                 .value();
         }
     });
 
+    var Router = Backbone.Router.extend({
 
-    ({
-        initialize: function () {
+        routes: {
+            "l/:file": "openLocalFile",
+            "r/*file": "openRemoteFile",
+            '*path': 'defaultRoute'
+        }
+
+    });
+
+
+    window.gconsole = ({
+        start: function (data) {
+            this.data = data;
 
             this.settings = {
                 orientation: $.Storage.get('console.orientation') || 'vertical',
                 eastSize: $.Storage.get('console.eastSize') || '50%',
                 southSize: $.Storage.get('console.southSize') || '50%',
-                wrap: $.Storage.get('console.wrap') !== 'false',
+                wrap: $.Storage.get('console.wrap') !== 'false'
             };
 
             this.initLayout();
             this.initEditor();
             this.initWrap();
+            this.initRouter();
 
             $('#editor button.submit').click($.proxy(this.executeCode, this));
-            $('#editor button.fromFile').click($.proxy(this.executeFromFile, this));
             $('#editor button.save').click($.proxy(this.save, this));
             $('.results button.clear').click($.proxy(this.clearResults, this));
 
@@ -162,17 +204,49 @@ jQuery(function ($) {
             $(window).on('beforeunload', $.proxy(this.onBeforeunload, this));
 
             this.showOrientation(this.settings.orientation);
+            Backbone.history.start({pushState: false});
         },
 
-        save: function() {
+        save: function () {
+            $('#editor .file-name-section .saving').show();
             this.file.text = this.editor.getValue();
             this.file.save();
+            $('#editor .file-name-section .saving').fadeOut();
         },
 
         onBeforeunload: function (e) {
             if (this.file.text !== this.editor.getValue()) {
                 return 'You have unsaved changes.';
             }
+        },
+
+        initRouter: function() {
+            var oThis = this;
+            var router = new Router();
+
+            router.on("route:openLocalFile", function (name) {
+                console.log('local: ' + name);
+                var file = File.load(name);
+                if (!file) {
+                    console.log('TODO: no file');
+                    return;
+                }
+                oThis.showFile(file);
+
+            });
+            router.on("route:openRemoteFile", function (name) {
+                console.log('remote: ' + name);
+                var jqxhr = $.get(oThis.data.baseUrl + '/console/loadFile', {filename: name});
+                jqxhr.done(function (response) {
+                    console.log(response);
+                    var file = new File(name, response.text);
+                    oThis.showFile(file);
+                });
+            });
+            router.on('route:defaultRoute', function () {
+                console.log('TODO: grab the last file.');
+                router.navigate('l/last.groovy', {trigger: true});
+            });
         },
 
         initLayout: function () {
@@ -203,8 +277,14 @@ jQuery(function ($) {
             });
         },
 
+        showFile: function (file) {
+            this.file = file;
+            $('#editor .file-name').html(file.name);
+            this.editor.setValue(this.file.text);
+        },
+
         initEditor: function () {
-            this.editor = CodeMirror.fromTextArea($('#code')[0], {
+            this.editor = CodeMirror.fromTextArea($('textarea[name=code]')[0], {
                 matchBrackets: true,
                 mode: 'groovy',
                 lineNumbers: true,
@@ -214,13 +294,7 @@ jQuery(function ($) {
                 }
             });
             this.editor.focus();
-
-            this.file = File.load('last.groovy');
-            if (!this.file) {
-                this.file = new File('last.groovy', '');
-            }
-
-            this.editor.setValue(this.file.text);
+            this.editor.setValue('');
         },
 
         initWrap: function () {
@@ -248,22 +322,15 @@ jQuery(function ($) {
             });
         },
 
-        executeFromFile: function () {
-            this.doExecute({
-                filename: $('#filename').val(),
-                captureStdout: 'on'
-            });
-        },
-
         doExecute: function (postParams) {
             var $result = $('<div class="script-result loading">Executing Script...</div>');
             $('#result .inner').append($result);
 
             this.scrollToResult($result);
-            $.post(gconsole.executeLink, postParams)
+            $.post(this.data.baseUrl + '/console/execute', postParams)
                 .done($.proxy(function (response) {
                     $result.removeClass('loading');
-                    var timeSpan = '<span class="result_time">' + response.totalTime + ' ms</span>';
+                    var timeSpan = '<span class="result-time label label-default pull-right">' + response.totalTime + ' ms</span>';
                     if (response.exception) {
                         $result.html(timeSpan + response.exception + response.result).addClass('stacktrace');
                     } else {
@@ -312,6 +379,5 @@ jQuery(function ($) {
             });
         }
 
-    }.initialize());
-
-});
+    });
+})(jQuery, Backbone);
