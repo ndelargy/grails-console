@@ -16,10 +16,11 @@
         var store = localStorage.getItem(this.name);
         Model.prototype.localStorage = this;
         Model.prototype.sync = Backbone.LocalModelStore.sync;
+        this.data = {};
         if (store) {
-            this.data = _.map(JSON.parse(store), function(it) { return new Model(it)});
-        } else {
-            this.data = {};
+            _.each(JSON.parse(store), function(v, k) {
+                this.data[k] = new Model(v);
+            }, this);
         }
     };
 
@@ -27,8 +28,6 @@
 
         // Save the current state of the **Store** to *localStorage*.
         save: function () {
-            console.log(this.name);
-            console.log(JSON.stringify(this.data));
             var jsonData = _.map(this.data, function(it) { return it.toJSON() });
             localStorage.setItem(this.name, JSON.stringify(jsonData));
         },
@@ -43,7 +42,9 @@
         // Add a model, giving it a (hopefully)-unique GUID, if it doesn't already
         // have an id of it's own.
         create: function (model) {
-            if (!model.id) model.set(model.idAttribute, guid());
+            if (!model.id) {
+                model.set(model.idAttribute, guid());
+            }
             this.data[model.id] = model;
             this.save();
             return model;

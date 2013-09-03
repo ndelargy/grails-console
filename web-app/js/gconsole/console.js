@@ -102,7 +102,6 @@
                 var value = $('#newFileName').find('input[type=text]').val();
                 $('#newFileName').modal('hide');
                 callback(value);
-                console.log(value);
             });
             $('#myModal').on('hidden.bs.modal', function () {
                 // do something…
@@ -153,7 +152,6 @@
 
             });
             router.on("route:openRemoteFile", function (name) {
-                console.log('remote: ' + name);
                 var jqxhr = $.get(oThis.data.baseUrl + '/console/loadFile', {filename: name});
                 jqxhr.done(function (response) {
                     console.log(response);
