@@ -1,79 +1,23 @@
-(function ($, Backbone) {
+(function (App, $, _, Backbone) {
 
-    function S4() {
-        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-    }
-
-    function guid() {
-        return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
-    }
-
-    var Store = function (name) {
+    var LocalObjectStore = function (name) {
         this.name = name;
-        var store = localStorage.getItem(this.name);
-        this.data = (store && JSON.parse(store)) || {};
     };
 
-    _.extend(Store.prototype, {
-
-        // Save the current state of the **Store** to *localStorage*.
-        save: function () {
-            localStorage.setItem(this.name, JSON.stringify(this.data));
+    _.extend(LocalObjectStore.prototype, {
+        getObject: function (key) {
+            var string = localStorage.getItem(this.name + '.' + key);
+            return string && JSON.parse(string);
         },
-
-        // Add a model, giving it a (hopefully)-unique GUID, if it doesn't already
-        // have an id of it's own.
-        create: function (model) {
-            if (!model.id) model.set(model.idAttribute, guid());
-            this.data[model.id] = model;
-            this.save();
-            return model;
-        },
-
-        // Update a model by replacing its copy in `this.data`.
-        update: function (model) {
-            this.data[model.id] = model;
-            this.save();
-            return model;
-        },
-
-        // Retrieve a model from `this.data` by id.
-        find: function (model) {
-            return this.data[model.id];
-        },
-
-        // Return the array of all models currently in storage.
-        findAll: function () {
-            return _.values(this.data);
-        },
-
-        // Delete a model from `this.data`, returning it.
-        destroy: function (model) {
-            delete this.data[model.id];
-            this.save();
-            return model;
+        setObject: function (key, object) {
+            localStorage.setItem(this.name + '.' + key, JSON.stringify(object));
         }
-
     });
 
-    var localFileStore = {
-        load: function(fileName) {
-            var string = localStorage.getItem('file.' + name);
-            var file;
-            if (string) {
-                var data = JSON.parse(string);
-                file = new File(data.name, data.text);
-            }
-            return file;
-        },
-        save: function(file) {
-            this.lastModified = new Date();
-            localStorage.setItem('file.' + file.name, JSON.stringify(file));
-        }
-    };
+    var localObjectStore = new LocalObjectStore('gconsole');
 
     var remoteFileStore = {
-        load: function(fileName) {
+        load: function (fileName) {
             var jqxhr = $.get(
                 gconsole.data.baseUrl + '/console/loadFile',
                 {filename: fileName}
@@ -83,106 +27,50 @@
                 gconsole.showFile(file);
             });
         },
-        save: function(file) {
+        save: function (file) {
             this.lastModified = new Date();
             localStorage.setItem('file.' + file.name, JSON.stringify(file));
         }
     };
 
-    Backbone.sync = function (method, model, options) {
+//    window.SomeCollection = Backbone.Collection.extend({
+//
+//        localStorage: new Store("SomeCollection")
+//
+//        // ... everything else is normal.
+//
+//    });
 
-        var resp;
-        var store = model.localStorage || model.collection.localStorage;
+    var File = Backbone.Model.extend();
+    var localFileStore = new Backbone.LocalModelStore('gconsole.files', File);
 
-        switch (method) {
-            case "read":
-                resp = model.id ? store.find(model) : store.findAll();
-                break;
-            case "create":
-                resp = store.create(model);
-                break;
-            case "update":
-                resp = store.update(model);
-                break;
-            case "delete":
-                resp = store.destroy(model);
-                break;
-        }
-
-        if (resp) {
-            options.success(resp);
-        } else {
-            options.error("Record not found");
-        }
-    };
-
-    window.SomeCollection = Backbone.Collection.extend({
-
-        localStorage: new Store("SomeCollection")
-
-        // ... everything else is normal.
-
-    });
-
-    var File = function (name, text) {
-        this.name = name;
-        this.text = text;
-    };
-
-    _.extend(File.prototype, {
-        save: function () {
-            this.lastModified = new Date();
-            localStorage.setItem('file.' + this.name, JSON.stringify(this));
-        },
-        toJSON: function () {
-            return {name: this.name, text: this.text, lastModified: this.lastModified};
-        }
-    });
-
-    _.extend(File, {
-        load: function (name) {
-            var string = localStorage.getItem('file.' + name);
-            var file;
-            if (string) {
-                var data = JSON.parse(string);
-                file = new File(data.name, data.text);
-            }
-            return file;
-        },
-        list: function () {
-            var prefix = 'file.';
-            return _.chain(localStorage)
-                .keys()
-                .filter(function (key) {
-                    return key.indexOf(prefix) == 0;
-                })
-                .map(function (key) {
-                    return key.substr(prefix.length);
-                })
-                .value();
-        }
-    });
+    App.File = File;
+    App.fileStore = localFileStore;
 
     var Router = Backbone.Router.extend({
 
         routes: {
             "l/:file": "openLocalFile",
             "r/*file": "openRemoteFile",
+            "new": "newFile",
             '*path': 'defaultRoute'
         }
 
     });
 
+    var Prompt = function() {
+
+    };
 
     window.gconsole = ({
         start: function (data) {
             this.data = data;
 
-            this.settings = {
-                orientation: $.Storage.get('console.orientation') || 'vertical',
-                eastSize: $.Storage.get('console.eastSize') || '50%',
-                southSize: $.Storage.get('console.southSize') || '50%',
-                wrap: $.Storage.get('console.wrap') !== 'false'
+            this.settings = localObjectStore.getObject('settings') || {
+                orientation: 'vertical',
+                eastSize: '50%',
+                southSize: '50%',
+                wrap: true
             };
 
             this.initLayout();
@@ -192,6 +80,7 @@
 
             $('#editor button.submit').click($.proxy(this.executeCode, this));
             $('#editor button.save').click($.proxy(this.save, this));
+            $('#editor button.new').click($.proxy(this.newFileClick, this));
             $('.results button.clear').click($.proxy(this.clearResults, this));
 
 
@@ -207,26 +96,55 @@
             Backbone.history.start({pushState: false});
         },
 
+        prompt: function(message, callback) {
+            $('#newFileName').modal('show');
+            $('#newFileName').find('button.ok').click(function(event) {
+                var value = $('#newFileName').find('input[type=text]').val();
+                $('#newFileName').modal('hide');
+                callback(value);
+                console.log(value);
+            });
+            $('#myModal').on('hidden.bs.modal', function () {
+                // do something…
+            })
+
+        },
+
         save: function () {
-            $('#editor .file-name-section .saving').show();
-            this.file.text = this.editor.getValue();
-            this.file.save();
-            $('#editor .file-name-section .saving').fadeOut();
+            if (!this.file.get('name')) {
+                this.prompt('File name', _.bind(function(name) {
+                    this.file.set('name', name);
+                    this.save();
+                    this.router.navigate('l/' + name, {trigger: false});
+                }, this));
+            } else {
+                $('#editor .file-name-section .saving').show();
+                this.file.set('text', this.editor.getValue());
+                this.file.save();
+                $('#editor .file-name-section .saving').fadeOut();
+            }
+        },
+
+        newFileClick: function () {
+            // TODO check if file needs to be saved
+
+            this.router.navigate('new', {trigger: true});
         },
 
         onBeforeunload: function (e) {
-            if (this.file.text !== this.editor.getValue()) {
+            if (this.file.get('text') !== this.editor.getValue()) {
                 return 'You have unsaved changes.';
             }
         },
 
-        initRouter: function() {
+        initRouter: function () {
             var oThis = this;
             var router = new Router();
 
             router.on("route:openLocalFile", function (name) {
-                console.log('local: ' + name);
-                var file = File.load(name);
+                var file = _.find(localFileStore.findAll(), function(model){
+                    return model.get('name') === name;
+                });
                 if (!file) {
                     console.log('TODO: no file');
                     return;
@@ -239,14 +157,20 @@
                 var jqxhr = $.get(oThis.data.baseUrl + '/console/loadFile', {filename: name});
                 jqxhr.done(function (response) {
                     console.log(response);
-                    var file = new File(name, response.text);
+                    var file = new File({name: name, text: response.text});
                     oThis.showFile(file);
                 });
+            });
+            router.on('route:newFile', function () {
+                var file = new File({text: ''});
+                oThis.showFile(file);
             });
             router.on('route:defaultRoute', function () {
                 console.log('TODO: grab the last file.');
                 router.navigate('l/last.groovy', {trigger: true});
             });
+
+            this.router = router;
         },
 
         initLayout: function () {
@@ -279,8 +203,8 @@
 
         showFile: function (file) {
             this.file = file;
-            $('#editor .file-name').html(file.name);
-            this.editor.setValue(this.file.text);
+            $('#editor .file-name').html(file.get('name'));
+            this.editor.setValue(this.file.get('text'));
         },
 
         initEditor: function () {
@@ -371,13 +295,8 @@
         },
 
         storeSettings: function () {
-            $.Storage.set({
-                'console.orientation': this.settings.orientation,
-                'console.eastSize': '' + this.settings.eastSize,
-                'console.southSize': '' + this.settings.southSize,
-                'console.wrap': '' + this.settings.wrap,
-            });
+            localObjectStore.setObject('settings', this.settings);
         }
 
     });
-})(jQuery, Backbone);
+})(window.App = window.App || {}, jQuery, _, Backbone);

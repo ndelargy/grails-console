@@ -34,7 +34,7 @@
       <button class="submit btn btn-default" title="(Ctrl + Enter)"><i class="icon-play"></i></button>
     </div>
     <div class="btn-group">
-      <button class="btn btn-default"><i class="icon-file"></i></button>
+      <button class="new btn btn-default"><i class="icon-file"></i></button>
       <button class="btn btn-default"><i class="icon-folder-close"></i></button>
       <button class="save btn btn-default"><i class="icon-save"></i></button>
       <button class="btn btn-default"><i class="icon-code-fork"></i></button>
@@ -57,7 +57,20 @@
 
 <div class="east results" style="display: none">
   <div class="btn-toolbar">
-    <button class="clear btn btn-default" title="(Esc)"><i class="icon-eraser"></i></button>
+    <button class="clear btn-sm btn btn-default" title="(Esc)"><i class="icon-eraser"></i></button>
+    <div class="btn-group">
+      <button class="clear btn-sm btn btn-default dropdown-toggle" title="(Esc)"  data-toggle="dropdown">
+        <i class="icon-cog"></i>
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#">Action</a></li>
+        <li><a href="#">Another action</a></li>
+        <li><a href="#">Something else here</a></li>
+        <li class="divider"></li>
+        <li><a href="#">Separated link</a></li>
+      </ul>
+    </div>
 
     <form class="navbar-form pull-right">
       <label class="checkbox-inline">
@@ -97,6 +110,24 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="newFileName" class="modal fade" style="display: none">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">File name</h4>
+      </div>
+
+      <div class="modal-body">
+        <input class="form-control" type="text" />
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary ok">OK</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

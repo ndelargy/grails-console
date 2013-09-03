@@ -16,6 +16,7 @@ class ConsoleControllerTests extends ControllerUnitTestCase {
 		Metadata.current['app.grails.version'] = '3.1.4'
 		controller.metaClass.getG = { -> [resource: { Map m -> '' },
 		                                  createLink: { Map m -> '' }] }
+        mockFor
 		sessionData.clear()
 	}
 

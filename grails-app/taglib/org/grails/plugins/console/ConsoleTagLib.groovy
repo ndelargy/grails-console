@@ -10,10 +10,10 @@ class ConsoleTagLib {
 	static namespace = 'con'
 
     static List CSS = [
-        ['css', 'bootstrap.min.css'],
-        ['css', 'bootstrap-theme.min.css'],
-        ['font-awesome/css', 'font-awesome.min.css'],
-        ['js/codemirror-3.15/lib', 'codemirror.css'],
+        ['lib/bootstrap/css', 'bootstrap.min.css'],
+        ['lib/bootstrap/css', 'bootstrap-theme.min.css'],
+        ['lib/font-awesome/css', 'font-awesome.min.css'],
+        ['lib/codemirror-3.15/lib', 'codemirror.css'],
         ['css', 'jquery.layout.css'],
         ['css', 'grails-console.css']
     ]
@@ -21,15 +21,15 @@ class ConsoleTagLib {
     static List JS = [
         ['js', 'jquery-1.7.1.min.js'],
         ['js', 'jquery-ui-1.8.17.custom.min.js'],
-        ['js', 'bootstrap.min.js'],
+        ['lib/bootstrap/js', 'bootstrap.min.js'],
         ['js', 'underscore-min.js'],
         ['js', 'backbone-min.js'],
         ['js', 'jquery.layout-latest.min.js'],
-        ['js', 'jquery.Storage.js'],
         ['js', 'jquery.hotkeys.js'],
-        ['js', 'codemirror-3.15/lib/codemirror.js'],
-        ['js', 'codemirror-3.15/mode/groovy/groovy.js'],
-        ['js', 'grails-console/console.js']
+        ['lib/codemirror-3.15/lib', 'codemirror.js'],
+        ['lib/codemirror-3.15/mode/groovy', 'groovy.js'],
+        ['js/gconsole', 'backbone-localstorage.js'],
+        ['js/gconsole', 'console.js']
     ]
 
 	def resources = { attrs ->
