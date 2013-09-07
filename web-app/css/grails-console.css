@@ -168,9 +168,9 @@ label.wrap span {
     vertical-align: middle;
 }
 
-.dropdown-menu.settings i.icon-check{
+.dropdown-menu.settings a i.icon-check{
     visibility: hidden;
 }
-.dropdown-menu.settings li.selected  i.icon-check{
+.dropdown-menu.settings a.selected  i.icon-check{
     visibility: visible;
 }

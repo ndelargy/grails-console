@@ -80,10 +80,21 @@
             'results.showScript': true,
             'results.showStdout': true,
             'results.showResult': true
+        },
 
+        toggle: function(attribute) {
+            this.set(attribute, !this.get(attribute));
+        },
+
+        save: function() {
+            localStorage.setItem('gconsole.settings', JSON.stringify(this));
+        }
+    }, {
+        load: function() {
+            var json = JSON.parse(localStorage.getItem('gconsole.settings')) || {};
+            return new Settings(json);
         }
     });
-    var localSettingsStore = new Backbone.LocalModelStore('gconsole.settings', Settings);
 
     var SettingsView = Backbone.View.extend({
 
@@ -96,33 +107,53 @@
             'click .results-show-result': 'onResultsShowResultClick'
         },
 
-        render: function() {
+        initialize: function() {
+            this.listenTo(this.model, 'change', this.render, this);
+        },
 
+        render: function() {
+            this.$('.orientation-horizontal').toggleClass('selected', this.model.get('orientation') === 'horizontal');
+            this.$('.orientation-vertical').toggleClass('selected', this.model.get('orientation') === 'vertical');
+            this.$('.results-wrap').toggleClass('selected', this.model.get('results.wrapText'));
+            this.$('.results-show-script').toggleClass('selected', this.model.get('results.showScript'));
+            this.$('.results-show-stdout').toggleClass('selected', this.model.get('results.showStdout'));
+            this.$('.results-show-result').toggleClass('selected', this.model.get('results.showResult'));
         },
 
         onOrientationHorizontalClick: function(event) {
-            event._preventDefault();
-
+            event.preventDefault();
+            event.stopPropagation();
+            this.model.set('orientation', 'horizontal');
         },
 
         onOrientationVerticalClick: function(event) {
-            event._preventDefault();
+            event.preventDefault();
+            event.stopPropagation();
+            this.model.set('orientation', 'vertical');
         },
 
         onResultsWrapClick: function(event) {
-            event._preventDefault();
+            event.preventDefault();
+            event.stopPropagation();
+            this.model.toggle('results.wrapText');
         },
 
         onResultsShowScriptClick: function(event) {
-            event._preventDefault();
+            event.preventDefault();
+            event.stopPropagation();
+            this.model.toggle('results.showScript');
         },
 
         onResultsShowStdoutClick: function(event) {
-            event._preventDefault();
+            event.preventDefault();
+            event.stopPropagation();
+            this.model.toggle('results.showStdout');
         },
 
         onResultsShowResultClick: function(event) {
-            event._preventDefault();
+            event.preventDefault();
+            event.stopPropagation();
+            this.model.toggle('results.showResult');
         }
 
     });
@@ -131,38 +162,41 @@
         start: function (data) {
             this.data = data;
 
-            this.settings = localSettingsStore.first() || new Settings();
+            this.settings = Settings.load();
 
             this.initLayout();
             this.initEditor();
             this.initResults();
             this.initRouter();
 
-            $('#editor button.submit').click($.proxy(this.executeCode, this));
-            $('#editor button.save').click($.proxy(this.save, this));
-            $('#editor button.new').click($.proxy(this.newFileClick, this));
-            $('.results button.clear').click($.proxy(this.clearResults, this));
+            $('#editor button.submit').click(_.bind(this.executeCode, this));
+            $('#editor button.save').click(_.bind(this.save, this));
+            $('#editor button.new').click(_.bind(this.newFileClick, this));
+            $('.results button.clear').click(_.bind(this.clearResults, this));
 
 
-            this.settings.on('change:orientation', function(model, value, options) {
-                this.showOrientation();
-            }, this);
+            this.settings.on('change:orientation', _.bind(this.showOrientation, this));
 
-            $('.orientation .vertical').click($.proxy(function (event) { this.showOrientation('vertical'); }, this));
-            $('.orientation .horizontal').click($.proxy(function (event) { this.showOrientation('horizontal'); }, this));
+            $('.orientation .vertical').click(_.bind(function (event) { this.showOrientation('vertical'); }, this));
+            $('.orientation .horizontal').click(_.bind(function (event) { this.showOrientation('horizontal'); }, this));
 
-            $(document).on('keydown', 'Ctrl+return', $.proxy(this.executeCode, this));
-            $(document).on('keydown', 'esc', $.proxy(this.clearResults, this));
+            $(document).on('keydown', 'Ctrl+return', _.bind(this.executeCode, this));
+            $(document).on('keydown', 'esc', _.bind(this.clearResults, this));
 
-            $(window).on('beforeunload', $.proxy(this.onBeforeunload, this));
+            $(window).on('beforeunload', _.bind(this.onBeforeunload, this));
 
             this.showOrientation();
             Backbone.history.start({pushState: false});
+
+            new SettingsView({
+                model: this.settings,
+                el: $('.dropdown-menu.settings')[0]
+            }).render();
         },
 
         prompt: function(message, callback) {
             $('#newFileName').modal('show');
-            $('#newFileName').find('button.ok').click(function(event) {
+            $('#newFileName').find('button.ok').click(function(event) { // TODO once
                 var value = $('#newFileName').find('input[type=text]').val();
                 $('#newFileName').modal('hide');
                 callback(value);
@@ -242,12 +276,12 @@
                 north__spacing_open: 0,
                 center__paneSelector: '#editor',
                 center__contentSelector: '#code-wrapper',
-                center__onresize: $.proxy(function () { this.editor.refresh(); }, this),
+                center__onresize: _.bind(function () { this.editor.refresh(); }, this),
                 east__paneSelector: '.east',
                 east__contentSelector: '#result',
                 east__initHidden: this.settings.get('orientation') !== 'vertical',
                 east__size: this.settings.get('layout.east.size'),
-                east__onresize_end: $.proxy(function (name, $el, state, opts) {
+                east__onresize_end: _.bind(function (name, $el, state, opts) {
                     this.settings.set('layout.east.size', state.size);
                     this.storeSettings();
                 }, this),
@@ -255,7 +289,7 @@
                 south__contentSelector: '#result',
                 south__initHidden: this.settings.get('orientation') !== 'horizontal',
                 south__size: this.settings.get('layout.south.size'),
-                south__onresize_end: $.proxy(function (name, $el, state, opts) {
+                south__onresize_end: _.bind(function (name, $el, state, opts) {
                     this.settings.set('layout.south.size', state.size);
                     this.storeSettings();
                 }, this),
@@ -284,8 +318,8 @@
                 mode: 'groovy',
                 lineNumbers: true,
                 extraKeys: {
-                    'Ctrl-Enter': $.proxy(this.executeCode, this),
-                    'Esc': $.proxy(this.clearResults, this)
+                    'Ctrl-Enter': _.bind(this.executeCode, this),
+                    'Esc': _.bind(this.clearResults, this)
                 }
             });
             this.editor.focus();
@@ -293,6 +327,7 @@
         },
 
         initResults: function () {
+            $('#result').toggleClass('wrap', this.settings.get('results.wrapText'));
             this.settings.on('change:results.wrapText', function(model, value, options) {
                 $('#result').toggleClass('wrap', value);
             }, this);
@@ -313,7 +348,7 @@
 
             this.scrollToResult($result);
             $.post(this.data.baseUrl + '/console/execute', postParams)
-                .done($.proxy(function (response) {
+                .done(_.bind(function (response) {
                     $result.removeClass('loading');
                     var timeSpan = '<span class="result-time label label-default pull-right">' + response.totalTime + ' ms</span>';
                     if (response.exception) {
@@ -322,7 +357,7 @@
                         $result.html(timeSpan + response.output + response.result);
                     }
                     this.scrollToResult($result);
-                }, this)).fail($.proxy(function () {
+                }, this)).fail(_.bind(function () {
                     $result.removeClass('loading').addClass('stacktrace');
                     $result.html('An error occurred.');
                     this.scrollToResult($result);
