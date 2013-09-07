@@ -33,14 +33,6 @@
         }
     };
 
-//    window.SomeCollection = Backbone.Collection.extend({
-//
-//        localStorage: new Store("SomeCollection")
-//
-//        // ... everything else is normal.
-//
-//    });
-
     var File = Backbone.Model.extend();
     var localFileStore = new Backbone.LocalModelStore('gconsole.files', File);
 
@@ -71,98 +63,11 @@
         }
     });
 
-    var Settings = Backbone.Model.extend({
-        defaults: {
-            'orientation': 'vertical',
-            'layout.east.size': '50%',
-            'layout.south.size': '50%',
-            'results.wrapText': true,
-            'results.showScript': true,
-            'results.showStdout': true,
-            'results.showResult': true
-        },
-
-        toggle: function(attribute) {
-            this.set(attribute, !this.get(attribute));
-        },
-
-        save: function() {
-            localStorage.setItem('gconsole.settings', JSON.stringify(this));
-        }
-    }, {
-        load: function() {
-            var json = JSON.parse(localStorage.getItem('gconsole.settings')) || {};
-            return new Settings(json);
-        }
-    });
-
-    var SettingsView = Backbone.View.extend({
-
-        events: {
-            'click .orientation-horizontal': 'onOrientationHorizontalClick',
-            'click .orientation-vertical': 'onOrientationVerticalClick',
-            'click .results-wrap': 'onResultsWrapClick',
-            'click .results-show-script': 'onResultsShowScriptClick',
-            'click .results-show-stdout': 'onResultsShowStdoutClick',
-            'click .results-show-result': 'onResultsShowResultClick'
-        },
-
-        initialize: function() {
-            this.listenTo(this.model, 'change', this.render, this);
-        },
-
-        render: function() {
-            this.$('.orientation-horizontal').toggleClass('selected', this.model.get('orientation') === 'horizontal');
-            this.$('.orientation-vertical').toggleClass('selected', this.model.get('orientation') === 'vertical');
-            this.$('.results-wrap').toggleClass('selected', this.model.get('results.wrapText'));
-            this.$('.results-show-script').toggleClass('selected', this.model.get('results.showScript'));
-            this.$('.results-show-stdout').toggleClass('selected', this.model.get('results.showStdout'));
-            this.$('.results-show-result').toggleClass('selected', this.model.get('results.showResult'));
-        },
-
-        onOrientationHorizontalClick: function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            this.model.set('orientation', 'horizontal');
-        },
-
-        onOrientationVerticalClick: function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            this.model.set('orientation', 'vertical');
-        },
-
-        onResultsWrapClick: function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            this.model.toggle('results.wrapText');
-        },
-
-        onResultsShowScriptClick: function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            this.model.toggle('results.showScript');
-        },
-
-        onResultsShowStdoutClick: function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            this.model.toggle('results.showStdout');
-        },
-
-        onResultsShowResultClick: function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            this.model.toggle('results.showResult');
-        }
-
-    });
-
     window.gconsole = ({
         start: function (data) {
             this.data = data;
 
-            this.settings = Settings.load();
+            this.settings = App.Settings.load();
 
             this.initLayout();
             this.initEditor();
@@ -188,7 +93,7 @@
             this.showOrientation();
             Backbone.history.start({pushState: false});
 
-            new SettingsView({
+            new App.SettingsView({
                 model: this.settings,
                 el: $('.dropdown-menu.settings')[0]
             }).render();
@@ -283,7 +188,7 @@
                 east__size: this.settings.get('layout.east.size'),
                 east__onresize_end: _.bind(function (name, $el, state, opts) {
                     this.settings.set('layout.east.size', state.size);
-                    this.storeSettings();
+                    this.settings.save();
                 }, this),
                 south__paneSelector: '.south',
                 south__contentSelector: '#result',
@@ -291,7 +196,7 @@
                 south__size: this.settings.get('layout.south.size'),
                 south__onresize_end: _.bind(function (name, $el, state, opts) {
                     this.settings.set('layout.south.size', state.size);
-                    this.storeSettings();
+                    this.settings.save();
                 }, this),
                 resizable: true,
                 fxName: ''
@@ -334,8 +239,6 @@
         },
 
         executeCode: function () {
-            this.storeSettings();
-
             this.doExecute({
                 code: this.editor.getValue(),
                 captureStdout: 'on'
@@ -387,10 +290,6 @@
                 this.layout.initContent('south');
             }
             this.editor.refresh();
-        },
-
-        storeSettings: function () {
-            this.settings.save();
         }
 
     });

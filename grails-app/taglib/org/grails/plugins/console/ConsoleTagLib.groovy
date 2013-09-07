@@ -29,7 +29,9 @@ class ConsoleTagLib {
         ['lib/codemirror-3.15/lib', 'codemirror.js'],
         ['lib/codemirror-3.15/mode/groovy', 'groovy.js'],
         ['js/gconsole', 'backbone-localstorage.js'],
-        ['js/gconsole', 'console.js']
+        ['js/gconsole', 'console.js'],
+        ['js/gconsole', 'settings-model.js'],
+        ['js/gconsole', 'settings-view.js']
     ]
 
 	def resources = { attrs ->
