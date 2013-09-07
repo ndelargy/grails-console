@@ -58,9 +58,18 @@
 
     });
 
-    var Prompt = function() {
-
-    };
+    var FileNameView = Backbone.View.extend({
+        initialize: function() {
+            var html = '<div class="pull-right saving" style="display: none">Saving</div><div class="file-name"></div>';
+            this.listenTo(this.model, 'change', _.bind(this.render, this));
+            this.$el.html(html);
+        },
+        render: function() {
+            var name = this.model.get('name') || '&nbsp;';
+            this.$('.file-name').html(name);
+            return this;
+        }
+    });
 
     window.gconsole = ({
         start: function (data) {
@@ -112,6 +121,7 @@
         save: function () {
             if (!this.file.get('name')) {
                 this.prompt('File name', _.bind(function(name) {
+                    name = name + '.groovy'; // TODO
                     this.file.set('name', name);
                     this.save();
                     this.router.navigate('l/' + name, {trigger: false});
@@ -197,11 +207,18 @@
                 resizable: true,
                 fxName: ''
             });
+
+            this.layout.allowOverflow("north");
         },
 
         showFile: function (file) {
             this.file = file;
-            $('#editor .file-name').html(file.get('name'));
+            if (this.fileNameView) {
+                this.fileNameView.remove();
+            }
+            this.fileNameView = new FileNameView({model: file});
+            $('.file-name-section').html(this.fileNameView.render().el);
+//            $('#editor .file-name').html(file.get('name'));
             this.editor.setValue(this.file.get('text'));
         },
 

@@ -7,6 +7,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <link rel="icon" type="image/png" href="${resource(dir: 'images', file: 'grails.logo.png', plugin: 'console')}" />
   <con:resources/>
+  %{--<link href="${resource(dir: 'build', file: 'gconsole.css')}" type="text/css" rel="stylesheet" />--}%
+  %{--<script type="text/javascript" src="${resource(dir: 'build', file: 'gconsole.js')}"></script>--}%
 </head>
 
 <body>
@@ -14,16 +16,34 @@
   <div class="navbar">
     <a class="navbar-brand" href="#">Grails Debug Console</a>
     <form class="navbar-form pull-right">
-      <div class="btn-group orientation" data-toggle="buttons">
-        <label class="btn vertical btn-default active">
-          <input type="radio" name="options">
-          <img src="${resource(dir: 'images', file: 'v.png', plugin: 'console')}" alt="Vertical"/>
-        </label>
-        <label class="btn horizontal btn-default">
-          <input type="radio" name="options">
-          <img src="${resource(dir: 'images', file: 'h.png', plugin: 'console')}" alt="Horizontal"/>
-        </label>
+
+      <div class="btn-group">
+        <button class="clear btn-sm btn btn-default dropdown-toggle" title="(Esc)"  data-toggle="dropdown">
+          <i class="icon-cog"></i>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu pull-right" role="menu">
+          <li role="presentation" class="dropdown-header">Orientation</li>
+          <li><a href="#"><i class="icon-check-empty"></i> Horizontal</a></li>
+          <li><a href="#"><i class="icon-check"></i> Vertical</a></li>
+          <li role="presentation" class="divider"></li>
+          <li role="presentation" class="dropdown-header">Results Pane</li>
+          <li><a href="#"><i class="icon-check"></i> Wrap text</a></li>
+          <li><a href="#"><i class="icon-check"></i> Show script</a></li>
+          <li><a href="#"><i class="icon-check"></i> Show stdout</a></li>
+          <li><a href="#"><i class="icon-check"></i> Show result</a></li>
+        </ul>
       </div>
+      %{--<div class="btn-group orientation" data-toggle="buttons">--}%
+        %{--<label class="btn vertical btn-default active">--}%
+          %{--<input type="radio" name="options">--}%
+          %{--<img src="${resource(dir: 'images', file: 'v.png', plugin: 'console')}" alt="Vertical"/>--}%
+        %{--</label>--}%
+        %{--<label class="btn horizontal btn-default">--}%
+          %{--<input type="radio" name="options">--}%
+          %{--<img src="${resource(dir: 'images', file: 'h.png', plugin: 'console')}" alt="Horizontal"/>--}%
+        %{--</label>--}%
+      %{--</div>--}%
     </form>
   </div>
 </div>
@@ -44,11 +64,7 @@
       <button class="help btn btn-default" data-toggle="modal" data-target="#helpModal"><i class="icon-question"></i></button>
     </div>
   </div>
-  <div class="file-name-section">
-    <div class="pull-right saving" style="display: none">Saving</div>
-    <div class="file-name">
-    </div>
-  </div>
+  <div class="file-name-section"></div>
 
   <div id="code-wrapper">
     <textarea name="code" rows="25" cols="100"></textarea>
@@ -58,25 +74,12 @@
 <div class="east results" style="display: none">
   <div class="btn-toolbar">
     <button class="clear btn-sm btn btn-default" title="(Esc)"><i class="icon-eraser"></i></button>
-    <div class="btn-group">
-      <button class="clear btn-sm btn btn-default dropdown-toggle" title="(Esc)"  data-toggle="dropdown">
-        <i class="icon-cog"></i>
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" role="menu">
-        <li><a href="#">Action</a></li>
-        <li><a href="#">Another action</a></li>
-        <li><a href="#">Something else here</a></li>
-        <li class="divider"></li>
-        <li><a href="#">Separated link</a></li>
-      </ul>
-    </div>
 
-    <form class="navbar-form pull-right">
-      <label class="checkbox-inline">
-        <input type="checkbox"> Wrap text
-      </label>
-    </form>
+    %{--<form class="navbar-form pull-right">--}%
+      %{--<label class="checkbox-inline">--}%
+        %{--<input type="checkbox"> Wrap text--}%
+      %{--</label>--}%
+    %{--</form>--}%
   </div>
 
   <div id="result"><div class="inner"></div></div>
@@ -84,7 +87,7 @@
 
 <div class="south" style="display: none"></div>
 
-<div id="helpModal" class="modal fade" style="display: none">
+<div id="helpModal" class="modal fade" style="display: none" data-backdrop="false">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
