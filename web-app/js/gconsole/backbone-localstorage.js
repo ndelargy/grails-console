@@ -60,6 +60,10 @@
             return _.values(this.data);
         },
 
+        first: function () {
+            return _.first(this.findAll());
+        },
+
         // Delete a model from `this.data`, returning it.
         destroy: function (model) {
             delete this.data[model.id];

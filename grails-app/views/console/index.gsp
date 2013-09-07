@@ -11,6 +11,11 @@
   %{--<script type="text/javascript" src="${resource(dir: 'build', file: 'gconsole.js')}"></script>--}%
 </head>
 
+
+<script type="handlebarsTODO">
+
+</script>
+
 <body>
 <div id="header">
   <div class="navbar">
@@ -22,16 +27,16 @@
           <i class="icon-cog"></i>
           <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu pull-right" role="menu">
+        <ul class="dropdown-menu pull-right settings" role="menu">
           <li role="presentation" class="dropdown-header">Orientation</li>
-          <li><a href="#"><i class="icon-check-empty"></i> Horizontal</a></li>
-          <li><a href="#"><i class="icon-check"></i> Vertical</a></li>
+          <li><a href="#" class="orientation-horizontal"><i class="icon-check"></i> Horizontal</a></li>
+          <li><a href="#" class="orientation-vertical"><i class="icon-check"></i> Vertical</a></li>
           <li role="presentation" class="divider"></li>
           <li role="presentation" class="dropdown-header">Results Pane</li>
-          <li><a href="#"><i class="icon-check"></i> Wrap text</a></li>
-          <li><a href="#"><i class="icon-check"></i> Show script</a></li>
-          <li><a href="#"><i class="icon-check"></i> Show stdout</a></li>
-          <li><a href="#"><i class="icon-check"></i> Show result</a></li>
+          <li><a href="#" class="results-wrap"><i class="icon-check"></i> Wrap text</a></li>
+          <li><a href="#" class="results-show-script"><i class="icon-check"></i> Show script</a></li>
+          <li><a href="#" class="results-show-stdout"><i class="icon-check"></i> Show stdout</a></li>
+          <li><a href="#" class="results-show-result"><i class="icon-check"></i> Show result</a></li>
         </ul>
       </div>
       %{--<div class="btn-group orientation" data-toggle="buttons">--}%
@@ -66,14 +71,14 @@
   </div>
   <div class="file-name-section"></div>
 
-  <div id="code-wrapper">
+  <div id="code-wrapper" class="ui-layout-content" style="padding: 0">
     <textarea name="code" rows="25" cols="100"></textarea>
   </div>
 </div>
 
 <div class="east results" style="display: none">
   <div class="btn-toolbar">
-    <button class="clear btn-sm btn btn-default" title="(Esc)"><i class="icon-eraser"></i></button>
+    <button class="clear btn btn-default" title="(Esc)"><i class="icon-eraser"></i></button>
 
     %{--<form class="navbar-form pull-right">--}%
       %{--<label class="checkbox-inline">--}%

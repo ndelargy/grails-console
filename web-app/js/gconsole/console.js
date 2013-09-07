@@ -71,20 +71,71 @@
         }
     });
 
+    var Settings = Backbone.Model.extend({
+        defaults: {
+            'orientation': 'vertical',
+            'layout.east.size': '50%',
+            'layout.south.size': '50%',
+            'results.wrapText': true,
+            'results.showScript': true,
+            'results.showStdout': true,
+            'results.showResult': true
+
+        }
+    });
+    var localSettingsStore = new Backbone.LocalModelStore('gconsole.settings', Settings);
+
+    var SettingsView = Backbone.View.extend({
+
+        events: {
+            'click .orientation-horizontal': 'onOrientationHorizontalClick',
+            'click .orientation-vertical': 'onOrientationVerticalClick',
+            'click .results-wrap': 'onResultsWrapClick',
+            'click .results-show-script': 'onResultsShowScriptClick',
+            'click .results-show-stdout': 'onResultsShowStdoutClick',
+            'click .results-show-result': 'onResultsShowResultClick'
+        },
+
+        render: function() {
+
+        },
+
+        onOrientationHorizontalClick: function(event) {
+            event._preventDefault();
+
+        },
+
+        onOrientationVerticalClick: function(event) {
+            event._preventDefault();
+        },
+
+        onResultsWrapClick: function(event) {
+            event._preventDefault();
+        },
+
+        onResultsShowScriptClick: function(event) {
+            event._preventDefault();
+        },
+
+        onResultsShowStdoutClick: function(event) {
+            event._preventDefault();
+        },
+
+        onResultsShowResultClick: function(event) {
+            event._preventDefault();
+        }
+
+    });
+
     window.gconsole = ({
         start: function (data) {
             this.data = data;
 
-            this.settings = localObjectStore.getObject('settings') || {
-                orientation: 'vertical',
-                eastSize: '50%',
-                southSize: '50%',
-                wrap: true
-            };
+            this.settings = localSettingsStore.first() || new Settings();
 
             this.initLayout();
             this.initEditor();
-            this.initWrap();
+            this.initResults();
             this.initRouter();
 
             $('#editor button.submit').click($.proxy(this.executeCode, this));
@@ -92,6 +143,10 @@
             $('#editor button.new').click($.proxy(this.newFileClick, this));
             $('.results button.clear').click($.proxy(this.clearResults, this));
 
+
+            this.settings.on('change:orientation', function(model, value, options) {
+                this.showOrientation();
+            }, this);
 
             $('.orientation .vertical').click($.proxy(function (event) { this.showOrientation('vertical'); }, this));
             $('.orientation .horizontal').click($.proxy(function (event) { this.showOrientation('horizontal'); }, this));
@@ -101,7 +156,7 @@
 
             $(window).on('beforeunload', $.proxy(this.onBeforeunload, this));
 
-            this.showOrientation(this.settings.orientation);
+            this.showOrientation();
             Backbone.history.start({pushState: false});
         },
 
@@ -175,7 +230,7 @@
             });
             router.on('route:defaultRoute', function () {
                 console.log('TODO: grab the last file.');
-                router.navigate('l/last.groovy', {trigger: true});
+                router.navigate('new', {trigger: true});
             });
 
             this.router = router;
@@ -190,18 +245,18 @@
                 center__onresize: $.proxy(function () { this.editor.refresh(); }, this),
                 east__paneSelector: '.east',
                 east__contentSelector: '#result',
-                east__initHidden: this.settings.orientation !== 'vertical',
-                east__size: this.settings.eastSize,
+                east__initHidden: this.settings.get('orientation') !== 'vertical',
+                east__size: this.settings.get('layout.east.size'),
                 east__onresize_end: $.proxy(function (name, $el, state, opts) {
-                    this.settings.eastSize = state.size;
+                    this.settings.set('layout.east.size', state.size);
                     this.storeSettings();
                 }, this),
                 south__paneSelector: '.south',
                 south__contentSelector: '#result',
-                south__initHidden: this.settings.orientation !== 'horizontal',
-                south__size: this.settings.southSize,
+                south__initHidden: this.settings.get('orientation') !== 'horizontal',
+                south__size: this.settings.get('layout.south.size'),
                 south__onresize_end: $.proxy(function (name, $el, state, opts) {
-                    this.settings.southSize = state.size;
+                    this.settings.set('layout.south.size', state.size);
                     this.storeSettings();
                 }, this),
                 resizable: true,
@@ -218,8 +273,9 @@
             }
             this.fileNameView = new FileNameView({model: file});
             $('.file-name-section').html(this.fileNameView.render().el);
-//            $('#editor .file-name').html(file.get('name'));
+
             this.editor.setValue(this.file.get('text'));
+            this.editor.refresh();
         },
 
         initEditor: function () {
@@ -236,20 +292,10 @@
             this.editor.setValue('');
         },
 
-        initWrap: function () {
-            var $input = $('label.wrap input');
-            if (this.settings.wrap) {
-                $input.prop('checked', 'checked');
-            } else {
-                $input.removeProp('checked');
-            }
-            $('#result').toggleClass('wrap', this.settings.wrap);
-
-            $input.click($.proxy(function (event) {
-                this.settings.wrap = event.currentTarget.checked;
-                $('#result').toggleClass('wrap', this.settings.wrap);
-                this.storeSettings();
-            }, this));
+        initResults: function () {
+            this.settings.on('change:results.wrapText', function(model, value, options) {
+                $('#result').toggleClass('wrap', value);
+            }, this);
         },
 
         executeCode: function () {
@@ -290,7 +336,8 @@
             $('#result').animate({scrollTop: scroll});
         },
 
-        showOrientation: function (orientation) {
+        showOrientation: function () {
+            var orientation = this.settings.get('orientation');
             if (orientation === 'vertical') {
                 $('.orientation .vertical').button('toggle');
                 $('.east').append($('.south').children());
@@ -305,12 +352,10 @@
                 this.layout.initContent('south');
             }
             this.editor.refresh();
-            this.settings.orientation = orientation;
-            this.storeSettings();
         },
 
         storeSettings: function () {
-            localObjectStore.setObject('settings', this.settings);
+            this.settings.save();
         }
 
     });
