@@ -39,17 +39,6 @@
     App.File = File;
     App.fileStore = localFileStore;
 
-    var Router = Backbone.Router.extend({
-
-        routes: {
-            "l/:file": "openLocalFile",
-            "r/*file": "openRemoteFile",
-            "new": "newFile",
-            '*path': 'defaultRoute'
-        }
-
-    });
-
     var FileNameView = Backbone.View.extend({
         initialize: function() {
             var html = '<div class="pull-right saving" style="display: none">Saving</div><div class="file-name"></div>';
@@ -142,7 +131,7 @@
 
         initRouter: function () {
             var oThis = this;
-            var router = new Router();
+            var router = new App.Router();
 
             router.on("route:openLocalFile", function (name) {
                 var file = _.find(localFileStore.findAll(), function(model){

@@ -27,42 +27,42 @@
             event.preventDefault();
             event.stopPropagation();
             this.model.set('orientation', 'horizontal');
-            this.settings.save();
+            this.model.save();
         },
 
         onOrientationVerticalClick: function(event) {
             event.preventDefault();
             event.stopPropagation();
             this.model.set('orientation', 'vertical');
-            this.settings.save();
+            this.model.save();
         },
 
         onResultsWrapClick: function(event) {
             event.preventDefault();
             event.stopPropagation();
             this.model.toggle('results.wrapText');
-            this.settings.save();
+            this.model.save();
         },
 
         onResultsShowScriptClick: function(event) {
             event.preventDefault();
             event.stopPropagation();
             this.model.toggle('results.showScript');
-            this.settings.save();
+            this.model.save();
         },
 
         onResultsShowStdoutClick: function(event) {
             event.preventDefault();
             event.stopPropagation();
             this.model.toggle('results.showStdout');
-            this.settings.save();
+            this.model.save();
         },
 
         onResultsShowResultClick: function(event) {
             event.preventDefault();
             event.stopPropagation();
             this.model.toggle('results.showResult');
-            this.settings.save();
+            this.model.save();
         }
 
     });
