@@ -36,7 +36,9 @@ class ConsoleTagLib {
         ['js/gconsole', 'settings-model.js'],
         ['js/gconsole', 'settings-view.js'],
         ['js/gconsole', 'result-model.js'],
+        ['js/gconsole', 'result-collection.js'],
         ['js/gconsole', 'result-view.js'],
+        ['js/gconsole', 'result-collection-view.js'],
         ['js/gconsole', 'editor-view.js']
     ]
 

@@ -7,7 +7,6 @@
             this.settings = App.Settings.getInstance();
 
             this.initLayout();
-            this.initResults();
             this.initRouter();
 
             this.editorView = new App.EditorView({
@@ -16,15 +15,16 @@
             App.layout.initContent('center');
             this.editorView.resize();
 
+            this.resultCollection = new App.ResultCollection();
+            this.resultsView = new App.ResultCollectionView({
+                collection: this.resultCollection
+            }).render();
+
             this.editorView.on('execute', this.executeCode, this);
             this.editorView.on('new', this.newFileClick, this);
             this.editorView.on('open', this.openFileClick, this);
             this.editorView.on('clear', this.clearResults, this);
 
-
-            $('.results button.clear').click(_.bind(this.clearResults, this));
-
-            this.settings.on('change:orientation', this.showOrientation, this);
 
             $(document).on('keydown', 'Ctrl+return', _.bind(this.executeCode, this));
             $(document).on('keydown', 'esc', _.bind(this.clearResults, this));
@@ -32,11 +32,14 @@
             $(window).on('beforeunload', _.bind(this.onBeforeunload, this));
 
             this.showOrientation();
+            this.settings.on('change:orientation', this.showOrientation, this);
 
             new App.SettingsView({
                 model: this.settings,
                 el: $('.dropdown-menu.settings')[0]
             }).render();
+
+
             Backbone.history.start({pushState: false});
         },
 
@@ -121,6 +124,7 @@
                     this.settings.save();
                 }, this),
                 resizable: true,
+                findNestedContent: true,
                 fxName: ''
             });
 
@@ -131,24 +135,13 @@
             this.editorView.showFile(file); // TODO
         },
 
-        initResults: function () {
-            $('#result').toggleClass('wrap', this.settings.get('results.wrapText'));
-            this.settings.on('change:results.wrapText', function(model, value, options) {
-                $('#result').toggleClass('wrap', value);
-            }, this);
-        },
-
         executeCode: function () {
             var result = new App.Result({
                 loading: true,
                 input: this.editorView.getValue()
             });
-            var resultsView = new App.ResultView({model: result});
+            this.resultCollection.add(result);
 
-            $('#result .inner').append(resultsView.render().el);
-            var $result = resultsView.$el;
-
-            this.scrollToResult($result);
             $.post(this.data.baseUrl + '/console/execute', {code: this.editorView.getValue()})
                 .done(_.bind(function (response) {
                     result.set({
@@ -158,34 +151,28 @@
                         result: response.result,
                         output: response.output
                     });
-                    this.scrollToResult($result);
                 }, this)).fail(_.bind(function () {
                     result.set({
                         loading: false,
                         error: 'An error occurred.'
                     });
-                    this.scrollToResult($result);
                 }, this));
         },
 
-        clearResults: function () { $('#result .inner').html(''); },
-
-        scrollToResult: function ($result) {
-            var scroll = $result.position().top + $('#result').scrollTop();
-            $('#result').animate({scrollTop: scroll});
-        },
+        clearResults: function () { this.resultsView.clear(); },
 
         showOrientation: function () {
             var orientation = this.settings.get('orientation');
             if (orientation === 'vertical') {
                 $('.orientation .vertical').button('toggle');
-                $('.east').append($('.south').children());
+                console.log(this.resultsView.el);
+                $('.east').append(this.resultsView.el);
                 this.layout.hide('south');
                 this.layout.show('east');
                 this.layout.initContent('east');
             } else {
                 $('.orientation .horizontal').button('toggle');
-                $('.south').append($('.east').children());
+                $('.south').append(this.resultsView.el);
                 this.layout.hide('east');
                 this.layout.show('south');
                 this.layout.initContent('south');

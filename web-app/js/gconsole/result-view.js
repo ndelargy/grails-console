@@ -32,6 +32,7 @@
                 }
                 this.$el.html(html);
             }
+            this.trigger('render');
             return this;
         },
 

@@ -116,9 +116,9 @@ body, html {
     border: 0;
 }
 
-.results {
-    height: 100%;
-}
+/*.results {*/
+    /*height: 100%;*/
+/*}*/
 
 #editor .buttons,
 .east .buttons,

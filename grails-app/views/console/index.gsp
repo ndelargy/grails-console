@@ -34,16 +34,6 @@
           <li><a href="#" class="results-show-result"><i class="icon-check"></i> Show result</a></li>
         </ul>
       </div>
-      %{--<div class="btn-group orientation" data-toggle="buttons">--}%
-        %{--<label class="btn vertical btn-default active">--}%
-          %{--<input type="radio" name="options">--}%
-          %{--<img src="${resource(dir: 'images', file: 'v.png', plugin: 'console')}" alt="Vertical"/>--}%
-        %{--</label>--}%
-        %{--<label class="btn horizontal btn-default">--}%
-          %{--<input type="radio" name="options">--}%
-          %{--<img src="${resource(dir: 'images', file: 'h.png', plugin: 'console')}" alt="Horizontal"/>--}%
-        %{--</label>--}%
-      %{--</div>--}%
     </form>
   </div>
 </div>
@@ -52,17 +42,6 @@
 </div>
 
 <div class="east results" style="display: none">
-  <div class="btn-toolbar">
-    <button class="clear btn btn-default" title="(Esc)"><i class="icon-eraser"></i> Clear</button>
-
-    %{--<form class="navbar-form pull-right">--}%
-      %{--<label class="checkbox-inline">--}%
-        %{--<input type="checkbox"> Wrap text--}%
-      %{--</label>--}%
-    %{--</form>--}%
-  </div>
-
-  <div id="result"><div class="inner"></div></div>
 </div>
 
 <div class="south" style="display: none"></div>
