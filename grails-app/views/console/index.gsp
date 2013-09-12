@@ -11,11 +11,6 @@
   %{--<script type="text/javascript" src="${resource(dir: 'build', file: 'gconsole.js')}"></script>--}%
 </head>
 
-
-<script type="handlebarsTODO">
-
-</script>
-
 <body>
 <div id="header">
   <div class="navbar">
@@ -54,31 +49,11 @@
 </div>
 
 <div id="editor" style="display: none">
-  <div class="btn-toolbar">
-    <div class="btn-group">
-      <button class="submit btn btn-default" title="(Ctrl + Enter)"><i class="icon-play"></i></button>
-    </div>
-    <div class="btn-group">
-      <button class="new btn btn-default"><i class="icon-file"></i></button>
-      <button class="btn btn-default"><i class="icon-folder-close"></i></button>
-      <button class="save btn btn-default"><i class="icon-save"></i></button>
-      <button class="btn btn-default"><i class="icon-code-fork"></i></button>
-    </div>
-
-    <div class="btn-group">
-      <button class="help btn btn-default" data-toggle="modal" data-target="#helpModal"><i class="icon-question"></i></button>
-    </div>
-  </div>
-  <div class="file-name-section"></div>
-
-  <div id="code-wrapper" class="ui-layout-content" style="padding: 0">
-    <textarea name="code" rows="25" cols="100"></textarea>
-  </div>
 </div>
 
 <div class="east results" style="display: none">
   <div class="btn-toolbar">
-    <button class="clear btn btn-default" title="(Esc)"><i class="icon-eraser"></i></button>
+    <button class="clear btn btn-default" title="(Esc)"><i class="icon-eraser"></i> Clear</button>
 
     %{--<form class="navbar-form pull-right">--}%
       %{--<label class="checkbox-inline">--}%
@@ -133,9 +108,10 @@
 
       <div class="modal-body">
         <input class="form-control" type="text" />
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary ok">OK</button>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary ok">OK</button>
+        </div>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -144,7 +120,7 @@
 <con:layoutResources/>
 <script type="text/javascript" charset="utf-8">
   jQuery(function($){
-    gconsole.start({
+    App.start({
       baseUrl: '${resource(plugin: 'none')}'
     });
   });

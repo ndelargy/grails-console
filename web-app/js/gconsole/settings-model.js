@@ -1,4 +1,6 @@
-(function (App){
+(function (App, Backbone, localStorage, JSON) {
+
+    var instance;
 
     var localStorageKey = 'gconsole.settings'
 
@@ -13,20 +15,23 @@
             'results.showResult': true
         },
 
-        toggle: function(attribute) {
+        toggle: function (attribute) {
             this.set(attribute, !this.get(attribute));
         },
 
-        save: function() {
+        save: function () {
             localStorage.setItem(localStorageKey, JSON.stringify(this));
         }
     }, {
-        load: function() {
-            var json = JSON.parse(localStorage.getItem(localStorageKey)) || {};
-            return new Settings(json);
+        getInstance: function () {
+            if (!instance) {
+                var json = JSON.parse(localStorage.getItem(localStorageKey)) || {};
+                instance = new Settings(json);
+            }
+            return instance;
         }
     });
 
     App.Settings = Settings;
 
-})(window.App = window.App || {});
+})(App, Backbone, localStorage, JSON);

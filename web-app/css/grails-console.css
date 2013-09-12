@@ -43,6 +43,12 @@ body, html {
     min-width: inherit;
 }
 
+#result.hide-input .script-result .input,
+#result.hide-output .script-result .output,
+#result.hide-result .script-result .result {
+    display: none;
+}
+
 .script-result {
     background: none repeat scroll 0 0 #fff;
     border-bottom: 1px solid #aaa;

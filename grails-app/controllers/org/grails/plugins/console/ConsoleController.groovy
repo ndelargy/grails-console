@@ -15,22 +15,16 @@ class ConsoleController {
 
     def execute = {
         long startTime = System.currentTimeMillis()
-        boolean captureStdout = params.captureStdout != null
 
         String code = params.code
 
-        Map results = consoleService.eval(code, captureStdout, request)
+        Map results = consoleService.eval(code, true, request)
         if (results.exception) {
             def sw = new StringWriter()
             new PrintWriter(sw).withWriter { GrailsUtil.deepSanitize(results.exception).printStackTrace(it) }
             results.exception = encode(sw.toString())
         } else {
-            def buffer = new StringBuilder()
-            for (line in code.tokenize('\n')) {
-                buffer.append('groovy> ').append(line).append('\n')
-            }
-            buffer.append('\n').append results.output
-            results.output = encode(buffer.toString())
+            results.output = encode(results.output)
             results.result = encode(InvokerHelper.inspect(results.result))
         }
 

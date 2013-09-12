@@ -25,14 +25,19 @@ class ConsoleTagLib {
         ['js', 'underscore-min.js'],
         ['js', 'backbone-min.js'],
         ['js', 'backbone-localstorage.js'],
+        ['js', 'handlebars.runtime.js'],
         ['js', 'jquery.layout-latest.min.js'],
         ['js', 'jquery.hotkeys.js'],
         ['lib/codemirror-3.15/lib', 'codemirror.js'],
         ['lib/codemirror-3.15/mode/groovy', 'groovy.js'],
-        ['js/gconsole', 'console.js'],
+        ['build', 'jst.js'],
+        ['js/gconsole', 'app.js'],
         ['js/gconsole', 'router.js'],
         ['js/gconsole', 'settings-model.js'],
-        ['js/gconsole', 'settings-view.js']
+        ['js/gconsole', 'settings-view.js'],
+        ['js/gconsole', 'result-model.js'],
+        ['js/gconsole', 'result-view.js'],
+        ['js/gconsole', 'editor-view.js']
     ]
 
 	def resources = { attrs ->
