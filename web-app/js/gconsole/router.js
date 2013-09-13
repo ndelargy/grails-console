@@ -11,4 +11,4 @@
 
     });
 
-})(window.App = window.App || {});
+})(App);

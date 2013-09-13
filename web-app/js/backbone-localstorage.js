@@ -74,7 +74,6 @@
     });
 
     Backbone.LocalModelStore.sync = function(method, model, options) {
-
         var resp;
         var store = model.localStorage || model.collection.localStorage;
 
