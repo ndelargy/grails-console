@@ -10,11 +10,14 @@
             this.template = JST.results;
             this.listenTo(App.settings, 'change:results.wrapText', this.setWrap, this);
 
+            this.resultViews = [];
+
             this.listenTo(this.collection, 'add', function (model, collection, options) {
                 var resultView = new App.ResultView({model: model});
-                this.listenTo(resultView, 'render', _.bind(function () { this.scrollToResultView(resultView); }, this)); // TODO cleanup events after clear
+                this.listenTo(resultView, 'render', function () { this.scrollToResultView(resultView); });
                 this.$('.inner').append(resultView.render().el);
                 this.scrollToResultView(resultView);
+                this.resultViews.push(resultView);
             });
         },
 
@@ -37,7 +40,8 @@
         },
 
         clear: function () {
-            this.$('.inner').html('');
+            _.invoke(this.resultViews, 'remove');
+            this.resultViews = [];
         }
     });
 })(App, Backbone, JST);
