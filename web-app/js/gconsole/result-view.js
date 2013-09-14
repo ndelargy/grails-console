@@ -1,4 +1,4 @@
-(function (App, Backbone) {
+(function (App, Backbone, JST) {
 
     App.ResultView = Backbone.View.extend({
 
@@ -8,43 +8,37 @@
 
         initialize: function () {
             this.listenTo(this.model, 'change', this.render, this);
+            this.template = JST['result'];
         },
 
         render: function () {
+            var html;
             if (this.model.get('loading')) {
-                this.$el.addClass('loading');
-                this.$el.text('Executing Script...');
+                html = '<div class="loading">Executing Script...</div>';
             } else {
-                this.$el.removeClass('loading');
-                var html = '';
-                html += '<span class="result-time label label-default pull-right">' + this.model.get('totalTime') + ' ms</span>';
-                if (this.model.get('exception')) {
+                var data = {
+                    totalTime: this.model.get('totalTime'),
+                    input: this.formattedInput(),
+                    output: this.model.get('output'),
+                    result: this.model.get('exception') || this.model.get('error') || this.model.get('result')
+                };
+                if (!this.model.isSuccess()) {
                     this.$el.addClass('stacktrace');
-                    html += '<div class="input">'+this.formattedInput()+'</div>';
-                    html += '<div>'+this.model.get('exception')+'</div>';
-                } else if (this.model.get('error')){
-                    this.$el.addClass('stacktrace');
-                    html += '<div>'+this.model.get('error')+'</div>'
-                } else {
-                    html += '<div class="input">'+this.formattedInput()+'</div>';
-                    html += '<div class="output">'+this.model.get('output')+'</div>';
-                    html += '<div class="result">'+this.model.get('result')+'</div>';
                 }
-                this.$el.html(html);
+
+                html = this.template(data);
             }
+            this.$el.html(html);
             this.trigger('render');
             return this;
         },
 
-        formattedInput: function() {
+        formattedInput: function () {
             var lines = this.model.get('input').trim().split('\n');
-            var newInput = '';
-
-            _.each(lines, function(line) {
-                newInput += 'groovy> ' + line + '\n';
-            });
-            return newInput;
+            return _.map(lines, function (line) {
+                return 'groovy> ' + line;
+            }).join('\n');
         }
 
     });
-})(App, Backbone);
+})(App, Backbone, JST);

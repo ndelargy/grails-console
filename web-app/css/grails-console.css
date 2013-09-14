@@ -60,7 +60,7 @@ body, html {
     color: #ff0000;
 }
 
-.script-result.loading {
+.script-result .loading {
     background: url("../images/spinner.gif") no-repeat scroll 10px center #FFFFFF;
     padding: 15px 15px 15px 37px;
 }

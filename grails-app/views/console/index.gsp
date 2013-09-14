@@ -38,12 +38,8 @@
   </div>
 </div>
 
-<div id="editor" style="display: none">
-</div>
-
-<div class="east results" style="display: none">
-</div>
-
+<div id="editor" style="display: none"></div>
+<div class="east results" style="display: none"></div>
 <div class="south" style="display: none"></div>
 
 <div id="helpModal" class="modal fade" style="display: none" data-backdrop="false">

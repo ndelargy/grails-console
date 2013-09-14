@@ -7,9 +7,8 @@
         },
 
         initialize: function () {
-            var settings = App.settings;
-            $('#result').toggleClass('wrap', settings.get('results.wrapText'));
-            this.listenTo(settings, 'change:results.wrapText', this.onWrapTextChange, this);
+            this.template = JST.results;
+            this.listenTo(App.settings, 'change:results.wrapText', this.setWrap, this);
 
             this.listenTo(this.collection, 'add', function (model, collection, options) {
                 var resultView = new App.ResultView({model: model});
@@ -24,13 +23,16 @@
             this.$('#result').animate({scrollTop: scroll});
         },
 
-        onWrapTextChange: function (model, value, options) {
-            this.$('#result').toggleClass('wrap', value);
+        setWrap: function () {
+            console.log(App.settings.get('results.wrapText'));
+            console.log('pop');
+            this.$('#result').toggleClass('wrap', App.settings.get('results.wrapText'));
         },
 
         render: function () {
-            var html = JST['results']();
+            var html = this.template();
             this.$el.html(html);
+            this.setWrap();
             return this;
         },
 

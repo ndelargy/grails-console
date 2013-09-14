@@ -22,10 +22,9 @@ class ConsoleController {
         if (results.exception) {
             def sw = new StringWriter()
             new PrintWriter(sw).withWriter { GrailsUtil.deepSanitize(results.exception).printStackTrace(it) }
-            results.exception = encode(sw.toString())
+            results.exception = sw.toString()
         } else {
-            results.output = encode(results.output)
-            results.result = encode(InvokerHelper.inspect(results.result))
+            results.result = InvokerHelper.inspect(results.result)
         }
 
         results.totalTime = System.currentTimeMillis() - startTime
@@ -68,8 +67,4 @@ class ConsoleController {
         }
         render results as JSON
     }
-
-	private String encode(String s) {
-		s.encodeAsHTML().replaceAll(/[\n\r]/, '<br/>').replaceAll('\t', '&nbsp;&nbsp;&nbsp;&nbsp;')
-	}
 }

@@ -26,7 +26,6 @@
             this.editorView.on('open', this.openFileClick, this);
             this.editorView.on('clear', this.clearResults, this);
 
-
             $(document).on('keydown', 'Ctrl+return', _.bind(this.executeCode, this));
             $(document).on('keydown', 'esc', _.bind(this.clearResults, this));
 
@@ -40,7 +39,6 @@
                 el: $('.dropdown-menu.settings')[0]
             }).render();
 
-
             Backbone.history.start({pushState: false});
         },
 
@@ -50,11 +48,11 @@
             App.router.navigate('new', {trigger: true});
         },
 
-        openFileClick: function(event) {
+        openFileClick: function (event) {
 
             var files = localFileStore.findAll(); // TODO sort last modified desc
             var html = JST['file-list']({
-                files: _.map(files, function(file) {return file.toJSON()})
+                files: _.map(files, function (file) {return file.toJSON()})
             });
             var $div = $(html);
             $('#editor').html($div);
@@ -73,7 +71,7 @@
             App.router = router;
 
             App.router.on("route:openLocalFile", function (name) {
-                var file = _.find(localFileStore.findAll(), function(model){
+                var file = _.find(localFileStore.findAll(), function (model) {
                     return model.get('name') === name;
                 });
                 if (!file) {
@@ -86,7 +84,6 @@
             App.router.on("route:openRemoteFile", function (name) {
                 var jqxhr = $.get(oThis.data.baseUrl + '/console/loadFile', {filename: name});
                 jqxhr.done(function (response) {
-                    console.log(response);
                     var file = new File({name: name, text: response.text});
                     oThis.showFile(file);
                 });
@@ -166,7 +163,6 @@
             var orientation = this.settings.get('orientation');
             if (orientation === 'vertical') {
                 $('.orientation .vertical').button('toggle');
-                console.log(this.resultsView.el);
                 $('.east').append(this.resultsView.el);
                 this.layout.hide('south');
                 this.layout.show('east');
@@ -180,9 +176,7 @@
             }
             this.editorView.refresh();
         }
-
     });
-
 
     var remoteFileStore = {
         load: function (fileName) {
