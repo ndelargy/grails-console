@@ -10,13 +10,13 @@ describe 'App.Router', ->
   it 'should handle openLocalFile routes', ->
     callback = jasmine.createSpy()
     @router.on 'route:openLocalFile', callback
-    @router.navigate 'l/filename', trigger: true
+    @router.navigate 'local/filename', trigger: true
     expect(callback).toHaveBeenCalledWith('filename')
 
   it 'should handle openRemoteFile routes', ->
     callback = jasmine.createSpy()
     @router.on 'route:openRemoteFile', callback
-    @router.navigate 'r/filename', trigger: true
+    @router.navigate 'remote/filename', trigger: true
     expect(callback).toHaveBeenCalledWith('filename')
 
   it 'should handle newFile routes', ->

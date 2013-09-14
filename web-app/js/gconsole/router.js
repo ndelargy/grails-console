@@ -3,8 +3,8 @@
     App.Router = Backbone.Router.extend({
 
         routes: {
-            "l/:file": "openLocalFile",
-            "r/*file": "openRemoteFile",
+            "local/:file": "openLocalFile",
+            "remote/*file": "openRemoteFile",
             "new": "newFile",
             '*path': 'defaultRoute'
         }
