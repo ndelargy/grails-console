@@ -40,7 +40,10 @@
         },
 
         clear: function () {
-            _.invoke(this.resultViews, 'remove');
+            _.each(this.resultViews, function (view) {
+                this.stopListening(view);
+                view.remove();
+            }, this);
             this.resultViews = [];
         }
     });
