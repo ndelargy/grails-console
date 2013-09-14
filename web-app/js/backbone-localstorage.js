@@ -14,8 +14,7 @@
     Backbone.LocalModelStore = function (name, Model) {
         this.name = name;
         var store = localStorage.getItem(this.name);
-        Model.prototype.localStorage = this;
-        Model.prototype.sync = Backbone.LocalModelStore.sync;
+        Model.prototype.sync = _.bind(this.sync, this);
         this.data = {};
         if (store) {
             _.each(JSON.parse(store), function(v, k) {
@@ -34,6 +33,7 @@
 
         // Update a model by replacing its copy in `this.data`.
         update: function (model) {
+            model.set('lastModified', new Date().getTime());
             this.data[model.id] = model;
             this.save();
             return model;
@@ -42,6 +42,7 @@
         // Add a model, giving it a (hopefully)-unique GUID, if it doesn't already
         // have an id of it's own.
         create: function (model) {
+            model.set('lastModified', new Date().getTime());
             if (!model.id) {
                 model.set(model.idAttribute, guid());
             }
@@ -69,6 +70,23 @@
             delete this.data[model.id];
             this.save();
             return model;
+        },
+
+        sync: function(method, model, options) {
+            var resp;
+
+            switch (method) {
+                case "read":    resp = model.id ? this.find(model) : this.findAll();  break;
+                case "create":  resp = this.create(model);                            break;
+                case "update":  resp = this.update(model);                            break;
+                case "delete":  resp = this.destroy(model);                           break;
+            }
+
+            if (resp) {
+                options.success(resp);
+            } else {
+                options.error("Record not found");
+            }
         }
 
     });

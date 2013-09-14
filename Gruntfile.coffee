@@ -26,7 +26,8 @@ module.exports = (grunt) ->
       "web-app/js/gconsole/result-collection.js",
       "web-app/js/gconsole/result-view.js",
       "web-app/js/gconsole/result-collection-view.js",
-      "web-app/js/gconsole/editor-view.js"
+      "web-app/js/gconsole/editor-view.js",
+      "web-app/js/gconsole/file-model.js"
     ]
 
     cssSrc: [

@@ -1,11 +1,19 @@
 (function ($, _, Backbone, JST) {
 
+
+    Handlebars.registerHelper('dateFormatTime', function(context) {
+        var date = new Date(context);
+        return date.toDateString() + ' ' + date.toTimeString();
+    });
+
     window.App = ({
         start: function (data) {
             this.data = data;
 
             App.settings = new App.Settings;
             App.settings.load();
+
+            App.localFileStore = new Backbone.LocalModelStore('gconsole.files', App.File);
 
             this.initLayout();
             this.initRouter();
@@ -50,7 +58,8 @@
 
         openFileClick: function (event) {
 
-            var files = localFileStore.findAll(); // TODO sort last modified desc
+            var files = App.localFileStore.findAll(); // TODO sort last modified desc
+            files = _.sortBy(files, function(model) { return model.get('lastModified'); }).reverse();
             var html = JST['file-list']({
                 files: _.map(files, function (file) {return file.toJSON()})
             });
@@ -71,7 +80,7 @@
             App.router = router;
 
             App.router.on("route:openLocalFile", function (name) {
-                var file = _.find(localFileStore.findAll(), function (model) {
+                var file = _.find(App.localFileStore.findAll(), function (model) {
                     return model.get('name') === name;
                 });
                 if (!file) {
@@ -84,12 +93,12 @@
             App.router.on("route:openRemoteFile", function (name) {
                 var jqxhr = $.get(oThis.data.baseUrl + '/console/loadFile', {filename: name});
                 jqxhr.done(function (response) {
-                    var file = new File({name: name, text: response.text});
+                    var file = new App.File({name: name, text: response.text});
                     oThis.showFile(file);
                 });
             });
             App.router.on('route:newFile', function () {
-                var file = new File({text: ''});
+                var file = new App.File({text: ''});
                 oThis.showFile(file);
             });
             App.router.on('route:defaultRoute', function () {
@@ -195,10 +204,5 @@
         }
     };
 
-    var File = Backbone.Model.extend();
-    var localFileStore = new Backbone.LocalModelStore('gconsole.files', File);
-
-    App.File = File;
-    App.fileStore = localFileStore;
 
 })(jQuery, _, Backbone, JST);

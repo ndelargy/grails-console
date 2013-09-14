@@ -27,8 +27,6 @@
         },
 
         setWrap: function () {
-            console.log(App.settings.get('results.wrapText'));
-            console.log('pop');
             this.$('#result').toggleClass('wrap', App.settings.get('results.wrapText'));
         },
 

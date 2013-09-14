@@ -12,15 +12,18 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 this["JST"]["file-list"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
 
 function program1(depth0,data) {
   
-  var buffer = "", stack1;
-  buffer += "\n      <tr>\n          <td>";
+  var buffer = "", stack1, options;
+  buffer += "\n      <tr>\n          <td><input type=\"checkbox\" /></td>\n          <td>";
   if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
+    + "</td>\n          <td>";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.dateFormatTime || depth0.dateFormatTime),stack1 ? stack1.call(depth0, depth0.lastModified, options) : helperMissing.call(depth0, "dateFormatTime", depth0.lastModified, options)))
     + "</td>\n      </tr>\n  ";
   return buffer;
   }
