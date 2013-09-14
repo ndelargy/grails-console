@@ -7,7 +7,7 @@
         },
 
         initialize: function () {
-            var settings = App.Settings.getInstance();
+            var settings = App.settings;
             $('#result').toggleClass('wrap', settings.get('results.wrapText'));
             this.listenTo(settings, 'change:results.wrapText', this.onWrapTextChange, this);
 

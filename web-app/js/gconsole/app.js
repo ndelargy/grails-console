@@ -4,7 +4,8 @@
         start: function (data) {
             this.data = data;
 
-            this.settings = App.Settings.getInstance();
+            App.settings = new App.Settings;
+            App.settings.load();
 
             this.initLayout();
             this.initRouter();

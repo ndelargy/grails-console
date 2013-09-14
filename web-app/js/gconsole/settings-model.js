@@ -1,10 +1,8 @@
 (function (App, Backbone, localStorage, JSON) {
 
-    var instance;
-
     var localStorageKey = 'gconsole.settings'
 
-    var Settings = Backbone.Model.extend({
+    App.Settings = Backbone.Model.extend({
         defaults: {
             'orientation': 'vertical',
             'layout.east.size': '50%',
@@ -21,17 +19,12 @@
 
         save: function () {
             localStorage.setItem(localStorageKey, JSON.stringify(this));
-        }
-    }, {
-        getInstance: function () {
-            if (!instance) {
-                var json = JSON.parse(localStorage.getItem(localStorageKey)) || {};
-                instance = new Settings(json);
-            }
-            return instance;
+        },
+
+        load: function() {
+            var json = JSON.parse(localStorage.getItem(localStorageKey)) || {};
+            this.set(json);
         }
     });
-
-    App.Settings = Settings;
 
 })(App, Backbone, localStorage, JSON);
