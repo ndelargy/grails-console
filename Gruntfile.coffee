@@ -27,7 +27,10 @@ module.exports = (grunt) ->
       "web-app/js/gconsole/result-view.js",
       "web-app/js/gconsole/result-collection-view.js",
       "web-app/js/gconsole/editor-view.js",
-      "web-app/js/gconsole/file-model.js"
+      "web-app/js/gconsole/file-model.js",
+      "web-app/js/gconsole/file-collection.js",
+      "web-app/js/gconsole/file-collect-view.js",
+      "web-app/js/gconsole/local-file-store.js"
     ]
 
     cssSrc: [
@@ -75,7 +78,7 @@ module.exports = (grunt) ->
         options:
           specs: 'web-app/build/spec/*spec.*'
           helpers: 'web-app/spec/*helper.js'
-#          keepRunner: true
+          keepRunner: true
 
     coffee:
       spec:

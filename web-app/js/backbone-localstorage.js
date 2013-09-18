@@ -43,6 +43,10 @@
         // have an id of it's own.
         create: function (model) {
             model.set('lastModified', new Date().getTime());
+            if (!model.id) model.id = model.attributes.id = guid();
+            this.data[model.id] = model;
+            this.save();
+            return model;
             if (!model.id) {
                 model.set(model.idAttribute, guid());
             }
@@ -61,10 +65,6 @@
             return _.values(this.data);
         },
 
-        first: function () {
-            return _.first(this.findAll());
-        },
-
         // Delete a model from `this.data`, returning it.
         destroy: function (model) {
             delete this.data[model.id];
@@ -74,6 +74,7 @@
 
         sync: function(method, model, options) {
             var resp;
+//            var store = model.localStorage || model.collection.localStorage;
 
             switch (method) {
                 case "read":    resp = model.id ? this.find(model) : this.findAll();  break;
@@ -90,22 +91,4 @@
         }
 
     });
-
-    Backbone.LocalModelStore.sync = function(method, model, options) {
-        var resp;
-        var store = model.localStorage || model.collection.localStorage;
-
-        switch (method) {
-            case "read":    resp = model.id ? store.find(model) : store.findAll(); break;
-            case "create":  resp = store.create(model);                            break;
-            case "update":  resp = store.update(model);                            break;
-            case "delete":  resp = store.destroy(model);                           break;
-        }
-
-        if (resp) {
-            options.success(resp);
-        } else {
-            options.error("Record not found");
-        }
-    };
 })(_, Backbone);

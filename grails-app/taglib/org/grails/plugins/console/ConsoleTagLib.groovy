@@ -39,8 +39,11 @@ class ConsoleTagLib {
         ['js/gconsole', 'result-collection.js'],
         ['js/gconsole', 'result-view.js'],
         ['js/gconsole', 'result-collection-view.js'],
+        ['js/gconsole', 'editor-view.js'],
         ['js/gconsole', 'file-model.js'],
-        ['js/gconsole', 'editor-view.js']
+        ['js/gconsole', 'file-collection.js'],
+        ['js/gconsole', 'file-collection-view.js'],
+        ['js/gconsole', 'local-file-store.js']
     ]
 
 	def resources = { attrs ->

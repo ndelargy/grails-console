@@ -66,12 +66,12 @@
 
         showFile: function (file) {
             this.file = file;
-            this.file.on('request', function() {
-                console.log('request');
-            });
-            this.file.on('sync', function() {
-                console.log('sync');
-            });
+//            this.file.on('request', function() {
+//                console.log('request');
+//            });
+//            this.file.on('sync', function() {
+//                console.log('sync');
+//            });
             if (this.fileNameView) {
                 this.fileNameView.remove();
             }
@@ -91,7 +91,7 @@
                 this.prompt('File name', _.bind(function(name) {
                     this.file.set('name', name);
                     this.save();
-                    App.router.navigate('l/' + name, {trigger: false});
+                    App.router.navigate('local/' + name, {trigger: false});
                 }, this));
             } else {
                 this.$('.file-name-section .saving').show();

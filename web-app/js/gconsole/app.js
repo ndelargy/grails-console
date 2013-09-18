@@ -13,7 +13,7 @@
             App.settings = new App.Settings;
             App.settings.load();
 
-            App.localFileStore = new Backbone.LocalModelStore('gconsole.files', App.File);
+            App.localFileStore = new App.LocalFileStore('gconsole.files');
 
             this.initLayout();
             this.initRouter();
@@ -58,7 +58,7 @@
 
         openFileClick: function (event) {
 
-            var files = App.localFileStore.findAll(); // TODO sort last modified desc
+            var files = App.localFileStore.list(); // TODO sort last modified desc
             files = _.sortBy(files, function(model) { return model.get('lastModified'); }).reverse();
             var html = JST['file-list']({
                 files: _.map(files, function (file) {return file.toJSON()})
@@ -80,7 +80,7 @@
             App.router = router;
 
             App.router.on("route:openLocalFile", function (name) {
-                var file = _.find(App.localFileStore.findAll(), function (model) {
+                var file = _.find(App.localFileStore.list(), function (model) {
                     return model.get('name') === name;
                 });
                 if (!file) {
@@ -94,11 +94,14 @@
                 var jqxhr = $.get(oThis.data.baseUrl + '/console/loadFile', {filename: name});
                 jqxhr.done(function (response) {
                     var file = new App.File({name: name, text: response.text});
+                    file.sync = _.bind(App.localFileStore.sync, App.localFileStore); // TODO
                     oThis.showFile(file);
                 });
             });
             App.router.on('route:newFile', function () {
                 var file = new App.File({text: ''});
+                file.sync = _.bind(App.localFileStore.sync, App.localFileStore); // TODO
+
                 oThis.showFile(file);
             });
             App.router.on('route:defaultRoute', function () {
@@ -139,6 +142,7 @@
         },
 
         showFile: function (file) {
+            console.log(file);
             this.editorView.showFile(file); // TODO
         },
 
