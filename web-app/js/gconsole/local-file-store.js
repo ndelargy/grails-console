@@ -16,15 +16,8 @@
     _.extend(App.LocalFileStore.prototype, {
 
         list: function () {
-            return _.map(this.data, function(value, key) {
-                var file = new App.File(value);
-                file.sync = _.bind(App.localFileStore.sync, App.localFileStore); // TODO
-                return file;
-            });
-            //dfd ?
-        },
-
-        loadText: function (file) {
+            var models =  _.map(this.data, function(value, key) { return this.newFile(value); }, this);
+            return new App.FileCollection(models);
             //dfd ?
         },
 
@@ -41,6 +34,7 @@
         },
 
         update: function (file) {
+            console.log(file.toJSON());
             file.set('lastModified', new Date().getTime());
             this.data[file.id] = file.toJSON();
             this._save();
@@ -59,7 +53,9 @@
         },
 
         _save: function () {
+            console.log(this.data);
             localStorage.setItem(this.name, JSON.stringify(this.data));
+            console.log(localStorage.getItem(this.name));
         },
 
         _load: function () {
@@ -69,6 +65,12 @@
             } catch (e) {
                 this.data = {};
             }
+        },
+
+        newFile: function(data) {
+            var file = new App.File(data)
+            file.sync = _.bind(this.sync, this); // TODO
+            return file;
         },
 
         sync: function (method, file, options) {

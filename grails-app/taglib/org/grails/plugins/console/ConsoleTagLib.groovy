@@ -24,7 +24,6 @@ class ConsoleTagLib {
         ['lib/bootstrap/js', 'bootstrap.min.js'],
         ['js', 'underscore-min.js'],
         ['js', 'backbone-min.js'],
-        ['js', 'backbone-localstorage.js'],
         ['js', 'handlebars.runtime.js'],
         ['js', 'jquery.layout-latest.min.js'],
         ['js', 'jquery.hotkeys.js'],

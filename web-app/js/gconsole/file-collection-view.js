@@ -3,19 +3,19 @@
     App.FileCollectionView = Backbone.View.extend({
 
         events: {
-            'click button.clear': 'clear'
+//            'click button.clear': 'clear'
         },
 
         initialize: function () {
             this.template = JST['file-list'];
+        },
 
-            var files = App.localFileStore.findAll();
-            files = _.sortBy(files, function(model) { return model.get('lastModified'); }).reverse();
+        render: function() {
             var html = JST['file-list']({
-                files: _.map(files, function (file) {return file.toJSON()})
+                files: this.collection.toJSON()
             });
-            var $div = $(html);
-            $('#editor').html($div);
+            this.$el.html(html);
+            return this;
         }
     });
 

@@ -11,7 +11,6 @@ module.exports = (grunt) ->
       "web-app/lib/bootstrap/js/bootstrap.min.js",
       "web-app/js/underscore-min.js",
       "web-app/js/backbone-min.js",
-      "web-app/js/backbone-localstorage.js",
       "web-app/js/handlebars.runtime.js",
       "web-app/js/jquery.layout-latest.min.js",
       "web-app/js/jquery.hotkeys.js",
@@ -88,6 +87,10 @@ module.exports = (grunt) ->
         dest: "web-app/build/spec/"
         ext: ".js"
 
+    clean:
+      build: ['web-app/build']
+#      release: ["path/to/another/dir/one", "path/to/another/dir/two"]
+
     watch:
       jst:
         files: 'web-app/templates/**/*.hbs'
@@ -99,6 +102,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-watch"
   grunt.loadNpmTasks "grunt-contrib-jasmine"
   grunt.loadNpmTasks "grunt-contrib-coffee"
+  grunt.loadNpmTasks "grunt-contrib-clean"
 
 # Default task(s).
 #  grunt.registerTask "default", ["uglify"]

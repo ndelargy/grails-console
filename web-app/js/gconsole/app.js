@@ -57,14 +57,11 @@
         },
 
         openFileClick: function (event) {
-
-            var files = App.localFileStore.list(); // TODO sort last modified desc
-            files = _.sortBy(files, function(model) { return model.get('lastModified'); }).reverse();
-            var html = JST['file-list']({
-                files: _.map(files, function (file) {return file.toJSON()})
-            });
-            var $div = $(html);
-            $('#editor').html($div);
+            var files = App.localFileStore.list();
+            var view = new App.FileCollectionView({
+                collection: files
+            }).render();
+            $('#editor').html(view.$el);
         },
 
         onBeforeunload: function (event) {
@@ -80,9 +77,7 @@
             App.router = router;
 
             App.router.on("route:openLocalFile", function (name) {
-                var file = _.find(App.localFileStore.list(), function (model) {
-                    return model.get('name') === name;
-                });
+                var file = App.localFileStore.list().findWhere({name: name});
                 if (!file) {
                     console.log('TODO: no file');
                     return;
@@ -93,15 +88,12 @@
             App.router.on("route:openRemoteFile", function (name) {
                 var jqxhr = $.get(oThis.data.baseUrl + '/console/loadFile', {filename: name});
                 jqxhr.done(function (response) {
-                    var file = new App.File({name: name, text: response.text});
-                    file.sync = _.bind(App.localFileStore.sync, App.localFileStore); // TODO
+                    var file = App.localFileStore.newFile({name: name, text: response.text});
                     oThis.showFile(file);
                 });
             });
             App.router.on('route:newFile', function () {
-                var file = new App.File({text: ''});
-                file.sync = _.bind(App.localFileStore.sync, App.localFileStore); // TODO
-
+                var file = App.localFileStore.newFile({text: ''});
                 oThis.showFile(file);
             });
             App.router.on('route:defaultRoute', function () {
@@ -142,7 +134,6 @@
         },
 
         showFile: function (file) {
-            console.log(file);
             this.editorView.showFile(file); // TODO
         },
 
