@@ -10,39 +10,39 @@ class ConsoleTagLib {
 	static namespace = 'con'
 
     static List CSS = [
-        ['lib/bootstrap/css', 'bootstrap.min.css'],
-        ['lib/bootstrap/css', 'bootstrap-theme.min.css'],
-        ['lib/font-awesome/css', 'font-awesome.min.css'],
-        ['lib/codemirror-3.15/lib', 'codemirror.css'],
-        ['css', 'jquery.layout.css'],
-        ['css', 'grails-console.css']
+        ['vendor/bootstrap/css', 'bootstrap.min.css'],
+        ['vendor/bootstrap/css', 'bootstrap-theme.min.css'],
+        ['vendor/font-awesome/css', 'font-awesome.min.css'],
+        ['vendor/codemirror-3.15/lib', 'codemirror.css'],
+        ['vendor/jquery-layout/css', 'jquery.layout.css'],
+        ['src/styles', 'grails-console.css']
     ]
 
     static List JS = [
-        ['js', 'jquery-1.7.1.min.js'],
-        ['js', 'jquery-ui-1.8.17.custom.min.js'],
-        ['lib/bootstrap/js', 'bootstrap.min.js'],
-        ['js', 'underscore-min.js'],
-        ['js', 'backbone-min.js'],
-        ['js', 'handlebars.runtime.js'],
-        ['js', 'jquery.layout-latest.min.js'],
-        ['js', 'jquery.hotkeys.js'],
-        ['lib/codemirror-3.15/lib', 'codemirror.js'],
-        ['lib/codemirror-3.15/mode/groovy', 'groovy.js'],
+        ['vendor/js/libs', 'jquery-1.7.1.min.js'],
+        ['vendor/js/libs', 'jquery-ui-1.8.17.custom.min.js'],
+        ['vendor/bootstrap/js', 'bootstrap.min.js'],
+        ['vendor/js/libs', 'underscore-min.js'],
+        ['vendor/js/libs', 'backbone-min.js'],
+        ['vendor/js/libs', 'handlebars.runtime.js'],
+        ['vendor/jquery-layout/js', 'jquery.layout-latest.min.js'],
+        ['vendor/js/plugins', 'jquery.hotkeys.js'],
+        ['vendor/codemirror-3.15/lib', 'codemirror.js'],
+        ['vendor/codemirror-3.15/mode/groovy', 'groovy.js'],
         ['build', 'jst.js'],
-        ['js/gconsole', 'app.js'],
-        ['js/gconsole', 'router.js'],
-        ['js/gconsole', 'settings-model.js'],
-        ['js/gconsole', 'settings-view.js'],
-        ['js/gconsole', 'result-model.js'],
-        ['js/gconsole', 'result-collection.js'],
-        ['js/gconsole', 'result-view.js'],
-        ['js/gconsole', 'result-collection-view.js'],
-        ['js/gconsole', 'editor-view.js'],
-        ['js/gconsole', 'file-model.js'],
-        ['js/gconsole', 'file-collection.js'],
-        ['js/gconsole', 'file-collection-view.js'],
-        ['js/gconsole', 'local-file-store.js']
+        ['src/app', 'app.js'],
+        ['src/app', 'router.js'],
+        ['src/app', 'settings-model.js'],
+        ['src/app', 'settings-view.js'],
+        ['src/app', 'result-model.js'],
+        ['src/app', 'result-collection.js'],
+        ['src/app', 'result-view.js'],
+        ['src/app', 'result-collection-view.js'],
+        ['src/app', 'editor-view.js'],
+        ['src/app', 'file-model.js'],
+        ['src/app', 'file-collection.js'],
+        ['src/app', 'file-collection-view.js'],
+        ['src/app', 'local-file-store.js']
     ]
 
 	def resources = { attrs ->

@@ -61,7 +61,7 @@ body, html {
 }
 
 .script-result .loading {
-    background: url("../images/spinner.gif") no-repeat scroll 10px center #FFFFFF;
+    background: url("../img/spinner.gif") no-repeat scroll 10px center #FFFFFF;
     padding: 15px 15px 15px 37px;
 }
 
@@ -79,7 +79,7 @@ body, html {
 }
 
 .navbar-brand {
-    background: transparent url(../images/grails.logo.png) no-repeat;
+    background: transparent url(../img/grails.logo.png) no-repeat;
     background-position: 5px center;
     padding-left: 45px;
 
@@ -119,17 +119,6 @@ body, html {
 /*.results {*/
     /*height: 100%;*/
 /*}*/
-
-#editor .buttons,
-.east .buttons,
-.south .buttons {
-    background-color: #eee;
-    border-bottom: 1px solid #888;
-    background: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#dddddd));
-    background: -moz-linear-gradient(top, #eeeeee, #dddddd);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#eeeeee', endColorstr = '#dddddd');
-    position: relative;
-}
 
 .CodeMirror {
     height: 100%;
