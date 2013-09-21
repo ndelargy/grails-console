@@ -16,7 +16,7 @@ module.exports = (grunt) ->
       "web-app/vendor/js/plugins/jquery.hotkeys.js",
       "web-app/vendor/codemirror-3.15/lib/codemirror.js",
       "web-app/vendor/codemirror-3.15/mode/groovy/groovy.js",
-      "web-app/build/jst.js",
+      "web-app/dist/debug/jst.js",
       "web-app/src/app/app.js",
       "web-app/src/app/router.js",
       "web-app/src/app/settings-model.js",
@@ -69,26 +69,28 @@ module.exports = (grunt) ->
             filePath.replace(/^.*\/templates\//, "").replace(/\.hbs$/, "")
 
         files:
-          "web-app/build/jst.js": "web-app/src/templates/**/*.hbs"
+          "web-app/dist/debug/jst.js": "web-app/src/templates/**/*.hbs"
 
     jasmine:
       test:
         src: "<%= jsSrc %>"
         options:
-          specs: 'web-app/build/spec/*spec.*'
+          specs: 'web-app/target/spec/*spec.*'
           helpers: 'web-app/spec/*helper.js'
           keepRunner: true
+          outfile: 'web-app/target/spec/SpecRunner.html'
 
     coffee:
       spec:
         expand: true
         cwd: "web-app/spec"
         src: ["**/*.coffee"]
-        dest: "web-app/build/spec/"
+        dest: "web-app/target/spec/"
         ext: ".js"
 
     clean:
       build: ['web-app/build']
+      spec: 'web-app/target/spec/'
 #      release: ["path/to/another/dir/one", "path/to/another/dir/two"]
 
     watch:
@@ -106,4 +108,4 @@ module.exports = (grunt) ->
 
 # Default task(s).
 #  grunt.registerTask "default", ["uglify"]
-  grunt.registerTask "test", ["coffee:spec", "jasmine"]
+  grunt.registerTask "test", ["handlebars", "clean:spec", "coffee:spec", "jasmine"]

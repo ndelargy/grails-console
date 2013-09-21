@@ -29,7 +29,7 @@ class ConsoleTagLib {
         ['vendor/js/plugins', 'jquery.hotkeys.js'],
         ['vendor/codemirror-3.15/lib', 'codemirror.js'],
         ['vendor/codemirror-3.15/mode/groovy', 'groovy.js'],
-        ['build', 'jst.js'],
+        ['dist/debug', 'jst.js'],
         ['src/app', 'app.js'],
         ['src/app', 'router.js'],
         ['src/app', 'settings-model.js'],
