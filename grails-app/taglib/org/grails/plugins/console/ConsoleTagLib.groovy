@@ -14,8 +14,9 @@ class ConsoleTagLib {
         ['vendor/bootstrap/css', 'bootstrap-theme.min.css'],
         ['vendor/font-awesome/css', 'font-awesome.min.css'],
         ['vendor/codemirror-3.15/lib', 'codemirror.css'],
+        ['vendor/codemirror-3.15/theme', 'lesser-dark.css'],
         ['vendor/jquery-layout/css', 'jquery.layout.css'],
-        ['src/styles', 'grails-console.css']
+        ['dist/debug/', 'app.css']
     ]
 
     static List JS = [
@@ -32,6 +33,7 @@ class ConsoleTagLib {
         ['dist/debug', 'jst.js'],
         ['src/app', 'app.js'],
         ['src/app', 'router.js'],
+        ['src/app', 'header-view.js'],
         ['src/app', 'settings-model.js'],
         ['src/app', 'settings-view.js'],
         ['src/app', 'result-model.js'],

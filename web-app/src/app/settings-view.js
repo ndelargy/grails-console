@@ -1,4 +1,4 @@
-(function (App){
+(function (App, $){
     App.SettingsView = Backbone.View.extend({
 
         events: {
@@ -7,7 +7,7 @@
             'click .results-wrap': 'onResultsWrapClick',
             'click .results-show-script': 'onResultsShowScriptClick',
             'click .results-show-stdout': 'onResultsShowStdoutClick',
-            'click .results-show-result': 'onResultsShowResultClick'
+            'click .theme': 'onThemeClick'
         },
 
         initialize: function() {
@@ -15,12 +15,17 @@
         },
 
         render: function() {
+            var oThis = this;
             this.$('.orientation-horizontal').toggleClass('selected', this.model.get('orientation') === 'horizontal');
             this.$('.orientation-vertical').toggleClass('selected', this.model.get('orientation') === 'vertical');
             this.$('.results-wrap').toggleClass('selected', this.model.get('results.wrapText'));
             this.$('.results-show-script').toggleClass('selected', this.model.get('results.showScript'));
             this.$('.results-show-stdout').toggleClass('selected', this.model.get('results.showStdout'));
             this.$('.results-show-result').toggleClass('selected', this.model.get('results.showResult'));
+            this.$('.theme').each(function(index, el) {
+                var $el = $(el);
+                $el.toggleClass('selected', oThis.model.get('theme') === $el.data('theme'));
+            });
         },
 
         onOrientationHorizontalClick: function(event) {
@@ -34,6 +39,14 @@
             event.preventDefault();
             event.stopPropagation();
             this.model.set('orientation', 'vertical');
+            this.model.save();
+        },
+
+        onThemeClick: function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            var $el = $(event.currentTarget);
+            this.model.set('theme', $el.data('theme'));
             this.model.save();
         },
 
@@ -66,4 +79,4 @@
         }
 
     });
-})(window.App = window.App || {});
+})(App, jQuery);

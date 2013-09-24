@@ -15,6 +15,14 @@
 
             App.localFileStore = new App.LocalFileStore('gconsole.files');
 
+            var headerView = new App.HeaderView();
+            $('#header').html(headerView.render().el);
+            headerView.on('new', function() {
+                // TODO check if file needs to be saved
+                App.router.navigate('new', {trigger: true});
+            });
+            headerView.on('scripts', this.openFileClick, this);
+
             this.initLayout();
             this.initRouter();
 
@@ -30,8 +38,6 @@
             }).render();
 
             this.editorView.on('execute', this.executeCode, this);
-            this.editorView.on('new', this.newFileClick, this);
-            this.editorView.on('open', this.openFileClick, this);
             this.editorView.on('clear', this.clearResults, this);
 
             $(document).on('keydown', 'Ctrl+return', _.bind(this.executeCode, this));
@@ -42,18 +48,11 @@
             this.showOrientation();
             this.settings.on('change:orientation', this.showOrientation, this);
 
-            new App.SettingsView({
-                model: this.settings,
-                el: $('.dropdown-menu.settings')[0]
-            }).render();
+            this.showTheme();
+            this.settings.on('change:theme', this.showTheme, this);
 
+            $('body').css('visibility', 'visible');
             Backbone.history.start({pushState: false});
-        },
-
-        newFileClick: function (event) {
-            // TODO check if file needs to be saved
-
-            App.router.navigate('new', {trigger: true});
         },
 
         openFileClick: function (event) {
@@ -179,6 +178,11 @@
                 this.layout.initContent('south');
             }
             this.editorView.refresh();
+        },
+
+        showTheme: function() {
+            var theme = this.settings.get('theme');
+            $('body').attr('data-theme', theme);
         }
     });
 

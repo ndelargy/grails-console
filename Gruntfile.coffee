@@ -3,7 +3,7 @@ module.exports = (grunt) ->
   # Project configuration.
   grunt.initConfig
 
-    pkg: grunt.file.readJSON("package.json")
+    pkg: grunt.file.readJSON "package.json"
 
     jsSrc: [
       "web-app/vendor/js/libs/jquery-1.7.1.min.js",
@@ -19,6 +19,7 @@ module.exports = (grunt) ->
       "web-app/dist/debug/jst.js",
       "web-app/src/app/app.js",
       "web-app/src/app/router.js",
+      "web-app/src/app/header-view.js",
       "web-app/src/app/settings-model.js",
       "web-app/src/app/settings-view.js",
       "web-app/src/app/result-model.js",
@@ -37,8 +38,9 @@ module.exports = (grunt) ->
       "web-app/vendor/bootstrap/css/bootstrap-theme.min.css",
       "web-app/vendor/font-awesome/css/font-awesome.min.css",
       "web-app/vendor/codemirror-3.15/lib/codemirror.css",
+      "web-app/vendor/codemirror-3.15/theme/lesser-dark.css",
       "web-app/vendor/jquery-layout/css/jquery.layout.css",
-      "web-app/src/styles/grails-console.css"
+      "web-app/dist/debug/app.css"
     ]
 
 #    uglify:
@@ -88,6 +90,11 @@ module.exports = (grunt) ->
         dest: "web-app/target/spec/"
         ext: ".js"
 
+    less:
+      app:
+        files:
+          'web-app/dist/debug/app.css': 'web-app/src/styles/app.less'
+
     clean:
       build: ['web-app/build']
       spec: 'web-app/target/spec/'
@@ -95,8 +102,11 @@ module.exports = (grunt) ->
 
     watch:
       jst:
-        files: 'web-app/templates/**/*.hbs'
+        files: 'web-app/src/templates/**/*.hbs'
         tasks: ['handlebars:compile']
+      less:
+        files: 'web-app/src/styles/**/*.less'
+        tasks: ['less:app']
 
   grunt.loadNpmTasks "grunt-contrib-concat"
   grunt.loadNpmTasks "grunt-contrib-copy"
@@ -105,6 +115,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-jasmine"
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-contrib-clean"
+  grunt.loadNpmTasks "grunt-contrib-less"
 
 # Default task(s).
 #  grunt.registerTask "default", ["uglify"]

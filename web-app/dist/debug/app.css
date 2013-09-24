@@ -1,0 +1,170 @@
+body,
+html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Lucida Grande", Verdana, sans-serif;
+  background: #eee;
+  overflow: hidden;
+}
+#header .navbar-brand {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 23px;
+  font-weight: bold;
+  color: #555;
+}
+.script-result,
+.result_time {
+  color: white;
+  font-size: 11px;
+  font-family: monospace;
+  padding: 8px;
+  margin-bottom: 8px;
+}
+#result {
+  font-size: 15px;
+  background: #f4f4f4;
+  overflow: auto;
+}
+#result .script-result {
+  white-space: pre;
+  margin: 0;
+  background: none repeat scroll 0 0 #fff;
+  border-bottom: 1px solid #aaa;
+  color: #000000;
+}
+#result .script-result.stacktrace {
+  background: none repeat scroll 0 0 #FFF3F3;
+  color: #ff0000;
+}
+#result .script-result .loading {
+  background: url("../img/spinner.gif") no-repeat scroll 10px center #ffffff;
+  padding: 15px 15px 15px 37px;
+}
+#result.wrap .script-result {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+#result.wrap .inner {
+  float: none;
+  min-width: inherit;
+}
+#result.hide-input .script-result .input,
+#result.hide-output .script-result .output,
+#result.hide-result .script-result .result {
+  display: none;
+}
+.result-time {
+  font-size: 100%;
+}
+#header {
+  overflow: hidden;
+}
+.navbar {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+.navbar-brand {
+  background: transparent url(../img/grails.logo.png) no-repeat;
+  background-position: 5px center;
+  padding-left: 45px;
+}
+.btn-toolbar {
+  padding: 3px;
+}
+#editorContainer {
+  width: 100%;
+  height: 50%;
+  overflow: auto;
+  background: #f4f4f4;
+}
+#editor .file-name-section {
+  margin: 0;
+  padding: 5px 15px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+.ui-layout-pane {
+  padding: 0;
+  border: 0;
+}
+/*.results {*/
+/*height: 100%;*/
+/*}*/
+.CodeMirror {
+  height: 100%;
+  font-size: 14px;
+}
+.CodeMirror-scroll {
+  /*height: 100%;*/
+
+}
+.CodeMirror-gutter {
+  /*padding-bottom: 0;*/
+
+  /*margin-bottom: 0;*/
+
+}
+/*.CodeMirror {*/
+/*border: 1px solid #eee;*/
+/*height: auto;*/
+/*}*/
+.CodeMirror-scroll {
+  /*overflow-y: hidden;*/
+
+  /*overflow-x: auto;*/
+
+  /*margin-bottom: 0;*/
+
+  /*padding-bottom: 0;*/
+
+}
+#code-wrapper {
+  overflow: auto;
+}
+label.wrap {
+  color: #777777;
+  font-size: 0.75em;
+  margin-right: 5px;
+  position: absolute;
+  right: 5px;
+  height: 20px;
+  top: 50%;
+  margin-top: -10px;
+}
+label.wrap input,
+label.wrap span {
+  vertical-align: middle;
+}
+.dropdown-menu.settings a i.icon-check {
+  visibility: hidden;
+}
+.dropdown-menu.settings a.selected i.icon-check {
+  visibility: visible;
+}
+body[data-theme="default"] .btn-toolbar {
+  background-color: #dddddd;
+}
+body[data-theme="lesser-dark"] #header .navbar {
+  background-color: #222;
+  background-image: none;
+}
+body[data-theme="lesser-dark"] #header .navbar .navbar-brand {
+  color: #eee;
+}
+body[data-theme="lesser-dark"] .btn-toolbar {
+  background-color: #888;
+}
+body[data-theme="lesser-dark"] #result {
+  background-color: #262626;
+}
+body[data-theme="lesser-dark"] #editor .file-name-section {
+  background-color: #eee;
+}
+body[data-theme="lesser-dark"] .ui-layout-resizer {
+  background-color: #aaa;
+}
+body[data-theme="lesser-dark"] .ui-layout-toggler {
+  background-color: #777;
+}

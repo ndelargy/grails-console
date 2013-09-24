@@ -5,38 +5,14 @@
 <head>
   <title>Grails Debug Console</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <link rel="icon" type="image/png" href="${resource(dir: 'images', file: 'grails.logo.png', plugin: 'console')}" />
+  <link rel="icon" type="image/png" href="${resource(dir: 'src/img', file: 'grails.logo.png', plugin: 'console')}" />
   <con:resources/>
   %{--<link href="${resource(dir: 'build', file: 'gconsole.css')}" type="text/css" rel="stylesheet" />--}%
   %{--<script type="text/javascript" src="${resource(dir: 'build', file: 'gconsole.js')}"></script>--}%
 </head>
 
-<body>
-<div id="header">
-  <div class="navbar">
-    <a class="navbar-brand" href="#">Grails Debug Console</a>
-    <form class="navbar-form pull-right">
-
-      <div class="btn-group">
-        <button class="clear btn-sm btn btn-default dropdown-toggle" title="(Esc)"  data-toggle="dropdown">
-          <i class="icon-cog"></i>
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu pull-right settings" role="menu">
-          <li role="presentation" class="dropdown-header">Orientation</li>
-          <li><a href="#" class="orientation-horizontal"><i class="icon-check"></i> Horizontal</a></li>
-          <li><a href="#" class="orientation-vertical"><i class="icon-check"></i> Vertical</a></li>
-          <li role="presentation" class="divider"></li>
-          <li role="presentation" class="dropdown-header">Results Pane</li>
-          <li><a href="#" class="results-wrap"><i class="icon-check"></i> Wrap text</a></li>
-          <li><a href="#" class="results-show-script"><i class="icon-check"></i> Show script</a></li>
-          <li><a href="#" class="results-show-stdout"><i class="icon-check"></i> Show stdout</a></li>
-          <li><a href="#" class="results-show-result"><i class="icon-check"></i> Show result</a></li>
-        </ul>
-      </div>
-    </form>
-  </div>
-</div>
+<body style="visibility: hidden">
+<div id="header"></div>
 
 <div id="editor" style="display: none"></div>
 <div class="east results" style="display: none"></div>

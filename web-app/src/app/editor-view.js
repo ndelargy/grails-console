@@ -1,4 +1,4 @@
-(function (App, Backbone, CodeMirror) {
+(function (App, Backbone, CodeMirror, JST) {
 
     var FileNameView = Backbone.View.extend({
         initialize: function() {
@@ -18,6 +18,9 @@
         events: {
             'click button[data-function]': 'onButtonClick',
             'click button.save': 'save'
+        },
+
+        initialize: function() {
         },
 
         onButtonClick: function(event) {
@@ -46,10 +49,18 @@
                 extraKeys: { // TODO $(document).trigger passthrough?
                     'Ctrl-Enter': function() { oThis.trigger('execute'); },
                     'Esc': function() { oThis.trigger('clear'); }
-                }
+                },
+                theme: 'lesser-dark'
             });
             this.editor.focus();
             this.editor.setValue('');
+
+            App.settings.on('change:theme', this.setTheme, this);
+            this.setTheme();
+        },
+
+        setTheme: function() {
+            this.editor.setOption('theme', App.settings.get('theme'));
         },
 
         getValue: function() {
@@ -114,4 +125,4 @@
 
         }
     });
-})(App, Backbone, CodeMirror);
+})(App, Backbone, CodeMirror, JST);

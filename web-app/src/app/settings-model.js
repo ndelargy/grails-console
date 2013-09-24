@@ -10,7 +10,8 @@
             'results.wrapText': true,
             'results.showScript': true,
             'results.showStdout': true,
-            'results.showResult': true
+            'results.showResult': true,
+            'theme': 'default'
         },
 
         toggle: function (attribute) {
