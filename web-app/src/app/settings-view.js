@@ -11,11 +11,13 @@
         },
 
         initialize: function() {
+            this.model = App.settings;
             this.listenTo(this.model, 'change', this.render, this);
         },
 
         render: function() {
             var oThis = this;
+//            console.log(this.$('.orientation-horizontal'));
             this.$('.orientation-horizontal').toggleClass('selected', this.model.get('orientation') === 'horizontal');
             this.$('.orientation-vertical').toggleClass('selected', this.model.get('orientation') === 'vertical');
             this.$('.results-wrap').toggleClass('selected', this.model.get('results.wrapText'));

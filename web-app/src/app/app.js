@@ -1,7 +1,7 @@
 (function ($, _, Backbone, JST) {
 
 
-    Handlebars.registerHelper('dateFormatTime', function(context) {
+    Handlebars.registerHelper('dateFormatTime', function (context) {
         var date = new Date(context);
         return date.toDateString() + ' ' + date.toTimeString();
     });
@@ -15,13 +15,13 @@
 
             App.localFileStore = new App.LocalFileStore('gconsole.files');
 
-            var headerView = new App.HeaderView();
-            $('#header').html(headerView.render().el);
-            headerView.on('new', function() {
+            var headerView = new App.HeaderView().render();
+            headerView.on('new', function () {
                 // TODO check if file needs to be saved
                 App.router.navigate('new', {trigger: true});
             });
             headerView.on('scripts', this.openFileClick, this);
+            headerView.$el.appendTo('body');
 
             this.initLayout();
             this.initRouter();
@@ -103,8 +103,6 @@
 
         initLayout: function () {
             this.layout = $('body').layout({
-                north__paneSelector: '#header',
-                north__spacing_open: 0,
                 center__paneSelector: '#editor',
                 center__contentSelector: '#code-wrapper',
                 center__onresize: _.bind(function () { this.editorView.refresh(); }, this),
@@ -180,7 +178,7 @@
             this.editorView.refresh();
         },
 
-        showTheme: function() {
+        showTheme: function () {
             var theme = this.settings.get('theme');
             $('body').attr('data-theme', theme);
         }

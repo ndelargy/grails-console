@@ -3,11 +3,11 @@
     App.HeaderView = Backbone.View.extend({
 
         attributes: {
-//            'class': 'script-result'
+            'class': 'navbar navbar-fixed-top'
         },
 
         events: {
-            'click button.new': 'onNewClick', // TODO triggers
+//            'click button.new': 'onNewClick', // TODO triggers
             'click button.scripts': 'onScriptsClick' // TODO triggers
         },
 
@@ -19,10 +19,10 @@
             this.$el.html(this.template());
 
             new App.SettingsView({
-                model: App.settings,
-                el: $('.dropdown-menu.settings')[0]
+                el: this.$('.dropdown-menu.settings')[0]
             }).render(); // TODO move to template
 
+            console.log(this.$('.dropdown-menu.settings')[0]);
             return this;
         },
 

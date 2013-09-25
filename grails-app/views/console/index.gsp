@@ -12,7 +12,6 @@
 </head>
 
 <body style="visibility: hidden">
-<div id="header"></div>
 
 <div id="editor" style="display: none"></div>
 <div class="east results" style="display: none"></div>

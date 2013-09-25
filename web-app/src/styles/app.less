@@ -8,7 +8,11 @@ body, html {
   overflow: hidden;
 }
 
-#header .navbar-brand {
+body {
+  padding-top: 50px;
+}
+
+.navbar-brand {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 23px;
   font-weight: bold;
@@ -63,10 +67,6 @@ body, html {
 
 .result-time {
   font-size: 100%;
-}
-
-#header {
-  overflow: hidden;
 }
 
 .navbar {
@@ -173,13 +173,11 @@ body[data-theme="default"] {
 }
 
 body[data-theme="lesser-dark"] {
-  #header {
-    .navbar {
-      background-color: #222;
-      background-image: none;
-      .navbar-brand {
-        color: #eee;
-      }
+  .navbar {
+    background-color: #222;
+    background-image: none;
+    .navbar-brand {
+      color: #eee;
     }
   }
   .btn-toolbar {
