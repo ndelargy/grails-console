@@ -17,20 +17,20 @@ module.exports = (grunt) ->
       "web-app/vendor/codemirror-3.15/lib/codemirror.js",
       "web-app/vendor/codemirror-3.15/mode/groovy/groovy.js",
       "web-app/dist/debug/jst.js",
-      "web-app/src/app/app.js",
-      "web-app/src/app/router.js",
-      "web-app/src/app/header-view.js",
-      "web-app/src/app/settings-model.js",
-      "web-app/src/app/settings-view.js",
-      "web-app/src/app/result-model.js",
-      "web-app/src/app/result-collection.js",
-      "web-app/src/app/result-view.js",
-      "web-app/src/app/result-collection-view.js",
-      "web-app/src/app/editor-view.js",
-      "web-app/src/app/file-model.js",
-      "web-app/src/app/file-collection.js",
-      "web-app/src/app/file-collect-view.js",
-      "web-app/src/app/local-file-store.js"
+      "web-app/dist/debug/app/app.js",
+      "web-app/dist/debug/app/router.js",
+      "web-app/dist/debug/app/header-view.js",
+      "web-app/dist/debug/app/settings-model.js",
+      "web-app/dist/debug/app/settings-view.js",
+      "web-app/dist/debug/app/result-model.js",
+      "web-app/dist/debug/app/result-collection.js",
+      "web-app/dist/debug/app/result-view.js",
+      "web-app/dist/debug/app/result-collection-view.js",
+      "web-app/dist/debug/app/editor-view.js",
+      "web-app/dist/debug/app/file-model.js",
+      "web-app/dist/debug/app/file-collection.js",
+      "web-app/dist/debug/app/file-collection-view.js",
+      "web-app/dist/debug/app/local-file-store.js"
     ]
 
     cssSrc: [
@@ -83,6 +83,12 @@ module.exports = (grunt) ->
           outfile: 'web-app/target/spec/SpecRunner.html'
 
     coffee:
+      app:
+        expand: true
+        cwd: "web-app/src/app"
+        src: ["**/*.coffee"]
+        dest: "web-app/dist/debug/app"
+        ext: ".js"
       spec:
         expand: true
         cwd: "web-app/spec"
@@ -95,8 +101,15 @@ module.exports = (grunt) ->
         files:
           'web-app/dist/debug/app.css': 'web-app/src/styles/app.less'
 
+    copy:
+      js:
+        expand: true,
+        cwd: 'web-app/src/app'
+        src: '**/*.js'
+        dest: 'web-app/dist/debug/app'
+
     clean:
-      build: ['web-app/build']
+      dist: ['web-app/dist']
       spec: 'web-app/target/spec/'
 #      release: ["path/to/another/dir/one", "path/to/another/dir/two"]
 
@@ -107,6 +120,12 @@ module.exports = (grunt) ->
       less:
         files: 'web-app/src/styles/**/*.less'
         tasks: ['less:app']
+      js:
+        files: 'web-app/src/app/**/*.js'
+        tasks: ['copy:js']
+      coffee:
+        files: 'web-app/src/app/**/*.coffee'
+        tasks: ['coffee:app']
 
   grunt.loadNpmTasks "grunt-contrib-concat"
   grunt.loadNpmTasks "grunt-contrib-copy"
@@ -117,6 +136,14 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-clean"
   grunt.loadNpmTasks "grunt-contrib-less"
 
+  grunt.registerTask "json", "Write resource config to file", ->
+    json =
+      jsSrc: grunt.config.get('jsSrc')
+      cssSrc: grunt.config.get('cssSrc')
+    grunt.file.write 'grails-app/conf/resources.json', JSON.stringify(json, undefined, 2)
+#    grunt.log.writeln JSON.stringify(json)
+
 # Default task(s).
-#  grunt.registerTask "default", ["uglify"]
+  grunt.registerTask "default", ["debug"]
   grunt.registerTask "test", ["handlebars", "clean:spec", "coffee:spec", "jasmine"]
+  grunt.registerTask "debug", ["clean:dist", "handlebars:compile", "coffee:app", "less:app", "json"]

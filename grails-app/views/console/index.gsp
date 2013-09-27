@@ -13,10 +13,6 @@
 
 <body style="visibility: hidden">
 
-<div id="editor" style="display: none"></div>
-<div class="east results" style="display: none"></div>
-<div class="south" style="display: none"></div>
-
 <div id="helpModal" class="modal fade" style="display: none" data-backdrop="false">
   <div class="modal-dialog">
     <div class="modal-content">

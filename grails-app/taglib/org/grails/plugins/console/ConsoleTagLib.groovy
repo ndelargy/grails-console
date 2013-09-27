@@ -1,5 +1,6 @@
 package org.grails.plugins.console
 
+import grails.converters.JSON
 import org.codehaus.groovy.grails.plugins.PluginManagerHolder
 
 /**
@@ -9,44 +10,6 @@ class ConsoleTagLib {
 
 	static namespace = 'con'
 
-    static List CSS = [
-        ['vendor/bootstrap/css', 'bootstrap.min.css'],
-        ['vendor/bootstrap/css', 'bootstrap-theme.min.css'],
-        ['vendor/font-awesome/css', 'font-awesome.min.css'],
-        ['vendor/codemirror-3.15/lib', 'codemirror.css'],
-        ['vendor/codemirror-3.15/theme', 'lesser-dark.css'],
-        ['vendor/jquery-layout/css', 'jquery.layout.css'],
-        ['dist/debug/', 'app.css']
-    ]
-
-    static List JS = [
-        ['vendor/js/libs', 'jquery-1.7.1.min.js'],
-        ['vendor/js/libs', 'jquery-ui-1.8.17.custom.min.js'],
-        ['vendor/bootstrap/js', 'bootstrap.min.js'],
-        ['vendor/js/libs', 'underscore-min.js'],
-        ['vendor/js/libs', 'backbone-min.js'],
-        ['vendor/js/libs', 'handlebars.runtime.js'],
-        ['vendor/jquery-layout/js', 'jquery.layout-latest.min.js'],
-        ['vendor/js/plugins', 'jquery.hotkeys.js'],
-        ['vendor/codemirror-3.15/lib', 'codemirror.js'],
-        ['vendor/codemirror-3.15/mode/groovy', 'groovy.js'],
-        ['dist/debug', 'jst.js'],
-        ['src/app', 'app.js'],
-        ['src/app', 'router.js'],
-        ['src/app', 'header-view.js'],
-        ['src/app', 'settings-model.js'],
-        ['src/app', 'settings-view.js'],
-        ['src/app', 'result-model.js'],
-        ['src/app', 'result-collection.js'],
-        ['src/app', 'result-view.js'],
-        ['src/app', 'result-collection-view.js'],
-        ['src/app', 'editor-view.js'],
-        ['src/app', 'file-model.js'],
-        ['src/app', 'file-collection.js'],
-        ['src/app', 'file-collection-view.js'],
-        ['src/app', 'local-file-store.js']
-    ]
-
 	def resources = { attrs ->
 		boolean hasResourcesPlugin = PluginManagerHolder.pluginManager.hasGrailsPlugin('resources')
 
@@ -55,8 +18,11 @@ class ConsoleTagLib {
 			out << r.layoutResources()
 		}
 		else {
-            CSS.each {
-                out << """<link rel='stylesheet' media="screen" href='${resource(dir: it[0], file: it[1], plugin: 'console')}' />"""
+            String json = getClass().getResourceAsStream('resources.json').text
+            Map config = JSON.parse(json)
+// TODO test this
+            config.cssSrc.each {
+                out << """<link rel='stylesheet' media="screen" href='${resource(file: it, plugin: 'console')}' />"""
             }
 		}
 	}
@@ -68,7 +34,10 @@ class ConsoleTagLib {
 			out << r.layoutResources()
 		}
 		else {
-            JS.each {
+            String json = getClass().getResourceAsStream('resources.json').text
+            Map config = JSON.parse(json)
+// TODO test this
+            config.jsSrc.each {
                 out << g.javascript(src: it[0] + '/' + it[1], plugin: 'console')
             }
 		}

@@ -1,14 +1,20 @@
-import org.grails.plugins.console.ConsoleTagLib
+import grails.converters.JSON
+import grails.util.Holders
 
 modules = {
 
-	'console' {
+//    String json = Holders.grailsApplication.mainContext.getResource('dist/debug/resources.json').file.text
+    String json = getClass().getResourceAsStream('resources.json').text
+    Map config = JSON.parse(json)
+
+    'console' {
         defaultBundle false
-        ConsoleTagLib.CSS.each {
-            resource url: [dir: it[0], file: it[1], plugin: 'console'] //
+        config.cssSrc.each {
+            int index =  it.lastIndexOf('/')
+            resource url: [file: it - 'web-app/', plugin: 'console']
         }
-        ConsoleTagLib.JS.each {
-            resource url: [dir: it[0], file: it[1], plugin: 'console']
+        config.jsSrc.each {
+            resource url: [file: it - 'web-app/', plugin: 'console']
         }
     }
 }
