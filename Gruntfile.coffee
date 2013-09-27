@@ -30,7 +30,9 @@ module.exports = (grunt) ->
       "web-app/dist/debug/app/file-model.js",
       "web-app/dist/debug/app/file-collection.js",
       "web-app/dist/debug/app/file-collection-view.js",
-      "web-app/dist/debug/app/local-file-store.js"
+      "web-app/dist/debug/app/local-file-store.js",
+      "web-app/dist/debug/app/main-view.js",
+      "web-app/dist/debug/app/editor-section-view.js"
     ]
 
     cssSrc: [
@@ -126,6 +128,9 @@ module.exports = (grunt) ->
       coffee:
         files: 'web-app/src/app/**/*.coffee'
         tasks: ['coffee:app']
+      gruntfile:
+        files: 'Gruntfile.coffee'
+        tasks: ['debug']
 
   grunt.loadNpmTasks "grunt-contrib-concat"
   grunt.loadNpmTasks "grunt-contrib-copy"
@@ -143,7 +148,6 @@ module.exports = (grunt) ->
     grunt.file.write 'grails-app/conf/resources.json', JSON.stringify(json, undefined, 2)
 #    grunt.log.writeln JSON.stringify(json)
 
-# Default task(s).
   grunt.registerTask "default", ["debug"]
-  grunt.registerTask "test", ["handlebars", "clean:spec", "coffee:spec", "jasmine"]
+  grunt.registerTask "test", ["debug", "clean:spec", "coffee:spec", "jasmine"]
   grunt.registerTask "debug", ["clean:dist", "handlebars:compile", "coffee:app", "less:app", "json"]

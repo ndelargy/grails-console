@@ -7,22 +7,25 @@
     guid = function() {
       return S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4();
     };
-    App.LocalFileStore = function(name) {
-      this.name = name;
-      return this._load();
-    };
-    return _.extend(App.LocalFileStore.prototype, {
-      list: function() {
+    return App.LocalFileStore = (function() {
+      function LocalFileStore(name) {
+        this.name = name;
+        this._load();
+      }
+
+      LocalFileStore.prototype.list = function() {
         var models;
         models = _.map(this.data, function(value, key) {
           return this.newFile(value);
         }, this);
         return new App.FileCollection(models);
-      },
-      find: function(file) {
+      };
+
+      LocalFileStore.prototype.find = function(file) {
         return this.data[file.id];
-      },
-      create: function(file) {
+      };
+
+      LocalFileStore.prototype.create = function(file) {
         file.set("lastModified", new Date().getTime());
         if (!file.id) {
           file.id = file.attributes.id = guid();
@@ -30,29 +33,34 @@
         this.data[file.id] = file.toJSON();
         this._save();
         return file.toJSON();
-      },
-      update: function(file) {
+      };
+
+      LocalFileStore.prototype.update = function(file) {
         console.log(file.toJSON());
         file.set("lastModified", new Date().getTime());
         this.data[file.id] = file.toJSON();
         this._save();
         return file.toJSON();
-      },
-      destroy: function(file) {
+      };
+
+      LocalFileStore.prototype.destroy = function(file) {
         delete this.data[file.id];
         this._save();
         return file.toJSON();
-      },
-      destroyAll: function() {
+      };
+
+      LocalFileStore.prototype.destroyAll = function() {
         this.data = {};
         return localStorage.removeItem(this.name);
-      },
-      _save: function() {
+      };
+
+      LocalFileStore.prototype._save = function() {
         console.log(this.data);
         localStorage.setItem(this.name, JSON.stringify(this.data));
         return console.log(localStorage.getItem(this.name));
-      },
-      _load: function() {
+      };
+
+      LocalFileStore.prototype._load = function() {
         var e, store;
         store = localStorage.getItem(this.name);
         try {
@@ -61,14 +69,16 @@
           e = _error;
           return this.data = {};
         }
-      },
-      newFile: function(data) {
+      };
+
+      LocalFileStore.prototype.newFile = function(data) {
         var file;
         file = new App.File(data);
         file.sync = _.bind(this.sync, this);
         return file;
-      },
-      sync: function(method, file, options) {
+      };
+
+      LocalFileStore.prototype.sync = function(method, file, options) {
         var resp;
         resp = void 0;
         switch (method) {
@@ -89,8 +99,11 @@
         } else {
           return options.error("Record not found");
         }
-      }
-    });
+      };
+
+      return LocalFileStore;
+
+    })();
   })(App, _, localStorage, JSON, jQuery);
 
 }).call(this);
