@@ -15,7 +15,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"btn-toolbar\">\n    <div class=\"btn-group\">\n        <button class=\"submit btn btn-default\" title=\"(Ctrl + Enter)\" data-function=\"execute\"><i class=\"icon-play\"></i> Execute</button>\n        <button class=\"save btn btn-default\"><i class=\"icon-save\"></i> Save</button>\n        <button class=\"btn btn-default\" data-function=\"fork\"><i class=\"icon-code-fork\"></i> Fork</button>\n        <button class=\"help btn btn-default\" data-toggle=\"modal\" data-target=\"#helpModal\"><i class=\"icon-question\"></i> Help</button>\n    </div>\n</div>\n<div class=\"file-name-section\"></div>\n\n<div id=\"code-wrapper\" class=\"ui-layout-content\">\n    <textarea name=\"code\" rows=\"25\" cols=\"100\"></textarea>\n</div>";
+  return "<div class=\"btn-toolbar\">\n    <div class=\"btn-group\">\n        <button class=\"submit btn btn-default\" title=\"(Ctrl + Enter)\" data-function=\"execute\"><i class=\"icon-play\"></i></button>\n        <button class=\"save btn btn-default\"><i class=\"icon-save\"></i></button>\n        <button class=\"btn btn-default\" data-function=\"fork\"><i class=\"icon-code-fork\"></i></button>\n        <button class=\"help btn btn-default\" data-toggle=\"modal\" data-target=\"#helpModal\"><i class=\"icon-question\"></i></button>\n    </div>\n</div>\n<div class=\"file-name-section\"></div>\n\n<div id=\"code-wrapper\" class=\"ui-layout-content\">\n    <textarea name=\"code\" rows=\"25\" cols=\"100\"></textarea>\n</div>";
   });
 
 this["JST"]["file-list"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -89,5 +89,5 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"btn-toolbar\">\n    <button class=\"clear btn btn-default\" title=\"(Esc)\"><i class=\"icon-eraser\"></i> Clear</button>\n</div>\n\n<div id=\"result\"><div class=\"inner\"></div></div>";
+  return "<div class=\"btn-toolbar\">\n    <button class=\"clear btn btn-default\" title=\"(Esc)\"><i class=\"icon-eraser\"></i></button>\n</div>\n\n<div id=\"result\"><div class=\"inner\"></div></div>";
   });

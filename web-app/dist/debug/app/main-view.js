@@ -1,6 +1,5 @@
 (function() {
   (function(App, Backbone) {
-    console.log('ddd');
     return App.MainView = Backbone.View.extend({
       attributes: {
         id: "main-content"

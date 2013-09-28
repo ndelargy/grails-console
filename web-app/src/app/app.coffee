@@ -43,8 +43,8 @@
         file = App.localFileStore.list().findWhere(name: name)
         unless file
           console.log "TODO: no file"
-        return
-        @showFile file
+          return
+        @mainView.showFile file
 
       App.router.on "route:openRemoteFile", (name) =>
         jqxhr = $.get(@data.baseUrl + "/console/loadFile",

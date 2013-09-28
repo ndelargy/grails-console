@@ -50,9 +50,9 @@
           });
           if (!file) {
             console.log("TODO: no file");
+            return;
           }
-          return;
-          return _this.showFile(file);
+          return _this.mainView.showFile(file);
         });
         App.router.on("route:openRemoteFile", function(name) {
           var jqxhr;
