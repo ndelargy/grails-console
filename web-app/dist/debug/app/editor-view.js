@@ -1,11 +1,11 @@
 (function() {
   (function(App, Backbone, CodeMirror, JST) {
     var FileNameView;
-    FileNameView = Backbone.View.extend({
+    FileNameView = App.View.extend({
       initialize: function() {
         var html;
-        html = "<div class=\"pull-right saving\" style=\"display: none\">Saving</div><div class=\"file-name\"></div>";
-        this.listenTo(this.model, "change", _.bind(this.render, this));
+        html = '<div class="pull-right saving" style="display: none">Saving</div><div class="file-name"></div>';
+        this.listenTo(this.model, "change", this.render);
         return this.$el.html(html);
       },
       render: function() {
@@ -15,14 +15,17 @@
         return this;
       }
     });
-    return App.EditorView = Backbone.View.extend({
+    return App.EditorView = App.View.extend({
       events: {
-        "click button[data-function=\"execute\"]": "executeCode",
-        "click button[data-function]": "onButtonClick",
-        "click button.save": "save"
+        'click button[data-function=execute]': "executeCode",
+        'click button[data-function]': "onButtonClick",
+        'click button.save': "save"
       },
       initialize: function() {
-        return $(window).on("beforeunload", _.bind(this.onBeforeunload, this));
+        var _this = this;
+        return $(window).on("beforeunload", function() {
+          return _this.onBeforeunload();
+        });
       },
       onButtonClick: function(event) {
         var fcn;
@@ -40,25 +43,24 @@
         return this.editor.refresh();
       },
       initEditor: function() {
-        var oThis;
-        oThis = this;
+        var _this = this;
         this.editor = CodeMirror.fromTextArea(this.$("textarea[name=code]")[0], {
           matchBrackets: true,
           mode: "groovy",
           lineNumbers: true,
           extraKeys: {
-            "Ctrl-Enter": function() {
-              return oThis.executeCode();
+            'Ctrl-Enter': function() {
+              return _this.executeCode();
             },
-            Esc: function() {
-              return oThis.trigger("clear");
+            'Esc': function() {
+              return _this.trigger("clear");
             }
           },
           theme: "lesser-dark"
         });
         this.editor.focus();
         this.editor.setValue("");
-        App.settings.on("change:theme", this.setTheme, this);
+        this.listenTo(App.settings, 'change:theme', this.setTheme);
         return this.setTheme();
       },
       setTheme: function() {
@@ -83,20 +85,22 @@
         });
         this.$(".file-name-section").html(this.fileNameView.render().el);
         this.editor.setValue(this.file.get("text"));
-        return this.editor.refresh();
+        this.editor.refresh();
+        return this.editor.focus();
       },
       isDirty: function() {
         return this.file.get("text") !== this.editor.getValue();
       },
       save: function() {
+        var _this = this;
         if (!this.file.get("name")) {
-          return this.prompt("File name", _.bind(function(name) {
-            this.file.set("name", name);
-            this.save();
+          return this.prompt("File name", function(name) {
+            _this.file.set("name", name);
+            _this.save();
             return App.router.navigate("local/" + name, {
               trigger: false
             });
-          }, this));
+          });
         } else {
           this.$(".file-name-section .saving").show();
           this.file.set("text", this.editor.getValue());
@@ -115,15 +119,16 @@
         return $("#myModal").on("hidden.bs.modal", function() {});
       },
       executeCode: function() {
-        var result;
+        var jqxhr, result;
         result = new App.Result({
           loading: true,
           input: this.getValue()
         });
         this.trigger("execute", result);
-        return $.post(App.data.baseUrl + "/console/execute", {
+        jqxhr = $.post("" + App.data.baseUrl + "/console/execute", {
           code: this.getValue()
-        }).done(function(response) {
+        });
+        jqxhr.done(function(response) {
           return result.set({
             loading: false,
             totalTime: response.totalTime,
@@ -131,7 +136,8 @@
             result: response.result,
             output: response.output
           });
-        }).fail(function() {
+        });
+        return jqxhr.fail(function() {
           return result.set({
             loading: false,
             error: "An error occurred."
@@ -142,6 +148,10 @@
         if (this.editorView.isDirty()) {
           return "You have unsaved changes.";
         }
+      },
+      onShow: function() {
+        console.log('ddd');
+        return this.editor.focus();
       }
     });
   })(App, Backbone, CodeMirror, JST);

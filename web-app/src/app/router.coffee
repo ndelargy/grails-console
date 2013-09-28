@@ -9,4 +9,7 @@
       "files":        "files"
       "*path":        "defaultRoute"
 
+    navigateToFile: (file) ->
+      @navigate "local/#{file.get('name')}", trigger: true
+
 ) App

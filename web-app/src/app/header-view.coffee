@@ -13,7 +13,6 @@
     render: ->
       @$el.html @template()
       new App.SettingsView(el: @$(".dropdown-menu.settings")[0]).render() # TODO move to template
-      console.log @$(".dropdown-menu.settings")[0]
       this
 
     onNewClick: (event) ->

@@ -7,6 +7,11 @@
         "new": "newFile",
         "files": "files",
         "*path": "defaultRoute"
+      },
+      navigateToFile: function(file) {
+        return this.navigate("local/" + (file.get('name')), {
+          trigger: true
+        });
       }
     });
   })(App);

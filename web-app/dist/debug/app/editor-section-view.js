@@ -1,6 +1,6 @@
 (function() {
   (function(App, Backbone, JST) {
-    return App.EditorSectionView = Backbone.View.extend({
+    return App.EditorSectionView = App.View.extend({
       attributes: {
         "class": "full-height"
       },
@@ -15,6 +15,7 @@
         }).render();
         this.layout.initContent("center");
         this.editorView.resize();
+        this.subviews.push(this.editorView);
         this.resultCollection = new App.ResultCollection();
         this.resultsView = new App.ResultCollectionView({
           collection: this.resultCollection
@@ -65,13 +66,11 @@
         var orientation;
         orientation = App.settings.get("orientation");
         if (orientation === "vertical") {
-          $(".orientation .vertical").button("toggle");
           $(".east").append(this.resultsView.el);
           this.layout.hide("south");
           this.layout.show("east");
           this.layout.initContent("east");
         } else {
-          $(".orientation .horizontal").button("toggle");
           $(".south").append(this.resultsView.el);
           this.layout.hide("east");
           this.layout.show("south");

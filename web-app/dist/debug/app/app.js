@@ -4,9 +4,9 @@
     Handlebars.registerHelper("dateFormatTime", function(context) {
       var date;
       date = new Date(context);
-      return date.toDateString() + " " + date.toTimeString();
+      return "" + (date.toLocaleDateString()) + " " + (date.toLocaleTimeString());
     });
-    window.App = {
+    window.App = _.extend({
       start: function(data) {
         var headerView;
         this.data = data;
@@ -31,6 +31,7 @@
         }).render();
         this.mainView.$el.appendTo("body");
         this.mainView.refresh();
+        this.mainView.trigger('show');
         this.showTheme();
         App.settings.on("change:theme", this.showTheme, this);
         $("body").css("visibility", "visible");
@@ -52,7 +53,7 @@
             console.log("TODO: no file");
             return;
           }
-          return _this.mainView.showFile(file);
+          return _this.mainView.showEditor(file);
         });
         App.router.on("route:openRemoteFile", function(name) {
           var jqxhr;
@@ -73,7 +74,7 @@
           file = App.localFileStore.newFile({
             text: ""
           });
-          return _this.mainView.showFile(file);
+          return _this.mainView.showEditor(file);
         });
         App.router.on("route:defaultRoute", function() {
           console.log("TODO: grab the last file.");
@@ -82,20 +83,18 @@
           });
         });
         return App.router.on("route:files", function() {
-          var files, view;
-          files = App.localFileStore.list();
-          view = new App.FileCollectionView({
-            collection: files
-          }).render();
-          return $("#main-content").html(view.$el);
+          return _this.mainView.showFiles();
         });
       },
       showTheme: function() {
         var theme;
         theme = App.settings.get("theme");
         return $("body").attr("data-theme", theme);
+      },
+      createLink: function(action) {
+        return "" + this.data.baseUrl + "/console/" + action;
       }
-    };
+    }, Backbone.Events);
     return remoteFileStore = {
       load: function(fileName) {
         var jqxhr;

@@ -12,6 +12,7 @@
     "web-app/vendor/codemirror-3.15/mode/groovy/groovy.js",
     "web-app/dist/debug/jst.js",
     "web-app/dist/debug/app/app.js",
+    "web-app/dist/debug/app/view.js",
     "web-app/dist/debug/app/router.js",
     "web-app/dist/debug/app/header-view.js",
     "web-app/dist/debug/app/settings-model.js",

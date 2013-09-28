@@ -16,7 +16,6 @@
         new App.SettingsView({
           el: this.$(".dropdown-menu.settings")[0]
         }).render();
-        console.log(this.$(".dropdown-menu.settings")[0]);
         return this;
       },
       onNewClick: function(event) {

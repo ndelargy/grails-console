@@ -6,6 +6,11 @@
       @subviews = []
       Backbone.View::constructor.apply this, arguments
 
+      @listenTo @, 'show', ->
+        console.log('hi')
+        @onShow()
+        view.onShow() for view in @subviews
+
     initialize: ->
 
     onShow: ->

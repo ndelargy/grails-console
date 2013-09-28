@@ -9,7 +9,7 @@ body, html {
 }
 
 body {
-  padding-top: 50px;
+  padding-top: 61px;
 }
 
 #main-content {
@@ -76,6 +76,7 @@ body {
 .navbar {
   margin-bottom: 0;
   border-radius: 0;
+  padding: 5px;
 }
 
 .navbar-brand {
@@ -170,13 +171,49 @@ label.wrap span {
   visibility: visible;
 }
 
-
 .files-view {
   width: 600px;
+  padding: 20px;
   margin-left: auto;
   margin-right: auto;
   height: 100%;
   background-color: #fff;
+  font-size: 14px;
+  border-style: solid;
+  border-color: #ccc;
+  border-width: 0 1px;
+  .file-store-select {
+    padding: 0 0 10px 0;
+  }
+  ul.files {
+    padding: 0;
+    li {
+      list-style-type: none;
+      padding: 5px 0;
+      border-bottom: 1px solid #eee;
+      a.name {
+        color: black;
+        font-size: 16px;
+      }
+      a.delete {
+        text-decoration: none;
+      }
+      .icon-trash {
+        color: #ddd;
+        cursor: pointer;
+      }
+      .date {
+        color: #888;
+        font-size: 12px;
+        margin-right: 5px;
+      }
+      &:hover {
+        .icon-trash {
+          color: #000;
+        }
+      }
+    }
+  }
 }
 
 .full-height {

@@ -1,6 +1,6 @@
 ((App, Backbone, JST) ->
 
-  App.EditorSectionView = Backbone.View.extend
+  App.EditorSectionView = App.View.extend
 
     attributes:
       class: "full-height"
@@ -15,6 +15,7 @@
       @editorView = new App.EditorView(el: @$("#editor")[0]).render()
       @layout.initContent "center"
       @editorView.resize()
+      @subviews.push @editorView
 
       @resultCollection = new App.ResultCollection()
       @resultsView = new App.ResultCollectionView(collection: @resultCollection).render()
@@ -33,7 +34,7 @@
       @showOrientation()
 
     initLayout: ->
-      @layout = @$el.layout(
+      @layout = @$el.layout
         center__paneSelector: "#editor"
         center__contentSelector: "#code-wrapper"
         center__onresize: => @editorView.refresh()
@@ -54,18 +55,15 @@
         resizable: true
         findNestedContent: true
         fxName: ""
-      )
 
     showOrientation: ->
       orientation = App.settings.get("orientation")
       if orientation is "vertical"
-        $(".orientation .vertical").button "toggle"
         $(".east").append @resultsView.el
         @layout.hide "south"
         @layout.show "east"
         @layout.initContent "east"
       else
-        $(".orientation .horizontal").button "toggle"
         $(".south").append @resultsView.el
         @layout.hide "east"
         @layout.show "south"

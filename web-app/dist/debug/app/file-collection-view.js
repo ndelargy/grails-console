@@ -3,13 +3,17 @@
     var RemoteFileStore;
     App.FileCollectionView = Backbone.View.extend({
       attributes: {
-        "class": "files-view"
+        "class": 'files-view'
       },
       events: {
-        "click tr": "onRowClick"
+        'click a.name': 'onNameClick',
+        'click a.delete': 'onDeleteClick'
       },
       initialize: function() {
-        return this.template = JST["file-list"];
+        this.template = JST["file-list"];
+        return this.listenTo(this.collection, 'all', function() {
+          return this.render();
+        });
       },
       render: function() {
         var html;
@@ -19,14 +23,23 @@
         this.$el.html(html);
         return this;
       },
-      onRowClick: function(event) {
-        var $tr, file;
+      onNameClick: function(event) {
+        var file, fileId;
         event.preventDefault();
-        $tr = $(event.currentTarget);
+        fileId = $(event.currentTarget).closest('li').data("fileId");
         file = this.collection.findWhere({
-          id: $tr.data("fileId")
+          id: fileId
         });
-        return this.trigger("select", file);
+        return App.router.navigateToFile(file);
+      },
+      onDeleteClick: function(event) {
+        var file, fileId;
+        event.preventDefault();
+        fileId = $(event.currentTarget).closest('li').data("fileId");
+        file = this.collection.findWhere({
+          id: fileId
+        });
+        return file.destroy();
       }
     });
     RemoteFileStore = function() {};

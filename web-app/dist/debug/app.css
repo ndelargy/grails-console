@@ -9,7 +9,7 @@ html {
   overflow: hidden;
 }
 body {
-  padding-top: 50px;
+  padding-top: 61px;
 }
 #main-content {
   height: 100%;
@@ -67,6 +67,7 @@ body {
 .navbar {
   margin-bottom: 0;
   border-radius: 0;
+  padding: 5px;
 }
 .navbar-brand {
   background: transparent url(../img/grails.logo.png) no-repeat;
@@ -145,10 +146,45 @@ label.wrap span {
 }
 .files-view {
   width: 600px;
+  padding: 20px;
   margin-left: auto;
   margin-right: auto;
   height: 100%;
   background-color: #fff;
+  font-size: 14px;
+  border-style: solid;
+  border-color: #ccc;
+  border-width: 0 1px;
+}
+.files-view .file-store-select {
+  padding: 0 0 10px 0;
+}
+.files-view ul.files {
+  padding: 0;
+}
+.files-view ul.files li {
+  list-style-type: none;
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
+.files-view ul.files li a.name {
+  color: black;
+  font-size: 16px;
+}
+.files-view ul.files li a.delete {
+  text-decoration: none;
+}
+.files-view ul.files li .icon-trash {
+  color: #ddd;
+  cursor: pointer;
+}
+.files-view ul.files li .date {
+  color: #888;
+  font-size: 12px;
+  margin-right: 5px;
+}
+.files-view ul.files li:hover .icon-trash {
+  color: #000;
 }
 .full-height {
   height: 100%;

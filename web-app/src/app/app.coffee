@@ -2,10 +2,14 @@
 
   Handlebars.registerHelper "dateFormatTime", (context) ->
     date = new Date(context)
-    date.toDateString() + " " + date.toTimeString()
+    "#{date.toLocaleDateString()} #{date.toLocaleTimeString()}"
 
 
-  window.App = (
+  # commands
+  # show: (file) >
+  # files: ->
+
+  window.App = _.extend
     start: (data) ->
       @data = data
 
@@ -28,11 +32,14 @@
       @mainView = new App.MainView(el: $("#main-content")[0]).render()
       @mainView.$el.appendTo "body"
       @mainView.refresh()
+      @mainView.trigger 'show'
 
       #            $(document).on('keydown', 'Ctrl+return', _.bind(this.executeCode, this)); TODO
       #            $(document).on('keydown', 'esc', _.bind(this.clearResults, this)); TODO
+
       @showTheme()
       App.settings.on "change:theme", @showTheme, this
+
       $("body").css "visibility", "visible"
       Backbone.history.start pushState: false
 
@@ -44,7 +51,7 @@
         unless file
           console.log "TODO: no file"
           return
-        @mainView.showFile file
+        @mainView.showEditor(file)
 
       App.router.on "route:openRemoteFile", (name) =>
         jqxhr = $.get(@data.baseUrl + "/console/loadFile",
@@ -57,27 +64,25 @@
           )
           @mainView.showFile file
 
-
       App.router.on "route:newFile", =>
-        file = App.localFileStore.newFile(text: "")
-        @mainView.showFile file
+        file = App.localFileStore.newFile(text: "") # TODO defer store
+        @mainView.showEditor(file)
 
       App.router.on "route:defaultRoute", ->
         console.log "TODO: grab the last file."
-        router.navigate "new",
-          trigger: true
+        router.navigate "new", trigger: true
 
-
-      App.router.on "route:files", ->
-        files = App.localFileStore.list()
-        view = new App.FileCollectionView(collection: files).render()
-        $("#main-content").html view.$el # TODO switcher
-
+      App.router.on "route:files", =>
+        @mainView.showFiles()
 
     showTheme: ->
       theme = App.settings.get("theme")
       $("body").attr "data-theme", theme
-  )
+
+    createLink: (action) ->
+      "#{@data.baseUrl}/console/#{action}"
+
+  , Backbone.Events
 
 
   remoteFileStore =

@@ -1,24 +1,33 @@
 ((App, Backbone, JST) ->
   App.FileCollectionView = Backbone.View.extend
     attributes:
-      class: "files-view"
+      class: 'files-view'
 
     events:
-      "click tr": "onRowClick"
+      'click a.name': 'onNameClick'
+      'click a.delete': 'onDeleteClick'
 
     initialize: ->
       @template = JST["file-list"]
+      @listenTo @collection, 'all', -> @render()
 
     render: ->
       html = JST["file-list"](files: @collection.toJSON())
       @$el.html html
       this
 
-    onRowClick: (event) ->
+    onNameClick: (event) ->
       event.preventDefault()
-      $tr = $(event.currentTarget)
-      file = @collection.findWhere(id: $tr.data("fileId"))
-      @trigger "select", file
+      fileId = $(event.currentTarget).closest('li').data("fileId")
+      file = @collection.findWhere(id: fileId)
+      App.router.navigateToFile file
+
+    onDeleteClick: (event) ->
+      event.preventDefault()
+      fileId = $(event.currentTarget).closest('li').data("fileId")
+      file = @collection.findWhere(id: fileId)
+      # TODO confirm
+      file.destroy()
 
 
   #
