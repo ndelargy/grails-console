@@ -32,9 +32,11 @@
           this.filesView.$el.hide();
           this.editorSectionView.refresh();
         }
-        return this.editorSectionView.editorView.showFile(file);
+        return this.editorSectionView.showFile(file);
       },
       showFiles: function() {
+        this.filesView.collection = App.localFileStore.list();
+        this.filesView.render();
         if (!this.filesView.$el.is(':visible')) {
           this.editorSectionView.$el.hide();
           return this.filesView.$el.show();

@@ -45,7 +45,7 @@ body {
   color: #ff0000;
 }
 #result .script-result .loading {
-  background: url("../img/spinner.gif") no-repeat scroll 10px center #ffffff;
+  background: url("img/spinner.gif") no-repeat scroll 10px center #ffffff;
   padding: 15px 15px 15px 37px;
 }
 #result.wrap .script-result {
@@ -70,7 +70,7 @@ body {
   padding: 5px;
 }
 .navbar-brand {
-  background: transparent url(../img/grails.logo.png) no-repeat;
+  background: transparent url("img/grails.logo.png") no-repeat;
   background-position: 5px center;
   padding-left: 45px;
 }

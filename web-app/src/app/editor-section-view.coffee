@@ -71,7 +71,7 @@
       @editorView.refresh()
 
     showFile: (file) ->
-      @mainView.showFile file
+      @editorView.showFile file
 
     clearResults: ->
       @resultsView.clear()

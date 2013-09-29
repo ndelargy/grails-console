@@ -36,7 +36,6 @@
       };
 
       LocalFileStore.prototype.update = function(file) {
-        console.log(file.toJSON());
         file.set("lastModified", new Date().getTime());
         this.data[file.id] = file.toJSON();
         this._save();
@@ -55,9 +54,7 @@
       };
 
       LocalFileStore.prototype._save = function() {
-        console.log(this.data);
-        localStorage.setItem(this.name, JSON.stringify(this.data));
-        return console.log(localStorage.getItem(this.name));
+        return localStorage.setItem(this.name, JSON.stringify(this.data));
       };
 
       LocalFileStore.prototype._load = function() {
@@ -73,6 +70,7 @@
 
       LocalFileStore.prototype.newFile = function(data) {
         var file;
+        console.log('newFile');
         file = new App.File(data);
         file.sync = _.bind(this.sync, this);
         return file;

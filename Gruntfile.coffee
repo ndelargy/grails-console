@@ -110,6 +110,12 @@ module.exports = (grunt) ->
         cwd: 'web-app/src/app'
         src: '**/*.js'
         dest: 'web-app/dist/debug/app'
+      img:
+        expand: true,
+        cwd: 'web-app/src/img'
+        src: '**/*'
+        dest: 'web-app/dist/debug/img'
+
 
     clean:
       dist: ['web-app/dist']
@@ -151,4 +157,4 @@ module.exports = (grunt) ->
 
   grunt.registerTask "default", ["debug"]
   grunt.registerTask "test", ["debug", "clean:spec", "coffee:spec", "jasmine"]
-  grunt.registerTask "debug", ["clean:dist", "handlebars:compile", "coffee:app", "less:app", "json"]
+  grunt.registerTask "debug", ["clean:dist", "handlebars:compile", "coffee:app", "copy:img", "less:app", "json"]

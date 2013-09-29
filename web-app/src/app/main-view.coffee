@@ -32,9 +32,11 @@
         @filesView.$el.hide()
         @editorSectionView.refresh()
 
-      @editorSectionView.editorView.showFile file # TODO
+      @editorSectionView.showFile file
 
     showFiles: ->
+      @filesView.collection = App.localFileStore.list() # TODO silly
+      @filesView.render()
       unless @filesView.$el.is ':visible'
         @editorSectionView.$el.hide()
         @filesView.$el.show()

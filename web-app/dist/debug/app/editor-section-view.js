@@ -79,7 +79,7 @@
         return this.editorView.refresh();
       },
       showFile: function(file) {
-        return this.mainView.showFile(file);
+        return this.editorView.showFile(file);
       },
       clearResults: function() {
         return this.resultsView.clear();

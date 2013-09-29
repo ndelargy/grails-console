@@ -10,10 +10,7 @@
         'click a.delete': 'onDeleteClick'
       },
       initialize: function() {
-        this.template = JST["file-list"];
-        return this.listenTo(this.collection, 'all', function() {
-          return this.render();
-        });
+        return this.template = JST["file-list"];
       },
       render: function() {
         var html;

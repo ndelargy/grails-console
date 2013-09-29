@@ -22,13 +22,12 @@
 
     create: (file) ->
       file.set "lastModified", new Date().getTime()
-      file.id = file.attributes.id = guid()  unless file.id
+      file.id = file.attributes.id = guid() unless file.id
       @data[file.id] = file.toJSON()
       @_save()
       file.toJSON()
 
     update: (file) ->
-      console.log file.toJSON()
       file.set "lastModified", new Date().getTime()
       @data[file.id] = file.toJSON()
       @_save()
@@ -45,9 +44,7 @@
       localStorage.removeItem @name
 
     _save: ->
-      console.log @data
       localStorage.setItem @name, JSON.stringify(@data)
-      console.log localStorage.getItem(@name)
 
     _load: ->
       store = localStorage.getItem(@name)
@@ -57,6 +54,7 @@
         @data = {}
 
     newFile: (data) ->
+      console.log 'newFile'
       file = new App.File(data)
       file.sync = _.bind(@sync, this)
       # TODO
