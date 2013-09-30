@@ -1,4 +1,5 @@
 ((App, Backbone, JST) ->
+
   App.HeaderView = Backbone.View.extend
     attributes:
       class: "navbar navbar-fixed-top"
@@ -13,7 +14,7 @@
     render: ->
       @$el.html @template()
       new App.SettingsView(el: @$(".dropdown-menu.settings")[0]).render() # TODO move to template
-      this
+      @
 
     onNewClick: (event) ->
       event.preventDefault()
@@ -21,6 +22,6 @@
 
     onFilesClick: (event) ->
       event.preventDefault()
-      @trigger "scripts"
+      @trigger "files"
 
 ) App, Backbone, JST

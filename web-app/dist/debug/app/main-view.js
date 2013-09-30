@@ -8,7 +8,8 @@
         var files;
         this.editorSectionView = new App.EditorSectionView();
         this.subviews.push(this.editorSectionView);
-        files = App.localFileStore.list();
+        files = new App.FileCollection;
+        files.store = App.localFileStore;
         return this.filesView = new App.FileCollectionView({
           collection: files
         });
@@ -23,9 +24,7 @@
       refresh: function() {
         return this.editorSectionView.refresh();
       },
-      onShow: function() {
-        return console.log('onShow');
-      },
+      onShow: function() {},
       showEditor: function(file) {
         if (!this.editorSectionView.$el.is(':visible')) {
           this.editorSectionView.$el.show();
@@ -35,7 +34,7 @@
         return this.editorSectionView.showFile(file);
       },
       showFiles: function() {
-        this.filesView.collection = App.localFileStore.list();
+        this.filesView.collection.fetch();
         this.filesView.render();
         if (!this.filesView.$el.is(':visible')) {
           this.editorSectionView.$el.hide();

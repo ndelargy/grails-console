@@ -12,10 +12,12 @@
       @_load()
 
     list: ->
-      models = _.map(@data, (value, key) ->
-        @newFile value
-      , this)
-      new App.FileCollection(models)
+      collection = new App.FileCollection(@fetch())
+      collection.store = @
+      collection
+
+    fetch: ->
+      _.values @data
 
     find: (file) ->
       @data[file.id]
@@ -54,7 +56,6 @@
         @data = {}
 
     newFile: (data) ->
-      console.log 'newFile'
       file = new App.File(data)
       file.sync = _.bind(@sync, this)
       # TODO
@@ -67,7 +68,7 @@
       #            var dfd = $.Deferred();
       switch method
         when "read"
-          resp = @find(file) # fetch
+          resp = if file.id then @find(file) else @fetch()
         when "create"
           resp = @create(file) # save
         when "update"

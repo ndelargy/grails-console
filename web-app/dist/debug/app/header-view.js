@@ -24,7 +24,7 @@
       },
       onFilesClick: function(event) {
         event.preventDefault();
-        return this.trigger("scripts");
+        return this.trigger("files");
       }
     });
   })(App, Backbone, JST);

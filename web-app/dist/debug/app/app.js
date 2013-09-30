@@ -20,7 +20,7 @@
             trigger: true
           });
         });
-        headerView.on("scripts", function() {
+        headerView.on("files", function() {
           return App.router.navigate("files", {
             trigger: true
           });

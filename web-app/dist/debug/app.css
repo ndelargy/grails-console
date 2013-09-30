@@ -30,7 +30,6 @@ body {
 }
 #result {
   font-size: 15px;
-  background: #f4f4f4;
   overflow: auto;
 }
 #result .script-result {
@@ -86,6 +85,7 @@ body {
 .ui-layout-pane {
   padding: 0;
   border: 0;
+  background: transparent;
 }
 .ui-layout-content {
   padding: 0;
@@ -189,8 +189,17 @@ label.wrap span {
 .full-height {
   height: 100%;
 }
+body[data-theme="default"] #main-content {
+  background: url("img/brushed.png");
+}
+body[data-theme="default"] #editor .file-name-section {
+  background-color: #eee;
+}
 body[data-theme="default"] .btn-toolbar {
   background-color: #dddddd;
+}
+body[data-theme="lesser-dark"] #main-content {
+  background: url("img/debut_dark.png");
 }
 body[data-theme="lesser-dark"] .navbar {
   background-color: #222;
@@ -201,9 +210,6 @@ body[data-theme="lesser-dark"] .navbar .navbar-brand {
 }
 body[data-theme="lesser-dark"] .btn-toolbar {
   background-color: #888;
-}
-body[data-theme="lesser-dark"] #result {
-  background-color: #262626;
 }
 body[data-theme="lesser-dark"] #editor .file-name-section {
   background-color: #eee;

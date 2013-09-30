@@ -13,6 +13,7 @@ body {
 }
 
 #main-content {
+//  margin: 10px;
   height: 100%;
 }
 
@@ -34,7 +35,7 @@ body {
 #result {
   font-size: 15px;
   overflow: auto;
-  background: #f4f4f4;
+//  background: #f4f4f4;
   overflow: auto;
   .script-result {
     white-space: pre;
@@ -108,6 +109,7 @@ body {
 .ui-layout-pane {
   padding: 0;
   border: 0;
+  background: transparent;
 }
 
 .ui-layout-content {
@@ -221,9 +223,17 @@ label.wrap span {
 }
 
 body[data-theme="default"] {
+  #main-content {
+    background: url("img/brushed.png");
+  }
   .navbar {
     //    background: #888;
 
+  }
+  #editor {
+    .file-name-section {
+      background-color: #eee;
+    }
   }
   .btn-toolbar {
     background-color: #dddddd;
@@ -231,6 +241,9 @@ body[data-theme="default"] {
 }
 
 body[data-theme="lesser-dark"] {
+  #main-content {
+    background: url("img/debut_dark.png");
+  }
   .navbar {
     background-color: #222;
     background-image: none;
@@ -242,7 +255,7 @@ body[data-theme="lesser-dark"] {
     background-color: #888;
   }
   #result {
-    background-color: rgb(38, 38, 38);
+//    background-color: rgb(38, 38, 38);
   }
   #editor {
     .file-name-section {

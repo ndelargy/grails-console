@@ -6,7 +6,6 @@
         Backbone.View.prototype.constructor.apply(this, arguments);
         return this.listenTo(this, 'show', function() {
           var view, _i, _len, _ref, _results;
-          console.log('hi');
           this.onShow();
           _ref = this.subviews;
           _results = [];

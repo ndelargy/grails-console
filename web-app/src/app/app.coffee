@@ -21,11 +21,11 @@
 
       headerView = new App.HeaderView().render()
       headerView.on "new", ->
-
         # TODO check if file needs to be saved
         App.router.navigate "new", trigger: true
 
-      headerView.on "scripts", ->
+      headerView.on "files", ->
+        # TODO check if file needs to be saved
         App.router.navigate "files", trigger: true
 
       headerView.$el.appendTo "body"

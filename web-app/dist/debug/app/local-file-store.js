@@ -14,11 +14,14 @@
       }
 
       LocalFileStore.prototype.list = function() {
-        var models;
-        models = _.map(this.data, function(value, key) {
-          return this.newFile(value);
-        }, this);
-        return new App.FileCollection(models);
+        var collection;
+        collection = new App.FileCollection(this.fetch());
+        collection.store = this;
+        return collection;
+      };
+
+      LocalFileStore.prototype.fetch = function() {
+        return _.values(this.data);
       };
 
       LocalFileStore.prototype.find = function(file) {
@@ -70,7 +73,6 @@
 
       LocalFileStore.prototype.newFile = function(data) {
         var file;
-        console.log('newFile');
         file = new App.File(data);
         file.sync = _.bind(this.sync, this);
         return file;
@@ -81,7 +83,7 @@
         resp = void 0;
         switch (method) {
           case "read":
-            resp = this.find(file);
+            resp = file.id ? this.find(file) : this.fetch();
             break;
           case "create":
             resp = this.create(file);

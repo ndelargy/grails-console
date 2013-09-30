@@ -9,7 +9,7 @@
 
     initialize: ->
       @template = JST["file-list"]
-#      @listenTo @collection, 'all', -> @render()
+#      @listenTo @collection, 'all', -> @render() # TODO remove
 
     render: ->
       html = JST["file-list"](files: @collection.toJSON())

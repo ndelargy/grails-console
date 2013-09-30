@@ -10,8 +10,10 @@
       @subviews.push @editorSectionView
 
       # TODO lazy
-      files = App.localFileStore.list()
-      @filesView = new App.FileCollectionView(collection: files)
+      files = new App.FileCollection
+      files.store = App.localFileStore
+      @filesView = new App.FileCollectionView
+        collection: files
 
     render: ->
       @editorSectionView.render()
@@ -24,7 +26,6 @@
       @editorSectionView.refresh()
 
     onShow: ->
-      console.log 'onShow'
 
     showEditor: (file) ->
       unless @editorSectionView.$el.is ':visible'
@@ -35,7 +36,7 @@
       @editorSectionView.showFile file
 
     showFiles: ->
-      @filesView.collection = App.localFileStore.list() # TODO silly
+      @filesView.collection.fetch()
       @filesView.render()
       unless @filesView.$el.is ':visible'
         @editorSectionView.$el.hide()

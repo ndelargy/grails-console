@@ -18,11 +18,12 @@ class ConsoleTagLib {
 			out << r.layoutResources()
 		}
 		else {
-            String json = getClass().getResourceAsStream('resources.json').text
+            String json = Thread.currentThread().contextClassLoader.getResourceAsStream('resources.json').text
+
             Map config = JSON.parse(json)
 // TODO test this
             config.cssSrc.each {
-                out << """<link rel='stylesheet' media="screen" href='${resource(file: it, plugin: 'console')}' />"""
+                out << """<link rel='stylesheet' media="screen" href='${resource(file: it - 'web-app/', plugin: 'console')}' />"""
             }
 		}
 	}
@@ -34,11 +35,11 @@ class ConsoleTagLib {
 			out << r.layoutResources()
 		}
 		else {
-            String json = getClass().getResourceAsStream('resources.json').text
+            String json = Thread.currentThread().contextClassLoader.getResourceAsStream('resources.json').text
             Map config = JSON.parse(json)
 // TODO test this
             config.jsSrc.each {
-                out << g.javascript(src: it[0] + '/' + it[1], plugin: 'console')
+                out << """<script type="text/javascript" src='${resource(file: it - 'web-app/', plugin: 'console')}' ></script>"""
             }
 		}
 	}
