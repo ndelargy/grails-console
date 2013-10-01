@@ -31,7 +31,6 @@
         }).render();
         this.mainView.$el.appendTo("body");
         this.mainView.refresh();
-        this.mainView.trigger('show');
         this.showTheme();
         App.settings.on("change:theme", this.showTheme, this);
         $("body").css("visibility", "visible");

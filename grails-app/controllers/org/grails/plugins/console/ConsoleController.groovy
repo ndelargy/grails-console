@@ -32,6 +32,18 @@ class ConsoleController {
         render results as JSON
     }
 
+    def listFiles = {
+        File baseDir = new File('/Users/mattsheehan/test')
+        Map result = [:]
+        result.data = baseDir.listFiles().collect { File file ->
+            [
+                name: file.name,
+                lastModified: file.lastModified()
+            ]
+        }
+        render result as JSON
+    }
+
     def loadFile = {
         String filename = params.filename
         Map results = [:]

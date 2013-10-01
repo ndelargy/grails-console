@@ -30,7 +30,8 @@ module.exports = (grunt) ->
       "web-app/dist/debug/app/editor-view.js",
       "web-app/dist/debug/app/file-model.js",
       "web-app/dist/debug/app/file-collection.js",
-      "web-app/dist/debug/app/file-collection-view.js",
+      "web-app/dist/debug/app/files-section-view.js",
+      "web-app/dist/debug/app/local-files-view.js",
       "web-app/dist/debug/app/local-file-store.js",
       "web-app/dist/debug/app/main-view.js",
       "web-app/dist/debug/app/editor-section-view.js"

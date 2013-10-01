@@ -32,7 +32,6 @@
       @mainView = new App.MainView(el: $("#main-content")[0]).render()
       @mainView.$el.appendTo "body"
       @mainView.refresh()
-      @mainView.trigger 'show'
 
       #            $(document).on('keydown', 'Ctrl+return', _.bind(this.executeCode, this)); TODO
       #            $(document).on('keydown', 'esc', _.bind(this.clearResults, this)); TODO

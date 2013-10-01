@@ -41,11 +41,20 @@ function program1(depth0,data) {
   return buffer;
   }
 
-  buffer += "<div class=\"file-store-select\">\n    <ul class=\"nav nav-pills\">\n        <li class=\"active\"><a href=\"#\">Local</a></li>\n        <li><a href=\"#\">Remote</a></li>\n    </ul>\n</div>\n<ul class=\"files\">\n  ";
+  buffer += "<ul class=\"files\">\n  ";
   stack1 = helpers.each.call(depth0, depth0.files, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</ul>";
   return buffer;
+  });
+
+this["JST"]["files-section"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<div class=\"file-store-select\">\n    <ul class=\"nav nav-pills\">\n        <li class=\"active\"><a href=\"#\">Local</a></li>\n        <li><a href=\"#\">Remote</a></li>\n    </ul>\n</div>";
   });
 
 this["JST"]["header"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

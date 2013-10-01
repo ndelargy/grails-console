@@ -5,20 +5,15 @@
         id: "main-content"
       },
       initialize: function() {
-        var files;
         this.editorSectionView = new App.EditorSectionView();
         this.subviews.push(this.editorSectionView);
-        files = new App.FileCollection;
-        files.store = App.localFileStore;
-        return this.filesView = new App.FileCollectionView({
-          collection: files
-        });
+        return this.filesSectionView = new App.FilesSectionView;
       },
       render: function() {
         this.editorSectionView.render();
         this.$el.append(this.editorSectionView.$el.hide());
-        this.filesView.render();
-        this.$el.append(this.filesView.$el.hide());
+        this.filesSectionView.render();
+        this.$el.append(this.filesSectionView.$el.hide());
         return this;
       },
       refresh: function() {
@@ -28,17 +23,17 @@
       showEditor: function(file) {
         if (!this.editorSectionView.$el.is(':visible')) {
           this.editorSectionView.$el.show();
-          this.filesView.$el.hide();
+          this.filesSectionView.$el.hide();
           this.editorSectionView.refresh();
         }
         return this.editorSectionView.showFile(file);
       },
       showFiles: function() {
-        this.filesView.collection.fetch();
-        this.filesView.render();
-        if (!this.filesView.$el.is(':visible')) {
+        this.filesSectionView.render();
+        this.filesSectionView.showLocal();
+        if (!this.filesSectionView.$el.is(':visible')) {
           this.editorSectionView.$el.hide();
-          return this.filesView.$el.show();
+          return this.filesSectionView.$el.show();
         }
       }
     });

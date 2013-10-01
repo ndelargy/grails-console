@@ -1,7 +1,7 @@
 (function() {
   (function(App, Backbone, JST) {
     var RemoteFileStore;
-    App.FileCollectionView = Backbone.View.extend({
+    App.LocalFilesView = Backbone.View.extend({
       attributes: {
         "class": 'files-view'
       },
@@ -14,6 +14,7 @@
       },
       render: function() {
         var html;
+        this.collection.fetch();
         html = JST["file-list"]({
           files: this.collection.toJSON()
         });

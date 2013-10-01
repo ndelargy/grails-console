@@ -189,7 +189,7 @@ label.wrap span {
 .full-height {
   height: 100%;
 }
-body[data-theme="default"] #main-content {
+body[data-theme="default"] {
   background: url("img/brushed.png");
 }
 body[data-theme="default"] #editor .file-name-section {
@@ -198,7 +198,7 @@ body[data-theme="default"] #editor .file-name-section {
 body[data-theme="default"] .btn-toolbar {
   background-color: #dddddd;
 }
-body[data-theme="lesser-dark"] #main-content {
+body[data-theme="lesser-dark"] {
   background: url("img/debut_dark.png");
 }
 body[data-theme="lesser-dark"] .navbar {

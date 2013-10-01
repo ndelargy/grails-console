@@ -1,5 +1,5 @@
 ((App, Backbone, JST) ->
-  App.FileCollectionView = Backbone.View.extend
+  App.LocalFilesView = Backbone.View.extend
     attributes:
       class: 'files-view'
 
@@ -12,6 +12,7 @@
 #      @listenTo @collection, 'all', -> @render() # TODO remove
 
     render: ->
+      @collection.fetch() # TODO
       html = JST["file-list"](files: @collection.toJSON())
       @$el.html html
       this
