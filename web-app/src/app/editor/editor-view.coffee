@@ -1,6 +1,6 @@
 ((App, Backbone, CodeMirror, JST) ->
 
-  FileNameView = App.View.extend
+  FileNameView = App.ItemView.extend
     initialize: ->
       html = '<div class="pull-right saving" style="display: none">Saving</div><div class="file-name"></div>'
       @listenTo @model, "change", @render
@@ -11,7 +11,7 @@
       @$(".file-name").html name
       @
 
-  App.EditorView = App.View.extend
+  App.EditorView = App.ItemView.extend
     events:
       'click button[data-function=execute]': "executeCode"
       'click button[data-function]': "onButtonClick"

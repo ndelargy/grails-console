@@ -14,8 +14,7 @@
         return this.listenTo(this.model, "change", this.render, this);
       },
       render: function() {
-        var oThis;
-        oThis = this;
+        var _this = this;
         this.$(".orientation-horizontal").toggleClass("selected", this.model.get("orientation") === "horizontal");
         this.$(".orientation-vertical").toggleClass("selected", this.model.get("orientation") === "vertical");
         this.$(".results-wrap").toggleClass("selected", this.model.get("results.wrapText"));
@@ -25,7 +24,7 @@
         return this.$(".theme").each(function(index, el) {
           var $el;
           $el = $(el);
-          return $el.toggleClass("selected", oThis.model.get("theme") === $el.data("theme"));
+          return $el.toggleClass("selected", _this.model.get("theme") === $el.data("theme"));
         });
       },
       onOrientationHorizontalClick: function(event) {

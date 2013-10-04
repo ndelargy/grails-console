@@ -1,40 +1,31 @@
 (function() {
   (function(App, Backbone) {
-    return App.MainView = App.View.extend({
+    return App.MainView = Backbone.Marionette.Layout.extend({
+      template: 'main',
       attributes: {
         id: "main-content"
       },
+      regions: {
+        editorRegion: '.editor',
+        filesRegion: '.files'
+      },
       initialize: function() {
-        this.editorSectionView = new App.EditorSectionView();
-        this.subviews.push(this.editorSectionView);
+        this.editorSectionView = new App.EditorSectionView;
         return this.filesSectionView = new App.FilesSectionView;
       },
-      render: function() {
-        this.editorSectionView.render();
-        this.$el.append(this.editorSectionView.$el.hide());
-        this.filesSectionView.render();
-        this.$el.append(this.filesSectionView.$el.hide());
-        return this;
+      onRender: function() {
+        this.editorRegion.show(this.editorSectionView);
+        return this.filesRegion.show(this.filesSectionView);
       },
-      refresh: function() {
-        return this.editorSectionView.refresh();
-      },
-      onShow: function() {},
       showEditor: function(file) {
-        if (!this.editorSectionView.$el.is(':visible')) {
-          this.editorSectionView.$el.show();
-          this.filesSectionView.$el.hide();
-          this.editorSectionView.refresh();
-        }
+        this.editorRegion.$el.show();
+        this.filesRegion.$el.hide();
+        this.editorSectionView.refresh();
         return this.editorSectionView.showFile(file);
       },
       showFiles: function() {
-        this.filesSectionView.render();
-        this.filesSectionView.showLocal();
-        if (!this.filesSectionView.$el.is(':visible')) {
-          this.editorSectionView.$el.hide();
-          return this.filesSectionView.$el.show();
-        }
+        this.editorRegion.$el.hide();
+        return this.filesRegion.$el.show();
       }
     });
   })(App, Backbone);

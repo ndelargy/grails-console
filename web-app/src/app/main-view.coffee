@@ -1,42 +1,32 @@
 ((App, Backbone) ->
 
-  App.MainView = App.View.extend
+  App.MainView = Backbone.Marionette.Layout.extend
+
+    template: 'main'
 
     attributes:
       id: "main-content"
 
-    initialize: ->
-      @editorSectionView = new App.EditorSectionView()
-      @subviews.push @editorSectionView
+    regions:
+      editorRegion: '.editor'
+      filesRegion: '.files'
 
-      # TODO lazy
+    initialize: ->
+      @editorSectionView = new App.EditorSectionView
       @filesSectionView = new App.FilesSectionView
 
-    render: ->
-      @editorSectionView.render()
-      @$el.append(@editorSectionView.$el.hide())
-      @filesSectionView.render()
-      @$el.append(@filesSectionView.$el.hide())
-      @
-
-    refresh: ->
-      @editorSectionView.refresh()
-
-    onShow: ->
+    onRender: ->
+      @editorRegion.show @editorSectionView
+      @filesRegion.show @filesSectionView
 
     showEditor: (file) ->
-      unless @editorSectionView.$el.is ':visible'
-        @editorSectionView.$el.show()
-        @filesSectionView.$el.hide()
-        @editorSectionView.refresh()
-
+      @editorRegion.$el.show()
+      @filesRegion.$el.hide()
+      @editorSectionView.refresh()
       @editorSectionView.showFile file
 
     showFiles: ->
-      @filesSectionView.render()
-      @filesSectionView.showLocal()
-      unless @filesSectionView.$el.is ':visible'
-        @editorSectionView.$el.hide()
-        @filesSectionView.$el.show()
+      @editorRegion.$el.hide()
+      @filesRegion.$el.show()
 
 ) App, Backbone

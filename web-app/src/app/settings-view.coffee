@@ -15,19 +15,15 @@
       @listenTo @model, "change", @render, this
 
     render: ->
-      oThis = this
-
-      #            console.log(this.$('.orientation-horizontal'));
       @$(".orientation-horizontal").toggleClass "selected", @model.get("orientation") is "horizontal"
       @$(".orientation-vertical").toggleClass "selected", @model.get("orientation") is "vertical"
       @$(".results-wrap").toggleClass "selected", @model.get("results.wrapText")
       @$(".results-show-script").toggleClass "selected", @model.get("results.showScript")
       @$(".results-show-stdout").toggleClass "selected", @model.get("results.showStdout")
       @$(".results-show-result").toggleClass "selected", @model.get("results.showResult")
-      @$(".theme").each (index, el) ->
+      @$(".theme").each (index, el) =>
         $el = $(el)
-        $el.toggleClass "selected", oThis.model.get("theme") is $el.data("theme")
-
+        $el.toggleClass "selected", @model.get("theme") is $el.data("theme")
 
     onOrientationHorizontalClick: (event) ->
       event.preventDefault()

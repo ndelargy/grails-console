@@ -1,6 +1,6 @@
 ((App, Backbone, JST) ->
 
-  App.EditorSectionView = App.View.extend
+  App.EditorSectionView = App.ItemView.extend
 
     attributes:
       class: "full-height"
@@ -27,6 +27,10 @@
       @showOrientation()
       App.settings.on "change:orientation", @showOrientation, this
       this
+
+    onVisible: ->
+      @log 'onVisible'
+      @refresh()
 
     refresh: ->
       @editorView.refresh()

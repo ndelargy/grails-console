@@ -1,21 +1,25 @@
 ((App, Backbone, JST) ->
-  App.LocalFilesView = Backbone.View.extend
+
+  App.RemoteFilesView = App.ItemView.extend
+
+    template: 'file-list'
+
     attributes:
-      class: 'files-view'
+      class: 'remote-files-view'
 
     events:
       'click a.name': 'onNameClick'
       'click a.delete': 'onDeleteClick'
 
     initialize: ->
-      @template = JST["file-list"]
+#      @template = JST["file-list"]
 #      @listenTo @collection, 'all', -> @render() # TODO remove
 
-    render: ->
-      @collection.fetch() # TODO
-      html = JST["file-list"](files: @collection.toJSON())
-      @$el.html html
-      this
+#    render: ->
+#      @collection.fetch() # TODO
+#      html = JST["file-list"](files: @collection.toJSON())
+#      @$el.html html
+#      this
 
     onNameClick: (event) ->
       event.preventDefault()

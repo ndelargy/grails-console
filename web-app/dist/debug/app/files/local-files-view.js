@@ -1,7 +1,8 @@
 (function() {
   (function(App, Backbone, JST) {
     var RemoteFileStore;
-    App.LocalFilesView = Backbone.View.extend({
+    App.LocalFilesView = Backbone.Marionette.ItemView.extend({
+      template: 'file-list',
       attributes: {
         "class": 'files-view'
       },
@@ -10,17 +11,10 @@
         'click a.delete': 'onDeleteClick'
       },
       initialize: function() {
-        return this.template = JST["file-list"];
+        this.listenTo(this.collection, 'all', this.render);
+        return this.collection.fetch();
       },
-      render: function() {
-        var html;
-        this.collection.fetch();
-        html = JST["file-list"]({
-          files: this.collection.toJSON()
-        });
-        this.$el.html(html);
-        return this;
-      },
+      onBeforeRender: function() {},
       onNameClick: function(event) {
         var file, fileId;
         event.preventDefault();
@@ -37,7 +31,12 @@
         file = this.collection.findWhere({
           id: fileId
         });
-        return file.destroy();
+        if (confirm('Are you sure you want to delete this file?')) {
+          return file.destroy();
+        }
+      },
+      serializeData: function() {
+        return this.collection.toJSON();
       }
     });
     RemoteFileStore = function() {};

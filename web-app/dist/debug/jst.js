@@ -42,7 +42,7 @@ function program1(depth0,data) {
   }
 
   buffer += "<ul class=\"files\">\n  ";
-  stack1 = helpers.each.call(depth0, depth0.files, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  stack1 = helpers.each.call(depth0, depth0, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</ul>";
   return buffer;
@@ -54,7 +54,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"file-store-select\">\n    <ul class=\"nav nav-pills\">\n        <li class=\"active\"><a href=\"#\">Local</a></li>\n        <li><a href=\"#\">Remote</a></li>\n    </ul>\n</div>";
+  return "<div class=\"file-store-select\">\n    <ul class=\"nav nav-pills\">\n        <li class=\"active\"><a href=\"#\">Local</a></li>\n        <li><a href=\"#\">Remote</a></li>\n    </ul>\n</div>\n<div class=\"local\"></div>\n<div class=\"remote\"></div>";
   });
 
 this["JST"]["header"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -64,6 +64,15 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
 
   return "<a class=\"navbar-brand\" href=\"#\">Grails Debug Console</a>\n\n<form class=\"navbar-form pull-right\">\n\n    <button type=\"button\" class=\"btn btn-primary new\">New</button>\n    <button type=\"button\" class=\"btn btn-primary files\">Files</button>\n    <div class=\"btn-group\">\n        <button class=\"clear btn-sm btn btn-default dropdown-toggle\" title=\"(Esc)\" data-toggle=\"dropdown\">\n            <i class=\"icon-cog\"></i>\n            <span class=\"caret\"></span>\n        </button>\n        <ul class=\"dropdown-menu pull-right settings\" role=\"menu\">\n            <li role=\"presentation\" class=\"dropdown-header\">Layout</li>\n            <li><a href=\"#\" class=\"orientation-horizontal\"><i class=\"icon-check\"></i> Horizontal</a></li>\n            <li><a href=\"#\" class=\"orientation-vertical\"><i class=\"icon-check\"></i> Vertical</a></li>\n            <li role=\"presentation\" class=\"divider\"></li>\n            <li role=\"presentation\" class=\"dropdown-header\">Results Pane</li>\n            <li><a href=\"#\" class=\"results-wrap\"><i class=\"icon-check\"></i> Wrap text</a></li>\n            <li><a href=\"#\" class=\"results-show-script\"><i class=\"icon-check\"></i> Show script</a></li>\n            <li><a href=\"#\" class=\"results-show-stdout\"><i class=\"icon-check\"></i> Show stdout</a></li>\n            <li><a href=\"#\" class=\"results-show-result\"><i class=\"icon-check\"></i> Show result</a></li>\n            <li role=\"presentation\" class=\"divider\"></li>\n            <li role=\"presentation\" class=\"dropdown-header\">Theme</li>\n            <li><a href=\"#\" class=\"theme\" data-theme=\"default\"><i class=\"icon-check\"></i> Light</a></li>\n            <li><a href=\"#\" class=\"theme\" data-theme=\"lesser-dark\"><i class=\"icon-check\"></i> Dark</a></li>\n        </ul>\n    </div>\n</form>";
+  });
+
+this["JST"]["main"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<div class='editor full-height'></div>\n<div class='files full-height'></div>";
   });
 
 this["JST"]["result"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

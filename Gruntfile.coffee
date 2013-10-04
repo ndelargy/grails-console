@@ -6,44 +6,48 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON "package.json"
 
     jsSrc: [
-      "web-app/vendor/js/libs/jquery-1.7.1.min.js",
-      "web-app/vendor/js/libs/jquery-ui-1.8.17.custom.min.js",
-      "web-app/vendor/bootstrap/js/bootstrap.min.js",
-      "web-app/vendor/js/libs/underscore-min.js",
-      "web-app/vendor/js/libs/backbone-min.js",
-      "web-app/vendor/js/libs/handlebars.runtime.js",
-      "web-app/vendor/jquery-layout/js/jquery.layout-latest.min.js",
-      "web-app/vendor/js/plugins/jquery.hotkeys.js",
-      "web-app/vendor/codemirror-3.15/lib/codemirror.js",
-      "web-app/vendor/codemirror-3.15/mode/groovy/groovy.js",
-      "web-app/dist/debug/jst.js",
-      "web-app/dist/debug/app/app.js",
-      "web-app/dist/debug/app/view.js",
-      "web-app/dist/debug/app/router.js",
-      "web-app/dist/debug/app/header-view.js",
-      "web-app/dist/debug/app/settings-model.js",
-      "web-app/dist/debug/app/settings-view.js",
-      "web-app/dist/debug/app/result-model.js",
-      "web-app/dist/debug/app/result-collection.js",
-      "web-app/dist/debug/app/result-view.js",
-      "web-app/dist/debug/app/result-collection-view.js",
-      "web-app/dist/debug/app/editor-view.js",
-      "web-app/dist/debug/app/file-model.js",
-      "web-app/dist/debug/app/file-collection.js",
-      "web-app/dist/debug/app/files-section-view.js",
-      "web-app/dist/debug/app/local-files-view.js",
-      "web-app/dist/debug/app/local-file-store.js",
-      "web-app/dist/debug/app/main-view.js",
-      "web-app/dist/debug/app/editor-section-view.js"
+      "web-app/vendor/js/libs/jquery-1.7.1.min.js"
+      "web-app/vendor/js/libs/jquery-ui-1.8.17.custom.min.js"
+      "web-app/vendor/bootstrap/js/bootstrap.min.js"
+      "web-app/vendor/js/libs/underscore-min.js"
+      "web-app/vendor/js/libs/backbone-min.js"
+      "web-app/vendor/js/libs/backbone.marionette.min.js"
+      "web-app/vendor/js/libs/handlebars.runtime.js"
+      "web-app/vendor/jquery-layout/js/jquery.layout-latest.min.js"
+      "web-app/vendor/js/plugins/jquery.hotkeys.js"
+      "web-app/vendor/codemirror-3.15/lib/codemirror.js"
+      "web-app/vendor/codemirror-3.15/mode/groovy/groovy.js"
+      "web-app/dist/debug/jst.js"
+      "web-app/dist/debug/app/app.js"
+      "web-app/dist/debug/app/item-view.js"
+      "web-app/dist/debug/app/router.js"
+      "web-app/dist/debug/app/header-view.js"
+      "web-app/dist/debug/app/settings-model.js"
+      "web-app/dist/debug/app/settings-view.js"
+
+      "web-app/dist/debug/app/editor/result-model.js"
+      "web-app/dist/debug/app/editor/result-collection.js"
+      "web-app/dist/debug/app/editor/result-view.js"
+      "web-app/dist/debug/app/editor/result-collection-view.js"
+      "web-app/dist/debug/app/editor/editor-view.js"
+      "web-app/dist/debug/app/editor/editor-section-view.js"
+
+      "web-app/dist/debug/app/files/file-model.js"
+      "web-app/dist/debug/app/files/file-collection.js"
+      "web-app/dist/debug/app/files/files-section-view.js"
+      "web-app/dist/debug/app/files/local-files-view.js"
+      "web-app/dist/debug/app/files/remote-files-view.js"
+      "web-app/dist/debug/app/files/local-file-store.js"
+      "web-app/dist/debug/app/main-view.js"
     ]
 
     cssSrc: [
-      "web-app/vendor/bootstrap/css/bootstrap.min.css",
-      "web-app/vendor/bootstrap/css/bootstrap-theme.min.css",
-      "web-app/vendor/font-awesome/css/font-awesome.min.css",
-      "web-app/vendor/codemirror-3.15/lib/codemirror.css",
-      "web-app/vendor/codemirror-3.15/theme/lesser-dark.css",
-      "web-app/vendor/jquery-layout/css/jquery.layout.css",
+      "web-app/vendor/bootstrap/css/bootstrap.min.css"
+      "web-app/vendor/bootstrap/css/bootstrap-theme.min.css"
+      "web-app/vendor/font-awesome/css/font-awesome.min.css"
+      "web-app/vendor/codemirror-3.15/lib/codemirror.css"
+      "web-app/vendor/codemirror-3.15/theme/lesser-dark.css"
+      "web-app/vendor/jquery-layout/css/jquery.layout.css"
       "web-app/dist/debug/app.css"
     ]
 

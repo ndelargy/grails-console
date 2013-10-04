@@ -6,6 +6,9 @@
       date = new Date(context);
       return "" + (date.toLocaleDateString()) + " " + (date.toLocaleTimeString());
     });
+    Marionette.Renderer.render = function(template, data) {
+      return JST[template](data);
+    };
     window.App = _.extend({
       start: function(data) {
         var headerView;
@@ -30,7 +33,6 @@
           el: $("#main-content")[0]
         }).render();
         this.mainView.$el.appendTo("body");
-        this.mainView.refresh();
         this.showTheme();
         App.settings.on("change:theme", this.showTheme, this);
         $("body").css("visibility", "visible");

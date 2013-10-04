@@ -4,6 +4,8 @@
     date = new Date(context)
     "#{date.toLocaleDateString()} #{date.toLocaleTimeString()}"
 
+  Marionette.Renderer.render = (template, data) -> JST[template] data
+
 
   # commands
   # show: (file) >
@@ -31,7 +33,7 @@
       headerView.$el.appendTo "body"
       @mainView = new App.MainView(el: $("#main-content")[0]).render()
       @mainView.$el.appendTo "body"
-      @mainView.refresh()
+#      @mainView.refresh()
 
       #            $(document).on('keydown', 'Ctrl+return', _.bind(this.executeCode, this)); TODO
       #            $(document).on('keydown', 'esc', _.bind(this.clearResults, this)); TODO

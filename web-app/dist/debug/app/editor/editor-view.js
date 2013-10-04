@@ -1,7 +1,7 @@
 (function() {
   (function(App, Backbone, CodeMirror, JST) {
     var FileNameView;
-    FileNameView = App.View.extend({
+    FileNameView = App.ItemView.extend({
       initialize: function() {
         var html;
         html = '<div class="pull-right saving" style="display: none">Saving</div><div class="file-name"></div>';
@@ -15,7 +15,7 @@
         return this;
       }
     });
-    return App.EditorView = App.View.extend({
+    return App.EditorView = App.ItemView.extend({
       events: {
         'click button[data-function=execute]': "executeCode",
         'click button[data-function]': "onButtonClick",
