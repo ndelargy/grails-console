@@ -37,6 +37,7 @@ class ConsoleController {
         Map result = [:]
         result.data = baseDir.listFiles().collect { File file ->
             [
+                id: file.absolutePath,
                 name: file.name,
                 lastModified: file.lastModified()
             ]
@@ -44,21 +45,25 @@ class ConsoleController {
         render result as JSON
     }
 
-    def loadFile = {
-        String filename = params.filename
-        Map results = [:]
+    def file = {
+        // TODO DELETE PUT etc...
+        String filename = params.path
+        Map result = [:]
         if (filename) {
             log.info "Opening File $filename"
             def file = new File(filename)
             if (file.isDirectory()) {
-                results.error = "$filename is a directory"
+                result.error = "$filename is a directory"
             } else if (!file.exists() || !file.canRead()) {
-                results.error = "File $filename doesn't exist or cannot be read"
+                result.error = "File $filename doesn't exist or cannot be read"
             } else {
-                results.text = file.text
+                result.id = file.absolutePath
+                result.name = file.name
+                result.lastModified = file.lastModified()
+                result.text = file.text
             }
         }
-        render results as JSON
+        render result as JSON
     }
 
     def saveFile = {

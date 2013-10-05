@@ -122,7 +122,6 @@
       "You have unsaved changes." if @editorView.isDirty()
 
     onShow: ->
-      console.log 'ddd'
       @editor.focus()
 
 ) App, Backbone, CodeMirror, JST

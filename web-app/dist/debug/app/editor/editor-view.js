@@ -150,7 +150,6 @@
         }
       },
       onShow: function() {
-        console.log('ddd');
         return this.editor.focus();
       }
     });

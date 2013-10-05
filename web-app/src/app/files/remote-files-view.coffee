@@ -2,7 +2,7 @@
 
   App.RemoteFilesView = App.ItemView.extend
 
-    template: 'file-list'
+    template: 'remote-files'
 
     attributes:
       class: 'remote-files-view'
@@ -12,20 +12,15 @@
       'click a.delete': 'onDeleteClick'
 
     initialize: ->
-#      @template = JST["file-list"]
-#      @listenTo @collection, 'all', -> @render() # TODO remove
-
-#    render: ->
-#      @collection.fetch() # TODO
-#      html = JST["file-list"](files: @collection.toJSON())
-#      @$el.html html
-#      this
+      @listenTo @collection, 'all', @render
+      @collection.fetch()
 
     onNameClick: (event) ->
       event.preventDefault()
       fileId = $(event.currentTarget).closest('li').data("fileId")
       file = @collection.findWhere(id: fileId)
-      App.router.navigateToFile file
+      file.fetch()
+      App.router.navigateToRemoteFile file
 
     onDeleteClick: (event) ->
       event.preventDefault()
@@ -33,6 +28,9 @@
       file = @collection.findWhere(id: fileId)
       # TODO confirm
       file.destroy()
+
+    serializeData: ->
+      @collection.toJSON()
 
 
   #

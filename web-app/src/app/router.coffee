@@ -12,4 +12,7 @@
     navigateToFile: (file) ->
       @navigate "local/#{file.get('name')}", trigger: true
 
+    navigateToRemoteFile: (file) ->
+      @navigate "remote/#{file.get('name')}", trigger: true
+
 ) App

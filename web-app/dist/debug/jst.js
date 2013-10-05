@@ -54,7 +54,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"file-store-select\">\n    <ul class=\"nav nav-pills\">\n        <li class=\"active\"><a href=\"#\">Local</a></li>\n        <li><a href=\"#\">Remote</a></li>\n    </ul>\n</div>\n<div class=\"local\"></div>\n<div class=\"remote\"></div>";
+  return "<div class=\"file-store-select\">\n    <ul class=\"nav nav-pills\">\n        <li class=\"active\"><a href=\"#\" class=\"local-select\">Local</a></li>\n        <li><a href=\"#\" class=\"remote-select\">Remote</a></li>\n    </ul>\n</div>\n<div class=\"local\"></div>\n<div class=\"remote\"></div>";
   });
 
 this["JST"]["header"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -73,6 +73,36 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
 
   return "<div class='editor full-height'></div>\n<div class='files full-height'></div>";
+  });
+
+this["JST"]["remote-files"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = "", stack1, stack2, options;
+  buffer += "\n      <li data-file-id=\"";
+  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">\n          <span class=\"pull-right\">\n            <span class=\"date\">";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.dateFormatTime || depth0.dateFormatTime),stack1 ? stack1.call(depth0, depth0.lastModified, options) : helperMissing.call(depth0, "dateFormatTime", depth0.lastModified, options)))
+    + "</span>\n            <a class=\"delete\" href=\"#\"><i class=\"icon-trash\"></i></a>\n          </span>\n          <a class=\"name\" href=\"#\">";
+  if (stack2 = helpers.name) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.name; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
+    + "</a>\n      </li>\n  ";
+  return buffer;
+  }
+
+  buffer += "<input type=\"text\" />\n\n<ul class=\"files\">\n  ";
+  stack1 = helpers.each.call(depth0, depth0, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n</ul>";
+  return buffer;
   });
 
 this["JST"]["result"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

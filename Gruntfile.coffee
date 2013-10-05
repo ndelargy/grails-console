@@ -33,7 +33,9 @@ module.exports = (grunt) ->
       "web-app/dist/debug/app/editor/editor-section-view.js"
 
       "web-app/dist/debug/app/files/file-model.js"
+      "web-app/dist/debug/app/files/remote-file-model.js"
       "web-app/dist/debug/app/files/file-collection.js"
+      "web-app/dist/debug/app/files/remote-file-collection.js"
       "web-app/dist/debug/app/files/files-section-view.js"
       "web-app/dist/debug/app/files/local-files-view.js"
       "web-app/dist/debug/app/files/remote-files-view.js"

@@ -72,6 +72,7 @@ body {
   background: transparent url("img/grails.logo.png") no-repeat;
   background-position: 5px center;
   padding-left: 45px;
+  display: none;
 }
 .btn-toolbar {
   padding: 3px;
@@ -144,7 +145,7 @@ label.wrap span {
 .dropdown-menu.settings a.selected i.icon-check {
   visibility: visible;
 }
-.files-view {
+.files-section-view {
   width: 600px;
   padding: 20px;
   margin-left: auto;
@@ -156,34 +157,34 @@ label.wrap span {
   border-color: #ccc;
   border-width: 0 1px;
 }
-.files-view .file-store-select {
+.files-section-view .file-store-select {
   padding: 0 0 10px 0;
 }
-.files-view ul.files {
+.files-section-view ul.files {
   padding: 0;
 }
-.files-view ul.files li {
+.files-section-view ul.files li {
   list-style-type: none;
   padding: 5px 0;
   border-bottom: 1px solid #eee;
 }
-.files-view ul.files li a.name {
+.files-section-view ul.files li a.name {
   color: black;
   font-size: 16px;
 }
-.files-view ul.files li a.delete {
+.files-section-view ul.files li a.delete {
   text-decoration: none;
 }
-.files-view ul.files li .icon-trash {
+.files-section-view ul.files li .icon-trash {
   color: #ddd;
   cursor: pointer;
 }
-.files-view ul.files li .date {
+.files-section-view ul.files li .date {
   color: #888;
   font-size: 12px;
   margin-right: 5px;
 }
-.files-view ul.files li:hover .icon-trash {
+.files-section-view ul.files li:hover .icon-trash {
   color: #000;
 }
 .full-height {

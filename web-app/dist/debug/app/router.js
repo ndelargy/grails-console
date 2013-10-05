@@ -12,6 +12,11 @@
         return this.navigate("local/" + (file.get('name')), {
           trigger: true
         });
+      },
+      navigateToRemoteFile: function(file) {
+        return this.navigate("remote/" + (file.get('name')), {
+          trigger: true
+        });
       }
     });
   })(App);

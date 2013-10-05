@@ -1,0 +1,13 @@
+<input type="text" />
+
+<ul class="files">
+  {{#each this}}
+      <li data-file-id="{{id}}">
+          <span class="pull-right">
+            <span class="date">{{dateFormatTime lastModified}}</span>
+            <a class="delete" href="#"><i class="icon-trash"></i></a>
+          </span>
+          <a class="name" href="#">{{name}}</a>
+      </li>
+  {{/each}}
+</ul>

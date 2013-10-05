@@ -2,7 +2,7 @@
   (function(App, Backbone, JST) {
     var RemoteFileStore;
     App.RemoteFilesView = App.ItemView.extend({
-      template: 'file-list',
+      template: 'remote-files',
       attributes: {
         "class": 'remote-files-view'
       },
@@ -10,7 +10,10 @@
         'click a.name': 'onNameClick',
         'click a.delete': 'onDeleteClick'
       },
-      initialize: function() {},
+      initialize: function() {
+        this.listenTo(this.collection, 'all', this.render);
+        return this.collection.fetch();
+      },
       onNameClick: function(event) {
         var file, fileId;
         event.preventDefault();
@@ -18,7 +21,8 @@
         file = this.collection.findWhere({
           id: fileId
         });
-        return App.router.navigateToFile(file);
+        file.fetch();
+        return App.router.navigateToRemoteFile(file);
       },
       onDeleteClick: function(event) {
         var file, fileId;
@@ -28,6 +32,9 @@
           id: fileId
         });
         return file.destroy();
+      },
+      serializeData: function() {
+        return this.collection.toJSON();
       }
     });
     RemoteFileStore = function() {};
