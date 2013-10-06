@@ -12,10 +12,14 @@
       @
 
   App.EditorView = App.ItemView.extend
+
+    template: 'editor'
+
     events:
       'click button[data-function=execute]': "executeCode"
       'click button[data-function]': "onButtonClick"
       'click button.save': "save"
+      'click button.help': "onHelpClick"
 
     initialize: ->
       $(window).on "beforeunload", => @onBeforeunload() # TODO unload
@@ -24,11 +28,8 @@
       fcn = $(event.currentTarget).data("function")
       @trigger fcn
 
-    render: ->
-      html = JST["editor"]()
-      @$el.html html
+    onRender: ->
       @initEditor()
-      @
 
     resize: ->
       @editor.refresh()
@@ -76,8 +77,9 @@
       @file.get("text") isnt @editor.getValue()
 
     save: ->
-      unless @file.get("name")
-        @prompt "File name", (name) =>
+      if @file.isNew()
+        @prompt (name) =>
+          # TODO store
           @file.set "name", name
           @save()
           App.router.navigate "local/#{name}", trigger: false
@@ -87,15 +89,17 @@
         @file.save()
         @$(".file-name-section .saving").fadeOut()
 
-    prompt: (message, callback) ->
-      $("#newFileName").modal "show"
-      $("#newFileName").find("button.ok").click (event) -> # TODO once
-        value = $("#newFileName").find("input[type=text]").val()
-        $("#newFileName").modal "hide"
+    prompt: (callback) ->
+      $el = $(JST['save-new-file-modal']()) #TODO modal region?
+      $el.modal()
+      $el.find("button.ok").click (event) ->
+        value = $el.find("input[type=text]").val()
+        $el.modal "hide"
         callback value
 
-      $("#myModal").on "hidden.bs.modal", ->
-        # do something…
+      $el.on 'hidden.bs.modal', ->
+        $el.remove()
+        $('.modal-backdrop').remove()
 
     executeCode: ->
       result = new App.Result
@@ -103,7 +107,7 @@
         input: @getValue()
 
       @trigger "execute", result
-      jqxhr = $.post "#{App.data.baseUrl}/console/execute", code: @getValue()
+      jqxhr = $.post "#{App.data.baseUrl}/console/execute", code: @getValue() # TODO App.createLink
 
       jqxhr.done (response) ->
         result.set
@@ -123,5 +127,14 @@
 
     onShow: ->
       @editor.focus()
+
+    onHelpClick: (event) ->
+      event.preventDefault()
+      $el = $(JST['help-modal']())
+      $el.modal()
+      $el.on 'hidden.bs.modal', ->
+        $el.remove()
+        $('.modal-backdrop').remove()
+
 
 ) App, Backbone, CodeMirror, JST

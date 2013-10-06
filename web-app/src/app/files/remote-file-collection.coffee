@@ -8,7 +8,7 @@
 
     comparator: (file) -> file.get("lastModified") * -1
 
-    parse: (response, options) ->
-      response.data
+#    parse: (response, options) ->
+#      response.data
 
 ) App, Backbone

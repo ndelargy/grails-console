@@ -7,11 +7,11 @@ import org.codehaus.groovy.runtime.InvokerHelper
 
 class ConsoleController {
 
-	def consoleService
+    def consoleService
 
-	def index = {
-		[:]
-	}
+    def index = {
+        [:]
+    }
 
     def execute = {
         long startTime = System.currentTimeMillis()
@@ -34,8 +34,8 @@ class ConsoleController {
 
     def listFiles = {
         File baseDir = new File('/Users/mattsheehan/test')
-        Map result = [:]
-        result.data = baseDir.listFiles().collect { File file ->
+        List result
+        result = baseDir.listFiles().collect { File file ->
             [
                 id: file.absolutePath,
                 name: file.name,
@@ -46,24 +46,76 @@ class ConsoleController {
     }
 
     def file = {
-        // TODO DELETE PUT etc...
+        switch (request.method) {
+            case 'GET':
+                doFileGet()
+                break
+            case 'DELETE':
+                doFileDelete()
+                break
+            case 'PUT':
+                doFilePut()
+                break
+            case 'UPDATE':
+                doFileUpdate()
+                break
+        }
+    }
+
+    private doFileGet() {
         String filename = params.path
         Map result = [:]
+        int status = 200
         if (filename) {
             log.info "Opening File $filename"
             def file = new File(filename)
             if (file.isDirectory()) {
                 result.error = "$filename is a directory"
+                status = 400
             } else if (!file.exists() || !file.canRead()) {
                 result.error = "File $filename doesn't exist or cannot be read"
+                status = 400
             } else {
-                result.id = file.absolutePath
-                result.name = file.name
-                result.lastModified = file.lastModified()
-                result.text = file.text
+                result = [
+                    id: file.absolutePath,
+                    name: file.name,
+                    lastModified: file.lastModified(),
+                    text: file.text
+                ]
             }
         }
-        render result as JSON
+        render contentType: 'application/json', text: (result as JSON).toString(), status: status
+    }
+
+    private doFileDelete() {
+        String filename = params.path
+        Map result = [:]
+        int status = 200
+        if (filename) {
+            log.info "Opening File $filename"
+            def file = new File(filename)
+            if (file.isDirectory()) {
+                result.error = "$filename is a directory"
+                status = 400
+            } else if (!file.exists() || !file.canRead()) {
+                result.error = "File $filename doesn't exist or cannot be read"
+                status = 400
+            } else {
+                if (!file.delete()) {
+                    result.error = "File $filename could not be deleted"
+                    status = 400
+                }
+            }
+        }
+        render contentType: 'application/json', text: (result as JSON).toString(), status: status
+    }
+
+    private doFilePut() {
+        throw new UnsupportedOperationException('TODO') // TODO
+    }
+
+    private doFileUpdate() {
+        throw new UnsupportedOperationException('TODO') // TODO
     }
 
     def saveFile = {

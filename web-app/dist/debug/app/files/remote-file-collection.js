@@ -7,9 +7,6 @@
       model: App.RemoteFile,
       comparator: function(file) {
         return file.get("lastModified") * -1;
-      },
-      parse: function(response, options) {
-        return response.data;
       }
     });
   })(App, Backbone);

@@ -16,7 +16,7 @@
 
     initialize: ->
       files = new App.FileCollection
-      files.store = App.localFileStore
+      files.store = App.localFileStore # TODO
       @localFilesView = new App.LocalFilesView
         collection: files
 

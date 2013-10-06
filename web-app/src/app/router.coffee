@@ -3,16 +3,18 @@
   App.Router = Backbone.Router.extend
 
     routes:
-      "local/:file":  "openLocalFile"
-      "remote/*file": "openRemoteFile"
       "new":          "newFile"
       "files":        "files"
       "*path":        "defaultRoute"
 
+    initialize: ->
+      @route /^local:(.*?)$/, 'openLocalFile'
+      @route /^remote:(.*?)$/, 'openRemoteFile'
+
     navigateToFile: (file) ->
-      @navigate "local/#{file.get('name')}", trigger: true
+      @navigate "local:#{file.get('name')}", trigger: true
 
     navigateToRemoteFile: (file) ->
-      @navigate "remote/#{file.get('name')}", trigger: true
+      @navigate "remote:#{file.get('id')}", trigger: true
 
 ) App

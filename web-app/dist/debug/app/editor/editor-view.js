@@ -16,10 +16,12 @@
       }
     });
     return App.EditorView = App.ItemView.extend({
+      template: 'editor',
       events: {
         'click button[data-function=execute]': "executeCode",
         'click button[data-function]': "onButtonClick",
-        'click button.save': "save"
+        'click button.save': "save",
+        'click button.help': "onHelpClick"
       },
       initialize: function() {
         var _this = this;
@@ -32,12 +34,8 @@
         fcn = $(event.currentTarget).data("function");
         return this.trigger(fcn);
       },
-      render: function() {
-        var html;
-        html = JST["editor"]();
-        this.$el.html(html);
-        this.initEditor();
-        return this;
+      onRender: function() {
+        return this.initEditor();
       },
       resize: function() {
         return this.editor.refresh();
@@ -93,8 +91,8 @@
       },
       save: function() {
         var _this = this;
-        if (!this.file.get("name")) {
-          return this.prompt("File name", function(name) {
+        if (this.file.isNew()) {
+          return this.prompt(function(name) {
             _this.file.set("name", name);
             _this.save();
             return App.router.navigate("local/" + name, {
@@ -108,15 +106,20 @@
           return this.$(".file-name-section .saving").fadeOut();
         }
       },
-      prompt: function(message, callback) {
-        $("#newFileName").modal("show");
-        $("#newFileName").find("button.ok").click(function(event) {
+      prompt: function(callback) {
+        var $el;
+        $el = $(JST['save-new-file-modal']());
+        $el.modal();
+        $el.find("button.ok").click(function(event) {
           var value;
-          value = $("#newFileName").find("input[type=text]").val();
-          $("#newFileName").modal("hide");
+          value = $el.find("input[type=text]").val();
+          $el.modal("hide");
           return callback(value);
         });
-        return $("#myModal").on("hidden.bs.modal", function() {});
+        return $el.on('hidden.bs.modal', function() {
+          $el.remove();
+          return $('.modal-backdrop').remove();
+        });
       },
       executeCode: function() {
         var jqxhr, result;
@@ -151,6 +154,16 @@
       },
       onShow: function() {
         return this.editor.focus();
+      },
+      onHelpClick: function(event) {
+        var $el;
+        event.preventDefault();
+        $el = $(JST['help-modal']());
+        $el.modal();
+        return $el.on('hidden.bs.modal', function() {
+          $el.remove();
+          return $('.modal-backdrop').remove();
+        });
       }
     });
   })(App, Backbone, CodeMirror, JST);

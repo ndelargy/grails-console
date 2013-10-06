@@ -19,8 +19,8 @@
       event.preventDefault()
       fileId = $(event.currentTarget).closest('li').data("fileId")
       file = @collection.findWhere(id: fileId)
-      file.fetch()
-      App.router.navigateToRemoteFile file
+      file.fetch().done ->
+        App.router.navigateToRemoteFile file
 
     onDeleteClick: (event) ->
       event.preventDefault()

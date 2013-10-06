@@ -2,17 +2,16 @@
 
   App.EditorSectionView = App.ItemView.extend
 
+    template: 'editor-section'
+
     attributes:
       class: "full-height"
 
-    initialize: ->
-      @template = JST["editor-section"]
-
-    render: ->
-      @$el.html @template()
+    onRender: ->
       @initLayout()
 
-      @editorView = new App.EditorView(el: @$("#editor")[0]).render()
+      @editorView = new App.EditorView(el: @$("#editor")[0])
+      @editorView.render()
       @layout.initContent "center"
       @editorView.resize()
       @subviews.push @editorView

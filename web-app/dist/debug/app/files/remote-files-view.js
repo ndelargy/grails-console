@@ -21,8 +21,9 @@
         file = this.collection.findWhere({
           id: fileId
         });
-        file.fetch();
-        return App.router.navigateToRemoteFile(file);
+        return file.fetch().done(function() {
+          return App.router.navigateToRemoteFile(file);
+        });
       },
       onDeleteClick: function(event) {
         var file, fileId;

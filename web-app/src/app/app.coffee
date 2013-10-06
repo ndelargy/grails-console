@@ -50,27 +50,24 @@
       App.router.on "route:openLocalFile", (name) =>
         file = App.localFileStore.list().findWhere(name: name)
         unless file
-          console.log "TODO: no file"
+          alert 'no find file' # TODO
           return
-        @mainView.showEditor(file)
+        @mainView.showEditor file
 
       App.router.on "route:openRemoteFile", (name) =>
-        jqxhr = $.get(@data.baseUrl + "/console/loadFile",
-          filename: name
-        )
-        jqxhr.done (response) ->
-          file = App.localFileStore.newFile(
-            name: name
-            text: response.text
-          )
-          @mainView.showFile file
+        file = new App.RemoteFile
+          id: name # TODO search by path
+        file.fetch()
+        .done =>
+            @mainView.showEditor file
+        .fail =>
+            alert 'no find file' # TODO parse response?
 
       App.router.on "route:newFile", =>
         file = App.localFileStore.newFile(text: "") # TODO defer store
-        @mainView.showEditor(file)
+        @mainView.showEditor file
 
       App.router.on "route:defaultRoute", ->
-        console.log "TODO: grab the last file."
         router.navigate "new", trigger: true
 
       App.router.on "route:files", =>
@@ -84,20 +81,5 @@
       "#{@data.baseUrl}/console/#{action}"
 
   , Backbone.Events
-
-
-  remoteFileStore =
-    load: (fileName) ->
-      jqxhr = $.get(gconsole.data.baseUrl + "/console/loadFile",
-        filename: fileName
-      )
-      jqxhr.done (response) ->
-        file = new File(fileName, response.text)
-        gconsole.showFile file
-
-
-    save: (file) ->
-      @lastModified = new Date()
-      localStorage.setItem "file." + file.name, JSON.stringify(file)
 
 ) jQuery, _, Backbone, JST

@@ -1,6 +1,5 @@
 (function() {
   (function($, _, Backbone, JST) {
-    var remoteFileStore;
     Handlebars.registerHelper("dateFormatTime", function(context) {
       var date;
       date = new Date(context);
@@ -9,7 +8,7 @@
     Marionette.Renderer.render = function(template, data) {
       return JST[template](data);
     };
-    window.App = _.extend({
+    return window.App = _.extend({
       start: function(data) {
         var headerView;
         this.data = data;
@@ -51,23 +50,20 @@
             name: name
           });
           if (!file) {
-            console.log("TODO: no file");
+            alert('no find file');
             return;
           }
           return _this.mainView.showEditor(file);
         });
         App.router.on("route:openRemoteFile", function(name) {
-          var jqxhr;
-          jqxhr = $.get(_this.data.baseUrl + "/console/loadFile", {
-            filename: name
+          var file;
+          file = new App.RemoteFile({
+            id: name
           });
-          return jqxhr.done(function(response) {
-            var file;
-            file = App.localFileStore.newFile({
-              name: name,
-              text: response.text
-            });
-            return this.mainView.showFile(file);
+          return file.fetch().done(function() {
+            return _this.mainView.showEditor(file);
+          }).fail(function() {
+            return alert('no find file');
           });
         });
         App.router.on("route:newFile", function() {
@@ -78,7 +74,6 @@
           return _this.mainView.showEditor(file);
         });
         App.router.on("route:defaultRoute", function() {
-          console.log("TODO: grab the last file.");
           return router.navigate("new", {
             trigger: true
           });
@@ -96,23 +91,6 @@
         return "" + this.data.baseUrl + "/console/" + action;
       }
     }, Backbone.Events);
-    return remoteFileStore = {
-      load: function(fileName) {
-        var jqxhr;
-        jqxhr = $.get(gconsole.data.baseUrl + "/console/loadFile", {
-          filename: fileName
-        });
-        return jqxhr.done(function(response) {
-          var file;
-          file = new File(fileName, response.text);
-          return gconsole.showFile(file);
-        });
-      },
-      save: function(file) {
-        this.lastModified = new Date();
-        return localStorage.setItem("file." + file.name, JSON.stringify(file));
-      }
-    };
   })(jQuery, _, Backbone, JST);
 
 }).call(this);

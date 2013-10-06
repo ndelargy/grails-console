@@ -1,18 +1,16 @@
 (function() {
   (function(App, Backbone, JST) {
     return App.EditorSectionView = App.ItemView.extend({
+      template: 'editor-section',
       attributes: {
         "class": "full-height"
       },
-      initialize: function() {
-        return this.template = JST["editor-section"];
-      },
-      render: function() {
-        this.$el.html(this.template());
+      onRender: function() {
         this.initLayout();
         this.editorView = new App.EditorView({
           el: this.$("#editor")[0]
-        }).render();
+        });
+        this.editorView.render();
         this.layout.initContent("center");
         this.editorView.resize();
         this.subviews.push(this.editorView);
