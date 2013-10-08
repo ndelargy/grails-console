@@ -5,7 +5,7 @@
     template: 'main'
 
     attributes:
-      id: "main-content"
+      id: 'main-content'
 
     regions:
       editorRegion: '.editor'

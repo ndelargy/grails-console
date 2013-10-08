@@ -1,7 +1,6 @@
 (function() {
   (function(App, Backbone, JST) {
-    var RemoteFileStore;
-    App.RemoteFilesView = App.ItemView.extend({
+    return App.RemoteFilesView = App.ItemView.extend({
       template: 'remote-files',
       attributes: {
         "class": 'remote-files-view'
@@ -32,22 +31,12 @@
         file = this.collection.findWhere({
           id: fileId
         });
-        return file.destroy();
+        if (confirm('Are you sure you want to delete this file?')) {
+          return file.destroy();
+        }
       },
       serializeData: function() {
         return this.collection.toJSON();
-      }
-    });
-    RemoteFileStore = function() {};
-    return _.extend(RemoteFileStore.prototype, {
-      listFiles: function() {
-        return $.get("xxx/listFiles");
-      },
-      getFileText: function(name) {
-        return $.get("xxx/getFileText");
-      },
-      saveFile: function(file) {
-        return $.get("xxx/saveFile");
       }
     });
   })(App, Backbone, JST);

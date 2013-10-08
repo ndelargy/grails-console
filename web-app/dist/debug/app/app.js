@@ -57,9 +57,10 @@
         });
         App.router.on("route:openRemoteFile", function(name) {
           var file;
-          file = new App.RemoteFile({
+          file = new App.File({
             id: name
           });
+          file.local = false;
           return file.fetch().done(function() {
             return _this.mainView.showEditor(file);
           }).fail(function() {
@@ -87,8 +88,13 @@
         theme = App.settings.get("theme");
         return $("body").attr("data-theme", theme);
       },
-      createLink: function(action) {
-        return "" + this.data.baseUrl + "/console/" + action;
+      createLink: function(action, params) {
+        var link;
+        link = "" + this.data.baseUrl + "/console/" + action;
+        if (params) {
+          link += '?' + $.param(params, true);
+        }
+        return link;
       }
     }, Backbone.Events);
   })(jQuery, _, Backbone, JST);

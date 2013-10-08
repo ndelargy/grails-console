@@ -56,8 +56,8 @@ class ConsoleController {
             case 'PUT':
                 doFilePut()
                 break
-            case 'UPDATE':
-                doFileUpdate()
+            case 'POST':
+                doFilePost()
                 break
         }
     }
@@ -76,12 +76,7 @@ class ConsoleController {
                 result.error = "File $filename doesn't exist or cannot be read"
                 status = 400
             } else {
-                result = [
-                    id: file.absolutePath,
-                    name: file.name,
-                    lastModified: file.lastModified(),
-                    text: file.text
-                ]
+                result = fileToJson(file)
             }
         }
         render contentType: 'application/json', text: (result as JSON).toString(), status: status
@@ -97,8 +92,8 @@ class ConsoleController {
             if (file.isDirectory()) {
                 result.error = "$filename is a directory"
                 status = 400
-            } else if (!file.exists() || !file.canRead()) {
-                result.error = "File $filename doesn't exist or cannot be read"
+            } else if (!file.exists() || !file.canWrite()) {
+                result.error = "File $filename doesn't exist or cannot be deleted"
                 status = 400
             } else {
                 if (!file.delete()) {
@@ -111,11 +106,62 @@ class ConsoleController {
     }
 
     private doFilePut() {
-        throw new UnsupportedOperationException('TODO') // TODO
+        String filename = params.path
+        def json = request.JSON
+        Map result = [:]
+        int status = 200
+        if (filename) {
+            log.info "Opening File $filename"
+            def file = new File(filename)
+            if (file.isDirectory()) {
+                result.error = "$filename is a directory"
+                status = 400
+            } else if (!file.exists() || !file.canWrite()) {
+                result.error = "File $filename doesn't exist or cannot be modified"
+                status = 400
+            } else {
+                try {
+                    file.write json.text
+                } catch (e) {
+                    result.error = "File $filename could not be modified"
+                    status = 400
+                }
+            }
+        }
+        render contentType: 'application/json', text: (result as JSON).toString(), status: status
     }
 
-    private doFileUpdate() {
-        throw new UnsupportedOperationException('TODO') // TODO
+    private doFilePost() {
+        def json = request.JSON
+        Map result = [:]
+        int status = 200
+        File baseDir = new File('/Users/mattsheehan/test')
+        def file = new File(baseDir, json.name)
+//        if (file.isDirectory()) {
+//            result.error = "$filename is a directory"
+//            status = 400
+//        } else if (!file.exists() || !file.canWrite()) {
+//            result.error = "File $filename doesn't exist or cannot be modified"
+//            status = 400
+//        } else {
+            try {
+                file.write json.text
+                result = fileToJson(file)
+            } catch (e) {
+                result.error = "File $filename could not be modified"
+                status = 400
+            }
+//        }
+        render contentType: 'application/json', text: (result as JSON).toString(), status: status
+    }
+
+    private fileToJson(File file) {
+        [
+            id: file.absolutePath,
+            name: file.name,
+            lastModified: file.lastModified(),
+            text: file.text
+        ]
     }
 
     def saveFile = {

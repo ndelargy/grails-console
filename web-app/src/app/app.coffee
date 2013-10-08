@@ -55,8 +55,9 @@
         @mainView.showEditor file
 
       App.router.on "route:openRemoteFile", (name) =>
-        file = new App.RemoteFile
+        file = new App.File
           id: name # TODO search by path
+        file.local = false
         file.fetch()
         .done =>
             @mainView.showEditor file
@@ -77,8 +78,12 @@
       theme = App.settings.get("theme")
       $("body").attr "data-theme", theme
 
-    createLink: (action) ->
-      "#{@data.baseUrl}/console/#{action}"
+    createLink: (action, params) ->
+      link = "#{@data.baseUrl}/console/#{action}"
+      if params
+        link += '?' + $.param params, true
+
+      link
 
   , Backbone.Events
 

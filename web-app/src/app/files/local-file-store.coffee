@@ -12,9 +12,7 @@
       @_load()
 
     list: ->
-      collection = new App.FileCollection(@fetch())
-      collection.store = @
-      collection
+      new App.FileCollection(@fetch())
 
     fetch: ->
       _.values @data
@@ -56,10 +54,7 @@
         @data = {}
 
     newFile: (data) ->
-      file = new App.File(data)
-      file.sync = _.bind(@sync, this)
-      # TODO
-      file
+      new App.File(data)
 
     sync: (method, file, options) ->
       resp = undefined
@@ -79,4 +74,6 @@
       if resp
         options.success resp
       else
-        options.error "Record not found") App, _, localStorage, JSON, jQuery
+        options.error "Record not found"
+
+) App, _, localStorage, JSON, jQuery

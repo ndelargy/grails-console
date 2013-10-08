@@ -26,37 +26,9 @@
       event.preventDefault()
       fileId = $(event.currentTarget).closest('li').data("fileId")
       file = @collection.findWhere(id: fileId)
-      # TODO confirm
-      file.destroy()
+      file.destroy() if confirm 'Are you sure you want to delete this file?'
 
     serializeData: ->
       @collection.toJSON()
 
-
-  #
-  #    local
-  #    - load all on start
-  #    - save one
-  #
-  #    remote
-  #    - list
-  #     
-  RemoteFileStore = ->
-
-  _.extend RemoteFileStore::,
-    listFiles: ->
-      $.get "xxx/listFiles"
-
-
-  #dfd
-    getFileText: (name) ->
-      $.get "xxx/getFileText"
-
-
-  #dfd
-    saveFile: (file) ->
-      $.get "xxx/saveFile"
-
-
-#dfd
 ) App, Backbone, JST

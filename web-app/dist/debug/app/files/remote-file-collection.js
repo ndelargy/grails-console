@@ -4,9 +4,10 @@
       url: function() {
         return App.createLink('listFiles');
       },
-      model: App.RemoteFile,
+      model: App.File,
+      isLocal: false,
       comparator: function(file) {
-        return file.get("lastModified") * -1;
+        return file.get('lastModified') * -1;
       }
     });
   })(App, Backbone);

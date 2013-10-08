@@ -3,7 +3,7 @@
     return App.MainView = Backbone.Marionette.Layout.extend({
       template: 'main',
       attributes: {
-        id: "main-content"
+        id: 'main-content'
       },
       regions: {
         editorRegion: '.editor',

@@ -21,7 +21,7 @@
       event.preventDefault()
       fileId = $(event.currentTarget).closest('li').data("fileId")
       file = @collection.findWhere(id: fileId)
-      App.router.navigateToFile file
+      App.router.navigateToFile file, trigger: true
 
     onDeleteClick: (event) ->
       event.preventDefault()

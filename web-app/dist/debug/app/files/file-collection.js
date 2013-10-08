@@ -2,6 +2,7 @@
   (function(App, Backbone) {
     return App.FileCollection = Backbone.Collection.extend({
       model: App.File,
+      isLocal: true,
       comparator: function(file) {
         return file.get("lastModified") * -1;
       },

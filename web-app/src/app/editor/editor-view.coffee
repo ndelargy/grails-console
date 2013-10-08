@@ -78,24 +78,31 @@
 
     save: ->
       if @file.isNew()
-        @prompt (name) =>
-          # TODO store
-          @file.set "name", name
-          @save()
-          App.router.navigate "local/#{name}", trigger: false
+        @prompt()
       else
         @$(".file-name-section .saving").show()
         @file.set "text", @editor.getValue()
         @file.save()
         @$(".file-name-section .saving").fadeOut()
 
-    prompt: (callback) ->
+    prompt: () ->
       $el = $(JST['save-new-file-modal']()) #TODO modal region?
       $el.modal()
-      $el.find("button.ok").click (event) ->
-        value = $el.find("input[type=text]").val()
+      $el.find("input[type=text]").focus()
+      $el.find("button.ok").click (event) =>
+        name = $el.find("input[type=text]").val()
+        store = $('input[name=store]:checked').val()
+
+        @file.set "name", name
+        @file.local = store is 'local'
+
+        @$(".file-name-section .saving").show() # TODO copied
+        @file.set "text", @editor.getValue()
+        @file.save().then =>
+          @$(".file-name-section .saving").fadeOut()
+          App.router.navigateToFile @file, trigger: false
+
         $el.modal "hide"
-        callback value
 
       $el.on 'hidden.bs.modal', ->
         $el.remove()

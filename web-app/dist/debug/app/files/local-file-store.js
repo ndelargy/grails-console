@@ -14,10 +14,7 @@
       }
 
       LocalFileStore.prototype.list = function() {
-        var collection;
-        collection = new App.FileCollection(this.fetch());
-        collection.store = this;
-        return collection;
+        return new App.FileCollection(this.fetch());
       };
 
       LocalFileStore.prototype.fetch = function() {
@@ -72,10 +69,7 @@
       };
 
       LocalFileStore.prototype.newFile = function(data) {
-        var file;
-        file = new App.File(data);
-        file.sync = _.bind(this.sync, this);
-        return file;
+        return new App.File(data);
       };
 
       LocalFileStore.prototype.sync = function(method, file, options) {

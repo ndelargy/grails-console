@@ -10,10 +10,12 @@
         this.route(/^local:(.*?)$/, 'openLocalFile');
         return this.route(/^remote:(.*?)$/, 'openRemoteFile');
       },
-      navigateToFile: function(file) {
-        return this.navigate("local:" + (file.get('name')), {
-          trigger: true
-        });
+      navigateToFile: function(file, options) {
+        if (file.isLocal()) {
+          return this.navigate("local:" + (file.get('name')), options);
+        } else {
+          return this.navigate("remote:" + file.id, options);
+        }
       },
       navigateToRemoteFile: function(file) {
         return this.navigate("remote:" + (file.get('id')), {

@@ -11,8 +11,11 @@
       @route /^local:(.*?)$/, 'openLocalFile'
       @route /^remote:(.*?)$/, 'openRemoteFile'
 
-    navigateToFile: (file) ->
-      @navigate "local:#{file.get('name')}", trigger: true
+    navigateToFile: (file, options) ->
+      if file.isLocal()
+        @navigate "local:#{file.get('name')}", options
+      else
+        @navigate "remote:#{file.id}", options
 
     navigateToRemoteFile: (file) ->
       @navigate "remote:#{file.get('id')}", trigger: true

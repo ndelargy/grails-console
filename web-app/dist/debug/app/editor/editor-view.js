@@ -90,15 +90,8 @@
         return this.file.get("text") !== this.editor.getValue();
       },
       save: function() {
-        var _this = this;
         if (this.file.isNew()) {
-          return this.prompt(function(name) {
-            _this.file.set("name", name);
-            _this.save();
-            return App.router.navigate("local/" + name, {
-              trigger: false
-            });
-          });
+          return this.prompt();
         } else {
           this.$(".file-name-section .saving").show();
           this.file.set("text", this.editor.getValue());
@@ -106,15 +99,27 @@
           return this.$(".file-name-section .saving").fadeOut();
         }
       },
-      prompt: function(callback) {
-        var $el;
+      prompt: function() {
+        var $el,
+          _this = this;
         $el = $(JST['save-new-file-modal']());
         $el.modal();
+        $el.find("input[type=text]").focus();
         $el.find("button.ok").click(function(event) {
-          var value;
-          value = $el.find("input[type=text]").val();
-          $el.modal("hide");
-          return callback(value);
+          var name, store;
+          name = $el.find("input[type=text]").val();
+          store = $('input[name=store]:checked').val();
+          _this.file.set("name", name);
+          _this.file.local = store === 'local';
+          _this.$(".file-name-section .saving").show();
+          _this.file.set("text", _this.editor.getValue());
+          _this.file.save().then(function() {
+            _this.$(".file-name-section .saving").fadeOut();
+            return App.router.navigateToFile(_this.file, {
+              trigger: false
+            });
+          });
+          return $el.modal("hide");
         });
         return $el.on('hidden.bs.modal', function() {
           $el.remove();

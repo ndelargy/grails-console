@@ -4,11 +4,10 @@
 
     url: -> App.createLink 'listFiles'
 
-    model: App.RemoteFile
+    model: App.File
 
-    comparator: (file) -> file.get("lastModified") * -1
+    isLocal: false
 
-#    parse: (response, options) ->
-#      response.data
+    comparator: (file) -> file.get('lastModified') * -1
 
 ) App, Backbone
