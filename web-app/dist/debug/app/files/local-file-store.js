@@ -68,12 +68,8 @@
         }
       };
 
-      LocalFileStore.prototype.newFile = function(data) {
-        return new App.File(data);
-      };
-
       LocalFileStore.prototype.sync = function(method, file, options) {
-        var resp;
+        var dfd, resp;
         resp = void 0;
         switch (method) {
           case "read":
@@ -88,11 +84,14 @@
           case "delete":
             resp = this.destroy(file);
         }
+        dfd = $.Deferred();
+        dfd.resolveWith(this, resp);
         if (resp) {
-          return options.success(resp);
+          options.success(resp);
         } else {
-          return options.error("Record not found");
+          options.error("Record not found");
         }
+        return dfd;
       };
 
       return LocalFileStore;

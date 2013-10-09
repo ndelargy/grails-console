@@ -6,11 +6,6 @@
 
   Marionette.Renderer.render = (template, data) -> JST[template] data
 
-
-  # commands
-  # show: (file) >
-  # files: ->
-
   window.App = _.extend
     start: (data) ->
       @data = data
@@ -65,7 +60,7 @@
             alert 'no find file' # TODO parse response?
 
       App.router.on "route:newFile", =>
-        file = App.localFileStore.newFile(text: "") # TODO defer store
+        file = new App.File()
         @mainView.showEditor file
 
       App.router.on "route:defaultRoute", ->

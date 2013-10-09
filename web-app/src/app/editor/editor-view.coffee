@@ -1,15 +1,8 @@
 ((App, Backbone, CodeMirror, JST) ->
 
   FileNameView = App.ItemView.extend
-    initialize: ->
-      html = '<div class="pull-right saving" style="display: none">Saving</div><div class="file-name"></div>'
-      @listenTo @model, "change", @render
-      @$el.html html
 
-    render: ->
-      name = @model.get("name") or "&nbsp;"
-      @$(".file-name").html name
-      @
+    template: 'file-name'
 
   App.EditorView = App.ItemView.extend
 
@@ -48,7 +41,7 @@
         theme: "lesser-dark"
       )
       @editor.focus()
-      @editor.setValue ""
+      @editor.setValue ''
       @listenTo App.settings, 'change:theme', @setTheme
       @setTheme()
 
@@ -68,7 +61,8 @@
       @file = file
       @fileNameView.remove()  if @fileNameView
       @fileNameView = new FileNameView(model: file)
-      @$(".file-name-section").html @fileNameView.render().el
+      @fileNameView.render()
+      @$(".file-name-section").html @fileNameView.el
       @editor.setValue @file.get("text")
       @editor.refresh()
       @editor.focus()

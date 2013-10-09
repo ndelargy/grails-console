@@ -2,6 +2,9 @@
 
     App.File = Backbone.Model.extend
 
+      defaults:
+        text: ''
+
       isLocal: ->
         @local is true or @collection?.isLocal is true
 

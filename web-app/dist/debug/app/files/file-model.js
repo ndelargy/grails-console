@@ -1,6 +1,9 @@
 (function() {
   (function(App, Backbone) {
     return App.File = Backbone.Model.extend({
+      defaults: {
+        text: ''
+      },
       isLocal: function() {
         var _ref;
         return this.local === true || ((_ref = this.collection) != null ? _ref.isLocal : void 0) === true;

@@ -69,9 +69,7 @@
         });
         App.router.on("route:newFile", function() {
           var file;
-          file = App.localFileStore.newFile({
-            text: ""
-          });
+          file = new App.File();
           return _this.mainView.showEditor(file);
         });
         App.router.on("route:defaultRoute", function() {

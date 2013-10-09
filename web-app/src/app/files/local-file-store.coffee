@@ -53,14 +53,9 @@
       catch e
         @data = {}
 
-    newFile: (data) ->
-      new App.File(data)
-
     sync: (method, file, options) ->
       resp = undefined
 
-      #            var store = model.localStorage || model.collection.localStorage;
-      #            var dfd = $.Deferred();
       switch method
         when "read"
           resp = if file.id then @find(file) else @fetch()
@@ -70,10 +65,15 @@
           resp = @update(file) # save
         when "delete"
           resp = @destroy(file)
-      # destroy
+
+      dfd = $.Deferred()
+      dfd.resolveWith @, resp
+
       if resp
         options.success resp
       else
         options.error "Record not found"
+
+      dfd
 
 ) App, _, localStorage, JSON, jQuery

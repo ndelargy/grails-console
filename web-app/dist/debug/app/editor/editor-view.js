@@ -2,18 +2,7 @@
   (function(App, Backbone, CodeMirror, JST) {
     var FileNameView;
     FileNameView = App.ItemView.extend({
-      initialize: function() {
-        var html;
-        html = '<div class="pull-right saving" style="display: none">Saving</div><div class="file-name"></div>';
-        this.listenTo(this.model, "change", this.render);
-        return this.$el.html(html);
-      },
-      render: function() {
-        var name;
-        name = this.model.get("name") || "&nbsp;";
-        this.$(".file-name").html(name);
-        return this;
-      }
+      template: 'file-name'
     });
     return App.EditorView = App.ItemView.extend({
       template: 'editor',
@@ -57,7 +46,7 @@
           theme: "lesser-dark"
         });
         this.editor.focus();
-        this.editor.setValue("");
+        this.editor.setValue('');
         this.listenTo(App.settings, 'change:theme', this.setTheme);
         return this.setTheme();
       },
@@ -81,7 +70,8 @@
         this.fileNameView = new FileNameView({
           model: file
         });
-        this.$(".file-name-section").html(this.fileNameView.render().el);
+        this.fileNameView.render();
+        this.$(".file-name-section").html(this.fileNameView.el);
         this.editor.setValue(this.file.get("text"));
         this.editor.refresh();
         return this.editor.focus();
