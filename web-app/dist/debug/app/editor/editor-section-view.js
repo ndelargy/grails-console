@@ -21,10 +21,12 @@
         this.listenTo(this.editorView, "execute", function(result) {
           return this.resultCollection.add(result);
         });
-        this.editorView.on("clear", this.clearResults, this);
+        this.listenTo(this.editorView, "save", function(text) {
+          return this.trigger('save', text);
+        });
+        this.listenTo(this.editorView, "clear", this.clearResults);
         this.showOrientation();
-        App.settings.on("change:orientation", this.showOrientation, this);
-        return this;
+        return this.listenTo(App.settings, "change:orientation", this.showOrientation);
       },
       onVisible: function() {
         this.log('onVisible');
@@ -80,8 +82,8 @@
         }
         return this.editorView.refresh();
       },
-      showFile: function(file) {
-        return this.editorView.showFile(file);
+      setValue: function(text) {
+        return this.editorView.setValue(text);
       },
       clearResults: function() {
         return this.resultsView.clear();

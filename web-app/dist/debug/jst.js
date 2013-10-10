@@ -15,7 +15,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"btn-toolbar\">\n    <div class=\"btn-group\">\n        <button class=\"submit btn btn-default\" title=\"(Ctrl + Enter)\" data-function=\"execute\"><i class=\"icon-play\"></i></button>\n        <button class=\"save btn btn-default\"><i class=\"icon-save\"></i></button>\n        <button class=\"btn btn-default\" data-function=\"fork\"><i class=\"icon-code-fork\"></i></button>\n        <button class=\"help btn btn-default\"><i class=\"icon-question\"></i></button>\n    </div>\n</div>\n<div class=\"file-name-section\"></div>\n\n<div id=\"code-wrapper\" class=\"ui-layout-content\">\n    <textarea name=\"code\" rows=\"25\" cols=\"100\"></textarea>\n</div>";
+  return "<div class=\"btn-toolbar\">\n    <div class=\"btn-group\">\n        <button class=\"submit btn btn-default\" title=\"(Ctrl + Enter)\" data-function=\"execute\"><i class=\"icon-play\"></i></button>\n        <button class=\"save btn btn-default\"><i class=\"icon-save\"></i></button>\n        <button class=\"btn btn-default\" data-function=\"fork\"><i class=\"icon-code-fork\"></i></button>\n        <button class=\"help btn btn-default\"><i class=\"icon-question\"></i></button>\n    </div>\n</div>\n<div id=\"code-wrapper\" class=\"ui-layout-content\">\n    <textarea name=\"code\" rows=\"25\" cols=\"100\"></textarea>\n</div>";
   });
 
 this["JST"]["file-list"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -45,20 +45,6 @@ function program1(depth0,data) {
   stack1 = helpers.each.call(depth0, depth0, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</ul>";
-  return buffer;
-  });
-
-this["JST"]["file-name"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
-
-
-  buffer += "<div class=\"pull-right saving\" style=\"display: none\">Saving</div><div class=\"file-name\">";
-  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "</div>";
   return buffer;
   });
 

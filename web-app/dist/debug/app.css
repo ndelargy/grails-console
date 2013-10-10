@@ -192,9 +192,6 @@ label.wrap span {
 body[data-theme="default"] {
   background: url("img/brushed.png");
 }
-body[data-theme="default"] #editor .file-name-section {
-  background-color: #eee;
-}
 body[data-theme="default"] .btn-toolbar {
   background-color: #dddddd;
 }
@@ -210,9 +207,6 @@ body[data-theme="lesser-dark"] .navbar .navbar-brand {
 }
 body[data-theme="lesser-dark"] .btn-toolbar {
   background-color: #888;
-}
-body[data-theme="lesser-dark"] #editor .file-name-section {
-  background-color: #eee;
 }
 body[data-theme="lesser-dark"] .ui-layout-resizer {
   background-color: #aaa;

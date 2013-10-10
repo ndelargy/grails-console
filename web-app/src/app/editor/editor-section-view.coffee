@@ -22,10 +22,12 @@
       @listenTo @editorView, "execute", (result) ->
         @resultCollection.add result
 
-      @editorView.on "clear", @clearResults, this
+      @listenTo @editorView, "save", (text) ->
+        @trigger 'save', text
+
+      @listenTo @editorView, "clear", @clearResults
       @showOrientation()
-      App.settings.on "change:orientation", @showOrientation, this
-      this
+      @listenTo App.settings, "change:orientation", @showOrientation
 
     onVisible: ->
       @log 'onVisible'
@@ -73,8 +75,8 @@
         @layout.initContent "south"
       @editorView.refresh()
 
-    showFile: (file) ->
-      @editorView.showFile file
+    setValue: (text) ->
+      @editorView.setValue text
 
     clearResults: ->
       @resultsView.clear()

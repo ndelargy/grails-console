@@ -25,6 +25,8 @@
       @triggerMethod "render", @
       @triggerMethod "item:rendered", @
 
+      @
+
     renderHtml: (data) ->
       template = @getTemplate()
       Marionette.Renderer.render template, data

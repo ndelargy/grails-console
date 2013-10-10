@@ -1,9 +1,5 @@
 ((App, Backbone, CodeMirror, JST) ->
 
-  FileNameView = App.ItemView.extend
-
-    template: 'file-name'
-
   App.EditorView = App.ItemView.extend
 
     template: 'editor'
@@ -57,50 +53,13 @@
     refresh: ->
       @editor.refresh()
 
-    showFile: (file) ->
-      @file = file
-      @fileNameView.remove()  if @fileNameView
-      @fileNameView = new FileNameView(model: file)
-      @fileNameView.render()
-      @$(".file-name-section").html @fileNameView.el
-      @editor.setValue @file.get("text")
+    setValue: (text) ->
+      @editor.setValue text
       @editor.refresh()
       @editor.focus()
 
-    isDirty: ->
-      @file.get("text") isnt @editor.getValue()
-
     save: ->
-      if @file.isNew()
-        @prompt()
-      else
-        @$(".file-name-section .saving").show()
-        @file.set "text", @editor.getValue()
-        @file.save()
-        @$(".file-name-section .saving").fadeOut()
-
-    prompt: () ->
-      $el = $(JST['save-new-file-modal']()) #TODO modal region?
-      $el.modal()
-      $el.find("input[type=text]").focus()
-      $el.find("button.ok").click (event) =>
-        name = $el.find("input[type=text]").val()
-        store = $('input[name=store]:checked').val()
-
-        @file.set "name", name
-        @file.local = store is 'local'
-
-        @$(".file-name-section .saving").show() # TODO copied
-        @file.set "text", @editor.getValue()
-        @file.save().then =>
-          @$(".file-name-section .saving").fadeOut()
-          App.router.navigateToFile @file, trigger: false
-
-        $el.modal "hide"
-
-      $el.on 'hidden.bs.modal', ->
-        $el.remove()
-        $('.modal-backdrop').remove()
+      @trigger 'save', @editor.getValue()
 
     executeCode: ->
       result = new App.Result

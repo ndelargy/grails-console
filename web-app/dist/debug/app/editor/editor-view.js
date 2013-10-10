@@ -1,9 +1,5 @@
 (function() {
   (function(App, Backbone, CodeMirror, JST) {
-    var FileNameView;
-    FileNameView = App.ItemView.extend({
-      template: 'file-name'
-    });
     return App.EditorView = App.ItemView.extend({
       template: 'editor',
       events: {
@@ -62,59 +58,13 @@
       refresh: function() {
         return this.editor.refresh();
       },
-      showFile: function(file) {
-        this.file = file;
-        if (this.fileNameView) {
-          this.fileNameView.remove();
-        }
-        this.fileNameView = new FileNameView({
-          model: file
-        });
-        this.fileNameView.render();
-        this.$(".file-name-section").html(this.fileNameView.el);
-        this.editor.setValue(this.file.get("text"));
+      setValue: function(text) {
+        this.editor.setValue(text);
         this.editor.refresh();
         return this.editor.focus();
       },
-      isDirty: function() {
-        return this.file.get("text") !== this.editor.getValue();
-      },
       save: function() {
-        if (this.file.isNew()) {
-          return this.prompt();
-        } else {
-          this.$(".file-name-section .saving").show();
-          this.file.set("text", this.editor.getValue());
-          this.file.save();
-          return this.$(".file-name-section .saving").fadeOut();
-        }
-      },
-      prompt: function() {
-        var $el,
-          _this = this;
-        $el = $(JST['save-new-file-modal']());
-        $el.modal();
-        $el.find("input[type=text]").focus();
-        $el.find("button.ok").click(function(event) {
-          var name, store;
-          name = $el.find("input[type=text]").val();
-          store = $('input[name=store]:checked').val();
-          _this.file.set("name", name);
-          _this.file.local = store === 'local';
-          _this.$(".file-name-section .saving").show();
-          _this.file.set("text", _this.editor.getValue());
-          _this.file.save().then(function() {
-            _this.$(".file-name-section .saving").fadeOut();
-            return App.router.navigateToFile(_this.file, {
-              trigger: false
-            });
-          });
-          return $el.modal("hide");
-        });
-        return $el.on('hidden.bs.modal', function() {
-          $el.remove();
-          return $('.modal-backdrop').remove();
-        });
+        return this.trigger('save', this.editor.getValue());
       },
       executeCode: function() {
         var jqxhr, result;

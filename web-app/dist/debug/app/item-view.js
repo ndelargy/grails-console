@@ -28,7 +28,8 @@
         this.$el.html(html);
         this.bindUIElements();
         this.triggerMethod("render", this);
-        return this.triggerMethod("item:rendered", this);
+        this.triggerMethod("item:rendered", this);
+        return this;
       },
       renderHtml: function(data) {
         var template;
