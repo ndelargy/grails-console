@@ -17,7 +17,9 @@
         if (this.file.isNew()) {
           return this.prompt();
         } else {
-          return this.file.save();
+          App.savingOn();
+          this.file.save();
+          return App.savingOff();
         }
       },
       isDirty: function() {
@@ -36,7 +38,9 @@
           store = $('input[name=store]:checked').val();
           _this.file.set("name", name);
           _this.file.local = store === 'local';
+          App.savingOn();
           _this.file.save().then(function() {
+            App.savingOff();
             return App.router.navigateToFile(_this.file, {
               trigger: false
             });

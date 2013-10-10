@@ -17,9 +17,9 @@
       if @file.isNew()
         @prompt()
       else
-#        @$(".file-name-section .saving").show()
+        App.savingOn()
         @file.save()
-#        @$(".file-name-section .saving").fadeOut()
+        App.savingOff()
 
     isDirty: ->
       @file.get("text") isnt @editor.getValue()
@@ -36,10 +36,9 @@
         @file.set "name", name
         @file.local = store is 'local'
 
-#        @$(".file-name-section .saving").show() # TODO copied
-#        @file.set "text", @editor.getValue()
+        App.savingOn()
         @file.save().then =>
-#          @$(".file-name-section .saving").fadeOut()
+          App.savingOff()
           App.router.navigateToFile @file, trigger: false
 
         $el.modal "hide"

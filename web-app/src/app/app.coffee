@@ -80,6 +80,14 @@
 
       link
 
+    savingOn: -> # TODO
+#      $('.navbar .saving i').addClass('icon-refresh icon-spin').removeClass('icon-ok')
+      $('.navbar .saving').fadeIn(100)
+
+    savingOff: ->
+#      $('.navbar .saving i').removeClass('icon-refresh icon-spin').addClass('icon-ok')
+      $('.navbar .saving').fadeOut(100)
+
   , Backbone.Events
 
 ) jQuery, _, Backbone, JST

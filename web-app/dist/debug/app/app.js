@@ -93,6 +93,12 @@
           link += '?' + $.param(params, true);
         }
         return link;
+      },
+      savingOn: function() {
+        return $('.navbar .saving').fadeIn(100);
+      },
+      savingOff: function() {
+        return $('.navbar .saving').fadeOut(100);
       }
     }, Backbone.Events);
   })(jQuery, _, Backbone, JST);
