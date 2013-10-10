@@ -70,9 +70,9 @@
       dfd.resolveWith @, resp
 
       if resp
-        options.success resp
+        options?.success? resp
       else
-        options.error "Record not found"
+        options?.error? "Record not found"
 
       dfd
 

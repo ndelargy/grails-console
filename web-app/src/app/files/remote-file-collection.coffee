@@ -4,7 +4,7 @@
 
     url: -> App.createLink 'listFiles'
 
-    model: App.File
+    model: (attrs, options) -> new App.File attrs, options
 
     isLocal: false
 

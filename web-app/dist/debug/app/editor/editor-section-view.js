@@ -24,6 +24,9 @@
         this.listenTo(this.editorView, "save", function(text) {
           return this.trigger('save', text);
         });
+        this.listenTo(this.editorView, "fork", function(text) {
+          return this.trigger('fork', text);
+        });
         this.listenTo(this.editorView, "clear", this.clearResults);
         this.showOrientation();
         return this.listenTo(App.settings, "change:orientation", this.showOrientation);

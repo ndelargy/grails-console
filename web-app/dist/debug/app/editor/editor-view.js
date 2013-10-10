@@ -3,10 +3,10 @@
     return App.EditorView = App.ItemView.extend({
       template: 'editor',
       events: {
-        'click button[data-function=execute]': "executeCode",
-        'click button[data-function]': "onButtonClick",
-        'click button.save': "save",
-        'click button.help': "onHelpClick"
+        'click button.execute': 'executeCode',
+        'click button.save': 'onSaveClick',
+        'click button.fork': 'onForkClick',
+        'click button.help': 'onHelpClick'
       },
       initialize: function() {
         var _this = this;
@@ -63,8 +63,11 @@
         this.editor.refresh();
         return this.editor.focus();
       },
-      save: function() {
+      onSaveClick: function() {
         return this.trigger('save', this.editor.getValue());
+      },
+      onForkClick: function() {
+        return this.trigger('fork', this.editor.getValue());
       },
       executeCode: function() {
         var jqxhr, result;

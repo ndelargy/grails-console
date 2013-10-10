@@ -2,7 +2,7 @@
 
   App.FileCollection = Backbone.Collection.extend
 
-    model: App.File
+    model: (attrs, options) -> new App.File attrs, options # TODO set local here
 
     isLocal: true
 

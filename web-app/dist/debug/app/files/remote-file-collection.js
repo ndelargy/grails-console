@@ -4,7 +4,9 @@
       url: function() {
         return App.createLink('listFiles');
       },
-      model: App.File,
+      model: function(attrs, options) {
+        return new App.File(attrs, options);
+      },
       isLocal: false,
       comparator: function(file) {
         return file.get('lastModified') * -1;

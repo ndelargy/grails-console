@@ -15,7 +15,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"btn-toolbar\">\n    <div class=\"btn-group\">\n        <button class=\"submit btn btn-default\" title=\"(Ctrl + Enter)\" data-function=\"execute\"><i class=\"icon-play\"></i></button>\n        <button class=\"save btn btn-default\"><i class=\"icon-save\"></i></button>\n        <button class=\"btn btn-default\" data-function=\"fork\"><i class=\"icon-code-fork\"></i></button>\n        <button class=\"help btn btn-default\"><i class=\"icon-question\"></i></button>\n    </div>\n</div>\n<div id=\"code-wrapper\" class=\"ui-layout-content\">\n    <textarea name=\"code\" rows=\"25\" cols=\"100\"></textarea>\n</div>";
+  return "<div class=\"btn-toolbar\">\n    <div class=\"btn-group\">\n        <button class=\"execute btn btn-default\" title=\"Execute (Ctrl + Enter)\"><i class=\"icon-play\"></i></button>\n        <button class=\"save btn btn-default\" title=\"Save\"><i class=\"icon-save\"></i></button>\n        <button class=\"fork btn btn-default\" title=\"Fork\"><i class=\"icon-code-fork\"></i></button>\n        <button class=\"help btn btn-default\" title=\"Help\"><i class=\"icon-question\"></i></button>\n    </div>\n</div>\n<div id=\"code-wrapper\" class=\"ui-layout-content\">\n    <textarea name=\"code\" rows=\"25\" cols=\"100\"></textarea>\n</div>";
   });
 
 this["JST"]["file-list"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

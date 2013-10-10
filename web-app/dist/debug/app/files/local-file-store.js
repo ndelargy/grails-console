@@ -87,9 +87,17 @@
         dfd = $.Deferred();
         dfd.resolveWith(this, resp);
         if (resp) {
-          options.success(resp);
+          if (options != null) {
+            if (typeof options.success === "function") {
+              options.success(resp);
+            }
+          }
         } else {
-          options.error("Record not found");
+          if (options != null) {
+            if (typeof options.error === "function") {
+              options.error("Record not found");
+            }
+          }
         }
         return dfd;
       };

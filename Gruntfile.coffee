@@ -24,22 +24,10 @@ module.exports = (grunt) ->
       "web-app/dist/debug/app/header-view.js"
       "web-app/dist/debug/app/settings-model.js"
       "web-app/dist/debug/app/settings-view.js"
-
-      "web-app/dist/debug/app/editor/result-model.js"
-      "web-app/dist/debug/app/editor/result-collection.js"
-      "web-app/dist/debug/app/editor/result-view.js"
-      "web-app/dist/debug/app/editor/result-collection-view.js"
-      "web-app/dist/debug/app/editor/editor-view.js"
-      "web-app/dist/debug/app/editor/editor-section-view.js"
-
-      "web-app/dist/debug/app/files/file-model.js"
-      "web-app/dist/debug/app/files/file-collection.js"
-      "web-app/dist/debug/app/files/remote-file-collection.js"
-      "web-app/dist/debug/app/files/files-section-view.js"
-      "web-app/dist/debug/app/files/local-files-view.js"
-      "web-app/dist/debug/app/files/remote-files-view.js"
-      "web-app/dist/debug/app/files/local-file-store.js"
       "web-app/dist/debug/app/main-view.js"
+
+      "web-app/dist/debug/app/editor/**/*.js"
+      "web-app/dist/debug/app/files/**/*.js"
     ]
 
     cssSrc: [
@@ -156,8 +144,8 @@ module.exports = (grunt) ->
 
   grunt.registerTask "json", "Write resource config to file", ->
     json =
-      jsSrc: grunt.config.get('jsSrc')
-      cssSrc: grunt.config.get('cssSrc')
+      jsSrc: grunt.file.expand(grunt.config.get('jsSrc'))
+      cssSrc: grunt.file.expand(grunt.config.get('cssSrc'))
     grunt.file.write 'grails-app/conf/resources.json', JSON.stringify(json, undefined, 2)
 #    grunt.log.writeln JSON.stringify(json)
 

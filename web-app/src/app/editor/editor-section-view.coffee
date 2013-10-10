@@ -25,6 +25,9 @@
       @listenTo @editorView, "save", (text) ->
         @trigger 'save', text
 
+      @listenTo @editorView, "fork", (text) ->
+        @trigger 'fork', text
+
       @listenTo @editorView, "clear", @clearResults
       @showOrientation()
       @listenTo App.settings, "change:orientation", @showOrientation
