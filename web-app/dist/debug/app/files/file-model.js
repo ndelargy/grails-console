@@ -10,9 +10,7 @@
       },
       sync: function(method, file, options) {
         var url;
-        console.log(arguments);
         if (file.isLocal()) {
-          console.log(arguments);
           return App.localFileStore.sync(method, file, options);
         } else {
           url = file.isNew() ? App.createLink('file') : App.createLink('file', {

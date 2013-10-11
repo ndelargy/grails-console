@@ -157,10 +157,7 @@ label.wrap span {
   visibility: visible;
 }
 .files-section-view {
-  width: 600px;
   padding: 20px;
-  margin-left: auto;
-  margin-right: auto;
   height: 100%;
   background-color: #fff;
   font-size: 14px;
@@ -170,6 +167,11 @@ label.wrap span {
 }
 .files-section-view .file-store-select {
   padding: 0 0 10px 0;
+  float: left;
+  width: 200px;
+}
+.files-section-view .store {
+  margin-left: 200px;
 }
 .files-section-view ul.files {
   padding: 0;

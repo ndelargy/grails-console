@@ -1,11 +1,27 @@
-<ul class="files">
+<!--<ul class="files">-->
+  <!--{{#each this}}-->
+      <!--<li data-file-id="{{id}}">-->
+          <!--<span class="pull-right">-->
+            <!--<span class="date">{{dateFormatTime lastModified}}</span>-->
+            <!--<a class="delete" href="#"><i class="icon-trash"></i></a>-->
+          <!--</span>-->
+          <!--<a class="name" href="#">{{name}}</a>-->
+      <!--</li>-->
+  <!--{{/each}}-->
+<!--</ul>-->
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Date Modified</th>
+    </tr>
+  </thead>
   {{#each this}}
-      <li data-file-id="{{id}}">
-          <span class="pull-right">
-            <span class="date">{{dateFormatTime lastModified}}</span>
-            <a class="delete" href="#"><i class="icon-trash"></i></a>
-          </span>
-          <a class="name" href="#">{{name}}</a>
-      </li>
+    <tr data-file-id="{{id}}">
+        <td><a class="delete" href="#"><i class="icon-trash"></i></a></td>
+        <td><a class="name" href="#">{{name}}</a></td>
+        <td>{{dateFormatTime lastModified}}</td>
+    </tr>
   {{/each}}
-</ul>
+</table>
