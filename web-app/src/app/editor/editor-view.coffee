@@ -1,11 +1,11 @@
-((App, Backbone, CodeMirror, JST) ->
+((App, Backbone, CodeMirror, JST, $) ->
 
   App.EditorView = App.ItemView.extend
 
     template: 'editor'
 
     events:
-      'click button.execute': 'executeCode'
+      'click button.execute': 'onExecuteClick'
       'click button.save': 'onSaveClick'
       'click button.fork': 'onForkClick'
       'click button.help': 'onHelpClick'
@@ -42,7 +42,7 @@
       @setTheme()
 
     setTheme: ->
-      @editor.setOption "theme", App.settings.get("theme")
+      @editor.setOption 'theme', App.settings.get('theme')
 
     getValue: ->
       @editor.getValue()
@@ -63,6 +63,11 @@
 
     onForkClick: ->
       @trigger 'fork', @editor.getValue()
+
+    onExecuteClick: (event) ->
+      event.preventDefault()
+#      $(event.currentTarget).blur()
+      @executeCode()
 
     executeCode: ->
       result = new App.Result
@@ -100,4 +105,4 @@
         $('.modal-backdrop').remove()
 
 
-) App, Backbone, CodeMirror, JST
+) App, Backbone, CodeMirror, JST, jQuery

@@ -1,9 +1,9 @@
 (function() {
-  (function(App, Backbone, CodeMirror, JST) {
+  (function(App, Backbone, CodeMirror, JST, $) {
     return App.EditorView = App.ItemView.extend({
       template: 'editor',
       events: {
-        'click button.execute': 'executeCode',
+        'click button.execute': 'onExecuteClick',
         'click button.save': 'onSaveClick',
         'click button.fork': 'onForkClick',
         'click button.help': 'onHelpClick'
@@ -47,7 +47,7 @@
         return this.setTheme();
       },
       setTheme: function() {
-        return this.editor.setOption("theme", App.settings.get("theme"));
+        return this.editor.setOption('theme', App.settings.get('theme'));
       },
       getValue: function() {
         return this.editor.getValue();
@@ -68,6 +68,10 @@
       },
       onForkClick: function() {
         return this.trigger('fork', this.editor.getValue());
+      },
+      onExecuteClick: function(event) {
+        event.preventDefault();
+        return this.executeCode();
       },
       executeCode: function() {
         var jqxhr, result;
@@ -114,6 +118,6 @@
         });
       }
     });
-  })(App, Backbone, CodeMirror, JST);
+  })(App, Backbone, CodeMirror, JST, jQuery);
 
 }).call(this);

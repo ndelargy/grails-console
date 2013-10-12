@@ -1,3 +1,4 @@
+<%@ page import="grails.converters.JSON" %>
 <!doctype html>
 <html>
 
@@ -13,9 +14,7 @@
 <con:layoutResources/>
 <script type="text/javascript" charset="utf-8">
   jQuery(function($){
-    App.start({
-      baseUrl: '${resource(plugin: 'none')}'
-    });
+    App.start(<%= json as JSON %>);
   });
 </script>
 

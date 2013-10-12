@@ -32,7 +32,7 @@ module.exports = (grunt) ->
 
     cssSrc: [
       "web-app/vendor/bootstrap/css/bootstrap.min.css"
-      "web-app/vendor/bootstrap/css/bootstrap-theme.min.css"
+#      "web-app/vendor/bootstrap/css/bootstrap-theme.min.css"
       "web-app/vendor/font-awesome/css/font-awesome.min.css"
       "web-app/vendor/codemirror-3.18/lib/codemirror.css"
       "web-app/vendor/codemirror-3.18/theme/lesser-dark.css"

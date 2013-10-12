@@ -36,7 +36,10 @@
         }
       },
       serializeData: function() {
-        return this.collection.toJSON();
+        return {
+          files: this.collection.toJSON(),
+          baseDir: App.data.baseDir
+        };
       }
     });
   })(App, Backbone, JST);

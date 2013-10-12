@@ -14,12 +14,6 @@ body {
 #main-content {
   height: 100%;
 }
-.navbar-brand {
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 23px;
-  font-weight: bold;
-  color: #555;
-}
 .script-result,
 .result_time {
   color: white;
@@ -68,6 +62,13 @@ body {
   border-radius: 0;
   padding: 5px;
 }
+.navbar .navbar-brand {
+  background: transparent url("img/grails.logo.png") no-repeat;
+  background-position: 5px center;
+  padding-left: 48px;
+  font-size: 23px;
+  color: #555;
+}
 .navbar .saving {
   position: absolute;
   color: #fff;
@@ -79,11 +80,6 @@ body {
   margin-top: -20px;
   font-size: 20px;
   line-height: 40px;
-}
-.navbar-brand {
-  background: transparent url("img/grails.logo.png") no-repeat;
-  background-position: 5px center;
-  padding-left: 45px;
 }
 .btn-toolbar {
   padding: 3px;
@@ -157,7 +153,6 @@ label.wrap span {
   visibility: visible;
 }
 .files-section-view {
-  padding: 20px;
   height: 100%;
   background-color: #fff;
   font-size: 14px;
@@ -167,8 +162,19 @@ label.wrap span {
 }
 .files-section-view .file-store-select {
   padding: 0 0 10px 0;
-  float: left;
   width: 200px;
+  position: absolute;
+  height: 100%;
+  border-right: 1px solid #ccc;
+}
+.files-section-view .file-store-select .nav-pills li a {
+  border-radius: 0;
+}
+.files-section-view .file-store-select .nav-pills li a i {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -6px;
 }
 .files-section-view .store {
   margin-left: 200px;
@@ -203,11 +209,43 @@ label.wrap span {
 .full-height {
   height: 100%;
 }
+.btn-toolbar {
+  background-color: transparent;
+}
+.btn-toolbar button {
+  background-color: transparent;
+  background-image: none;
+  border-color: transparent;
+  box-shadow: none;
+}
+.btn-toolbar button:active {
+  outline: none;
+  border-color: transparent;
+  background-color: transparent;
+}
+.btn-toolbar button:hover {
+  outline: none;
+  border-color: #fff;
+  background-color: transparent;
+}
+.btn-toolbar button:focus {
+  outline: none;
+  border-color: transparent;
+  background-color: transparent;
+}
+.files-page-header {
+  padding: 10px;
+  border-bottom: 1px solid #ccc ;
+}
+.files-page-header h1 {
+  font-size: 28px;
+  margin: 0;
+}
+.files-page-header .dir {
+  margin-top: 10px;
+}
 body[data-theme="default"] {
   background: url("img/brushed.png");
-}
-body[data-theme="default"] .btn-toolbar {
-  background-color: #dddddd;
 }
 body[data-theme="lesser-dark"] {
   background: url("img/debut_dark.png");
@@ -219,8 +257,9 @@ body[data-theme="lesser-dark"] .navbar {
 body[data-theme="lesser-dark"] .navbar .navbar-brand {
   color: #eee;
 }
-body[data-theme="lesser-dark"] .btn-toolbar {
-  background-color: #888;
+body[data-theme="lesser-dark"] .btn-toolbar button {
+  color: #fff;
+  text-shadow: none;
 }
 body[data-theme="lesser-dark"] .ui-layout-resizer {
   background-color: #aaa;

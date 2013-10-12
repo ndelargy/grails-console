@@ -9,8 +9,15 @@ class ConsoleController {
 
     def consoleService
 
+    String baseDir = '/Users/mattsheehan/test1' // TODO config
+
     def index = {
-        [:]
+        [
+            json: [
+                baseUrl: resource(plugin: 'none'),
+                baseDir: baseDir
+            ]
+        ]
     }
 
     def execute = {
@@ -33,7 +40,7 @@ class ConsoleController {
     }
 
     def listFiles = {
-        File baseDir = new File('/Users/mattsheehan/test')
+        File baseDir = new File(baseDir)
         List result
         result = baseDir.listFiles().collect { File file ->
             [
@@ -135,7 +142,7 @@ class ConsoleController {
         def json = request.JSON
         Map result = [:]
         int status = 200
-        File baseDir = new File('/Users/mattsheehan/test')
+        File baseDir = new File(baseDir)
         def file = new File(baseDir, json.name)
 //        if (file.isDirectory()) {
 //            result.error = "$filename is a directory"

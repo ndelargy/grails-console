@@ -15,7 +15,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"btn-toolbar\">\n    <div class=\"btn-group\">\n        <button class=\"execute btn btn-default\" title=\"Execute (Ctrl + Enter)\"><i class=\"icon-play\"></i></button>\n        <button class=\"save btn btn-default\" title=\"Save\"><i class=\"icon-save\"></i></button>\n        <button class=\"fork btn btn-default\" title=\"Fork\"><i class=\"icon-code-fork\"></i></button>\n        <button class=\"help btn btn-default\" title=\"Help\"><i class=\"icon-question\"></i></button>\n    </div>\n</div>\n<div id=\"code-wrapper\" class=\"ui-layout-content\">\n    <textarea name=\"code\" rows=\"25\" cols=\"100\"></textarea>\n</div>";
+  return "<div class=\"btn-toolbar\">\n    <!--<div class=\"btn-group\">-->\n        <button class=\"execute btn btn-default\" title=\"Execute (Ctrl + Enter)\"><i class=\"icon-play\"></i></button>\n        <button class=\"save btn btn-default\" title=\"Save\"><i class=\"icon-save\"></i></button>\n        <button class=\"fork btn btn-default\" title=\"Fork\"><i class=\"icon-code-fork\"></i></button>\n        <button class=\"help btn btn-default\" title=\"Help\"><i class=\"icon-question\"></i></button>\n    <!--</div>-->\n</div>\n<div id=\"code-wrapper\" class=\"ui-layout-content\">\n    <textarea name=\"code\" rows=\"25\" cols=\"100\"></textarea>\n</div>";
   });
 
 this["JST"]["file-list"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -24,24 +24,6 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
 
 function program1(depth0,data) {
-  
-  var buffer = "", stack1, stack2, options;
-  buffer += "-->\n      <!--<li data-file-id=\"";
-  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "\">-->\n          <!--<span class=\"pull-right\">-->\n            <!--<span class=\"date\">";
-  options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.dateFormatTime || depth0.dateFormatTime),stack1 ? stack1.call(depth0, depth0.lastModified, options) : helperMissing.call(depth0, "dateFormatTime", depth0.lastModified, options)))
-    + "</span>-->\n            <!--<a class=\"delete\" href=\"#\"><i class=\"icon-trash\"></i></a>-->\n          <!--</span>-->\n          <!--<a class=\"name\" href=\"#\">";
-  if (stack2 = helpers.name) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
-  else { stack2 = depth0.name; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
-  buffer += escapeExpression(stack2)
-    + "</a>-->\n      <!--</li>-->\n  <!--";
-  return buffer;
-  }
-
-function program3(depth0,data) {
   
   var buffer = "", stack1, options;
   buffer += "\n    <tr data-file-id=\"";
@@ -59,11 +41,8 @@ function program3(depth0,data) {
   return buffer;
   }
 
-  buffer += "<!--<ul class=\"files\">-->\n  <!--";
+  buffer += "<div class=\"files-page-header\">\n    <h1>Local Files</h1>\n</div>\n\n<table class=\"table table-striped table-hover\">\n  <thead>\n    <tr>\n        <th></th>\n        <th>Name</th>\n        <th>Date Modified</th>\n    </tr>\n  </thead>\n  ";
   stack1 = helpers.each.call(depth0, depth0, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "-->\n<!--</ul>-->\n<table class=\"table table-striped table-hover\">\n  <thead>\n    <tr>\n        <th></th>\n        <th>Name</th>\n        <th>Date Modified</th>\n    </tr>\n  </thead>\n  ";
-  stack1 = helpers.each.call(depth0, depth0, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</table>";
   return buffer;
@@ -75,7 +54,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"file-store-select\">\n    <ul class=\"nav nav-pills nav-stacked\">\n        <li class=\"active\"><a href=\"#\" class=\"local-select\">Local</a></li>\n        <li><a href=\"#\" class=\"remote-select\">Remote</a></li>\n    </ul>\n</div>\n<div class=\"store\">\n  <div class=\"local\"></div>\n  <div class=\"remote\"></div>\n</div>";
+  return "<div class=\"file-store-select\">\n    <ul class=\"nav nav-pills nav-stacked\">\n        <li class=\"active\"><a href=\"#\" class=\"local-select\">Local <i class=\"icon-chevron-right pull-right\"></i></a></li>\n        <li><a href=\"#\" class=\"remote-select\">Remote <i class=\"icon-chevron-right pull-right\"></i></a></li>\n    </ul>\n</div>\n<div class=\"store\">\n  <div class=\"local\"></div>\n  <div class=\"remote\"></div>\n</div>";
   });
 
 this["JST"]["header"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -112,47 +91,49 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
 function program1(depth0,data) {
   
-  var buffer = "", stack1, stack2, options;
-  buffer += "-->\n      <!--<li data-file-id=\"";
-  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "\">-->\n          <!--<span class=\"pull-right\">-->\n            <!--<span class=\"date\">";
-  options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.dateFormatTime || depth0.dateFormatTime),stack1 ? stack1.call(depth0, depth0.lastModified, options) : helperMissing.call(depth0, "dateFormatTime", depth0.lastModified, options)))
-    + "</span>-->\n            <!--<a class=\"delete\" href=\"#\"><i class=\"icon-trash\"></i></a>-->\n          <!--</span>-->\n          <!--<a class=\"name\" href=\"#\">";
-  if (stack2 = helpers.name) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
-  else { stack2 = depth0.name; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
-  buffer += escapeExpression(stack2)
-    + "</a>-->\n      <!--</li>-->\n  <!--";
+  var buffer = "", stack1;
+  buffer += "\n  <table class=\"table table-striped table-hover\">\n      <thead>\n      <tr>\n          <th></th>\n          <th>Name</th>\n          <th>Date Modified</th>\n      </tr>\n      </thead>\n    ";
+  stack1 = helpers.each.call(depth0, depth0.files, {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n  </table>\n";
   return buffer;
   }
-
-function program3(depth0,data) {
+function program2(depth0,data) {
   
   var buffer = "", stack1, options;
-  buffer += "\n      <tr data-file-id=\"";
+  buffer += "\n        <tr data-file-id=\"";
   if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\">\n          <td><a class=\"delete\" href=\"#\"><i class=\"icon-trash\"></i></a></td>\n          <td><a class=\"name\" href=\"#\">";
+    + "\">\n            <td><a class=\"delete\" href=\"#\"><i class=\"icon-trash\"></i></a></td>\n            <td><a class=\"name\" href=\"#\">";
   if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</a></td>\n          <td>";
+    + "</a></td>\n            <td>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.dateFormatTime || depth0.dateFormatTime),stack1 ? stack1.call(depth0, depth0.lastModified, options) : helperMissing.call(depth0, "dateFormatTime", depth0.lastModified, options)))
-    + "</td>\n      </tr>\n  ";
+    + "</td>\n        </tr>\n    ";
   return buffer;
   }
 
-  buffer += "<!--<input type=\"text\" />-->\n\n<!--<ul class=\"files\">-->\n  <!--";
-  stack1 = helpers.each.call(depth0, depth0, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+function program4(depth0,data) {
+  
+  
+  return "\n  <div>\n      <div class=\"message\">No files</div>\n  </div>\n";
+  }
+
+  buffer += "<div class=\"files-page-header\">\n    <h1>Remote Files</h1>\n    <div class=\"dir\">";
+  if (stack1 = helpers.baseDir) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.baseDir; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</div>\n    <!--<input type=\"text\" class=\"form-control\" value=\"";
+  if (stack1 = helpers.baseDir) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.baseDir; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\"/>-->\n</div>\n\n";
+  stack1 = helpers['if'].call(depth0, depth0.files, {hash:{},inverse:self.program(4, program4, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "-->\n<!--</ul>-->\n\n<table class=\"table table-striped table-hover\">\n    <thead>\n    <tr>\n        <th></th>\n        <th>Name</th>\n        <th>Date Modified</th>\n    </tr>\n    </thead>\n  ";
-  stack1 = helpers.each.call(depth0, depth0, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n</table>";
+  buffer += "\n";
   return buffer;
   });
 

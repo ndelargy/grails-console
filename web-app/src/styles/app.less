@@ -13,15 +13,8 @@ body {
 }
 
 #main-content {
-//  margin: 10px;
+  //  margin: 10px;
   height: 100%;
-}
-
-.navbar-brand {
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 23px;
-  font-weight: bold;
-  color: #555;
 }
 
 .script-result, .result_time {
@@ -35,7 +28,7 @@ body {
 #result {
   font-size: 15px;
   overflow: auto;
-//  background: #f4f4f4;
+  //  background: #f4f4f4;
   overflow: auto;
   .script-result {
     white-space: pre;
@@ -78,6 +71,13 @@ body {
   margin-bottom: 0;
   border-radius: 0;
   padding: 5px;
+  .navbar-brand {
+    background: transparent url("img/grails.logo.png") no-repeat;
+    background-position: 5px center;
+    padding-left: 48px;
+    font-size: 23px;
+    color: #555;
+  }
   .saving {
     position: absolute;
     color: #fff;
@@ -92,14 +92,8 @@ body {
   }
 }
 
-.navbar-brand {
-  background: transparent url("img/grails.logo.png") no-repeat;
-  background-position: 5px center;
-  padding-left: 45px;
-}
-
 .btn-toolbar {
-//  border-bottom: 1px solid #eee;
+  //  border-bottom: 1px solid #eee;
   padding: 3px;
 }
 
@@ -185,10 +179,10 @@ label.wrap span {
 }
 
 .files-section-view {
-//  width: 600px;
-  padding: 20px;
-//  margin-left: auto;
-//  margin-right: auto;
+  //  width: 600px;
+  //  padding: 20px;
+  //  margin-left: auto;
+  //  margin-right: auto;
   height: 100%;
   background-color: #fff;
   font-size: 14px;
@@ -197,8 +191,23 @@ label.wrap span {
   border-width: 0 1px;
   .file-store-select {
     padding: 0 0 10px 0;
-    float: left;
     width: 200px;
+    position: absolute;
+    height: 100%;
+    border-right: 1px solid #ccc;
+    .nav-pills {
+      li {
+        a {
+          border-radius: 0;
+          i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            margin-top: -6px;
+          }
+        }
+      }
+    }
   }
   .store {
     margin-left: 200px;
@@ -237,6 +246,45 @@ label.wrap span {
 .full-height {
   height: 100%;
 }
+.btn-toolbar {
+  //    background-color: #888;
+
+  background-color: transparent;
+  button {
+
+    background-color: transparent;
+    background-image: none;
+    border-color: transparent;
+    box-shadow: none;
+    &:active {
+      outline: none;
+      border-color: transparent;
+      background-color: transparent;
+    }
+    &:hover {
+      outline: none;
+      border-color: #fff;
+      background-color: transparent;
+    }
+    &:focus {
+      outline: none;
+      border-color: transparent;
+      background-color: transparent;
+    }
+  }
+}
+
+.files-page-header {
+  padding: 10px;
+  border-bottom: 1px solid #ccc ;
+  h1 {
+    font-size: 28px;
+    margin: 0;
+  }
+  .dir {
+    margin-top: 10px;
+  }
+}
 
 body[data-theme="default"] {
   background: url("img/brushed.png");
@@ -246,7 +294,8 @@ body[data-theme="default"] {
   #editor {
   }
   .btn-toolbar {
-    background-color: #dddddd;
+//    background-color: #dddddd;
+//    background-color: transparent;
   }
 }
 
@@ -260,10 +309,15 @@ body[data-theme="lesser-dark"] {
     }
   }
   .btn-toolbar {
-    background-color: #888;
+//    background-color: #888;
+//    background-color: transparent;
+    button {
+      color: #fff;
+      text-shadow: none;
+    }
   }
   #result {
-//    background-color: rgb(38, 38, 38);
+    //    background-color: rgb(38, 38, 38);
   }
   #editor {
   }
