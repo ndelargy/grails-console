@@ -25,26 +25,40 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
 function program1(depth0,data) {
   
+  var buffer = "", stack1;
+  buffer += "\n    <table class=\"table table-striped table-hover\">\n        <thead>\n        <tr>\n            <th></th>\n            <th>Name</th>\n            <th>Date Modified</th>\n        </tr>\n        </thead>\n      ";
+  stack1 = helpers.each.call(depth0, depth0.files, {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n    </table>\n";
+  return buffer;
+  }
+function program2(depth0,data) {
+  
   var buffer = "", stack1, options;
-  buffer += "\n    <tr data-file-id=\"";
+  buffer += "\n          <tr data-file-id=\"";
   if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\">\n        <td><a class=\"delete\" href=\"#\"><i class=\"icon-trash\"></i></a></td>\n        <td><a class=\"name\" href=\"#\">";
+    + "\">\n              <td><a class=\"delete\" href=\"#\"><i class=\"icon-trash\"></i></a></td>\n              <td><a class=\"name\" href=\"#\">";
   if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</a></td>\n        <td>";
+    + "</a></td>\n              <td>";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.dateFormatTime || depth0.dateFormatTime),stack1 ? stack1.call(depth0, depth0.lastModified, options) : helperMissing.call(depth0, "dateFormatTime", depth0.lastModified, options)))
-    + "</td>\n    </tr>\n  ";
+    + "</td>\n          </tr>\n      ";
   return buffer;
   }
 
-  buffer += "<div class=\"files-page-header\">\n    <h1>Local Files</h1>\n</div>\n\n<table class=\"table table-striped table-hover\">\n  <thead>\n    <tr>\n        <th></th>\n        <th>Name</th>\n        <th>Date Modified</th>\n    </tr>\n  </thead>\n  ";
-  stack1 = helpers.each.call(depth0, depth0, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+function program4(depth0,data) {
+  
+  
+  return "\n    <div>\n        <div class=\"message\">No files</div>\n    </div>\n";
+  }
+
+  buffer += "<div class=\"files-page-header\">\n    <h1>Local Files</h1>\n</div>\n\n\n";
+  stack1 = helpers['if'].call(depth0, depth0.files, {hash:{},inverse:self.program(4, program4, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n</table>";
   return buffer;
   });
 

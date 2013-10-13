@@ -9,7 +9,7 @@ class ConsoleController {
 
     def consoleService
 
-    String baseDir = '/Users/mattsheehan/test1' // TODO config
+    String baseDir = '/Users/mattsheehan/test' // TODO config
 
     def index = {
         [

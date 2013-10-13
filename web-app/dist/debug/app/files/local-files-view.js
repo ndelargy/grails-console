@@ -38,7 +38,9 @@
         }
       },
       serializeData: function() {
-        return this.collection.toJSON();
+        return {
+          files: this.collection.toJSON()
+        };
       }
     });
     RemoteFileStore = function() {};
