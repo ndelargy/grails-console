@@ -7,27 +7,18 @@
     attributes:
       id: 'main-content'
 
-    regions:
-      editorRegion: '.editor'
-      filesRegion: '.files'
-
     initialize: ->
-      @editorController = new App.EditorController
-        region: @editorRegion
-      @filesSectionView = new App.FilesSectionView
+      @views = []
 
-    onRender: ->
-      @editorRegion.show @editorController.view
-      @editorRegion.$el.show()
-      @filesRegion.show @filesSectionView
+      @listenTo App, 'app:active', (view) ->
 
-    showEditor: (file) ->
-      @editorRegion.$el.show()
-      @filesRegion.$el.hide()
-      @editorController.showFile file
+        if not _.contains(@views, view)
+          @$el.append view.render().$el
+          @views.push view
 
-    showFiles: ->
-      @editorRegion.$el.hide()
-      @filesRegion.$el.show()
+        for aview in @views
+          aview.$el.hide() if aview isnt view
+        view.$el.show()
+        view.triggerMethod 'visible'
 
 ) App, Backbone

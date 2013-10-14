@@ -9,6 +9,6 @@
     comparator: (file) -> file.get("lastModified") * -1
 
     sync: (method, file, options) ->
-      @store.sync method, file, options
+      App.localFileStore.sync method, file, options
 
 ) App, Backbone

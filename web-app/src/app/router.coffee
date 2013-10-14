@@ -3,13 +3,13 @@
   App.Router = Backbone.Router.extend
 
     routes:
-      "new":          "newFile"
-      "files":        "files"
+#      "new":          "newFile"
+#      "files":        "files"
       "*path":        "defaultRoute"
 
     initialize: ->
-      @route /^local:(.*?)$/, 'openLocalFile'
-      @route /^remote:(.*?)$/, 'openRemoteFile'
+#      @route /^local:(.*?)$/, 'openLocalFile'
+#      @route /^remote:(.*?)$/, 'openRemoteFile'
 
     navigateToFile: (file, options) ->
       if file.isLocal()

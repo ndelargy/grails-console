@@ -233,6 +233,9 @@ label.wrap span {
   border-color: transparent;
   background-color: transparent;
 }
+.btn-toolbar > .btn + .btn {
+  margin-left: 0;
+}
 .files-page-header {
   padding: 10px;
   border-bottom: 1px solid #ccc ;

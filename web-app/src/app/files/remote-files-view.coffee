@@ -20,7 +20,7 @@
       fileId = $(event.currentTarget).closest('tr').data("fileId")
       file = @collection.findWhere(id: fileId)
       file.fetch().done ->
-        App.router.navigateToRemoteFile file
+        App.trigger 'app:file:selected', file
 
     onDeleteClick: (event) ->
       event.preventDefault()

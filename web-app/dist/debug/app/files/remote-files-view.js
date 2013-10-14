@@ -21,7 +21,7 @@
           id: fileId
         });
         return file.fetch().done(function() {
-          return App.router.navigateToRemoteFile(file);
+          return App.trigger('app:file:selected', file);
         });
       },
       onDeleteClick: function(event) {

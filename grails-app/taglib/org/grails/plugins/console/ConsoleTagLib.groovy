@@ -1,6 +1,7 @@
 package org.grails.plugins.console
 
 import grails.converters.JSON
+import grails.util.Holders
 import org.codehaus.groovy.grails.plugins.PluginManagerHolder
 
 /**
@@ -38,11 +39,11 @@ class ConsoleTagLib {
     Map getConfig() {
 //        String json = Thread.currentThread().contextClassLoader.getResource('resources.json').openStream().text
 
-
-        URL res = Thread.currentThread().contextClassLoader.getResource('resources.json')
-        URLConnection resConn = res.openConnection()
-        resConn.useCaches = false
-        String json = resConn.inputStream.text
+        String json = Holders.applicationContext.parent.getResource('classpath:resources.json').file.text
+//        URL res = Thread.currentThread().contextClassLoader.getResource('resources.json')
+//        URLConnection resConn = res.openConnection()
+//        resConn.useCaches = false
+//        String json = resConn.inputStream.text
         JSON.parse(json) as Map
     }
 }

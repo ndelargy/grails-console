@@ -43,23 +43,14 @@
         @mainView.showFiles()
 
     onStart: (data) ->
-      @data = data
-
-      App.settings = new App.Settings
-      App.settings.load()
-
-      App.localFileStore = new App.LocalFileStore("gconsole.files")
-      @initRouter()
-
       headerView = new App.HeaderView().render()
       headerView.on "new", ->
         # TODO check if file needs to be saved
-        App.router.navigate "new", trigger: true
+        Backbone.history.navigate "new", trigger: true
 
       headerView.on "files", ->
-        console.log 'files'
         # TODO check if file needs to be saved
-        App.router.navigate "files", trigger: true
+        Backbone.history.navigate "files", trigger: true
 
       headerView.$el.appendTo "body"
       @mainView = new App.MainView(el: $("#main-content")[0]).render()
@@ -95,7 +86,14 @@
       $('.navbar .saving').fadeOut(100)
   )
 
-  App.on 'initialize:after', (options) ->
+  App.on 'initialize:before', (options) ->
+    App.data = options
+
+    App.settings = new App.Settings
+    App.settings.load()
+
+    App.localFileStore = new App.LocalFileStore("gconsole.files")
+
 
   window.App = App
 

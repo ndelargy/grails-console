@@ -54,20 +54,14 @@
       },
       onStart: function(data) {
         var headerView;
-        this.data = data;
-        App.settings = new App.Settings;
-        App.settings.load();
-        App.localFileStore = new App.LocalFileStore("gconsole.files");
-        this.initRouter();
         headerView = new App.HeaderView().render();
         headerView.on("new", function() {
-          return App.router.navigate("new", {
+          return Backbone.history.navigate("new", {
             trigger: true
           });
         });
         headerView.on("files", function() {
-          console.log('files');
-          return App.router.navigate("files", {
+          return Backbone.history.navigate("files", {
             trigger: true
           });
         });
@@ -105,7 +99,12 @@
         return $('.navbar .saving').fadeOut(100);
       }
     }));
-    App.on('initialize:after', function(options) {});
+    App.on('initialize:before', function(options) {
+      App.data = options;
+      App.settings = new App.Settings;
+      App.settings.load();
+      return App.localFileStore = new App.LocalFileStore("gconsole.files");
+    });
     return window.App = App;
   })(jQuery, _, Backbone, JST, window);
 

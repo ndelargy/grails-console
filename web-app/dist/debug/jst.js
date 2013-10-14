@@ -92,10 +92,10 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 this["JST"]["main"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
+  var buffer = "";
 
 
-  return "<div class='editor full-height'></div>\n<div class='files full-height'></div>";
+  return buffer;
   });
 
 this["JST"]["remote-files"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

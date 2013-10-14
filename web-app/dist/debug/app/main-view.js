@@ -5,29 +5,24 @@
       attributes: {
         id: 'main-content'
       },
-      regions: {
-        editorRegion: '.editor',
-        filesRegion: '.files'
-      },
       initialize: function() {
-        this.editorController = new App.EditorController({
-          region: this.editorRegion
+        this.views = [];
+        return this.listenTo(App, 'app:active', function(view) {
+          var aview, _i, _len, _ref;
+          if (!_.contains(this.views, view)) {
+            this.$el.append(view.render().$el);
+            this.views.push(view);
+          }
+          _ref = this.views;
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            aview = _ref[_i];
+            if (aview !== view) {
+              aview.$el.hide();
+            }
+          }
+          view.$el.show();
+          return view.triggerMethod('visible');
         });
-        return this.filesSectionView = new App.FilesSectionView;
-      },
-      onRender: function() {
-        this.editorRegion.show(this.editorController.view);
-        this.editorRegion.$el.show();
-        return this.filesRegion.show(this.filesSectionView);
-      },
-      showEditor: function(file) {
-        this.editorRegion.$el.show();
-        this.filesRegion.$el.hide();
-        return this.editorController.showFile(file);
-      },
-      showFiles: function() {
-        this.editorRegion.$el.hide();
-        return this.filesRegion.$el.show();
       }
     });
   })(App, Backbone);

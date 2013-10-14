@@ -22,9 +22,7 @@
         file = this.collection.findWhere({
           id: fileId
         });
-        return App.router.navigateToFile(file, {
-          trigger: true
-        });
+        return App.trigger('app:file:selected', file);
       },
       onDeleteClick: function(event) {
         var file, fileId;
