@@ -1,6 +1,6 @@
-((App, Backbone, CodeMirror, JST, $) ->
+App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
 
-  App.EditorView = App.ItemView.extend
+  EditorApp.EditorView = App.ItemView.extend
 
     template: 'editor'
 
@@ -70,7 +70,7 @@
       @executeCode()
 
     executeCode: ->
-      result = new App.Result
+      result = new EditorApp.Result
         loading: true
         input: @getValue()
 
@@ -103,6 +103,3 @@
       $el.on 'hidden.bs.modal', ->
         $el.remove()
         $('.modal-backdrop').remove()
-
-
-) App, Backbone, CodeMirror, JST, jQuery

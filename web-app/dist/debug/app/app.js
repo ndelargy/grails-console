@@ -10,66 +10,23 @@
       return JST[template](data);
     };
     App = new (Backbone.Marionette.Application.extend({
-      initRouter: function() {
-        var router,
-          _this = this;
-        router = new App.Router();
-        App.router = router;
-        App.router.on("route:openLocalFile", function(name) {
-          var file;
-          file = App.localFileStore.list().findWhere({
-            name: name
-          });
-          if (!file) {
-            alert('no find file');
-            return;
-          }
-          return _this.mainView.showEditor(file);
-        });
-        App.router.on("route:openRemoteFile", function(name) {
-          var file;
-          file = new App.File({
-            id: name
-          });
-          file.local = false;
-          return file.fetch().done(function() {
-            return _this.mainView.showEditor(file);
-          }).fail(function() {
-            return alert('no find file');
-          });
-        });
-        App.router.on("route:newFile", function() {
-          var file;
-          file = new App.File();
-          return _this.mainView.showEditor(file);
-        });
-        App.router.on("route:defaultRoute", function() {
-          return router.navigate("new", {
-            trigger: true
-          });
-        });
-        return App.router.on("route:files", function() {
-          return _this.mainView.showFiles();
-        });
-      },
       onStart: function(data) {
-        var headerView;
+        var headerView, mainView;
         headerView = new App.HeaderView().render();
         headerView.on("new", function() {
-          return Backbone.history.navigate("new", {
-            trigger: true
-          });
+          return App.trigger('app:file:new');
         });
         headerView.on("files", function() {
+          App.trigger('app:file:list');
           return Backbone.history.navigate("files", {
             trigger: true
           });
         });
         headerView.$el.appendTo("body");
-        this.mainView = new App.MainView({
+        mainView = new App.MainView({
           el: $("#main-content")[0]
         }).render();
-        this.mainView.$el.appendTo("body");
+        mainView.$el.appendTo("body");
         this.showTheme();
         App.settings.on("change:theme", this.showTheme, this);
         $("body").css("visibility", "visible");

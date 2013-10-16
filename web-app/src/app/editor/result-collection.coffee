@@ -1,5 +1,5 @@
-((App, Backbone) ->
+App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
 
-  App.ResultCollection = Backbone.Collection.extend(model: App.Result)
+  EditorApp.ResultCollection = Backbone.Collection.extend
 
-) App, Backbone
+    model: (attrs, options) -> new EditorApp.Result attrs, options

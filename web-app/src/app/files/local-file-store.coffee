@@ -67,7 +67,7 @@
           resp = @destroy(file)
 
       dfd = $.Deferred()
-      dfd.resolveWith @, resp
+      dfd.resolveWith @, [resp]
 
       if resp
         options?.success? resp

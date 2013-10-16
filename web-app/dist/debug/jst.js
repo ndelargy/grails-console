@@ -154,27 +154,40 @@ function program4(depth0,data) {
 this["JST"]["result"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+  var stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
+function program1(depth0,data) {
+  
+  
+  return "\n    <div class=\"loading\">Executing Script...</div>\n";
+  }
 
-  buffer += "<span class=\"result-time label label-default pull-right\">";
+function program3(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\n    <span class=\"result-time label label-default pull-right\">";
   if (stack1 = helpers.totalTime) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.totalTime; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + " ms</span>\n<div class=\"input\">";
+    + " ms</span>\n    <div class=\"input\">";
   if (stack1 = helpers.input) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.input; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</div>\n<div class=\"output\">";
+    + "</div>\n    <div class=\"output\">";
   if (stack1 = helpers.output) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.output; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</div>\n<div class=\"result\">";
+    + "</div>\n    <div class=\"result\">";
   if (stack1 = helpers.result) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.result; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</div>";
+    + "</div>\n";
   return buffer;
+  }
+
+  stack1 = helpers['if'].call(depth0, depth0.loading, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { return stack1; }
+  else { return ''; }
   });
 
 this["JST"]["results"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

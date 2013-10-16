@@ -1,42 +1,35 @@
 (function() {
-  (function(App, Backbone, JST) {
-    return App.ResultView = Backbone.View.extend({
+  App.module('EditorApp', function(EditorApp, App, Backbone, Marionette, $, _) {
+    return EditorApp.ResultView = Marionette.ItemView.extend({
+      template: 'result',
       attributes: {
-        "class": "script-result"
+        "class": 'script-result'
       },
-      initialize: function() {
-        this.listenTo(this.model, "change", this.render, this);
-        return this.template = JST["result"];
+      modelEvents: {
+        change: 'render'
       },
-      render: function() {
-        var data, html;
-        html = void 0;
-        if (this.model.get("loading")) {
-          html = "<div class=\"loading\">Executing Script...</div>";
-        } else {
-          data = {
-            totalTime: this.model.get("totalTime"),
-            input: this.formattedInput(),
-            output: this.model.get("output"),
-            result: this.model.get("exception") || this.model.get("error") || this.model.get("result")
-          };
-          if (!this.model.isSuccess()) {
-            this.$el.addClass("stacktrace");
-          }
-          html = this.template(data);
+      onRender: function() {
+        if (!(this.model.get('loading') || this.model.isSuccess())) {
+          return this.$el.addClass('stacktrace');
         }
-        this.$el.html(html);
-        this.trigger("render");
-        return this;
+      },
+      serializeData: function() {
+        return {
+          loading: this.model.get('loading'),
+          totalTime: this.model.get('totalTime'),
+          input: this.formattedInput(),
+          output: this.model.get('output'),
+          result: this.model.get('exception') || this.model.get('error') || this.model.get('result')
+        };
       },
       formattedInput: function() {
         var lines;
-        lines = this.model.get("input").trim().split("\n");
+        lines = this.model.get('input').trim().split('\n');
         return _.map(lines, function(line) {
-          return "groovy> " + line;
-        }).join("\n");
+          return 'groovy> ' + line;
+        }).join('\n');
       }
     });
-  })(App, Backbone, JST);
+  });
 
 }).call(this);

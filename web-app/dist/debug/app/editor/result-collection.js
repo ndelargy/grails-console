@@ -1,8 +1,10 @@
 (function() {
-  (function(App, Backbone) {
-    return App.ResultCollection = Backbone.Collection.extend({
-      model: App.Result
+  App.module('EditorApp', function(EditorApp, App, Backbone, Marionette, $, _) {
+    return EditorApp.ResultCollection = Backbone.Collection.extend({
+      model: function(attrs, options) {
+        return new EditorApp.Result(attrs, options);
+      }
     });
-  })(App, Backbone);
+  });
 
 }).call(this);

@@ -1,6 +1,6 @@
 (function() {
-  (function(App, Backbone, JST) {
-    return App.ResultCollectionView = Backbone.View.extend({
+  App.module('EditorApp', function(EditorApp, App, Backbone, Marionette, $, _) {
+    return EditorApp.ResultCollectionView = Backbone.View.extend({
       events: {
         "click button.clear": "clear"
       },
@@ -10,7 +10,7 @@
         this.resultViews = [];
         return this.listenTo(this.collection, "add", function(model, collection, options) {
           var resultView;
-          resultView = new App.ResultView({
+          resultView = new EditorApp.ResultView({
             model: model
           });
           this.listenTo(resultView, "render", function() {
@@ -46,6 +46,6 @@
         return this.resultViews = [];
       }
     });
-  })(App, Backbone, JST);
+  });
 
 }).call(this);

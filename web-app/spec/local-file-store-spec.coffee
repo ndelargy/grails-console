@@ -2,6 +2,7 @@ describe 'App.LocalFileStore', ->
 
   beforeEach ->
     @store = new App.LocalFileStore('test')
+    App.localFileStore = @store
     @store.destroyAll()
 
 
@@ -21,7 +22,7 @@ describe 'App.LocalFileStore', ->
 
   it 'should work with sync', ->
     file = new App.File(name: 'test-name', text: 'test-text')
-    file.sync = _.bind(@store.sync, @store)
+    file.local = true
 
     expect(file.id).not.toBeDefined()
     spyOn(@store, 'create').andCallThrough()

@@ -8,54 +8,24 @@
 
 
 
-  #  App.addRegions TODO switch to two regions. have subapps fire switch events
+  #  App.addRegions TODO switch to two regions.
 
   App = new (Backbone.Marionette.Application.extend
-
-    initRouter: ->
-      router = new App.Router()
-      App.router = router
-      App.router.on "route:openLocalFile", (name) =>
-        file = App.localFileStore.list().findWhere(name: name)
-        unless file
-          alert 'no find file' # TODO
-          return
-        @mainView.showEditor file
-
-      App.router.on "route:openRemoteFile", (name) =>
-        file = new App.File
-          id: name # TODO search by path
-        file.local = false
-        file.fetch()
-        .done =>
-            @mainView.showEditor file
-        .fail =>
-            alert 'no find file' # TODO parse response?
-
-      App.router.on "route:newFile", =>
-        file = new App.File()
-        @mainView.showEditor file
-
-      App.router.on "route:defaultRoute", ->
-        router.navigate "new", trigger: true
-
-      App.router.on "route:files", =>
-        @mainView.showFiles()
 
     onStart: (data) ->
       headerView = new App.HeaderView().render()
       headerView.on "new", ->
         # TODO check if file needs to be saved
-        Backbone.history.navigate "new", trigger: true
+        App.trigger 'app:file:new'
 
       headerView.on "files", ->
         # TODO check if file needs to be saved
-        Backbone.history.navigate "files", trigger: true
+        App.trigger 'app:file:list'
+        Backbone.history.navigate "files", trigger: true # TODO move to file-app
 
       headerView.$el.appendTo "body"
-      @mainView = new App.MainView(el: $("#main-content")[0]).render()
-      @mainView.$el.appendTo "body"
-      #      @mainView.refresh()
+      mainView = new App.MainView(el: $("#main-content")[0]).render()
+      mainView.$el.appendTo "body"
 
       #            $(document).on('keydown', 'Ctrl+return', _.bind(this.executeCode, this)); TODO
       #            $(document).on('keydown', 'esc', _.bind(this.clearResults, this)); TODO

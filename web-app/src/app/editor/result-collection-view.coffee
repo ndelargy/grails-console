@@ -1,5 +1,7 @@
-((App, Backbone, JST) ->
-  App.ResultCollectionView = Backbone.View.extend
+App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
+
+  EditorApp.ResultCollectionView = Backbone.View.extend
+  
     events:
       "click button.clear": "clear"
 
@@ -8,7 +10,7 @@
       @listenTo App.settings, "change:results.wrapText", @setWrap, this
       @resultViews = []
       @listenTo @collection, "add", (model, collection, options) ->
-        resultView = new App.ResultView(model: model)
+        resultView = new EditorApp.ResultView(model: model)
         @listenTo resultView, "render", ->
           @scrollToResultView resultView
 
@@ -36,5 +38,3 @@
         view.remove()
       ), this
       @resultViews = []
-
-) App, Backbone, JST

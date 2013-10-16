@@ -1,33 +1,27 @@
-((App, Backbone, JST) ->
-  App.ResultView = Backbone.View.extend(
+App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
+
+  EditorApp.ResultView = Marionette.ItemView.extend
+  
+    template: 'result'
+
     attributes:
-      class: "script-result"
+      class: 'script-result'
 
-    initialize: ->
-      @listenTo @model, "change", @render, this
-      @template = JST["result"]
+    modelEvents:
+      change: 'render'
 
-    render: ->
-      html = undefined
-      if @model.get("loading")
-        html = "<div class=\"loading\">Executing Script...</div>"
-      else
-        data =
-          totalTime: @model.get("totalTime")
-          input: @formattedInput()
-          output: @model.get("output")
-          result: @model.get("exception") or @model.get("error") or @model.get("result")
+    onRender: ->
+      @$el.addClass 'stacktrace' unless @model.get('loading') or @model.isSuccess()
 
-        @$el.addClass "stacktrace"  unless @model.isSuccess()
-        html = @template(data)
-      @$el.html html
-      @trigger "render"
-      this
+    serializeData: ->
+      loading: @model.get('loading')
+      totalTime: @model.get('totalTime')
+      input: @formattedInput()
+      output: @model.get('output')
+      result: @model.get('exception') or @model.get('error') or @model.get('result')
 
     formattedInput: ->
-      lines = @model.get("input").trim().split("\n")
+      lines = @model.get('input').trim().split('\n')
       _.map(lines, (line) ->
-        "groovy> " + line
-      ).join "\n"
-  )
-) App, Backbone, JST
+        'groovy> ' + line
+      ).join '\n'

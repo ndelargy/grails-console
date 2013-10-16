@@ -85,7 +85,7 @@
             resp = this.destroy(file);
         }
         dfd = $.Deferred();
-        dfd.resolveWith(this, resp);
+        dfd.resolveWith(this, [resp]);
         if (resp) {
           if (options != null) {
             if (typeof options.success === "function") {

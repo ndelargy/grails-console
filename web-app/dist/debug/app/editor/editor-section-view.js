@@ -1,21 +1,21 @@
 (function() {
-  (function(App, Backbone, JST) {
-    return App.EditorSectionView = App.ItemView.extend({
+  App.module('EditorApp', function(EditorApp, App, Backbone, Marionette, $, _) {
+    return EditorApp.EditorSectionView = App.ItemView.extend({
       template: 'editor-section',
       attributes: {
         "class": "full-height"
       },
       onRender: function() {
         this.initLayout();
-        this.editorView = new App.EditorView({
+        this.editorView = new EditorApp.EditorView({
           el: this.$("#editor")[0]
         });
         this.editorView.render();
         this.layout.initContent("center");
         this.editorView.resize();
         this.subviews.push(this.editorView);
-        this.resultCollection = new App.ResultCollection();
-        this.resultsView = new App.ResultCollectionView({
+        this.resultCollection = new EditorApp.ResultCollection();
+        this.resultsView = new EditorApp.ResultCollectionView({
           collection: this.resultCollection
         }).render();
         this.listenTo(this.editorView, "execute", function(result) {
@@ -92,6 +92,6 @@
         return this.resultsView.clear();
       }
     });
-  })(App, Backbone, JST);
+  });
 
 }).call(this);

@@ -1,6 +1,6 @@
 (function() {
-  (function(App, Backbone, CodeMirror, JST, $) {
-    return App.EditorView = App.ItemView.extend({
+  App.module('EditorApp', function(EditorApp, App, Backbone, Marionette, $, _) {
+    return EditorApp.EditorView = App.ItemView.extend({
       template: 'editor',
       events: {
         'click button.execute': 'onExecuteClick',
@@ -75,7 +75,7 @@
       },
       executeCode: function() {
         var jqxhr, result;
-        result = new App.Result({
+        result = new EditorApp.Result({
           loading: true,
           input: this.getValue()
         });
@@ -118,6 +118,6 @@
         });
       }
     });
-  })(App, Backbone, CodeMirror, JST, jQuery);
+  });
 
 }).call(this);
