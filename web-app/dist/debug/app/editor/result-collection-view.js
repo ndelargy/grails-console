@@ -1,29 +1,26 @@
 (function() {
   App.module('EditorApp', function(EditorApp, App, Backbone, Marionette, $, _) {
-    return EditorApp.ResultCollectionView = Backbone.View.extend({
+    return EditorApp.ResultCollectionView = Marionette.CompositeView.extend({
+      template: 'results',
+      itemViewContainer: '.inner',
       events: {
-        "click button.clear": "clear"
+        'click button.clear': 'clear'
+      },
+      getItemView: function(item) {
+        return EditorApp.ResultView;
+      },
+      onAfterItemAdded: function(itemView) {
+        return this.scrollToResultView(itemView);
       },
       initialize: function() {
-        this.template = JST.results;
-        this.listenTo(App.settings, "change:results.wrapText", this.setWrap, this);
-        this.resultViews = [];
-        return this.listenTo(this.collection, "add", function(model, collection, options) {
-          var resultView;
-          resultView = new EditorApp.ResultView({
-            model: model
-          });
-          this.listenTo(resultView, "render", function() {
-            return this.scrollToResultView(resultView);
-          });
-          this.$(".inner").append(resultView.render().el);
-          this.scrollToResultView(resultView);
-          return this.resultViews.push(resultView);
-        });
+        this.listenTo(App.settings, "change:results.wrapText", this.setWrap);
+        return this.listenTo(this, 'itemview:complete', this.scrollToResultView);
       },
       scrollToResultView: function(resultView) {
         var scroll;
+        console.log("top " + (resultView.$el.position().top));
         scroll = resultView.$el.position().top + this.$("#result").scrollTop();
+        console.log("animate " + scroll);
         return this.$("#result").animate({
           scrollTop: scroll
         });
@@ -31,19 +28,11 @@
       setWrap: function() {
         return this.$("#result").toggleClass("wrap", App.settings.get("results.wrapText"));
       },
-      render: function() {
-        var html;
-        html = this.template();
-        this.$el.html(html);
-        this.setWrap();
-        return this;
+      onRender: function() {
+        return this.setWrap();
       },
       clear: function() {
-        _.each(this.resultViews, (function(view) {
-          this.stopListening(view);
-          return view.remove();
-        }), this);
-        return this.resultViews = [];
+        return this.collection.reset();
       }
     });
   });

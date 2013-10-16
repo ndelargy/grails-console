@@ -9,8 +9,11 @@
         change: 'render'
       },
       onRender: function() {
-        if (!(this.model.get('loading') || this.model.isSuccess())) {
-          return this.$el.addClass('stacktrace');
+        if (!this.model.get('loading')) {
+          if (!this.model.isSuccess()) {
+            this.$el.addClass('stacktrace');
+          }
+          return this.trigger('complete');
         }
       },
       serializeData: function() {

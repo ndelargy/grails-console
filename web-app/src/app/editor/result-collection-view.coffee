@@ -1,40 +1,36 @@
 App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
 
-  EditorApp.ResultCollectionView = Backbone.View.extend
+  # TODO remove #result
+
+  EditorApp.ResultCollectionView = Marionette.CompositeView.extend
   
+    template: 'results'
+
+    itemViewContainer: '.inner'
+
     events:
-      "click button.clear": "clear"
+      'click button.clear': 'clear'
+
+    getItemView: (item) -> EditorApp.ResultView
+
+    onAfterItemAdded: (itemView) ->
+      @scrollToResultView itemView
 
     initialize: ->
-      @template = JST.results
-      @listenTo App.settings, "change:results.wrapText", @setWrap, this
-      @resultViews = []
-      @listenTo @collection, "add", (model, collection, options) ->
-        resultView = new EditorApp.ResultView(model: model)
-        @listenTo resultView, "render", ->
-          @scrollToResultView resultView
-
-        @$(".inner").append resultView.render().el
-        @scrollToResultView resultView
-        @resultViews.push resultView
-
+      @listenTo App.settings, "change:results.wrapText", @setWrap
+      @listenTo @, 'itemview:complete', @scrollToResultView
 
     scrollToResultView: (resultView) ->
+      console.log "top #{resultView.$el.position().top}"
       scroll = resultView.$el.position().top + @$("#result").scrollTop()
+      console.log "animate #{scroll}"
       @$("#result").animate scrollTop: scroll
 
     setWrap: ->
       @$("#result").toggleClass "wrap", App.settings.get("results.wrapText")
 
-    render: ->
-      html = @template()
-      @$el.html html
+    onRender: ->
       @setWrap()
-      this
 
     clear: ->
-      _.each @resultViews, ((view) ->
-        @stopListening view
-        view.remove()
-      ), this
-      @resultViews = []
+      @collection.reset()

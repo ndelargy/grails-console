@@ -11,7 +11,9 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
       change: 'render'
 
     onRender: ->
-      @$el.addClass 'stacktrace' unless @model.get('loading') or @model.isSuccess()
+      unless @model.get('loading')
+        @$el.addClass 'stacktrace' unless @model.isSuccess()
+        @trigger 'complete'
 
     serializeData: ->
       loading: @model.get('loading')
