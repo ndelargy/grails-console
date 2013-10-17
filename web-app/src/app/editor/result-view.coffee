@@ -2,7 +2,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
 
   EditorApp.ResultView = Marionette.ItemView.extend
   
-    template: 'result'
+    template: 'editor/result'
 
     attributes:
       class: 'script-result'

@@ -1,5 +1,5 @@
 (function() {
-  (function(App, _, localStorage, JSON, $) {
+  App.module('Entities', function(Entities, App, Backbone, Marionette, $, _) {
     var S4, guid;
     S4 = function() {
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -7,15 +7,11 @@
     guid = function() {
       return S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4();
     };
-    return App.LocalFileStore = (function() {
+    Entities.LocalFileStore = (function() {
       function LocalFileStore(name) {
         this.name = name;
         this._load();
       }
-
-      LocalFileStore.prototype.list = function() {
-        return new App.FileCollection(this.fetch());
-      };
 
       LocalFileStore.prototype.fetch = function() {
         return _.values(this.data);
@@ -105,6 +101,35 @@
       return LocalFileStore;
 
     })();
-  })(App, _, localStorage, JSON, jQuery);
+    App.on('initialize:before', function(options) {
+      App.data = options;
+      App.settings = new App.Settings;
+      App.settings.load();
+      return Entities.localFileStore = new Entities.LocalFileStore('gconsole.files');
+    });
+    Entities.LocalFileCollection = Backbone.Collection.extend({
+      model: function(attrs, options) {
+        return new Entities.File(attrs, options);
+      },
+      isLocal: true,
+      comparator: function(file) {
+        return file.get('lastModified') * -1;
+      },
+      sync: function(method, file, options) {
+        return Entities.localFileStore.sync(method, file, options);
+      }
+    });
+    App.reqres.setHandler('local:file:entities', function() {
+      var files;
+      files = new Entities.LocalFileCollection(Entities.localFileStore.fetch());
+      files.store = Entities.localFileStore;
+      return files;
+    });
+    return App.reqres.setHandler('local:file:entity', function(name) {
+      return new Entities.LocalFileCollection(Entities.localFileStore.fetch()).findWhere({
+        name: name
+      });
+    });
+  });
 
 }).call(this);

@@ -5,7 +5,7 @@
         this.view = new EditorApp.EditorSectionView;
         this.listenTo(this.view, 'save', this.save);
         return this.listenTo(this.view, 'fork', function(text) {
-          this.showFile(new App.File({
+          this.showFile(new App.FileApp.File({
             text: text
           }));
           return App.router.navigate("new", {

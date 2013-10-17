@@ -7,7 +7,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
       @listenTo @view, 'save', @save
       @listenTo @view, 'fork', (text) ->
         # TODO check dirty
-        @showFile new App.File
+        @showFile new App.FileApp.File
           text: text
         # TODO
         App.router.navigate "new", trigger: false

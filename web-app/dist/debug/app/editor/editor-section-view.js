@@ -1,7 +1,7 @@
 (function() {
   App.module('EditorApp', function(EditorApp, App, Backbone, Marionette, $, _) {
     return EditorApp.EditorSectionView = App.ItemView.extend({
-      template: 'editor-section',
+      template: 'editor/editor-section',
       attributes: {
         "class": "full-height"
       },
@@ -49,7 +49,7 @@
             return _this.editorView.refresh();
           },
           east__paneSelector: ".east",
-          east__contentSelector: "#result",
+          east__contentSelector: ".script-result-section",
           east__initHidden: App.settings.get("orientation") !== "vertical",
           east__size: App.settings.get("layout.east.size"),
           east__onresize_end: function(name, $el, state, opts) {
@@ -57,7 +57,7 @@
             return App.settings.save();
           },
           south__paneSelector: ".south",
-          south__contentSelector: "#result",
+          south__contentSelector: ".script-result-section",
           south__initHidden: App.settings.get("orientation") !== "horizontal",
           south__size: App.settings.get("layout.south.size"),
           south__onresize_end: function(name, $el, state, opts) {

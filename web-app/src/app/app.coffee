@@ -48,11 +48,9 @@
       $("body").attr "data-theme", theme
 
     savingOn: -> # TODO
-  #      $('.navbar .saving i').addClass('icon-refresh icon-spin').removeClass('icon-ok')
       $('.navbar .saving').fadeIn(100)
 
     savingOff: ->
-  #      $('.navbar .saving i').removeClass('icon-refresh icon-spin').addClass('icon-ok')
       $('.navbar .saving').fadeOut(100)
   )
 
@@ -60,10 +58,7 @@
     App.data = options
 
     App.settings = new App.Settings
-    App.settings.load()
-
-    App.localFileStore = new App.LocalFileStore("gconsole.files")
-
+    App.settings.load() # TODO entity
 
   window.App = App
 

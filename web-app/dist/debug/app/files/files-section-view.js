@@ -1,7 +1,7 @@
 (function() {
-  (function(App, Backbone) {
-    return App.FilesSectionView = Backbone.Marionette.Layout.extend({
-      template: 'files-section',
+  App.module('FileApp', function(FileApp, App, Backbone, Marionette, $, _) {
+    return FileApp.FilesSectionView = Marionette.Layout.extend({
+      template: 'files/files-section',
       regions: {
         localRegion: '.local',
         remoteRegion: '.remote'
@@ -13,22 +13,25 @@
         'click a.local-select': 'onLocalClick',
         'click a.remote-select': 'onRemoteClick'
       },
-      initialize: function() {
-        var files, remoteFiles;
-        files = new App.FileCollection;
-        files.store = App.localFileStore;
-        this.localFilesView = new App.LocalFilesView({
-          collection: files
-        });
-        remoteFiles = new App.RemoteFileCollection;
-        return this.remoteFilesView = new App.RemoteFilesView({
-          collection: remoteFiles
-        });
-      },
       onRender: function() {
+        var dfd, localFiles,
+          _this = this;
+        localFiles = App.request('local:file:entities');
+        this.localFilesView = new FileApp.LocalFilesView({
+          collection: localFiles
+        });
         this.localRegion.show(this.localFilesView);
-        this.remoteRegion.show(this.remoteFilesView);
-        return this.remoteRegion.$el.hide();
+        dfd = App.request('remote:file:entities');
+        dfd.done(function(remoteFiles) {
+          _this.remoteFilesView = new FileApp.RemoteFilesView({
+            collection: remoteFiles
+          });
+          _this.remoteRegion.show(_this.remoteFilesView);
+          return _this.remoteRegion.$el.hide();
+        });
+        return dfd.fail(function() {
+          return alert('Failed to load remote files.');
+        });
       },
       onLocalClick: function(event) {
         event.preventDefault();
@@ -45,6 +48,6 @@
         return this.remoteRegion.$el.show();
       }
     });
-  })(App, Backbone);
+  });
 
 }).call(this);

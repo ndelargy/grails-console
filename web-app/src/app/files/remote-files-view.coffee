@@ -1,8 +1,8 @@
-((App, Backbone, JST) ->
+App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
-  App.RemoteFilesView = App.ItemView.extend
+  FileApp.RemoteFilesView = Marionette.CompositeView.extend
 
-    template: 'remote-files'
+    template: 'files/remote-files'
 
     attributes:
       class: 'remote-files-view'
@@ -11,9 +11,15 @@
       'click a.name': 'onNameClick'
       'click a.delete': 'onDeleteClick'
 
-    initialize: ->
-      @listenTo @collection, 'all', @render
-      @collection.fetch()
+    _initialEvents: ->
+      if @collection
+        @listenTo @collection, 'add', @addChildView
+        @listenTo @collection, 'remove', @removeItemView
+        @listenTo @collection, 'reset', @render
+
+    itemViewContainer: 'tbody'
+
+    getItemView: (item) -> FileApp.FileView
 
     onNameClick: (event) ->
       event.preventDefault()
@@ -31,5 +37,3 @@
     serializeData: ->
       files: @collection.toJSON()
       baseDir: App.data.baseDir
-
-) App, Backbone, JST

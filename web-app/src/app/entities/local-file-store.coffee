@@ -1,4 +1,4 @@
-((App, _, localStorage, JSON, $) ->
+App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
 
   S4 = ->
     (((1 + Math.random()) * 0x10000) | 0).toString(16).substring 1
@@ -6,15 +6,13 @@
   guid = ->
     S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4()
 
-  class App.RemoteFileStore
+  class Entities.LocalFileStore
 
     constructor: (@name) ->
       @_load()
 
     list: ->
-      collection = new App.FileCollection(@fetch())
-      collection.store = @
-      collection
+      new Entities.LocalFileCollection(@fetch())
 
     fetch: ->
       _.values @data
@@ -55,17 +53,9 @@
       catch e
         @data = {}
 
-    newFile: (data) ->
-      file = new App.File(data)
-      file.sync = _.bind(@sync, this)
-      # TODO
-      file
-
     sync: (method, file, options) ->
       resp = undefined
 
-      #            var store = model.localStorage || model.collection.localStorage;
-      #            var dfd = $.Deferred();
       switch method
         when "read"
           resp = if file.id then @find(file) else @fetch()
@@ -75,8 +65,13 @@
           resp = @update(file) # save
         when "delete"
           resp = @destroy(file)
-      # destroy
+
+      dfd = $.Deferred()
+      dfd.resolveWith @, [resp]
+
       if resp
-        options.success resp
+        options?.success? resp
       else
-        options.error "Record not found") App, _, localStorage, JSON, jQuery
+        options?.error? "Record not found"
+
+      dfd

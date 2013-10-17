@@ -1,10 +1,8 @@
 App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
 
-  # TODO remove #result
-
   EditorApp.ResultCollectionView = Marionette.CompositeView.extend
   
-    template: 'results'
+    template: 'editor/results'
 
     itemViewContainer: '.inner'
 
@@ -17,17 +15,15 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
       @scrollToResultView itemView
 
     initialize: ->
-      @listenTo App.settings, "change:results.wrapText", @setWrap
+      @listenTo App.settings, 'change:results.wrapText', @setWrap
       @listenTo @, 'itemview:complete', @scrollToResultView
 
     scrollToResultView: (resultView) ->
-      console.log "top #{resultView.$el.position().top}"
-      scroll = resultView.$el.position().top + @$("#result").scrollTop()
-      console.log "animate #{scroll}"
-      @$("#result").animate scrollTop: scroll
+      scroll = resultView.$el.position().top + @$('.script-result-section').scrollTop()
+      @$('.script-result-section').animate scrollTop: scroll
 
     setWrap: ->
-      @$("#result").toggleClass "wrap", App.settings.get("results.wrapText")
+      @$('.script-result-section').toggleClass 'wrap', App.settings.get('results.wrapText')
 
     onRender: ->
       @setWrap()

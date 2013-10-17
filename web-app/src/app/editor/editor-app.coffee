@@ -2,23 +2,20 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
 
   API =
     newFile: ->
-      file = new App.File
+      file = new App.Entities.File
       @showFile file
 
     openLocalFile: (name) ->
-      file = App.localFileStore.list().findWhere(name: name) # TODO reqres
+      file = App.request 'local:file:entity', name
       unless file
         alert 'no find file' # TODO
         return
       @showFile file
 
     openRemoteFile: (name) ->
-      file = new App.File
-        id: name # TODO search by path
-      file.local = false
-      file.fetch()
-        .done => @showFile file
-        .fail => alert 'no find file' # TODO parse response?
+      dfd = App.request 'remote:file:entity', name
+      dfd.done (file) => @showFile file
+      dfd.fail => alert 'no find file' # TODO parse response?
 
     showFile: (file) ->
       App.trigger 'app:active', EditorApp.controller.view

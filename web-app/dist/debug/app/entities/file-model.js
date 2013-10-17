@@ -1,6 +1,6 @@
 (function() {
-  (function(App, Backbone) {
-    return App.File = Backbone.Model.extend({
+  App.module('Entities', function(Entities, App, Backbone, Marionette, $, _) {
+    return Entities.File = Backbone.Model.extend({
       defaults: {
         text: ''
       },
@@ -22,6 +22,6 @@
         }
       }
     });
-  })(App, Backbone);
+  });
 
 }).call(this);

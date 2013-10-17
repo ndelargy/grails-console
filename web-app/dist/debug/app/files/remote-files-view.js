@@ -1,7 +1,7 @@
 (function() {
-  (function(App, Backbone, JST) {
-    return App.RemoteFilesView = App.ItemView.extend({
-      template: 'remote-files',
+  App.module('FileApp', function(FileApp, App, Backbone, Marionette, $, _) {
+    return FileApp.RemoteFilesView = Marionette.CompositeView.extend({
+      template: 'files/remote-files',
       attributes: {
         "class": 'remote-files-view'
       },
@@ -9,9 +9,16 @@
         'click a.name': 'onNameClick',
         'click a.delete': 'onDeleteClick'
       },
-      initialize: function() {
-        this.listenTo(this.collection, 'all', this.render);
-        return this.collection.fetch();
+      _initialEvents: function() {
+        if (this.collection) {
+          this.listenTo(this.collection, 'add', this.addChildView);
+          this.listenTo(this.collection, 'remove', this.removeItemView);
+          return this.listenTo(this.collection, 'reset', this.render);
+        }
+      },
+      itemViewContainer: 'tbody',
+      getItemView: function(item) {
+        return FileApp.FileView;
       },
       onNameClick: function(event) {
         var file, fileId;
@@ -42,6 +49,6 @@
         };
       }
     });
-  })(App, Backbone, JST);
+  });
 
 }).call(this);

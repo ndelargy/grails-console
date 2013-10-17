@@ -1,8 +1,7 @@
 (function() {
-  (function(App, Backbone, JST) {
-    var RemoteFileStore;
-    App.LocalFilesView = Backbone.Marionette.ItemView.extend({
-      template: 'file-list',
+  App.module('FileApp', function(FileApp, App, Backbone, Marionette, $, _) {
+    return FileApp.LocalFilesView = Marionette.CompositeView.extend({
+      template: 'files/file-list',
       attributes: {
         "class": 'files-view'
       },
@@ -10,11 +9,13 @@
         'click a.name': 'onNameClick',
         'click a.delete': 'onDeleteClick'
       },
+      itemViewContainer: 'tbody',
+      getItemView: function(item) {
+        return FileApp.FileView;
+      },
       initialize: function() {
-        this.listenTo(this.collection, 'all', this.render);
         return this.collection.fetch();
       },
-      onBeforeRender: function() {},
       onNameClick: function(event) {
         var file, fileId;
         event.preventDefault();
@@ -41,18 +42,6 @@
         };
       }
     });
-    RemoteFileStore = function() {};
-    return _.extend(RemoteFileStore.prototype, {
-      listFiles: function() {
-        return $.get("xxx/listFiles");
-      },
-      getFileText: function(name) {
-        return $.get("xxx/getFileText");
-      },
-      saveFile: function(file) {
-        return $.get("xxx/saveFile");
-      }
-    });
-  })(App, Backbone, JST);
+  });
 
 }).call(this);

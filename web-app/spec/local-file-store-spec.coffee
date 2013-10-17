@@ -11,7 +11,7 @@ describe 'App.LocalFileStore', ->
 
 
   it 'should persist to localStorage', ->
-    file = new App.File(name: 'test-name', text: 'test-text')
+    file = new App.FileApp.File(name: 'test-name', text: 'test-text')
     @store.create file
 
     expect(@store.list().length).toBe 1
@@ -21,7 +21,7 @@ describe 'App.LocalFileStore', ->
 
 
   it 'should work with sync', ->
-    file = new App.File(name: 'test-name', text: 'test-text')
+    file = new App.FileApp.File(name: 'test-name', text: 'test-text')
     file.local = true
 
     expect(file.id).not.toBeDefined()

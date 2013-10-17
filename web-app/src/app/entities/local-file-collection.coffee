@@ -1,4 +1,4 @@
-((App, _, localStorage, JSON, $) ->
+App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
 
   S4 = ->
     (((1 + Math.random()) * 0x10000) | 0).toString(16).substring 1
@@ -6,13 +6,10 @@
   guid = ->
     S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4()
 
-  class App.LocalFileStore
+  class Entities.LocalFileStore
 
     constructor: (@name) ->
       @_load()
-
-    list: ->
-      new App.FileCollection(@fetch())
 
     fetch: ->
       _.values @data
@@ -76,4 +73,31 @@
 
       dfd
 
-) App, _, localStorage, JSON, jQuery
+  App.on 'initialize:before', (options) ->
+    App.data = options
+
+    App.settings = new App.Settings
+    App.settings.load()
+
+    Entities.localFileStore = new Entities.LocalFileStore 'gconsole.files'
+
+
+  Entities.LocalFileCollection = Backbone.Collection.extend
+
+    model: (attrs, options) -> new Entities.File attrs, options # TODO set local here
+
+    isLocal: true
+
+    comparator: (file) -> file.get('lastModified') * -1
+
+    sync: (method, file, options) ->
+      Entities.localFileStore.sync method, file, options
+
+
+  App.reqres.setHandler 'local:file:entities', ->
+    files = new Entities.LocalFileCollection(Entities.localFileStore.fetch())
+    files.store = Entities.localFileStore
+    files
+
+  App.reqres.setHandler 'local:file:entity', (name) ->
+    new Entities.LocalFileCollection(Entities.localFileStore.fetch()).findWhere(name: name) # TODO

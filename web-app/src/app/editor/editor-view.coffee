@@ -2,7 +2,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
 
   EditorApp.EditorView = App.ItemView.extend
 
-    template: 'editor'
+    template: 'editor/editor'
 
     events:
       'click button.execute': 'onExecuteClick'

@@ -3,7 +3,6 @@
     var API;
     API = {
       files: function() {
-        console.log('yo');
         return App.trigger('app:active', FileApp.view);
       }
     };
@@ -13,8 +12,7 @@
         controller: API
       });
       router.appRoute('files', 'files');
-      console.log('init');
-      return FileApp.view = new App.FilesSectionView;
+      return FileApp.view = new FileApp.FilesSectionView;
     });
   });
 

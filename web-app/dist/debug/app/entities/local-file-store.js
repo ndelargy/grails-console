@@ -1,5 +1,5 @@
 (function() {
-  (function(App, _, localStorage, JSON, $) {
+  App.module('Entities', function(Entities, App, Backbone, Marionette, $, _) {
     var S4, guid;
     S4 = function() {
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -7,28 +7,25 @@
     guid = function() {
       return S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4();
     };
-    return App.RemoteFileStore = (function() {
-      function RemoteFileStore(name) {
+    return Entities.LocalFileStore = (function() {
+      function LocalFileStore(name) {
         this.name = name;
         this._load();
       }
 
-      RemoteFileStore.prototype.list = function() {
-        var collection;
-        collection = new App.FileCollection(this.fetch());
-        collection.store = this;
-        return collection;
+      LocalFileStore.prototype.list = function() {
+        return new Entities.LocalFileCollection(this.fetch());
       };
 
-      RemoteFileStore.prototype.fetch = function() {
+      LocalFileStore.prototype.fetch = function() {
         return _.values(this.data);
       };
 
-      RemoteFileStore.prototype.find = function(file) {
+      LocalFileStore.prototype.find = function(file) {
         return this.data[file.id];
       };
 
-      RemoteFileStore.prototype.create = function(file) {
+      LocalFileStore.prototype.create = function(file) {
         file.set("lastModified", new Date().getTime());
         if (!file.id) {
           file.id = file.attributes.id = guid();
@@ -38,29 +35,29 @@
         return file.toJSON();
       };
 
-      RemoteFileStore.prototype.update = function(file) {
+      LocalFileStore.prototype.update = function(file) {
         file.set("lastModified", new Date().getTime());
         this.data[file.id] = file.toJSON();
         this._save();
         return file.toJSON();
       };
 
-      RemoteFileStore.prototype.destroy = function(file) {
+      LocalFileStore.prototype.destroy = function(file) {
         delete this.data[file.id];
         this._save();
         return file.toJSON();
       };
 
-      RemoteFileStore.prototype.destroyAll = function() {
+      LocalFileStore.prototype.destroyAll = function() {
         this.data = {};
         return localStorage.removeItem(this.name);
       };
 
-      RemoteFileStore.prototype._save = function() {
+      LocalFileStore.prototype._save = function() {
         return localStorage.setItem(this.name, JSON.stringify(this.data));
       };
 
-      RemoteFileStore.prototype._load = function() {
+      LocalFileStore.prototype._load = function() {
         var e, store;
         store = localStorage.getItem(this.name);
         try {
@@ -71,15 +68,8 @@
         }
       };
 
-      RemoteFileStore.prototype.newFile = function(data) {
-        var file;
-        file = new App.File(data);
-        file.sync = _.bind(this.sync, this);
-        return file;
-      };
-
-      RemoteFileStore.prototype.sync = function(method, file, options) {
-        var resp;
+      LocalFileStore.prototype.sync = function(method, file, options) {
+        var dfd, resp;
         resp = void 0;
         switch (method) {
           case "read":
@@ -94,16 +84,27 @@
           case "delete":
             resp = this.destroy(file);
         }
+        dfd = $.Deferred();
+        dfd.resolveWith(this, [resp]);
         if (resp) {
-          return options.success(resp);
+          if (options != null) {
+            if (typeof options.success === "function") {
+              options.success(resp);
+            }
+          }
         } else {
-          return options.error("Record not found");
+          if (options != null) {
+            if (typeof options.error === "function") {
+              options.error("Record not found");
+            }
+          }
         }
+        return dfd;
       };
 
-      return RemoteFileStore;
+      return LocalFileStore;
 
     })();
-  })(App, _, localStorage, JSON, jQuery);
+  });
 
 }).call(this);

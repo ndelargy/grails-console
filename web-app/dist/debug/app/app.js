@@ -59,8 +59,7 @@
     App.on('initialize:before', function(options) {
       App.data = options;
       App.settings = new App.Settings;
-      App.settings.load();
-      return App.localFileStore = new App.LocalFileStore("gconsole.files");
+      return App.settings.load();
     });
     return window.App = App;
   })(jQuery, _, Backbone, JST, window);

@@ -4,14 +4,12 @@
     API = {
       newFile: function() {
         var file;
-        file = new App.File;
+        file = new App.Entities.File;
         return this.showFile(file);
       },
       openLocalFile: function(name) {
         var file;
-        file = App.localFileStore.list().findWhere({
-          name: name
-        });
+        file = App.request('local:file:entity', name);
         if (!file) {
           alert('no find file');
           return;
@@ -19,16 +17,14 @@
         return this.showFile(file);
       },
       openRemoteFile: function(name) {
-        var file,
+        var dfd,
           _this = this;
-        file = new App.File({
-          id: name
+        dfd = App.request('remote:file:entity', name);
+        dfd.done(function(file) {
+          return _this.showFile(file);
         });
-        file.local = false;
-        return file.fetch().done(function() {
-          return _this.showFile(file.fail(function() {
-            return alert('no find file');
-          }));
+        return dfd.fail(function() {
+          return alert('no find file');
         });
       },
       showFile: function(file) {

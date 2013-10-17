@@ -22,36 +22,36 @@ body {
   padding: 8px;
   margin-bottom: 8px;
 }
-#result {
+.script-result-section {
   font-size: 15px;
   overflow: auto;
 }
-#result .script-result {
+.script-result-section .script-result {
   white-space: pre;
   margin: 0;
   background: none repeat scroll 0 0 #fff;
   border-bottom: 1px solid #aaa;
   color: #000000;
 }
-#result .script-result.stacktrace {
+.script-result-section .script-result.stacktrace {
   background: none repeat scroll 0 0 #FFF3F3;
   color: #ff0000;
 }
-#result .script-result .loading {
+.script-result-section .script-result .loading {
   background: url("img/spinner.gif") no-repeat scroll 10px center #ffffff;
   padding: 15px 15px 15px 37px;
 }
-#result.wrap .script-result {
+.script-result-section.wrap .script-result {
   white-space: pre-wrap;
   word-wrap: break-word;
 }
-#result.wrap .inner {
+.script-result-section.wrap .inner {
   float: none;
   min-width: inherit;
 }
-#result.hide-input .script-result .input,
-#result.hide-output .script-result .output,
-#result.hide-result .script-result .result {
+.script-result-section.hide-input .script-result .input,
+.script-result-section.hide-output .script-result .output,
+.script-result-section.hide-result .script-result .result {
   display: none;
 }
 .result-time {
@@ -238,7 +238,7 @@ label.wrap span {
 }
 .files-page-header {
   padding: 10px;
-  border-bottom: 1px solid #ccc ;
+  border-bottom: 1px solid #ccc;
 }
 .files-page-header h1 {
   font-size: 28px;
