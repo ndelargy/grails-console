@@ -58,8 +58,7 @@
     }));
     App.on('initialize:before', function(options) {
       App.data = options;
-      App.settings = new App.Settings;
-      return App.settings.load();
+      return App.settings = App.request('settings:entity');
     });
     return window.App = App;
   })(jQuery, _, Backbone, JST, window);
