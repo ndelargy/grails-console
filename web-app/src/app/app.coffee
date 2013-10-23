@@ -56,9 +56,7 @@
 
   App.on 'initialize:before', (options) ->
     App.data = options
-
-    App.settings = new App.Settings
-    App.settings.load() # TODO entity
+    App.settings = App.request 'settings:entity'
 
   window.App = App
 
