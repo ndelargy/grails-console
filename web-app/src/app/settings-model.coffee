@@ -24,4 +24,12 @@
       json = JSON.parse(localStorage.getItem(localStorageKey)) or {}
       @set json
 
+  instance = undefined
+
+  App.reqres.setHandler 'settings:entity', ->
+    unless instance
+      instance = new App.Settings
+      instance.load()
+    instance
+
 ) App, Backbone, localStorage, JSON
