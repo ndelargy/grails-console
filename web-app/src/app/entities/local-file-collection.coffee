@@ -74,11 +74,6 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
       dfd
 
   App.on 'initialize:before', (options) ->
-    App.data = options
-
-    App.settings = new App.Settings
-    App.settings.load()
-
     Entities.localFileStore = new Entities.LocalFileStore 'gconsole.files'
 
 
