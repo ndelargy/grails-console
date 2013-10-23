@@ -102,9 +102,6 @@
 
     })();
     App.on('initialize:before', function(options) {
-      App.data = options;
-      App.settings = new App.Settings;
-      App.settings.load();
       return Entities.localFileStore = new Entities.LocalFileStore('gconsole.files');
     });
     Entities.LocalFileCollection = Backbone.Collection.extend({
