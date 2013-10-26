@@ -28,7 +28,7 @@
     instance = void 0;
     return App.reqres.setHandler('settings:entity', function() {
       if (!instance) {
-        instance = new App.Settings;
+        instance = new Entities.Settings;
         instance.load();
       }
       return instance;

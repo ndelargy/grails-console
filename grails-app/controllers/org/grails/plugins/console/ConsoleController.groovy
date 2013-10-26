@@ -14,6 +14,13 @@ class ConsoleController {
     def index = {
         [
             json: [
+                implicitVars: [
+                    ctx: 'the Spring application context',
+                    grailsApplication: 'the Grails application',
+                    config: 'the Grails configuration',
+                    request: 'the HTTP request',
+                    session: 'the HTTP session',
+                ],
                 baseUrl: resource(plugin: 'none'),
                 baseDir: baseDir
             ]

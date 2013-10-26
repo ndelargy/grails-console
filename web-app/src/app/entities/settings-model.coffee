@@ -28,6 +28,6 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
 
   App.reqres.setHandler 'settings:entity', ->
     unless instance
-      instance = new App.Settings
+      instance = new Entities.Settings
       instance.load()
     instance

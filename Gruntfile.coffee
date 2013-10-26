@@ -25,6 +25,7 @@ module.exports = (grunt) ->
       "web-app/dist/debug/app/settings-model.js"
       "web-app/dist/debug/app/settings-view.js"
       "web-app/dist/debug/app/main-view.js"
+      "web-app/dist/debug/app/help-view.js"
 
       "web-app/dist/debug/app/entities/**/*.js"
       "web-app/dist/debug/app/editor/**/*.js"

@@ -1,32 +1,26 @@
-<div class="modal fade" data-backdrop="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Help</h4>
-            </div>
+<div class="modal-content help-section">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Help</h4>
+    </div>
 
-            <div class="modal-body">
-                <h4>Implicit variables</h4>
-                <table class="table">
-                    <tr><td>ctx</td><td>the Spring application context</td></tr>
-                    <tr><td>grailsApplication</td><td>the Grails application</td></tr>
-                    <tr><td>config</td><td>the Grails configuration</td></tr>
-                    <tr><td>request</td><td>the HTTP request</td></tr>
-                    <tr><td>session</td><td>the HTTP session</td></tr>
-                </table>
-                <h4>Shortcuts</h4>
-                <table class="table">
-                    <tr><td>Execute</td><td>Ctrl-Enter</td></tr>
-                    <tr><td>Clear</td><td>Esc</td></tr>
-                </table>
-            </div>
+    <div class="modal-body">
+        <h4>Implicit variables</h4>
+        <table class="table">
+            {{#each implicitVars}}
+                <tr><td><code>{{@key}}</code></td><td>{{this}}</td></tr>
+            {{/each}}
+        </table>
+        <h4>Shortcuts</h4>
+        <table class="table">
+            <tr><td><span class="shortcut-key">Ctrl-Enter</span></td><td>Execute</td></tr>
+            <tr><td><span class="shortcut-key">Esc</span></td><td>Clear</td></tr>
+        </table>
+    </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+    </div>
+</div><!-- /.modal-content -->
 
 

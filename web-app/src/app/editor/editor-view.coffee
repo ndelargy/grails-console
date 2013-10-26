@@ -98,8 +98,4 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
 
     onHelpClick: (event) ->
       event.preventDefault()
-      $el = $(JST['help-modal']())
-      $el.modal()
-      $el.on 'hidden.bs.modal', ->
-        $el.remove()
-        $('.modal-backdrop').remove()
+      App.trigger 'help'

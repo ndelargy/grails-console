@@ -58,6 +58,15 @@
     App.data = options
     App.settings = App.request 'settings:entity'
 
+  App.on 'help', ->
+    # TODO modal region
+    view = new App.HelpView
+    $el = $('<div class="modal fade" data-backdrop="false"></div>').appendTo('body').html view.render().el
+    $el.modal()
+    $el.on 'hidden.bs.modal', ->
+      $el.remove()
+      $('.modal-backdrop').remove()
+
   window.App = App
 
 ) jQuery, _, Backbone, JST, window

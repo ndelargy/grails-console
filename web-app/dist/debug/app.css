@@ -14,40 +14,50 @@ body {
 #main-content {
   height: 100%;
 }
-.script-result,
-.result_time {
-  color: white;
-  font-size: 11px;
-  font-family: monospace;
-  padding: 8px;
-  margin-bottom: 8px;
+.help-section .shortcut-key {
+  color: #fff;
+  background-color: #888;
+  padding: 5px;
+  border-radius: 3px;
 }
 .script-result-section {
   font-size: 15px;
   overflow: auto;
 }
+.script-result-section .inner {
+  float: left;
+  min-width: 100%;
+}
 .script-result-section .script-result {
-  white-space: pre;
   margin: 0;
   background: none repeat scroll 0 0 #fff;
   border-bottom: 1px solid #aaa;
   color: #000000;
+  font-size: 11px;
+  font-family: monospace;
+  padding: 8px;
 }
 .script-result-section .script-result.stacktrace {
   background: none repeat scroll 0 0 #FFF3F3;
   color: #ff0000;
 }
 .script-result-section .script-result .loading {
-  background: url("img/spinner.gif") no-repeat scroll 10px center #ffffff;
   padding: 15px 15px 15px 37px;
 }
-.script-result-section.wrap .script-result {
-  white-space: pre-wrap;
-  word-wrap: break-word;
+.script-result-section .script-result .input,
+.script-result-section .script-result .output,
+.script-result-section .script-result .result {
+  white-space: pre;
 }
 .script-result-section.wrap .inner {
   float: none;
   min-width: inherit;
+}
+.script-result-section.wrap .script-result .input,
+.script-result-section.wrap .script-result .output,
+.script-result-section.wrap .script-result .result {
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 .script-result-section.hide-input .script-result .input,
 .script-result-section.hide-output .script-result .output,
@@ -80,6 +90,11 @@ body {
   margin-top: -20px;
   font-size: 20px;
   line-height: 40px;
+}
+.navbar button {
+  height: 32px;
+  font-size: 12px;
+  border-radius: 0;
 }
 .btn-toolbar {
   padding: 3px;

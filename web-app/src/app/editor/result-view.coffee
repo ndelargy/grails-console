@@ -19,11 +19,16 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
       loading: @model.get('loading')
       totalTime: @model.get('totalTime')
       input: @formattedInput()
-      output: @model.get('output')
+      output: @formattedOutput()
       result: @model.get('exception') or @model.get('error') or @model.get('result')
 
     formattedInput: ->
       lines = @model.get('input').trim().split('\n')
       _.map(lines, (line) ->
-        'groovy> ' + line
+        '> ' + line
+      ).join '\n'
+    formattedOutput: ->
+      lines = @model.get('output')?.trim()?.split('\n')
+      _.map(lines, (line) ->
+        '  ' + line
       ).join '\n'

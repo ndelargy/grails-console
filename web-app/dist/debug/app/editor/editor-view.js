@@ -108,14 +108,8 @@
         return this.editor.focus();
       },
       onHelpClick: function(event) {
-        var $el;
         event.preventDefault();
-        $el = $(JST['help-modal']());
-        $el.modal();
-        return $el.on('hidden.bs.modal', function() {
-          $el.remove();
-          return $('.modal-backdrop').remove();
-        });
+        return App.trigger('help');
       }
     });
   });
