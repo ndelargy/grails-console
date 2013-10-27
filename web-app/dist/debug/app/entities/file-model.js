@@ -11,7 +11,7 @@
       sync: function(method, file, options) {
         var url;
         if (file.isLocal()) {
-          return App.localFileStore.sync(method, file, options);
+          return Entities.localFileStore.sync(method, file, options);
         } else {
           url = file.isNew() ? App.createLink('file') : App.createLink('file', {
             path: file.get('id')

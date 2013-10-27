@@ -33,8 +33,8 @@
       @showTheme()
       App.settings.on "change:theme", @showTheme, this
 
-      $("body").css "visibility", "visible"
       Backbone.history.start(pushState: false) if Backbone?.history
+      $("body").css "visibility", "visible"  # TODO still have FOUC
 
     createLink: (action, params) ->
       link = "#{@data.baseUrl}/console/#{action}"

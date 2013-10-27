@@ -13,7 +13,6 @@ body {
 }
 
 #main-content {
-  //  margin: 10px;
   height: 100%;
 }
 
@@ -34,39 +33,24 @@ body {
   .inner {
     float: left;
     min-width: 100%;
-  }
-  .script-result {
-    margin: 0;
-    background: none repeat scroll 0 0 #fff;
-    border-bottom: 1px solid #aaa;
-    color: #000000;
-    font-size: 11px;
-    font-family: monospace;
-    padding: 8px;
-    &.stacktrace {
-      background: none repeat scroll 0 0 #FFF3F3;
-      color: #ff0000;
-    }
-    .loading {
-//      background: url("img/spinner.gif") no-repeat scroll 10px center #FFFFFF;
-      padding: 15px 15px 15px 37px;
-    }
-    .input, .output, .result {
-//      margin-left: 15px;
-      white-space: pre;
-    }
-    .input {
-//      border-left: 2px solid #ccc;
-//      border-bottom: 1px solid #eee;
-    }
-    .output {
-//      border-left: 2px solid #ccc;
-//      color: #999;
-//      border-bottom: 1px solid #eee;
-    }
-    .result {
-//      border-left: 2px solid #ccc;
-//      color: #999;
+    .script-result {
+      margin: 0;
+      border-bottom: 1px solid #aaa;
+      font-size: 11px;
+      font-family: monospace;
+      padding: 8px;
+      .loading {
+        text-align: center;
+      }
+      .input, .output, .result {
+        white-space: pre;
+      }
+      .input {
+      }
+      .output {
+      }
+      .result {
+      }
     }
   }
   &.wrap {
@@ -91,7 +75,6 @@ body {
 .result-time {
   font-size: 100%;
 }
-
 .navbar {
   margin-bottom: 0;
   border-radius: 0;
@@ -120,6 +103,9 @@ body {
     font-size: 12px;
     border-radius: 0;
   }
+}
+.modal-open .navbar-fixed-top {
+  margin-right: 0px;
 }
 
 .btn-toolbar {
@@ -184,21 +170,21 @@ body {
   overflow: auto;
 }
 
-label.wrap {
-  color: #777777;
-  font-size: 0.75em;
-  margin-right: 5px;
-  position: absolute;
-  right: 5px;
-  height: 20px;
-  top: 50%;
-  margin-top: -10px;
-}
-
-label.wrap input,
-label.wrap span {
-  vertical-align: middle;
-}
+//label.wrap {
+//  color: #777777;
+//  font-size: 0.75em;
+//  margin-right: 5px;
+//  position: absolute;
+//  right: 5px;
+//  height: 20px;
+//  top: 50%;
+//  margin-top: -10px;
+//}
+//
+//label.wrap input,
+//label.wrap span {
+//  vertical-align: middle;
+//}
 
 .dropdown-menu.settings a i.icon-check {
   visibility: hidden;
@@ -209,10 +195,10 @@ label.wrap span {
 }
 
 .files-section-view {
-  //  width: 600px;
-  //  padding: 20px;
-  //  margin-left: auto;
-  //  margin-right: auto;
+    width: 600px;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
   height: 100%;
   background-color: #fff;
   font-size: 14px;
@@ -326,6 +312,15 @@ body[data-theme="default"] {
   }
   #editor {
   }
+  .script-result-section {
+    .script-result {
+      color: #000;
+      background-color: #fff;
+      &.stacktrace .result{
+        color: #ff0000;
+      }
+    }
+  }
   .btn-toolbar {
     //    background-color: #dddddd;
     //    background-color: transparent;
@@ -350,6 +345,16 @@ body[data-theme="lesser-dark"] {
     }
   }
   #editor {
+  }
+
+  .script-result-section {
+    .script-result {
+      color: #fff;
+      background-color: #333;
+      &.stacktrace .result {
+        color: #ff5555;
+      }
+    }
   }
   .ui-layout-resizer {
     background-color: #aaa;

@@ -29,12 +29,12 @@
         mainView.$el.appendTo("body");
         this.showTheme();
         App.settings.on("change:theme", this.showTheme, this);
-        $("body").css("visibility", "visible");
         if (Backbone != null ? Backbone.history : void 0) {
-          return Backbone.history.start({
+          Backbone.history.start({
             pushState: false
           });
         }
+        return $("body").css("visibility", "visible");
       },
       createLink: function(action, params) {
         var link;

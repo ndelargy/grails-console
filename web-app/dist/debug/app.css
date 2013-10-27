@@ -28,25 +28,19 @@ body {
   float: left;
   min-width: 100%;
 }
-.script-result-section .script-result {
+.script-result-section .inner .script-result {
   margin: 0;
-  background: none repeat scroll 0 0 #fff;
   border-bottom: 1px solid #aaa;
-  color: #000000;
   font-size: 11px;
   font-family: monospace;
   padding: 8px;
 }
-.script-result-section .script-result.stacktrace {
-  background: none repeat scroll 0 0 #FFF3F3;
-  color: #ff0000;
+.script-result-section .inner .script-result .loading {
+  text-align: center;
 }
-.script-result-section .script-result .loading {
-  padding: 15px 15px 15px 37px;
-}
-.script-result-section .script-result .input,
-.script-result-section .script-result .output,
-.script-result-section .script-result .result {
+.script-result-section .inner .script-result .input,
+.script-result-section .inner .script-result .output,
+.script-result-section .inner .script-result .result {
   white-space: pre;
 }
 .script-result-section.wrap .inner {
@@ -95,6 +89,9 @@ body {
   height: 32px;
   font-size: 12px;
   border-radius: 0;
+}
+.modal-open .navbar-fixed-top {
+  margin-right: 0px;
 }
 .btn-toolbar {
   padding: 3px;
@@ -147,20 +144,6 @@ body {
 #code-wrapper {
   overflow: auto;
 }
-label.wrap {
-  color: #777777;
-  font-size: 0.75em;
-  margin-right: 5px;
-  position: absolute;
-  right: 5px;
-  height: 20px;
-  top: 50%;
-  margin-top: -10px;
-}
-label.wrap input,
-label.wrap span {
-  vertical-align: middle;
-}
 .dropdown-menu.settings a i.icon-check {
   visibility: hidden;
 }
@@ -168,6 +151,10 @@ label.wrap span {
   visibility: visible;
 }
 .files-section-view {
+  width: 600px;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
   height: 100%;
   background-color: #fff;
   font-size: 14px;
@@ -265,6 +252,13 @@ label.wrap span {
 body[data-theme="default"] {
   background: url("img/brushed.png");
 }
+body[data-theme="default"] .script-result-section .script-result {
+  color: #000;
+  background-color: #fff;
+}
+body[data-theme="default"] .script-result-section .script-result.stacktrace .result {
+  color: #ff0000;
+}
 body[data-theme="lesser-dark"] {
   background: url("img/debut_dark.png");
 }
@@ -278,6 +272,13 @@ body[data-theme="lesser-dark"] .navbar .navbar-brand {
 body[data-theme="lesser-dark"] .btn-toolbar button {
   color: #fff;
   text-shadow: none;
+}
+body[data-theme="lesser-dark"] .script-result-section .script-result {
+  color: #fff;
+  background-color: #333;
+}
+body[data-theme="lesser-dark"] .script-result-section .script-result.stacktrace .result {
+  color: #ff5555;
 }
 body[data-theme="lesser-dark"] .ui-layout-resizer {
   background-color: #aaa;
