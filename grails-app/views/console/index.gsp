@@ -11,6 +11,8 @@
 
 <body style="visibility: hidden">
 
+<div id="main-content"></div>
+
 <con:layoutResources/>
 <script type="text/javascript" charset="utf-8">
   jQuery(function($){

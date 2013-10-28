@@ -151,20 +151,22 @@ body {
   visibility: visible;
 }
 .files-section-view {
-  width: 600px;
-  padding: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  height: 100%;
-  background-color: #fff;
-  font-size: 14px;
-  border-style: solid;
-  border-color: #ccc;
-  border-width: 0 1px;
+  width: 700px;
+  height: 500px;
+}
+.files-section-view .modal-content {
+  overflow: auto;
+  resize: both;
+}
+.files-section-view .modal-body {
+  padding: 0;
+}
+.files-section-view .modal-footer {
+  margin-top: 0;
 }
 .files-section-view .file-store-select {
   padding: 0 0 10px 0;
-  width: 200px;
+  width: 115px;
   position: absolute;
   height: 100%;
   border-right: 1px solid #ccc;
@@ -179,7 +181,21 @@ body {
   margin-top: -6px;
 }
 .files-section-view .store {
-  margin-left: 200px;
+  margin-left: 115px;
+}
+.files-section-view .store .files-page-header {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+.files-section-view .store .files-page-header h1 {
+  font-size: 20px;
+  margin: 0;
+}
+.files-section-view .store .files-page-header .dir {
+  margin-top: 10px;
+}
+.files-section-view .store table {
+  margin-bottom: 0;
 }
 .files-section-view ul.files {
   padding: 0;
@@ -237,17 +253,6 @@ body {
 }
 .btn-toolbar > .btn + .btn {
   margin-left: 0;
-}
-.files-page-header {
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-}
-.files-page-header h1 {
-  font-size: 28px;
-  margin: 0;
-}
-.files-page-header .dir {
-  margin-top: 10px;
 }
 body[data-theme="default"] {
   background: url("img/brushed.png");

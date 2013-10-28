@@ -18,7 +18,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
       dfd.fail => alert 'no find file' # TODO parse response?
 
     showFile: (file) ->
-      App.trigger 'app:active', EditorApp.controller.view
+#      App.trigger 'app:active', EditorApp.controller.view
       EditorApp.controller.showFile file
 
   App.addInitializer ->
@@ -31,6 +31,8 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
 
     EditorApp.router = router
     EditorApp.controller = new EditorApp.Controller
+
+    App.mainRegion.show EditorApp.controller.view
 
   App.on 'app:file:selected', (file) ->
     if file.isLocal()

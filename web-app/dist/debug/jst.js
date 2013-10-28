@@ -92,7 +92,7 @@ function program3(depth0,data) {
   return "\n    <div>\n        <div class=\"message\">No files</div>\n    </div>\n";
   }
 
-  buffer += "<div class=\"files-page-header\">\n    <h1>Local Files</h1>\n</div>\n\n\n";
+  buffer += "<div class=\"files-page-header\">\n    <h1>Local</h1>\n</div>\n\n";
   stack1 = helpers['if'].call(depth0, depth0.files, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   return buffer;
@@ -121,7 +121,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"file-store-select\">\n    <ul class=\"nav nav-pills nav-stacked\">\n        <li class=\"active\"><a href=\"#\" class=\"local-select\">Local <i class=\"icon-chevron-right pull-right\"></i></a></li>\n        <li><a href=\"#\" class=\"remote-select\">Remote <i class=\"icon-chevron-right pull-right\"></i></a></li>\n    </ul>\n</div>\n<div class=\"store\">\n  <div class=\"local\"></div>\n  <div class=\"remote\"></div>\n</div>";
+  return "<div class=\"modal-content\"  style=\"resize: both\">\n    <div class=\"modal-header\">\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n        <h4 class=\"modal-title\">Files</h4>\n    </div>\n\n    <div class=\"modal-body\" style=\"resize: both\">\n        <div class=\"file-store-select\">\n            <ul class=\"nav nav-pills nav-stacked\">\n                <li class=\"active\"><a href=\"#\" class=\"local-select\">Local</a></li>\n                <li><a href=\"#\" class=\"remote-select\">Remote</a></li>\n            </ul>\n        </div>\n        <div class=\"store\">\n            <div class=\"local\"></div>\n            <div class=\"remote\"></div>\n        </div>\n\n    </div>\n\n    <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">Close</button>\n    </div>\n</div>\n<!-- /.modal-content -->";
   });
 
 this["JST"]["files/remote-files"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -141,7 +141,7 @@ function program3(depth0,data) {
   return "\n  <div>\n      <div class=\"message\">No files</div>\n  </div>\n";
   }
 
-  buffer += "<div class=\"files-page-header\">\n    <h1>Remote Files</h1>\n    <div class=\"dir\">";
+  buffer += "<div class=\"files-page-header\">\n    <h1>Remote</h1>\n    <div class=\"dir\">";
   if (stack1 = helpers.baseDir) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.baseDir; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)

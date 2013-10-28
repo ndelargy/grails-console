@@ -21,11 +21,10 @@
       headerView.on "files", ->
         # TODO check if file needs to be saved
         App.trigger 'app:file:list'
-        Backbone.history.navigate "files", trigger: true # TODO move to file-app
 
       headerView.$el.appendTo "body"
-      mainView = new App.MainView(el: $("#main-content")[0]).render()
-      mainView.$el.appendTo "body"
+#      mainView = new App.MainView(el: $("#main-content")[0]).render()
+#      mainView.$el.appendTo "body"
 
       #            $(document).on('keydown', 'Ctrl+return', _.bind(this.executeCode, this)); TODO
       #            $(document).on('keydown', 'esc', _.bind(this.clearResults, this)); TODO
@@ -53,6 +52,8 @@
     savingOff: ->
       $('.navbar .saving').fadeOut(100)
   )
+
+  App.addRegions mainRegion: '#main-content'
 
   App.on 'initialize:before', (options) ->
     App.data = options

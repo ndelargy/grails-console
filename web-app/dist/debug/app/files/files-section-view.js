@@ -7,7 +7,7 @@
         remoteRegion: '.remote'
       },
       attributes: {
-        'class': 'files-section-view'
+        'class': 'modal-dialog files-section-view'
       },
       events: {
         'click a.local-select': 'onLocalClick',

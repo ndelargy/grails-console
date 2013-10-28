@@ -195,19 +195,28 @@ body {
 }
 
 .files-section-view {
-    width: 600px;
-    padding: 20px;
-    margin-left: auto;
-    margin-right: auto;
-  height: 100%;
-  background-color: #fff;
-  font-size: 14px;
-  border-style: solid;
-  border-color: #ccc;
-  border-width: 0 1px;
+  width: 700px;
+//  margin-left: auto;
+//  margin-right: auto;
+  height: 500px;
+//  background-color: #fff;
+//  font-size: 14px;
+//  border-style: solid;
+//  border-color: #ccc;
+//  border-width: 0 1px;
+  .modal-content {
+    overflow: auto;
+    resize: both;
+  }
+  .modal-body {
+    padding: 0;
+  }
+  .modal-footer {
+    margin-top: 0;
+  }
   .file-store-select {
     padding: 0 0 10px 0;
-    width: 200px;
+    width: 115px;
     position: absolute;
     height: 100%;
     border-right: 1px solid #ccc;
@@ -226,7 +235,21 @@ body {
     }
   }
   .store {
-    margin-left: 200px;
+    margin-left: 115px;
+    .files-page-header {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      h1 {
+        font-size: 20px;
+        margin: 0;
+      }
+      .dir {
+        margin-top: 10px;
+      }
+    }
+    table {
+      margin-bottom: 0;
+    }
   }
   ul.files {
     padding: 0;
@@ -290,18 +313,6 @@ body {
   }
   &>.btn+.btn {
     margin-left: 0;
-  }
-}
-
-.files-page-header {
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-  h1 {
-    font-size: 28px;
-    margin: 0;
-  }
-  .dir {
-    margin-top: 10px;
   }
 }
 

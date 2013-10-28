@@ -11,22 +11,15 @@
     };
     App = new (Backbone.Marionette.Application.extend({
       onStart: function(data) {
-        var headerView, mainView;
+        var headerView;
         headerView = new App.HeaderView().render();
         headerView.on("new", function() {
           return App.trigger('app:file:new');
         });
         headerView.on("files", function() {
-          App.trigger('app:file:list');
-          return Backbone.history.navigate("files", {
-            trigger: true
-          });
+          return App.trigger('app:file:list');
         });
         headerView.$el.appendTo("body");
-        mainView = new App.MainView({
-          el: $("#main-content")[0]
-        }).render();
-        mainView.$el.appendTo("body");
         this.showTheme();
         App.settings.on("change:theme", this.showTheme, this);
         if (Backbone != null ? Backbone.history : void 0) {
@@ -56,6 +49,9 @@
         return $('.navbar .saving').fadeOut(100);
       }
     }));
+    App.addRegions({
+      mainRegion: '#main-content'
+    });
     App.on('initialize:before', function(options) {
       App.data = options;
       return App.settings = App.request('settings:entity');

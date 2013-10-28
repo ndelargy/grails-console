@@ -47,9 +47,7 @@
           App.savingOn();
           _this.file.save().then(function() {
             App.savingOff();
-            return App.router.navigateToFile(_this.file, {
-              trigger: false
-            });
+            return App.trigger('app:file:selected', _this.file);
           });
           return $el.modal("hide");
         });

@@ -44,7 +44,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
         App.savingOn()
         @file.save().then =>
           App.savingOff()
-          App.router.navigateToFile @file, trigger: false # TODO INVALID
+          App.trigger 'app:file:selected', @file
 
         $el.modal "hide"
 

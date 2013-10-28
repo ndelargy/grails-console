@@ -28,7 +28,6 @@
         });
       },
       showFile: function(file) {
-        App.trigger('app:active', EditorApp.controller.view);
         return EditorApp.controller.showFile(file);
       }
     };
@@ -41,7 +40,8 @@
       router.appRoute(/^local:(.*?)$/, 'openLocalFile');
       router.appRoute(/^remote:(.*?)$/, 'openRemoteFile');
       EditorApp.router = router;
-      return EditorApp.controller = new EditorApp.Controller;
+      EditorApp.controller = new EditorApp.Controller;
+      return App.mainRegion.show(EditorApp.controller.view);
     });
     App.on('app:file:selected', function(file) {
       if (file.isLocal()) {

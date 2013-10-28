@@ -7,12 +7,15 @@
       }
     };
     return App.addInitializer(function() {
-      var router;
-      router = new Marionette.AppRouter({
-        controller: API
+      var $el, view;
+      view = new FileApp.FilesSectionView;
+      $el = $('<div class="modal fade" data-backdrop="false"></div>').appendTo('body').html(view.render().el);
+      $el.modal({
+        show: false
       });
-      router.appRoute('files', 'files');
-      return FileApp.view = new FileApp.FilesSectionView;
+      return App.on('app:file:list', function() {
+        return $el.modal('show');
+      });
     });
   });
 
