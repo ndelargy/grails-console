@@ -13,8 +13,11 @@
       $el.modal({
         show: false
       });
-      return App.on('app:file:list', function() {
+      App.on('app:file:list', function() {
         return $el.modal('show');
+      });
+      return App.on('app:file:selected', function(file) {
+        return $el.modal('hide');
       });
     });
   });

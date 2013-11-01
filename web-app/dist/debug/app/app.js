@@ -12,14 +12,20 @@
     App = new (Backbone.Marionette.Application.extend({
       onStart: function(data) {
         var headerView;
-        headerView = new App.HeaderView().render();
-        headerView.on("new", function() {
+        headerView = new App.HeaderView;
+        headerView.on('new', function() {
           return App.trigger('app:file:new');
         });
-        headerView.on("files", function() {
+        headerView.on('files', function() {
           return App.trigger('app:file:list');
         });
-        headerView.$el.appendTo("body");
+        App.headerRegion.show(headerView);
+        $(document).bind('keydown', 'Ctrl+return', function() {
+          return App.trigger('app:editor:execute');
+        });
+        $(document).bind('keydown', 'esc', function() {
+          return App.trigger('app:editor:clear');
+        });
         this.showTheme();
         App.settings.on("change:theme", this.showTheme, this);
         if (Backbone != null ? Backbone.history : void 0) {
@@ -50,6 +56,7 @@
       }
     }));
     App.addRegions({
+      headerRegion: '#header',
       mainRegion: '#main-content'
     });
     App.on('initialize:before', function(options) {

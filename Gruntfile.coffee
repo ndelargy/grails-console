@@ -17,6 +17,7 @@ module.exports = (grunt) ->
       "web-app/vendor/js/plugins/jquery.hotkeys.js"
       "web-app/vendor/codemirror-3.18/lib/codemirror.js"
       "web-app/vendor/codemirror-3.18/mode/groovy/groovy.js"
+      "web-app/vendor/DataTables-1.9.4/media/js/jquery.dataTables.js"
       "web-app/dist/debug/jst.js"
       "web-app/dist/debug/app/app.js"
       "web-app/dist/debug/app/item-view.js"

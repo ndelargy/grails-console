@@ -11,7 +11,8 @@
 
 <body style="visibility: hidden">
 
-<div id="main-content"></div>
+<div id="header"></div>
+<div class="full-height"><div id="main-content"></div></div>
 
 <con:layoutResources/>
 <script type="text/javascript" charset="utf-8">

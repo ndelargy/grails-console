@@ -14,7 +14,8 @@
       },
       initialize: function() {
         this.listenTo(App.settings, 'change:results.wrapText', this.setWrap);
-        return this.listenTo(this, 'itemview:complete', this.scrollToResultView);
+        this.listenTo(this, 'itemview:complete', this.scrollToResultView);
+        return this.listenTo(App, 'app:editor:clear', this.clear);
       },
       scrollToResultView: function(resultView) {
         var scroll;

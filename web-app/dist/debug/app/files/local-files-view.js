@@ -19,7 +19,7 @@
       onNameClick: function(event) {
         var file, fileId;
         event.preventDefault();
-        fileId = $(event.currentTarget).closest('tr').data("fileId");
+        fileId = $(event.currentTarget).closest('tr').data('fileId');
         file = this.collection.findWhere({
           id: fileId
         });
@@ -28,7 +28,7 @@
       onDeleteClick: function(event) {
         var file, fileId;
         event.preventDefault();
-        fileId = $(event.currentTarget).closest('tr').data("fileId");
+        fileId = $(event.currentTarget).closest('tr').data('fileId');
         file = this.collection.findWhere({
           id: fileId
         });

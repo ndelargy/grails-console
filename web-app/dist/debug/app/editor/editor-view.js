@@ -10,9 +10,10 @@
       },
       initialize: function() {
         var _this = this;
-        return $(window).on("beforeunload", function() {
+        $(window).on("beforeunload", function() {
           return _this.onBeforeunload();
         });
+        return this.listenTo(App, 'app:editor:execute', this.executeCode);
       },
       onButtonClick: function(event) {
         var fcn;
