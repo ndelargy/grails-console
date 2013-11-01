@@ -1,27 +1,17 @@
-((App, Backbone, JST) ->
+((App, Backbone) ->
 
-  App.HeaderView = Backbone.View.extend
+  App.HeaderView = Backbone.Marionette.ItemView.extend
+
+    template: 'header'
+
     attributes:
-      class: "navbar navbar-fixed-top"
+      class: 'navbar navbar-fixed-top'
 
-    events:
-      "click button.new": "onNewClick" # TODO triggers
-      "click button.files": "onFilesClick" # TODO triggers
+    triggers:
+      'click button.new': 'new'
+      'click button.files': 'files'
 
-    initialize: ->
-      @template = JST.header
+    onRender: ->
+      new App.SettingsView(el: @$('.dropdown-menu.settings')[0]).render() # TODO move to template
 
-    render: ->
-      @$el.html @template()
-      new App.SettingsView(el: @$(".dropdown-menu.settings")[0]).render() # TODO move to template
-      @
-
-    onNewClick: (event) ->
-      event.preventDefault()
-      @trigger "new"
-
-    onFilesClick: (event) ->
-      event.preventDefault()
-      @trigger "files"
-
-) App, Backbone, JST
+) App, Backbone

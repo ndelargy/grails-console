@@ -12,6 +12,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
 
     initialize: ->
       $(window).on "beforeunload", => @onBeforeunload() # TODO unload
+      @listenTo App, 'app:editor:execute', @executeCode
 
     onButtonClick: (event) ->
       fcn = $(event.currentTarget).data("function")

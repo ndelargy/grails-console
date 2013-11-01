@@ -13,21 +13,19 @@
   App = new (Backbone.Marionette.Application.extend
 
     onStart: (data) ->
-      headerView = new App.HeaderView().render()
-      headerView.on "new", ->
+      headerView = new App.HeaderView
+      headerView.on 'new', ->
         # TODO check if file needs to be saved
         App.trigger 'app:file:new'
 
-      headerView.on "files", ->
+      headerView.on 'files', ->
         # TODO check if file needs to be saved
         App.trigger 'app:file:list'
 
-      headerView.$el.appendTo "body"
-#      mainView = new App.MainView(el: $("#main-content")[0]).render()
-#      mainView.$el.appendTo "body"
+      App.headerRegion.show headerView
 
-      #            $(document).on('keydown', 'Ctrl+return', _.bind(this.executeCode, this)); TODO
-      #            $(document).on('keydown', 'esc', _.bind(this.clearResults, this)); TODO
+      $(document).bind 'keydown', 'Ctrl+return', -> App.trigger 'app:editor:execute'
+      $(document).bind 'keydown', 'esc', -> App.trigger 'app:editor:clear'
 
       @showTheme()
       App.settings.on "change:theme", @showTheme, this
@@ -53,7 +51,9 @@
       $('.navbar .saving').fadeOut(100)
   )
 
-  App.addRegions mainRegion: '#main-content'
+  App.addRegions 
+    headerRegion: '#header'
+    mainRegion: '#main-content'
 
   App.on 'initialize:before', (options) ->
     App.data = options

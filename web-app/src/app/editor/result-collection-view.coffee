@@ -17,6 +17,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
     initialize: ->
       @listenTo App.settings, 'change:results.wrapText', @setWrap
       @listenTo @, 'itemview:complete', @scrollToResultView
+      @listenTo App, 'app:editor:clear', @clear
 
     scrollToResultView: (resultView) ->
       scroll = resultView.$el.position().top + @$('.script-result-section').scrollTop()

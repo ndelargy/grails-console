@@ -18,6 +18,9 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
     App.on 'app:file:list', ->
       $el.modal 'show'
 
+    App.on 'app:file:selected', (file) ->
+      $el.modal 'hide'
+
 
 #    $el.on 'hidden.bs.modal', ->
 #      $el.remove()

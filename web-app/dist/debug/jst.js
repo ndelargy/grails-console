@@ -92,7 +92,7 @@ function program3(depth0,data) {
   return "\n    <div>\n        <div class=\"message\">No files</div>\n    </div>\n";
   }
 
-  buffer += "<div class=\"files-page-header\">\n    <h1>Local</h1>\n</div>\n\n";
+  buffer += "<div class=\"files-page-header\">\n</div>\n\n";
   stack1 = helpers['if'].call(depth0, depth0.files, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   return buffer;
@@ -141,7 +141,7 @@ function program3(depth0,data) {
   return "\n  <div>\n      <div class=\"message\">No files</div>\n  </div>\n";
   }
 
-  buffer += "<div class=\"files-page-header\">\n    <h1>Remote</h1>\n    <div class=\"dir\">";
+  buffer += "<div class=\"files-page-header\">\n    <div class=\"dir\">";
   if (stack1 = helpers.baseDir) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.baseDir; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -185,15 +185,6 @@ function program1(depth0,data) {
   stack1 = helpers.each.call(depth0, depth0.implicitVars, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n        </table>\n        <h4>Shortcuts</h4>\n        <table class=\"table\">\n            <tr><td><span class=\"shortcut-key\">Ctrl-Enter</span></td><td>Execute</td></tr>\n            <tr><td><span class=\"shortcut-key\">Esc</span></td><td>Clear</td></tr>\n        </table>\n    </div>\n\n    <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">Close</button>\n    </div>\n</div><!-- /.modal-content -->\n\n\n";
-  return buffer;
-  });
-
-this["JST"]["main"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "";
-
-
   return buffer;
   });
 
