@@ -6,10 +6,6 @@
 
   Marionette.Renderer.render = (template, data) -> JST[template] data
 
-
-
-  #  App.addRegions TODO switch to two regions.
-
   App = new (Backbone.Marionette.Application.extend
 
     onStart: (data) ->
@@ -28,10 +24,10 @@
       $(document).bind 'keydown', 'esc', -> App.trigger 'app:editor:clear'
 
       @showTheme()
-      App.settings.on "change:theme", @showTheme, this
+      App.settings.on 'change:theme', @showTheme, this
 
       Backbone.history.start(pushState: false) if Backbone?.history
-      $("body").css "visibility", "visible"  # TODO still have FOUC
+      $('body').css 'visibility', 'visible'  # TODO still have FOUC
 
     createLink: (action, params) ->
       link = "#{@data.baseUrl}/console/#{action}"
@@ -41,8 +37,8 @@
       link
 
     showTheme: ->
-      theme = App.settings.get("theme")
-      $("body").attr "data-theme", theme
+      theme = App.settings.get('theme')
+      $('body').attr 'data-theme', theme
 
     savingOn: -> # TODO
       $('.navbar .saving').fadeIn(100)

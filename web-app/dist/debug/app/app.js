@@ -27,13 +27,13 @@
           return App.trigger('app:editor:clear');
         });
         this.showTheme();
-        App.settings.on("change:theme", this.showTheme, this);
+        App.settings.on('change:theme', this.showTheme, this);
         if (Backbone != null ? Backbone.history : void 0) {
           Backbone.history.start({
             pushState: false
           });
         }
-        return $("body").css("visibility", "visible");
+        return $('body').css('visibility', 'visible');
       },
       createLink: function(action, params) {
         var link;
@@ -45,8 +45,8 @@
       },
       showTheme: function() {
         var theme;
-        theme = App.settings.get("theme");
-        return $("body").attr("data-theme", theme);
+        theme = App.settings.get('theme');
+        return $('body').attr('data-theme', theme);
       },
       savingOn: function() {
         return $('.navbar .saving').fadeIn(100);

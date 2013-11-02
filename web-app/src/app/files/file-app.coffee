@@ -13,6 +13,8 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 #      $el.remove()
 #      $('.modal-backdrop').remove()
 
+    $el.find('.modal-content').resizable()
+
     # TODO modal region
 
     App.on 'app:file:list', ->

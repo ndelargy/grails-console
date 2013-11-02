@@ -1,7 +1,7 @@
 {
   "jsSrc": [
     "web-app/vendor/js/libs/jquery-1.7.1.min.js",
-    "web-app/vendor/js/libs/jquery-ui-1.8.17.custom.min.js",
+    "web-app/vendor/jquery-ui-1.10.3/jquery-ui.min.js",
     "web-app/vendor/bootstrap/js/bootstrap.min.js",
     "web-app/vendor/js/libs/underscore-min.js",
     "web-app/vendor/js/libs/backbone-min.js",
@@ -43,6 +43,7 @@
     "web-app/vendor/codemirror-3.18/lib/codemirror.css",
     "web-app/vendor/codemirror-3.18/theme/lesser-dark.css",
     "web-app/vendor/jquery-layout/css/jquery.layout.css",
+    "web-app/vendor/jquery-ui-1.10.3/jquery-ui.min.css",
     "web-app/dist/debug/app.css"
   ]
 }

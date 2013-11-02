@@ -13,6 +13,7 @@
       $el.modal({
         show: false
       });
+      $el.find('.modal-content').resizable();
       App.on('app:file:list', function() {
         return $el.modal('show');
       });
