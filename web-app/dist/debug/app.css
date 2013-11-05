@@ -154,6 +154,8 @@ body {
 }
 .files-section-view {
   width: 700px;
+}
+.files-section-view .modal-body {
   height: 500px;
 }
 .files-section-view .modal-body {
@@ -163,30 +165,15 @@ body {
   margin-top: 0;
 }
 .files-section-view .file-store-select {
-  padding: 0 0 10px 0;
-  width: 115px;
-  position: absolute;
-  height: 100%;
-  border-right: 1px solid #ccc;
-}
-.files-section-view .file-store-select .nav-pills li a {
-  border-radius: 0;
-}
-.files-section-view .file-store-select .nav-pills li a i {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  margin-top: -6px;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
 }
 .files-section-view .store {
-  margin-left: 115px;
+  overflow: auto;
 }
 .files-section-view .store .files-page-header {
   padding: 10px;
   border-bottom: 1px solid #ccc;
-}
-.files-section-view .store .files-page-header .dir {
-  margin-top: 10px;
 }
 .files-section-view .store table {
   margin-bottom: 0;

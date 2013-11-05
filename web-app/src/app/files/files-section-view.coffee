@@ -12,8 +12,7 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
       'class': 'modal-dialog files-section-view'
 
     events:
-      'click a.local-select': 'onLocalClick'
-      'click a.remote-select': 'onRemoteClick'
+      'change select[name=store]': 'onStoreChange'
 
     onRender: ->
       localFiles = App.request('local:file:entities')
@@ -21,7 +20,7 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
         collection: localFiles
       @localRegion.show @localFilesView
 
-      dfd = App.request('remote:file:entities')
+      dfd = App.request('remote:file:entities', '/')
       dfd.done (remoteFiles) =>
         @remoteFilesView = new FileApp.RemoteFilesView
           collection: remoteFiles
@@ -31,16 +30,10 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
       dfd.fail -> alert 'Failed to load remote files.'
 
-    onLocalClick: (event) ->
-      event.preventDefault()
-      @$(event.currentTarget).closest('ul').find('li').removeClass 'active' # TODO pull this out
-      @$(event.currentTarget).closest('li').addClass 'active'
-      @localRegion.$el.show()
-      @remoteRegion.$el.hide()
-
-    onRemoteClick: (event) ->
-      event.preventDefault()
-      @$(event.currentTarget).closest('ul').find('li').removeClass 'active'
-      @$(event.currentTarget).closest('li').addClass 'active'
-      @localRegion.$el.hide()
-      @remoteRegion.$el.show()
+    onStoreChange: (event) ->
+      if @$(event.currentTarget).val() is 'local'
+        @localRegion.$el.show()
+        @remoteRegion.$el.hide()
+      else
+        @localRegion.$el.hide()
+        @remoteRegion.$el.show()

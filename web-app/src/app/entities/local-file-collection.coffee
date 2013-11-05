@@ -83,7 +83,7 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
 
     isLocal: true
 
-    comparator: (file) -> file.get('lastModified') * -1
+    comparator: (file) -> file.get('name') * -1
 
     sync: (method, file, options) ->
       Entities.localFileStore.sync method, file, options

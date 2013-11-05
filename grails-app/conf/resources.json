@@ -18,6 +18,7 @@
     "web-app/dist/debug/app/header-view.js",
     "web-app/dist/debug/app/settings-view.js",
     "web-app/dist/debug/app/help-view.js",
+    "web-app/dist/debug/app/dom-utils.js",
     "web-app/dist/debug/app/entities/file-model.js",
     "web-app/dist/debug/app/entities/local-file-collection.js",
     "web-app/dist/debug/app/entities/local-file-store.js",

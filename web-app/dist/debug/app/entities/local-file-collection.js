@@ -110,7 +110,7 @@
       },
       isLocal: true,
       comparator: function(file) {
-        return file.get('lastModified') * -1;
+        return file.get('name') * -1;
       },
       sync: function(method, file, options) {
         return Entities.localFileStore.sync(method, file, options);

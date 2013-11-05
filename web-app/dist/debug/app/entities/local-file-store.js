@@ -58,14 +58,21 @@
       };
 
       LocalFileStore.prototype._load = function() {
-        var e, store;
+        var e, file, store, _i, _len, _ref, _results;
         store = localStorage.getItem(this.name);
         try {
-          return this.data = JSON.parse(store);
+          this.data = JSON.parse(store);
         } catch (_error) {
           e = _error;
-          return this.data = {};
+          this.data = {};
         }
+        _ref = this.data;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          file = _ref[_i];
+          _results.push(file.set('type', 'file'));
+        }
+        return _results;
       };
 
       LocalFileStore.prototype.sync = function(method, file, options) {

@@ -1,13 +1,14 @@
 (function() {
   App.module('FileApp', function(FileApp, App, Backbone, Marionette, $, _) {
-    return FileApp.RemoteFilesView = Marionette.CompositeView.extend({
-      template: 'files/remote-files',
+    FileApp.RemoteFilesView = Marionette.CompositeView.extend({
+      template: 'files/file-list',
       attributes: {
         "class": 'remote-files-view'
       },
       events: {
         'click a.name': 'onNameClick',
-        'click a.delete': 'onDeleteClick'
+        'click a.delete': 'onDeleteClick',
+        'blur input[name=path]': 'onPathBlur'
       },
       _initialEvents: function() {
         if (this.collection) {
@@ -42,12 +43,30 @@
           return file.destroy();
         }
       },
+      onPathBlur: function(event) {
+        var path;
+        path = $(event.currentTarget).val();
+        this.collection.path = path;
+        return this.collection.fetch({
+          reset: true
+        });
+      },
       serializeData: function() {
         return {
           files: this.collection.toJSON(),
-          baseDir: App.data.baseDir
+          baseDir: this.collection.path
         };
       }
+    });
+    Handlebars.registerHelper('fileIcon', function(file, options) {
+      var clazz;
+      clazz = this.type === 'dir' ? 'icon-folder-close' : 'icon-file';
+      return new Handlebars.SafeString("<i class='" + clazz + "'></i>");
+    });
+    return Handlebars.registerHelper('fileIcon', function(file, options) {
+      var clazz;
+      clazz = this.type === 'dir' ? 'icon-folder-close' : 'icon-file';
+      return new Handlebars.SafeString("<i class='" + clazz + "'></i>");
     });
   });
 

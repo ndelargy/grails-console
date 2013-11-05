@@ -2,14 +2,17 @@
   App.module('Entities', function(Entities, App, Backbone, Marionette, $, _) {
     Entities.RemoteFileCollection = Backbone.Collection.extend({
       url: function() {
-        return App.createLink('listFiles');
+        return App.createLink('listFiles', {
+          path: this.path
+        });
       },
       model: function(attrs, options) {
         return new Entities.File(attrs, options);
       },
       isLocal: false,
+      path: '/',
       comparator: function(file) {
-        return file.get('lastModified') * -1;
+        return file.get('name') * -1;
       }
     });
     App.reqres.setHandler('remote:file:entity', function(name) {
@@ -22,7 +25,7 @@
         return file;
       });
     });
-    return App.reqres.setHandler('remote:file:entities', function(name) {
+    return App.reqres.setHandler('remote:file:entities', function(path) {
       var remoteFiles;
       remoteFiles = new App.Entities.RemoteFileCollection;
       return remoteFiles.fetch({

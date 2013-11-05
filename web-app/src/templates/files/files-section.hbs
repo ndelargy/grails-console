@@ -4,12 +4,17 @@
         <h4 class="modal-title">Files</h4>
     </div>
 
-    <div class="modal-body" style="resize: both">
+    <div class="modal-body">
         <div class="file-store-select">
-            <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#" class="local-select">Local</a></li>
-                <li><a href="#" class="remote-select">Remote</a></li>
-            </ul>
+            <form class="form-inline">
+                <label class="control-label">File store</label>
+                <div class="form-group">
+                    <select class="form-control" name="store">
+                        <option value="local">Local</option>
+                        <option value="remote">Remote</option>
+                    </select>
+                </div>
+            </form>
         </div>
         <div class="store">
             <div class="local"></div>

@@ -38,7 +38,8 @@
       },
       serializeData: function() {
         return {
-          files: this.collection.toJSON()
+          files: this.collection.toJSON(),
+          baseDir: '/'
         };
       }
     });

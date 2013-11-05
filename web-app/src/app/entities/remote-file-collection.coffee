@@ -2,13 +2,15 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
 
   Entities.RemoteFileCollection = Backbone.Collection.extend
 
-    url: -> App.createLink 'listFiles'
+    url: -> App.createLink 'listFiles', path: @path
 
     model: (attrs, options) -> new Entities.File attrs, options
 
     isLocal: false
 
-    comparator: (file) -> file.get('lastModified') * -1
+    path: '/' # TODO default
+
+    comparator: (file) -> file.get('name') * -1
 
   App.reqres.setHandler 'remote:file:entity', (name) ->
     file = new Entities.File
@@ -16,6 +18,6 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
     file.local = false
     file.fetch().pipe -> file
 
-  App.reqres.setHandler 'remote:file:entities', (name) ->
+  App.reqres.setHandler 'remote:file:entities', (path) ->
     remoteFiles = new App.Entities.RemoteFileCollection #TODO reqres
-    remoteFiles.fetch(reset: true).pipe -> remoteFiles
+    remoteFiles.fetch(reset: true).pipe -> remoteFiles # TODO pass path

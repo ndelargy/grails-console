@@ -10,8 +10,7 @@
         'class': 'modal-dialog files-section-view'
       },
       events: {
-        'click a.local-select': 'onLocalClick',
-        'click a.remote-select': 'onRemoteClick'
+        'change select[name=store]': 'onStoreChange'
       },
       onRender: function() {
         var dfd, localFiles,
@@ -21,7 +20,7 @@
           collection: localFiles
         });
         this.localRegion.show(this.localFilesView);
-        dfd = App.request('remote:file:entities');
+        dfd = App.request('remote:file:entities', '/');
         dfd.done(function(remoteFiles) {
           _this.remoteFilesView = new FileApp.RemoteFilesView({
             collection: remoteFiles
@@ -33,19 +32,14 @@
           return alert('Failed to load remote files.');
         });
       },
-      onLocalClick: function(event) {
-        event.preventDefault();
-        this.$(event.currentTarget).closest('ul').find('li').removeClass('active');
-        this.$(event.currentTarget).closest('li').addClass('active');
-        this.localRegion.$el.show();
-        return this.remoteRegion.$el.hide();
-      },
-      onRemoteClick: function(event) {
-        event.preventDefault();
-        this.$(event.currentTarget).closest('ul').find('li').removeClass('active');
-        this.$(event.currentTarget).closest('li').addClass('active');
-        this.localRegion.$el.hide();
-        return this.remoteRegion.$el.show();
+      onStoreChange: function(event) {
+        if (this.$(event.currentTarget).val() === 'local') {
+          this.localRegion.$el.show();
+          return this.remoteRegion.$el.hide();
+        } else {
+          this.localRegion.$el.hide();
+          return this.remoteRegion.$el.show();
+        }
       }
     });
   });

@@ -53,6 +53,8 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
       catch e
         @data = {}
 
+      file.set('type', 'file') for file in @data
+
     sync: (method, file, options) ->
       resp = undefined
 

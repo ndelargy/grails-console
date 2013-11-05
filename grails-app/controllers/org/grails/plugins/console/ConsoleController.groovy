@@ -47,12 +47,13 @@ class ConsoleController {
     }
 
     def listFiles = {
-        File baseDir = new File(baseDir)
+        File baseDir = new File(params.path)
         List result
         result = baseDir.listFiles().collect { File file ->
             [
                 id: file.absolutePath,
                 name: file.name,
+                type: file.isDirectory() ? 'dir' : 'file',
                 lastModified: file.lastModified()
             ]
         }

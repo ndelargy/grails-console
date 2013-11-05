@@ -198,13 +198,14 @@ body {
   width: 700px;
 //  margin-left: auto;
 //  margin-right: auto;
-  height: 500px;
+//  height: 500px;
 //  background-color: #fff;
 //  font-size: 14px;
 //  border-style: solid;
 //  border-color: #ccc;
 //  border-width: 0 1px;
-  .modal-content {
+  .modal-body {
+    height: 500px;
 //    overflow: auto;
 //    resize: both;
   }
@@ -215,32 +216,18 @@ body {
     margin-top: 0;
   }
   .file-store-select {
-    padding: 0 0 10px 0;
-    width: 115px;
-    position: absolute;
-    height: 100%;
-    border-right: 1px solid #ccc;
-    .nav-pills {
-      li {
-        a {
-          border-radius: 0;
-          i {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            margin-top: -6px;
-          }
-        }
-      }
-    }
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
   }
   .store {
-    margin-left: 115px;
+    overflow: auto;
     .files-page-header {
       padding: 10px;
       border-bottom: 1px solid #ccc;
       .dir {
-        margin-top: 10px;
+//        border: 1px solid #ccc;
+//        padding: 5px;
+//        margin-top: 10px;
       }
     }
     table {

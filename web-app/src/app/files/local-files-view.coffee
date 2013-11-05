@@ -32,3 +32,4 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
     serializeData: ->
       files: @collection.toJSON()
+      baseDir: '/'
