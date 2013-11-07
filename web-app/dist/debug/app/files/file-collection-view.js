@@ -21,9 +21,11 @@
         return this.listenTo(FileApp, 'app:path:selected', function(path) {
           if (this.$el.is(':visible')) {
             this.collection.path = path;
-            return this.collection.fetch({
+            this.collection.fetch({
               reset: true
             });
+            App.settings.set('files.remote.lastDir', path);
+            return App.settings.save();
           }
         });
       },

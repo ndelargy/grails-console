@@ -27,7 +27,7 @@
         });
       },
       onRender: function() {
-        var dfd, filePathView,
+        var dfd, filePathView, remotePath, _ref,
           _this = this;
         this.localFiles = App.request('local:file:entities');
         filePathView = new FileApp.FilePathView({
@@ -38,7 +38,8 @@
           collection: this.localFiles
         });
         this.localRegion.show(this.localFilesView);
-        dfd = App.request('remote:file:entities', '/');
+        remotePath = (_ref = App.settings.get('files.remote.lastDir')) != null ? _ref : '/';
+        dfd = App.request('remote:file:entities', remotePath);
         dfd.done(function(remoteFiles) {
           _this.remoteFiles = remoteFiles;
           _this.remoteFilesView = new FileApp.FileCollectionView({

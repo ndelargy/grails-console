@@ -34,7 +34,8 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
         collection: @localFiles
       @localRegion.show @localFilesView
 
-      dfd = App.request('remote:file:entities', '/')
+      remotePath = App.settings.get('files.remote.lastDir') ? '/'
+      dfd = App.request('remote:file:entities', remotePath)
       dfd.done (remoteFiles) =>
         @remoteFiles = remoteFiles
         @remoteFilesView = new FileApp.FileCollectionView

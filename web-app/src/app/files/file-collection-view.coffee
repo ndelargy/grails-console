@@ -24,6 +24,8 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
         if (@$el.is(':visible')) # TODO store param?
           @collection.path = path
           @collection.fetch(reset: true)
+          App.settings.set 'files.remote.lastDir', path
+          App.settings.save()
 
     getItemView: (item) ->
       FileApp.FileView
