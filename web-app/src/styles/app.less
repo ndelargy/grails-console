@@ -196,18 +196,8 @@ body {
 
 .files-section-view {
   width: 700px;
-//  margin-left: auto;
-//  margin-right: auto;
-//  height: 500px;
-//  background-color: #fff;
-//  font-size: 14px;
-//  border-style: solid;
-//  border-color: #ccc;
-//  border-width: 0 1px;
   .modal-body {
     height: 500px;
-//    overflow: auto;
-//    resize: both;
   }
   .modal-body {
     padding: 0;
@@ -216,19 +206,28 @@ body {
     margin-top: 0;
   }
   .file-store-select {
+//    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    form {
+      margin: 10px;
+    }
+  }
+  .breadcrumb-section {
     padding: 10px;
     border-bottom: 1px solid #ccc;
+    .breadcrumb {
+      margin-bottom: 0;
+      padding: 0;
+      background-color: transparent;
+      &>li+li:before {
+        padding: 0 2px 0 5px;
+      }
+    }
   }
   .store {
     overflow: auto;
-    .files-page-header {
-      padding: 10px;
-      border-bottom: 1px solid #ccc;
-      .dir {
-//        border: 1px solid #ccc;
-//        padding: 5px;
-//        margin-top: 10px;
-      }
+    .files-page-body {
+      overflow: auto;
     }
     table {
       margin-bottom: 0;

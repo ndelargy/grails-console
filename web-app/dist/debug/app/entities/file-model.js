@@ -8,6 +8,19 @@
         var _ref;
         return this.local === true || ((_ref = this.collection) != null ? _ref.isLocal : void 0) === true;
       },
+      getPath: function() {
+        return this.id;
+      },
+      getDir: function() {
+        var index, name;
+        name = this.get('name');
+        index = name.lastIndexOf('/');
+        if (index >= 0) {
+          return name.substring(0, index);
+        } else {
+          return name;
+        }
+      },
       sync: function(method, file, options) {
         var url;
         if (file.isLocal()) {

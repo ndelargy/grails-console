@@ -25,6 +25,7 @@
         _ref = $target.parentsUntil(container).get().reverse();
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           ancestor = _ref[_i];
+          console.log("setHeight " + ancestor);
           setHeight($(ancestor));
         }
         return setHeight($target);

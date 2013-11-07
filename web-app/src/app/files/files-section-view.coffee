@@ -1,10 +1,13 @@
 App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
+  BaseDir = Backbone.Model.extend()
+
   FileApp.FilesSectionView = Marionette.Layout.extend
 
     template: 'files/files-section'
 
     regions:
+      filePathRegion: '.file-path-region'
       localRegion: '.local'
       remoteRegion: '.remote'
 
@@ -14,8 +17,18 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
     events:
       'change select[name=store]': 'onStoreChange'
 
+    initialize: ->
+      @baseDir = new BaseDir(path: '/')
+
+      @listenTo FileApp, 'app:path:selected', (path) ->
+        @baseDir.set 'path', path
+
     onRender: ->
       localFiles = App.request('local:file:entities')
+
+      filePathView = new FileApp.FilePathView(model: @baseDir)
+      @filePathRegion.show filePathView
+
       @localFilesView = new FileApp.LocalFilesView
         collection: localFiles
       @localRegion.show @localFilesView

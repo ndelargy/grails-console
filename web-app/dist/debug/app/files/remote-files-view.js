@@ -18,6 +18,14 @@
         }
       },
       itemViewContainer: 'tbody',
+      initialize: function() {
+        return this.listenTo(FileApp, 'app:path:selected', function(path) {
+          this.collection.path = path;
+          return this.collection.fetch({
+            reset: true
+          });
+        });
+      },
       getItemView: function(item) {
         return FileApp.FileView;
       },
@@ -28,9 +36,13 @@
         file = this.collection.findWhere({
           id: fileId
         });
-        return file.fetch().done(function() {
-          return App.trigger('app:file:selected', file);
-        });
+        if (file.get('type') === 'dir') {
+          return FileApp.trigger('app:path:selected', file.getPath());
+        } else {
+          return file.fetch().done(function() {
+            return App.trigger('app:file:selected', file);
+          });
+        }
       },
       onDeleteClick: function(event) {
         var file, fileId;
@@ -53,15 +65,9 @@
       },
       serializeData: function() {
         return {
-          files: this.collection.toJSON(),
-          baseDir: this.collection.path
+          files: this.collection.toJSON()
         };
       }
-    });
-    Handlebars.registerHelper('fileIcon', function(file, options) {
-      var clazz;
-      clazz = this.type === 'dir' ? 'icon-folder-close' : 'icon-file';
-      return new Handlebars.SafeString("<i class='" + clazz + "'></i>");
     });
     return Handlebars.registerHelper('fileIcon', function(file, options) {
       var clazz;

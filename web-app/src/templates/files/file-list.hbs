@@ -1,25 +1,18 @@
-<div class="files-page-header">
-    <div class="dir">
-        <div class="input-group">
-            <span class="input-group-addon"><i class="icon-folder-close"></i></span>
-            <input type="text" class="form-control" name="path" value="{{baseDir}}">
-        </div>
-    </div>
+<div class="files-page-body">
+  {{#if files}}
+      <table class="table table-striped table-hover">
+          <thead>
+          <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Date Modified</th>
+          </tr>
+          </thead>
+          <tbody></tbody>
+      </table>
+  {{else}}
+      <div>
+          <div class="message">No files</div>
+      </div>
+  {{/if}}
 </div>
-
-{{#if files}}
-    <table class="table table-striped table-hover">
-        <thead>
-        <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Date Modified</th>
-        </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-{{else}}
-    <div>
-        <div class="message">No files</div>
-    </div>
-{{/if}}

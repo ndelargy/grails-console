@@ -1,8 +1,4 @@
 App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
-  view = undefined
-  API =
-    files: ->
-      App.trigger 'app:active', FileApp.view
 
   App.addInitializer ->
     view = new FileApp.FilesSectionView
@@ -16,7 +12,7 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
     sizeContent = ->
       h = $el.find('.modal-content').height() - $el.find('.modal-header').outerHeight() - $el.find('.modal-footer').outerHeight()
       $el.find('.modal-body').height(h)
-      App.DomUtils.sizeToFitVertical($el.find('.store'), $el.find('.modal-body')[0])
+      App.DomUtils.sizeToFitVertical($el.find('.store .files-page-body'), $el.find('.modal-body')[0])
 
 
     $el.find('.modal-content').draggable
@@ -26,11 +22,20 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
     $el.find('.modal-content').resizable
       addClasses: false
       resize: (event, ui) ->
-        sizeContent()
+#        sizeContent()
       stop: (event, ui) ->
 
-    sizeContent()
+#    sizeContent()
     # TODO modal region
+    $el.modal 'show'
+    $el.find('.modal-body').layout
+      north__paneSelector: '.files-header'
+      north__spacing_open: 0
+      center__paneSelector: '.files-body'
+      center__contentSelector: '.store'
+      findNestedContent: true
+
+    $el.modal 'hide'
 
     App.on 'app:file:list', ->
       $el.modal 'show'
@@ -38,7 +43,6 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
     App.on 'app:file:selected', (file) ->
       $el.modal 'hide'
-
 
 #    $el.on 'hidden.bs.modal', ->
 #      $el.remove()

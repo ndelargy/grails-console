@@ -84,6 +84,7 @@ class ConsoleController {
         if (filename) {
             log.info "Opening File $filename"
             def file = new File(filename)
+            file.path
             if (file.isDirectory()) {
                 result.error = "$filename is a directory"
                 status = 400

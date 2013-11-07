@@ -24,6 +24,7 @@ App.module 'DomUtils', (DomUtils, App, Backbone, Marionette, $, _) ->
 
     if container
       for ancestor in $target.parentsUntil(container).get().reverse()
+        console.log "setHeight #{ancestor}"
         setHeight $(ancestor)
 
       setHeight $target

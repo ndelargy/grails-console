@@ -33,6 +33,7 @@
     "web-app/dist/debug/app/editor/result-model.js",
     "web-app/dist/debug/app/editor/result-view.js",
     "web-app/dist/debug/app/files/file-app.js",
+    "web-app/dist/debug/app/files/file-path-view.js",
     "web-app/dist/debug/app/files/file-view.js",
     "web-app/dist/debug/app/files/files-section-view.js",
     "web-app/dist/debug/app/files/local-files-view.js",

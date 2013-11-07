@@ -1,5 +1,4 @@
 App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
-
   FileApp.RemoteFilesView = Marionette.CompositeView.extend
 
     template: 'files/file-list'
@@ -20,14 +19,23 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
     itemViewContainer: 'tbody'
 
-    getItemView: (item) -> FileApp.FileView
+    initialize: ->
+      @listenTo FileApp, 'app:path:selected', (path) ->
+        @collection.path = path
+        @collection.fetch(reset: true)
+
+    getItemView: (item) ->
+      FileApp.FileView
 
     onNameClick: (event) ->
       event.preventDefault()
       fileId = $(event.currentTarget).closest('tr').data("fileId")
       file = @collection.findWhere(id: fileId)
-      file.fetch().done ->
-        App.trigger 'app:file:selected', file
+      if file.get('type') is 'dir'
+        FileApp.trigger 'app:path:selected', file.getPath()
+      else
+        file.fetch().done ->
+          App.trigger 'app:file:selected', file
 
     onDeleteClick: (event) ->
       event.preventDefault()
@@ -42,11 +50,6 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
     serializeData: ->
       files: @collection.toJSON()
-      baseDir: @collection.path
-
-  Handlebars.registerHelper 'fileIcon', (file, options) ->
-    clazz = if @type is 'dir' then 'icon-folder-close' else 'icon-file'
-    new Handlebars.SafeString "<i class='#{clazz}'></i>"
 
   Handlebars.registerHelper 'fileIcon', (file, options) ->
     clazz = if @type is 'dir' then 'icon-folder-close' else 'icon-file'

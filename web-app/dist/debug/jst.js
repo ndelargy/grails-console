@@ -78,28 +78,36 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 this["JST"]["files/file-list"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+  var buffer = "", stack1, self=this;
 
 function program1(depth0,data) {
   
   
-  return "\n    <table class=\"table table-striped table-hover\">\n        <thead>\n        <tr>\n            <th></th>\n            <th>Name</th>\n            <th>Date Modified</th>\n        </tr>\n        </thead>\n        <tbody></tbody>\n    </table>\n";
+  return "\n      <table class=\"table table-striped table-hover\">\n          <thead>\n          <tr>\n              <th></th>\n              <th>Name</th>\n              <th>Date Modified</th>\n          </tr>\n          </thead>\n          <tbody></tbody>\n      </table>\n  ";
   }
 
 function program3(depth0,data) {
   
   
-  return "\n    <div>\n        <div class=\"message\">No files</div>\n    </div>\n";
+  return "\n      <div>\n          <div class=\"message\">No files</div>\n      </div>\n  ";
   }
 
-  buffer += "<div class=\"files-page-header\">\n    <div class=\"dir\">\n        <div class=\"input-group\">\n            <span class=\"input-group-addon\"><i class=\"icon-folder-close\"></i></span>\n            <input type=\"text\" class=\"form-control\" name=\"path\" value=\"";
-  if (stack1 = helpers.baseDir) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.baseDir; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "\">\n        </div>\n    </div>\n</div>\n\n";
+  buffer += "<div class=\"files-page-body\">\n  ";
   stack1 = helpers['if'].call(depth0, depth0.files, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n</div>";
   return buffer;
+  });
+
+this["JST"]["files/file-path"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  if (stack1 = helpers.fileBreadcrumbs) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.fileBreadcrumbs; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  return escapeExpression(stack1);
   });
 
 this["JST"]["files/file"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -129,7 +137,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"modal-content\">\n    <div class=\"modal-header\">\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n        <h4 class=\"modal-title\">Files</h4>\n    </div>\n\n    <div class=\"modal-body\">\n        <div class=\"file-store-select\">\n            <form class=\"form-inline\">\n                <label class=\"control-label\">File store</label>\n                <div class=\"form-group\">\n                    <select class=\"form-control\" name=\"store\">\n                        <option value=\"local\">Local</option>\n                        <option value=\"remote\">Remote</option>\n                    </select>\n                </div>\n            </form>\n        </div>\n        <div class=\"store\">\n            <div class=\"local\"></div>\n            <div class=\"remote\"></div>\n        </div>\n\n    </div>\n\n    <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">Close</button>\n    </div>\n</div>\n<!-- /.modal-content -->";
+  return "<div class=\"modal-content\">\n    <div class=\"modal-header\">\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n        <h4 class=\"modal-title\">Files</h4>\n    </div>\n\n    <div class=\"modal-body\">\n        <div class=\"files-header\">\n            <div class=\"file-store-select\">\n                <form class=\"form-inline\">\n                    <label class=\"control-label\">File store</label>\n\n                    <div class=\"form-group\">\n                        <select class=\"form-control\" name=\"store\">\n                            <option value=\"local\">Local</option>\n                            <option value=\"remote\">Remote</option>\n                        </select>\n                    </div>\n                </form>\n            </div>\n            <div class=\"file-path-region\"></div>\n        </div>\n        <div class=\"files-body\">\n            <div class=\"store\">\n                <div class=\"local\"></div>\n                <div class=\"remote\"></div>\n            </div>\n        </div>\n\n    </div>\n\n    <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">Close</button>\n    </div>\n</div>\n<!-- /.modal-content -->";
   });
 
 this["JST"]["header"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
