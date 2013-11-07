@@ -92,6 +92,7 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
   App.reqres.setHandler 'local:file:entities', ->
     files = new Entities.LocalFileCollection(Entities.localFileStore.fetch())
     files.store = Entities.localFileStore
+    files.path = '/'
     files
 
   App.reqres.setHandler 'local:file:entity', (name) ->

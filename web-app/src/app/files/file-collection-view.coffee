@@ -21,8 +21,9 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
     initialize: ->
       @listenTo FileApp, 'app:path:selected', (path) ->
-        @collection.path = path
-        @collection.fetch(reset: true)
+        if (@$el.is(':visible')) # TODO store param?
+          @collection.path = path
+          @collection.fetch(reset: true)
 
     getItemView: (item) ->
       FileApp.FileView

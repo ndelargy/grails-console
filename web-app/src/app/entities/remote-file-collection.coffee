@@ -19,5 +19,6 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
     file.fetch().pipe -> file
 
   App.reqres.setHandler 'remote:file:entities', (path) ->
-    remoteFiles = new App.Entities.RemoteFileCollection #TODO reqres
-    remoteFiles.fetch(reset: true).pipe -> remoteFiles # TODO pass path
+    remoteFiles = new App.Entities.RemoteFileCollection
+    remoteFiles.path = path
+    remoteFiles.fetch(reset: true).pipe -> remoteFiles

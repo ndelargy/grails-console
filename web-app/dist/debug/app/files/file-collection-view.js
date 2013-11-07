@@ -19,10 +19,12 @@
       itemViewContainer: 'tbody',
       initialize: function() {
         return this.listenTo(FileApp, 'app:path:selected', function(path) {
-          this.collection.path = path;
-          return this.collection.fetch({
-            reset: true
-          });
+          if (this.$el.is(':visible')) {
+            this.collection.path = path;
+            return this.collection.fetch({
+              reset: true
+            });
+          }
         });
       },
       getItemView: function(item) {

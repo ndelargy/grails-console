@@ -28,6 +28,7 @@
     return App.reqres.setHandler('remote:file:entities', function(path) {
       var remoteFiles;
       remoteFiles = new App.Entities.RemoteFileCollection;
+      remoteFiles.path = path;
       return remoteFiles.fetch({
         reset: true
       }).pipe(function() {

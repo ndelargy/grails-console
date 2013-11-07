@@ -19,24 +19,28 @@
         this.baseDir = new BaseDir({
           path: '/'
         });
+        this.baseDir.on('change', function() {
+          return console.log('ddd');
+        });
         return this.listenTo(FileApp, 'app:path:selected', function(path) {
           return this.baseDir.set('path', path);
         });
       },
       onRender: function() {
-        var dfd, filePathView, localFiles,
+        var dfd, filePathView,
           _this = this;
-        localFiles = App.request('local:file:entities');
+        this.localFiles = App.request('local:file:entities');
         filePathView = new FileApp.FilePathView({
           model: this.baseDir
         });
         this.filePathRegion.show(filePathView);
         this.localFilesView = new FileApp.FileCollectionView({
-          collection: localFiles
+          collection: this.localFiles
         });
         this.localRegion.show(this.localFilesView);
         dfd = App.request('remote:file:entities', '/');
         dfd.done(function(remoteFiles) {
+          _this.remoteFiles = remoteFiles;
           _this.remoteFilesView = new FileApp.FileCollectionView({
             collection: remoteFiles
           });
@@ -50,10 +54,14 @@
       onStoreChange: function(event) {
         if (this.$(event.currentTarget).val() === 'local') {
           this.localRegion.$el.show();
-          return this.remoteRegion.$el.hide();
+          this.remoteRegion.$el.hide();
+          console.log('local ' + this.localFiles.path);
+          return this.baseDir.set('path', this.localFiles.path);
         } else {
           this.localRegion.$el.hide();
-          return this.remoteRegion.$el.show();
+          this.remoteRegion.$el.show();
+          console.log('remote ' + this.remoteFiles.path);
+          return this.baseDir.set('path', this.remoteFiles.path);
         }
       }
     });

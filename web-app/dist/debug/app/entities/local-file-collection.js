@@ -120,6 +120,7 @@
       var files;
       files = new Entities.LocalFileCollection(Entities.localFileStore.fetch());
       files.store = Entities.localFileStore;
+      files.path = '/';
       return files;
     });
     return App.reqres.setHandler('local:file:entity', function(name) {
