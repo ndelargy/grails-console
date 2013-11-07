@@ -33,11 +33,10 @@
     "web-app/dist/debug/app/editor/result-model.js",
     "web-app/dist/debug/app/editor/result-view.js",
     "web-app/dist/debug/app/files/file-app.js",
+    "web-app/dist/debug/app/files/file-collection-view.js",
     "web-app/dist/debug/app/files/file-path-view.js",
     "web-app/dist/debug/app/files/file-view.js",
-    "web-app/dist/debug/app/files/files-section-view.js",
-    "web-app/dist/debug/app/files/local-files-view.js",
-    "web-app/dist/debug/app/files/remote-files-view.js"
+    "web-app/dist/debug/app/files/files-section-view.js"
   ],
   "cssSrc": [
     "web-app/vendor/bootstrap/css/bootstrap.min.css",

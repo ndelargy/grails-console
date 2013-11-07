@@ -1,14 +1,13 @@
 (function() {
   App.module('FileApp', function(FileApp, App, Backbone, Marionette, $, _) {
-    FileApp.RemoteFilesView = Marionette.CompositeView.extend({
+    FileApp.FileCollectionView = Marionette.CompositeView.extend({
       template: 'files/file-list',
       attributes: {
         "class": 'remote-files-view'
       },
       events: {
         'click a.name': 'onNameClick',
-        'click a.delete': 'onDeleteClick',
-        'blur input[name=path]': 'onPathBlur'
+        'click a.delete': 'onDeleteClick'
       },
       _initialEvents: function() {
         if (this.collection) {
@@ -54,14 +53,6 @@
         if (confirm('Are you sure you want to delete this file?')) {
           return file.destroy();
         }
-      },
-      onPathBlur: function(event) {
-        var path;
-        path = $(event.currentTarget).val();
-        this.collection.path = path;
-        return this.collection.fetch({
-          reset: true
-        });
       },
       serializeData: function() {
         return {

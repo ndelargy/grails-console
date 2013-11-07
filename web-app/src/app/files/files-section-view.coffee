@@ -29,13 +29,13 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
       filePathView = new FileApp.FilePathView(model: @baseDir)
       @filePathRegion.show filePathView
 
-      @localFilesView = new FileApp.LocalFilesView
+      @localFilesView = new FileApp.FileCollectionView
         collection: localFiles
       @localRegion.show @localFilesView
 
       dfd = App.request('remote:file:entities', '/')
       dfd.done (remoteFiles) =>
-        @remoteFilesView = new FileApp.RemoteFilesView
+        @remoteFilesView = new FileApp.FileCollectionView
           collection: remoteFiles
 
         @remoteRegion.show @remoteFilesView

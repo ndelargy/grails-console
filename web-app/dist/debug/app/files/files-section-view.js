@@ -31,13 +31,13 @@
           model: this.baseDir
         });
         this.filePathRegion.show(filePathView);
-        this.localFilesView = new FileApp.LocalFilesView({
+        this.localFilesView = new FileApp.FileCollectionView({
           collection: localFiles
         });
         this.localRegion.show(this.localFilesView);
         dfd = App.request('remote:file:entities', '/');
         dfd.done(function(remoteFiles) {
-          _this.remoteFilesView = new FileApp.RemoteFilesView({
+          _this.remoteFilesView = new FileApp.FileCollectionView({
             collection: remoteFiles
           });
           _this.remoteRegion.show(_this.remoteFilesView);

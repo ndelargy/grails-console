@@ -1,5 +1,6 @@
 App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
-  FileApp.RemoteFilesView = Marionette.CompositeView.extend
+
+  FileApp.FileCollectionView = Marionette.CompositeView.extend
 
     template: 'files/file-list'
 
@@ -9,7 +10,6 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
     events:
       'click a.name': 'onNameClick'
       'click a.delete': 'onDeleteClick'
-      'blur input[name=path]': 'onPathBlur'
 
     _initialEvents: ->
       if @collection
@@ -42,11 +42,6 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
       fileId = $(event.currentTarget).closest('tr').data("fileId")
       file = @collection.findWhere(id: fileId)
       file.destroy() if confirm 'Are you sure you want to delete this file?'
-
-    onPathBlur: (event) ->
-      path = $(event.currentTarget).val()
-      @collection.path = path
-      @collection.fetch(reset: true)
 
     serializeData: ->
       files: @collection.toJSON()
