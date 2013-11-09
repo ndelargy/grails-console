@@ -43,7 +43,7 @@
           return FileApp.trigger('app:path:selected', file.getPath());
         } else {
           return file.fetch().done(function() {
-            return App.trigger('app:file:selected', file);
+            return FileApp.trigger('file:selected', file);
           });
         }
       },

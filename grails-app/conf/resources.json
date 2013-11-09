@@ -36,7 +36,8 @@
     "web-app/dist/debug/app/files/file-collection-view.js",
     "web-app/dist/debug/app/files/file-path-view.js",
     "web-app/dist/debug/app/files/file-view.js",
-    "web-app/dist/debug/app/files/files-section-view.js"
+    "web-app/dist/debug/app/files/files-section-view.js",
+    "web-app/dist/debug/app/files/loading-view.js"
   ],
   "cssSrc": [
     "web-app/vendor/bootstrap/css/bootstrap.min.css",

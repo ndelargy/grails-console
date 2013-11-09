@@ -10,7 +10,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
         @showFile new App.FileApp.File
           text: text
         # TODO
-        App.router.navigate "new", trigger: false
+        App.router.navigate "new", trigger: false # TODO event
 
     showFile: (file) ->
       @file = file
@@ -30,6 +30,9 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
       @file.get("text") isnt @editor.getValue() #TODO
 
     prompt: ->
+      # request name
+
+
       $el = $(JST['save-new-file-modal']()) #TODO modal region?
       $el.modal()
       $el.find("input[type=text]").focus()

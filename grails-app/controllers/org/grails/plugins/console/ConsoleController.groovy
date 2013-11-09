@@ -49,7 +49,7 @@ class ConsoleController {
     def listFiles = {
         File baseDir = new File(params.path)
         List result
-        result = baseDir.listFiles().collect { File file ->
+        result = baseDir.listFiles().findAll { !it.hidden }.collect { File file ->
             [
                 id: file.absolutePath,
                 name: file.name,

@@ -164,32 +164,41 @@ body {
 .files-section-view .modal-footer {
   margin-top: 0;
 }
-.files-section-view .file-store-select {
+.files-section-view .files-header > .section {
   border-bottom: 1px solid #ccc;
-}
-.files-section-view .file-store-select form {
-  margin: 10px;
-}
-.files-section-view .breadcrumb-section {
   padding: 10px;
-  border-bottom: 1px solid #ccc;
 }
-.files-section-view .breadcrumb-section .breadcrumb {
+.files-section-view .files-header > .section .form-group:last-child {
+  margin-bottom: 0;
+}
+.files-section-view .files-header .file-info select {
+  width: auto;
+}
+.files-section-view .files-header .breadcrumb-section .breadcrumb {
   margin-bottom: 0;
   padding: 0;
   background-color: transparent;
 }
-.files-section-view .breadcrumb-section .breadcrumb > li + li:before {
+.files-section-view .files-header .breadcrumb-section .breadcrumb > li + li:before {
   padding: 0 2px 0 5px;
 }
-.files-section-view .store {
+.files-section-view .files-body {
   overflow: auto;
 }
-.files-section-view .store .files-page-body {
-  overflow: auto;
-}
-.files-section-view .store table {
+.files-section-view .files-body .store table {
   margin-bottom: 0;
+}
+.files-section-view .files-body .store .loading-view {
+  height: 100%;
+  position: relative;
+}
+.files-section-view .files-body .store .loading-view .loading {
+  text-align: center;
+  height: 20px;
+  top: 50%;
+  position: absolute;
+  width: 100%;
+  margin-top: -10px;
 }
 .files-section-view ul.files {
   padding: 0;

@@ -10,7 +10,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
     onRender: ->
       @initLayout()
 
-      @editorView = new EditorApp.EditorView(el: @$('#editor')[0])
+      @editorView = new EditorApp.EditorView(el: @$('#editor')[0]) # TODO el
       @editorView.render()
       @layout.initContent 'center'
       @editorView.resize()
@@ -29,6 +29,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
         @trigger 'fork', text
 
       @listenTo @editorView, 'clear', @clearResults
+
       @showOrientation()
       @listenTo App.settings, 'change:orientation', @showOrientation
 

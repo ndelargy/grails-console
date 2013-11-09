@@ -18,7 +18,6 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
       dfd.fail => alert 'no find file' # TODO parse response?
 
     showFile: (file) ->
-#      App.trigger 'app:active', EditorApp.controller.view
       EditorApp.controller.showFile file
 
   App.addInitializer ->
@@ -28,6 +27,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
     router.appRoute 'new', 'newFile'
     router.appRoute /^local:(.*?)$/, 'openLocalFile'
     router.appRoute /^remote:(.*?)$/, 'openRemoteFile'
+    router.appRoute '*path', 'newFile'
 
     EditorApp.router = router
     EditorApp.controller = new EditorApp.Controller

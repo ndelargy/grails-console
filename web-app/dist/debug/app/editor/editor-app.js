@@ -39,6 +39,7 @@
       router.appRoute('new', 'newFile');
       router.appRoute(/^local:(.*?)$/, 'openLocalFile');
       router.appRoute(/^remote:(.*?)$/, 'openRemoteFile');
+      router.appRoute('*path', 'newFile');
       EditorApp.router = router;
       EditorApp.controller = new EditorApp.Controller;
       return App.mainRegion.show(EditorApp.controller.view);

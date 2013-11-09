@@ -137,7 +137,16 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"modal-content\">\n    <div class=\"modal-header\">\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n        <h4 class=\"modal-title\">Files</h4>\n    </div>\n\n    <div class=\"modal-body\">\n        <div class=\"files-header\">\n            <div class=\"file-store-select\">\n                <form class=\"form-inline\">\n                    <label class=\"control-label\">File store</label>\n\n                    <div class=\"form-group\">\n                        <select class=\"form-control\" name=\"store\">\n                            <option value=\"local\">Local</option>\n                            <option value=\"remote\">Remote</option>\n                        </select>\n                    </div>\n                </form>\n            </div>\n            <div class=\"file-path-region\"></div>\n        </div>\n        <div class=\"files-body\">\n            <div class=\"store\">\n                <div class=\"local\"></div>\n                <div class=\"remote\"></div>\n            </div>\n        </div>\n\n    </div>\n\n    <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">Close</button>\n    </div>\n</div>\n<!-- /.modal-content -->";
+  return "<div class=\"modal-content\">\n    <div class=\"modal-header\">\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n        <h4 class=\"modal-title\">Files</h4>\n    </div>\n\n    <div class=\"modal-body\">\n        <div class=\"files-header\">\n            <div class=\"section\">\n                <form class=\"form-horizontal file-info\">\n                    <div class=\"form-group\">\n                        <label class=\"col-sm-2 control-label\">Save as</label>\n\n                        <div class=\"col-sm-10\">\n                            <input class=\"form-control\" type=\"text\"/>\n                        </div>\n                    </div>\n                    <div class=\"form-group\">\n                        <label class=\"col-sm-2 control-label\">File store</label>\n\n                        <div class=\"col-sm-10\">\n                            <select class=\"form-control\" name=\"store\">\n                                <option value=\"local\">Local</option>\n                                <option value=\"remote\">Remote</option>\n                            </select>\n                        </div>\n                    </div>\n                </form>\n            </div>\n            <div class=\"file-path-region section\"></div>\n        </div>\n        <div class=\"files-body\">\n            <div class=\"store full-height\">\n                <div class=\"local full-height\"></div>\n                <div class=\"remote full-height\"></div>\n            </div>\n        </div>\n\n    </div>\n\n    <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">Cancel</button>\n        <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">Save</button>\n    </div>\n</div>\n<!-- /.modal-content -->";
+  });
+
+this["JST"]["files/loading"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<div class=\"loading\"><i class=\"icon-refresh icon-spin\"></i></div>";
   });
 
 this["JST"]["header"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -168,7 +177,7 @@ function program1(depth0,data) {
   buffer += "<div class=\"modal-content help-section\">\n    <div class=\"modal-header\">\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n        <h4 class=\"modal-title\">Help</h4>\n    </div>\n\n    <div class=\"modal-body\">\n        <h4>Implicit variables</h4>\n        <table class=\"table\">\n            ";
   stack1 = helpers.each.call(depth0, depth0.implicitVars, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n        </table>\n        <h4>Shortcuts</h4>\n        <table class=\"table\">\n            <tr><td><span class=\"shortcut-key\">Ctrl-Enter</span></td><td>Execute</td></tr>\n            <tr><td><span class=\"shortcut-key\">Esc</span></td><td>Clear</td></tr>\n        </table>\n    </div>\n\n    <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">Close</button>\n    </div>\n</div><!-- /.modal-content -->\n\n\n";
+  buffer += "\n        </table>\n        <h4>Shortcuts</h4>\n        <table class=\"table\">\n            <tr><td><code>Ctrl-Enter</code></td><td>Execute</td></tr>\n            <tr><td><code>Esc</code></td><td>Clear</td></tr>\n        </table>\n    </div>\n\n    <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">Close</button>\n    </div>\n</div><!-- /.modal-content -->\n\n\n";
   return buffer;
   });
 

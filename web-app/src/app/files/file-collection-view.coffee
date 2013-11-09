@@ -38,7 +38,7 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
         FileApp.trigger 'app:path:selected', file.getPath()
       else
         file.fetch().done ->
-          App.trigger 'app:file:selected', file
+          FileApp.trigger 'file:selected', file
 
     onDeleteClick: (event) ->
       event.preventDefault()

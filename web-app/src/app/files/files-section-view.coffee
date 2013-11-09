@@ -19,12 +19,14 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
     initialize: ->
       @baseDir = new BaseDir(path: '/')
-      @baseDir.on 'change', -> console.log 'ddd'
 
       @listenTo FileApp, 'app:path:selected', (path) ->
         @baseDir.set 'path', path
 
     onRender: ->
+      store = App.settings.get('files.lastStore') ? 'local'
+
+      localPath = '/'
       @localFiles = App.request('local:file:entities')
 
       filePathView = new FileApp.FilePathView(model: @baseDir)
@@ -34,6 +36,10 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
         collection: @localFiles
       @localRegion.show @localFilesView
 
+      @remoteRegion.show new FileApp.LoadingView
+
+      @showStore store
+
       remotePath = App.settings.get('files.remote.lastDir') ? '/'
       dfd = App.request('remote:file:entities', remotePath)
       dfd.done (remoteFiles) =>
@@ -42,18 +48,28 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
           collection: remoteFiles
 
         @remoteRegion.show @remoteFilesView
-        @remoteRegion.$el.hide()
 
-      dfd.fail -> alert 'Failed to load remote files.'
+      dfd.fail -> alert 'Failed to load remote files.' # TODO
 
-    onStoreChange: (event) ->
-      if @$(event.currentTarget).val() is 'local'
+      if store is 'remote'
+        @baseDir.set 'path', remotePath
+      else
+        @baseDir.set 'path', localPath
+
+      @$('select[name=store]').val store
+
+    showStore: (store) ->
+      if store is 'local'
         @localRegion.$el.show()
         @remoteRegion.$el.hide()
-        console.log 'local ' + @localFiles.path
-        @baseDir.set 'path', @localFiles.path
+        @baseDir.set 'path', @localFiles.path if @localFiles
       else
         @localRegion.$el.hide()
         @remoteRegion.$el.show()
-        console.log 'remote ' + @remoteFiles.path
-        @baseDir.set 'path', @remoteFiles.path
+        @baseDir.set 'path', @remoteFiles.path if @remoteFiles
+
+      App.settings.set 'files.lastStore', store
+      App.settings.save()
+
+    onStoreChange: (event) ->
+      @showStore @$(event.currentTarget).val()

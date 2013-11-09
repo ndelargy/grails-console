@@ -205,32 +205,48 @@ body {
   .modal-footer {
     margin-top: 0;
   }
-  .file-store-select {
-//    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    form {
-      margin: 10px;
+  .files-header {
+    &>.section {
+      border-bottom: 1px solid #ccc;
+      padding: 10px;
+      .form-group:last-child {
+        margin-bottom: 0;
+      }
     }
-  }
-  .breadcrumb-section {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    .breadcrumb {
-      margin-bottom: 0;
-      padding: 0;
-      background-color: transparent;
-      &>li+li:before {
-        padding: 0 2px 0 5px;
+    .file-info {
+      select {
+        width: auto;
+      }
+    }
+    .breadcrumb-section {
+      .breadcrumb {
+        margin-bottom: 0;
+        padding: 0;
+        background-color: transparent;
+        &>li+li:before {
+          padding: 0 2px 0 5px;
+        }
       }
     }
   }
-  .store {
+  .files-body {
     overflow: auto;
-    .files-page-body {
-      overflow: auto;
-    }
-    table {
-      margin-bottom: 0;
+    .store {
+      table {
+        margin-bottom: 0;
+      }
+      .loading-view {
+        height: 100%;
+        position: relative;
+        .loading {
+          text-align: center;
+          height: 20px;
+          top: 50%;
+          position: absolute;
+          width: 100%;
+          margin-top: -10px;
+        }
+      }
     }
   }
   ul.files {
