@@ -16,7 +16,7 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
     onBreadcrumbClick: (event) ->
       event.preventDefault()
       path = $(event.currentTarget).data('path')
-      FileApp.trigger 'app:path:selected', path
+      @trigger 'path:selected', path
 
     serializeData: ->
       baseDir: @model.get('path')

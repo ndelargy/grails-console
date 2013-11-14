@@ -151,8 +151,7 @@ class ConsoleController {
         def json = request.JSON
         Map result = [:]
         int status = 200
-        File baseDir = new File(baseDir)
-        def file = new File(baseDir, json.name)
+        File file = new File(json.name)
 //        if (file.isDirectory()) {
 //            result.error = "$filename is a directory"
 //            status = 400
@@ -164,7 +163,7 @@ class ConsoleController {
                 file.write json.text
                 result = fileToJson(file)
             } catch (e) {
-                result.error = "File $filename could not be modified"
+                result.error = "File $json.name could not be modified"
                 status = 400
             }
 //        }

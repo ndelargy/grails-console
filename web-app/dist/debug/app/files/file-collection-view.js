@@ -17,18 +17,6 @@
         }
       },
       itemViewContainer: 'tbody',
-      initialize: function() {
-        return this.listenTo(FileApp, 'app:path:selected', function(path) {
-          if (this.$el.is(':visible')) {
-            this.collection.path = path;
-            this.collection.fetch({
-              reset: true
-            });
-            App.settings.set('files.remote.lastDir', path);
-            return App.settings.save();
-          }
-        });
-      },
       getItemView: function(item) {
         return FileApp.FileView;
       },
@@ -39,13 +27,7 @@
         file = this.collection.findWhere({
           id: fileId
         });
-        if (file.get('type') === 'dir') {
-          return FileApp.trigger('app:path:selected', file.getPath());
-        } else {
-          return file.fetch().done(function() {
-            return FileApp.trigger('file:selected', file);
-          });
-        }
+        return this.trigger('file:selected', file);
       },
       onDeleteClick: function(event) {
         var file, fileId;

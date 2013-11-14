@@ -8,68 +8,89 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
     regions:
       filePathRegion: '.file-path-region'
-      localRegion: '.local'
-      remoteRegion: '.remote'
+      storeRegion: '.store'
 
     attributes:
       'class': 'modal-dialog files-section-view'
 
     events:
       'change select[name=store]': 'onStoreChange'
+      'click button.save': 'onSave'
 
-    initialize: ->
-      @baseDir = new BaseDir(path: '/')
-
-      @listenTo FileApp, 'app:path:selected', (path) ->
-        @baseDir.set 'path', path
+    initialize: (options) ->
+      @saving = options.saving
 
     onRender: ->
-      store = App.settings.get('files.lastStore') ? 'local'
-
-      localPath = '/'
-      @localFiles = App.request('local:file:entities')
+      @baseDir = new BaseDir(path: '/')
 
       filePathView = new FileApp.FilePathView(model: @baseDir)
       @filePathRegion.show filePathView
 
-      @localFilesView = new FileApp.FileCollectionView
-        collection: @localFiles
-      @localRegion.show @localFilesView
+      @listenTo filePathView, 'path:selected', (path) ->
+        @baseDir.set 'path', path
+        collection = @fileCollectionView.collection
+        collection.path = path
+        collection.fetch reset: true
 
-      @remoteRegion.show new FileApp.LoadingView
-
+      store = App.settings.get('files.lastStore') ? 'local'
       @showStore store
-
-      remotePath = App.settings.get('files.remote.lastDir') ? '/'
-      dfd = App.request('remote:file:entities', remotePath)
-      dfd.done (remoteFiles) =>
-        @remoteFiles = remoteFiles
-        @remoteFilesView = new FileApp.FileCollectionView
-          collection: remoteFiles
-
-        @remoteRegion.show @remoteFilesView
-
-      dfd.fail -> alert 'Failed to load remote files.' # TODO
-
-      if store is 'remote'
-        @baseDir.set 'path', remotePath
-      else
-        @baseDir.set 'path', localPath
 
       @$('select[name=store]').val store
 
+    onSave: (event) ->
+      event.preventDefault()
+      absolutePath = @baseDir.get('path')
+      absolutePath += '/' if absolutePath[absolutePath.length - 1] isnt '/'
+      absolutePath += @$('input.file-name').val()
+
+      @trigger 'save', @store, absolutePath
+
     showStore: (store) ->
-      if store is 'local'
-        @localRegion.$el.show()
-        @remoteRegion.$el.hide()
-        @baseDir.set 'path', @localFiles.path if @localFiles
+      @store = store
+      @storeRegion.show new FileApp.LoadingView
+
+      if store is 'remote'
+        path = App.settings.get('files.remote.lastDir') ? '/'
       else
-        @localRegion.$el.hide()
-        @remoteRegion.$el.show()
-        @baseDir.set 'path', @remoteFiles.path if @remoteFiles
+        path = '/'
+
+      $.when(@getCollection(store, path))
+        .done (collection) =>
+          @fileCollectionView = new FileApp.FileCollectionView
+            collection: collection
+
+          @listenTo @fileCollectionView, 'file:selected', (file) ->
+            if file.get('type') is 'dir'
+              path = file.getPath()
+              @baseDir.set 'path', path
+              collection.path = path
+              collection.fetch reset: true
+              App.settings.set 'files.remote.lastDir', path
+              App.settings.save()
+            else
+              @trigger 'file:selected', file
+#              file.fetch().done ->
+#                FileApp.trigger 'file:selected', file
+
+          @storeRegion.show @fileCollectionView
+
+        .fail -> alert 'Failed to load remote files.' # TODO
+
+      @baseDir.set 'path', path
 
       App.settings.set 'files.lastStore', store
       App.settings.save()
 
     onStoreChange: (event) ->
       @showStore @$(event.currentTarget).val()
+
+    getCollection: (store, path) ->
+      collection = undefined
+
+      if store is 'local'
+        collection = App.request('local:file:entities')
+      else
+        collection = App.request('remote:file:entities', path)
+
+    serializeData: ->
+      saving: @saving

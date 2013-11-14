@@ -73,6 +73,18 @@
         return $('.modal-backdrop').remove();
       });
     });
+    App.on('app:file:list', function() {
+      return App.FileApp.promptForFile().done(function(file) {
+        if (file) {
+          return file.fetch().done(function() {
+            App.EditorApp.router.showFile(file);
+            return App.EditorApp.controller.showFile(file);
+          });
+        }
+      }).fail(function() {
+        return alert('Couldnt load file!');
+      });
+    });
     return window.App = App;
   })(jQuery, _, Backbone, JST, window);
 

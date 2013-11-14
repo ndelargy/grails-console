@@ -7,7 +7,7 @@
     guid = function() {
       return S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4();
     };
-    return Entities.LocalFileStore = (function() {
+    Entities.LocalFileStore = (function() {
       function LocalFileStore(name) {
         this.name = name;
         this._load();
@@ -112,6 +112,9 @@
       return LocalFileStore;
 
     })();
+    return App.on('initialize:before', function(options) {
+      return Entities.localFileStore = new Entities.LocalFileStore('gconsole.files');
+    });
   });
 
 }).call(this);

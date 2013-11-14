@@ -19,26 +19,13 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
     itemViewContainer: 'tbody'
 
-    initialize: ->
-      @listenTo FileApp, 'app:path:selected', (path) ->
-        if (@$el.is(':visible')) # TODO store param?
-          @collection.path = path
-          @collection.fetch(reset: true)
-          App.settings.set 'files.remote.lastDir', path
-          App.settings.save()
-
-    getItemView: (item) ->
-      FileApp.FileView
+    getItemView: (item) -> FileApp.FileView
 
     onNameClick: (event) ->
       event.preventDefault()
       fileId = $(event.currentTarget).closest('tr').data("fileId")
       file = @collection.findWhere(id: fileId)
-      if file.get('type') is 'dir'
-        FileApp.trigger 'app:path:selected', file.getPath()
-      else
-        file.fetch().done ->
-          FileApp.trigger 'file:selected', file
+      @trigger 'file:selected', file
 
     onDeleteClick: (event) ->
       event.preventDefault()

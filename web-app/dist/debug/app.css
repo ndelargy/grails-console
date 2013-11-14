@@ -288,6 +288,9 @@ body[data-theme="lesser-dark"] .btn-toolbar button {
   color: #fff;
   text-shadow: none;
 }
+body[data-theme="lesser-dark"] .script-result-section {
+  background-color: #262626;
+}
 body[data-theme="lesser-dark"] .script-result-section .script-result {
   color: #fff;
   background-color: #333;

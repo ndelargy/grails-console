@@ -15,7 +15,7 @@
         var path;
         event.preventDefault();
         path = $(event.currentTarget).data('path');
-        return FileApp.trigger('app:path:selected', path);
+        return this.trigger('path:selected', path);
       },
       serializeData: function() {
         return {

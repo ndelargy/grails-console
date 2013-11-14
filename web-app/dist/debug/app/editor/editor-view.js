@@ -15,11 +15,6 @@
         });
         return this.listenTo(App, 'app:editor:execute', this.executeCode);
       },
-      onButtonClick: function(event) {
-        var fcn;
-        fcn = $(event.currentTarget).data("function");
-        return this.trigger(fcn);
-      },
       onRender: function() {
         return this.initEditor();
       },

@@ -1,12 +1,9 @@
 (function() {
   App.module('FileApp', function(FileApp, App, Backbone, Marionette, $, _) {
-    var $el, API, initView, view;
-    $el = void 0;
-    view = void 0;
-    initView = function() {
-      var sizeContent;
-      view = new FileApp.FilesSectionView;
-      $el = $('<div class="modal fade" data-backdrop="false"></div>').appendTo('body').html(view.render().el);
+    var API, showInModal;
+    showInModal = function(view) {
+      var $el, sizeContent;
+      $el = $('<div class="modal" data-backdrop="false"></div>').appendTo('body').html(view.render().el);
       $el.modal({
         show: false
       });
@@ -33,40 +30,60 @@
         stop: function(event, ui) {}
       });
       sizeContent();
-      return view;
+      $el.find('.modal-header .close').on('click', function(event) {
+        event.preventDefault();
+        return view.close();
+      });
+      $el.find('.modal-footer .cancel').on('click', function(event) {
+        event.preventDefault();
+        return view.close();
+      });
+      view.on('close', function() {
+        return $el.modal('hide');
+      });
+      $el.on('hidden.bs.modal', function() {
+        return $el.remove();
+      });
+      $el.modal('show');
+      return $el;
     };
     API = {
       promptForNewFileName: function() {
-        var dfd;
+        var dfd, view;
         dfd = $.Deferred();
-        if (!view) {
-          initView();
-        }
-        $el.modal('show');
-        return dfd;
+        view = new FileApp.FilesSectionView({
+          saving: true
+        });
+        showInModal(view);
+        view.$el.find('.file-name').focus();
+        view.on('save', function(store, absolutePath) {
+          dfd.resolveWith(null, [store, absolutePath]);
+          return view.close();
+        });
+        view.on('close', function() {
+          return dfd.resolve();
+        });
+        return dfd.promise();
       },
       promptForFile: function() {
-        var dfd;
+        var dfd, view;
         dfd = $.Deferred();
-        if (!view) {
-          initView();
-        }
-        $el.modal('show');
-        return dfd;
+        view = new FileApp.FilesSectionView({
+          saving: false
+        });
+        view.on('file:selected', function(file) {
+          dfd.resolveWith(null, [file]);
+          return view.close();
+        });
+        view.on('close', function() {
+          return dfd.resolve();
+        });
+        showInModal(view);
+        return dfd.promise();
       }
     };
-    return App.addInitializer(function() {
-      App.on('app:file:list', function() {
-        if (!view) {
-          initView();
-        }
-        return $el.modal('show');
-      });
-      return FileApp.on('file:selected', function(file) {
-        $el.modal('hide');
-        return App.trigger('app:file:selected', file);
-      });
-    });
+    FileApp.promptForFile = API.promptForFile;
+    return FileApp.promptForNewFileName = API.promptForNewFileName;
   });
 
 }).call(this);

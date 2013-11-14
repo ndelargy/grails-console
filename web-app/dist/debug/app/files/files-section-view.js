@@ -6,77 +6,102 @@
       template: 'files/files-section',
       regions: {
         filePathRegion: '.file-path-region',
-        localRegion: '.local',
-        remoteRegion: '.remote'
+        storeRegion: '.store'
       },
       attributes: {
         'class': 'modal-dialog files-section-view'
       },
       events: {
-        'change select[name=store]': 'onStoreChange'
+        'change select[name=store]': 'onStoreChange',
+        'click button.save': 'onSave'
       },
-      initialize: function() {
+      initialize: function(options) {
+        return this.saving = options.saving;
+      },
+      onRender: function() {
+        var filePathView, store, _ref;
         this.baseDir = new BaseDir({
           path: '/'
         });
-        return this.listenTo(FileApp, 'app:path:selected', function(path) {
-          return this.baseDir.set('path', path);
-        });
-      },
-      onRender: function() {
-        var dfd, filePathView, localPath, remotePath, store, _ref, _ref1,
-          _this = this;
-        store = (_ref = App.settings.get('files.lastStore')) != null ? _ref : 'local';
-        localPath = '/';
-        this.localFiles = App.request('local:file:entities');
         filePathView = new FileApp.FilePathView({
           model: this.baseDir
         });
         this.filePathRegion.show(filePathView);
-        this.localFilesView = new FileApp.FileCollectionView({
-          collection: this.localFiles
-        });
-        this.localRegion.show(this.localFilesView);
-        this.remoteRegion.show(new FileApp.LoadingView);
-        this.showStore(store);
-        remotePath = (_ref1 = App.settings.get('files.remote.lastDir')) != null ? _ref1 : '/';
-        dfd = App.request('remote:file:entities', remotePath);
-        dfd.done(function(remoteFiles) {
-          _this.remoteFiles = remoteFiles;
-          _this.remoteFilesView = new FileApp.FileCollectionView({
-            collection: remoteFiles
+        this.listenTo(filePathView, 'path:selected', function(path) {
+          var collection;
+          this.baseDir.set('path', path);
+          collection = this.fileCollectionView.collection;
+          collection.path = path;
+          return collection.fetch({
+            reset: true
           });
-          return _this.remoteRegion.show(_this.remoteFilesView);
         });
-        dfd.fail(function() {
-          return alert('Failed to load remote files.');
-        });
-        if (store === 'remote') {
-          this.baseDir.set('path', remotePath);
-        } else {
-          this.baseDir.set('path', localPath);
-        }
+        store = (_ref = App.settings.get('files.lastStore')) != null ? _ref : 'local';
+        this.showStore(store);
         return this.$('select[name=store]').val(store);
       },
-      showStore: function(store) {
-        if (store === 'local') {
-          this.localRegion.$el.show();
-          this.remoteRegion.$el.hide();
-          if (this.localFiles) {
-            this.baseDir.set('path', this.localFiles.path);
-          }
-        } else {
-          this.localRegion.$el.hide();
-          this.remoteRegion.$el.show();
-          if (this.remoteFiles) {
-            this.baseDir.set('path', this.remoteFiles.path);
-          }
+      onSave: function(event) {
+        var absolutePath;
+        event.preventDefault();
+        absolutePath = this.baseDir.get('path');
+        if (absolutePath[absolutePath.length - 1] !== '/') {
+          absolutePath += '/';
         }
+        absolutePath += this.$('input.file-name').val();
+        return this.trigger('save', this.store, absolutePath);
+      },
+      showStore: function(store) {
+        var path, _ref,
+          _this = this;
+        this.store = store;
+        this.storeRegion.show(new FileApp.LoadingView);
+        if (store === 'remote') {
+          path = (_ref = App.settings.get('files.remote.lastDir')) != null ? _ref : '/';
+        } else {
+          path = '/';
+        }
+        $.when(this.getCollection(store, path)).done(function(collection) {
+          _this.fileCollectionView = new FileApp.FileCollectionView({
+            collection: collection
+          });
+          _this.listenTo(_this.fileCollectionView, 'file:selected', function(file) {
+            if (file.get('type') === 'dir') {
+              path = file.getPath();
+              this.baseDir.set('path', path);
+              collection.path = path;
+              collection.fetch({
+                reset: true
+              });
+              App.settings.set('files.remote.lastDir', path);
+              return App.settings.save();
+            } else {
+              return this.trigger('file:selected', file);
+            }
+          });
+          return _this.storeRegion.show(_this.fileCollectionView);
+        }).fail(function() {
+          return alert('Failed to load remote files.');
+        });
+        this.baseDir.set('path', path);
         App.settings.set('files.lastStore', store);
         return App.settings.save();
       },
       onStoreChange: function(event) {
         return this.showStore(this.$(event.currentTarget).val());
+      },
+      getCollection: function(store, path) {
+        var collection;
+        collection = void 0;
+        if (store === 'local') {
+          return collection = App.request('local:file:entities');
+        } else {
+          return collection = App.request('remote:file:entities', path);
+        }
+      },
+      serializeData: function() {
+        return {
+          saving: this.saving
+        };
       }
     });
   });

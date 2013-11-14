@@ -64,6 +64,16 @@
       $el.remove()
       $('.modal-backdrop').remove()
 
+  App.on 'app:file:list', ->
+    App.FileApp.promptForFile()
+      .done (file) ->
+        if file
+          file.fetch().done ->
+            App.EditorApp.router.showFile file
+            App.EditorApp.controller.showFile file
+      .fail ->
+        alert 'Couldnt load file!' # TODO
+
   window.App = App
 
 ) jQuery, _, Backbone, JST, window

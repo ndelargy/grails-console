@@ -65,6 +65,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
         resizable: true
         findNestedContent: true
         fxName: ''
+        spacing_open: 3
 
     showOrientation: ->
       orientation = App.settings.get('orientation')

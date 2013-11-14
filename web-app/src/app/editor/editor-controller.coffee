@@ -20,7 +20,15 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
     save: (text) ->
       @file.set "text", text
       if @file.isNew()
-        @prompt()
+        App.FileApp.promptForNewFileName().done (store, absolutePath) =>
+          if store and absolutePath
+            @file.set 'name', absolutePath
+            @file.local = store is 'local'
+
+            App.savingOn()
+            @file.save().then =>
+              App.savingOff()
+              App.EditorApp.router.showFile @file
       else
         App.savingOn()
         @file.save()
@@ -28,30 +36,4 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
 
     isDirty: ->
       @file.get("text") isnt @editor.getValue() #TODO
-
-    prompt: ->
-      # request name
-
-
-      $el = $(JST['save-new-file-modal']()) #TODO modal region?
-      $el.modal()
-      $el.find("input[type=text]").focus()
-      $el.find("button.ok").click (event) =>
-        event.preventDefault()
-        name = $el.find("input[type=text]").val()
-        store = $('input[name=store]:checked').val()
-
-        @file.set "name", name
-        @file.local = store is 'local'
-
-        App.savingOn()
-        @file.save().then =>
-          App.savingOff()
-          App.trigger 'app:file:selected', @file
-
-        $el.modal "hide"
-
-      $el.on 'hidden.bs.modal', ->
-        $el.remove()
-        $('.modal-backdrop').remove()
 

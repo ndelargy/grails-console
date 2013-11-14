@@ -21,26 +21,24 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
       EditorApp.controller.showFile file
 
   App.addInitializer ->
-    router = new Marionette.AppRouter
-      controller: API
+    Router = Marionette.AppRouter.extend
+      showFile: (file) ->
+        if file.isLocal()
+          @navigate "local:#{file.get('name')}"
+        else
+          @navigate "remote:#{file.id}"
 
+    router = new Router controller: API
+
+    router.appRoute '*path', 'newFile'
     router.appRoute 'new', 'newFile'
     router.appRoute /^local:(.*?)$/, 'openLocalFile'
     router.appRoute /^remote:(.*?)$/, 'openRemoteFile'
-    router.appRoute '*path', 'newFile'
 
     EditorApp.router = router
     EditorApp.controller = new EditorApp.Controller
 
     App.mainRegion.show EditorApp.controller.view
-
-  App.on 'app:file:selected', (file) ->
-    if file.isLocal()
-      EditorApp.router.navigate "local:#{file.get('name')}"
-    else
-      EditorApp.router.navigate "remote:#{file.id}"
-
-    API.showFile file
 
   App.on 'app:file:new', (file) ->
     EditorApp.router.navigate "new", trigger: true

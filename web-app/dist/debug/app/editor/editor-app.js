@@ -32,25 +32,26 @@
       }
     };
     App.addInitializer(function() {
-      var router;
-      router = new Marionette.AppRouter({
+      var Router, router;
+      Router = Marionette.AppRouter.extend({
+        showFile: function(file) {
+          if (file.isLocal()) {
+            return this.navigate("local:" + (file.get('name')));
+          } else {
+            return this.navigate("remote:" + file.id);
+          }
+        }
+      });
+      router = new Router({
         controller: API
       });
+      router.appRoute('*path', 'newFile');
       router.appRoute('new', 'newFile');
       router.appRoute(/^local:(.*?)$/, 'openLocalFile');
       router.appRoute(/^remote:(.*?)$/, 'openRemoteFile');
-      router.appRoute('*path', 'newFile');
       EditorApp.router = router;
       EditorApp.controller = new EditorApp.Controller;
       return App.mainRegion.show(EditorApp.controller.view);
-    });
-    App.on('app:file:selected', function(file) {
-      if (file.isLocal()) {
-        EditorApp.router.navigate("local:" + (file.get('name')));
-      } else {
-        EditorApp.router.navigate("remote:" + file.id);
-      }
-      return API.showFile(file);
     });
     return App.on('app:file:new', function(file) {
       EditorApp.router.navigate("new", {

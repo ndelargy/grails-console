@@ -67,7 +67,8 @@
           },
           resizable: true,
           findNestedContent: true,
-          fxName: ''
+          fxName: '',
+          spacing_open: 3
         });
       },
       showOrientation: function() {

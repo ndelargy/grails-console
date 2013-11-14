@@ -146,6 +146,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-contrib-clean"
   grunt.loadNpmTasks "grunt-contrib-less"
+  grunt.loadNpmTasks "grunt-notify"
 
   grunt.registerTask "json", "Write resource config to file", ->
     json =

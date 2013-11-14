@@ -19,9 +19,20 @@
         return this.view.setValue(file.get('text'));
       },
       save: function(text) {
+        var _this = this;
         this.file.set("text", text);
         if (this.file.isNew()) {
-          return this.prompt();
+          return App.FileApp.promptForNewFileName().done(function(store, absolutePath) {
+            if (store && absolutePath) {
+              _this.file.set('name', absolutePath);
+              _this.file.local = store === 'local';
+              App.savingOn();
+              return _this.file.save().then(function() {
+                App.savingOff();
+                return App.EditorApp.router.showFile(_this.file);
+              });
+            }
+          });
         } else {
           App.savingOn();
           this.file.save();
@@ -30,31 +41,6 @@
       },
       isDirty: function() {
         return this.file.get("text") !== this.editor.getValue();
-      },
-      prompt: function() {
-        var $el,
-          _this = this;
-        $el = $(JST['save-new-file-modal']());
-        $el.modal();
-        $el.find("input[type=text]").focus();
-        $el.find("button.ok").click(function(event) {
-          var name, store;
-          event.preventDefault();
-          name = $el.find("input[type=text]").val();
-          store = $('input[name=store]:checked').val();
-          _this.file.set("name", name);
-          _this.file.local = store === 'local';
-          App.savingOn();
-          _this.file.save().then(function() {
-            App.savingOff();
-            return App.trigger('app:file:selected', _this.file);
-          });
-          return $el.modal("hide");
-        });
-        return $el.on('hidden.bs.modal', function() {
-          $el.remove();
-          return $('.modal-backdrop').remove();
-        });
       }
     });
   });

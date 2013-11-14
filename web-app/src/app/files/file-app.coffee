@@ -1,12 +1,7 @@
 App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
-  $el = undefined
-  view = undefined
-
-  initView = ->
-    view = new FileApp.FilesSectionView
-
-    $el = $('<div class="modal fade" data-backdrop="false"></div>').appendTo('body').html view.render().el
+  showInModal = (view) ->
+    $el = $('<div class="modal" data-backdrop="false"></div>').appendTo('body').html view.render().el
     $el.modal show: false
 
     sizeContent = ->
@@ -33,43 +28,65 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
     sizeContent()
     # TODO modal region
 
-    view
+    $el.find('.modal-header .close').on 'click', (event) ->
+      event.preventDefault()
+      view.close()
+
+    $el.find('.modal-footer .cancel').on 'click', (event) ->
+      event.preventDefault()
+      view.close()
+
+    view.on 'close', -> $el.modal 'hide'
+
+    $el.on 'hidden.bs.modal', ->
+      $el.remove()
+
+    $el.modal 'show'
+
+    $el
 
   API =
     promptForNewFileName: ->
       dfd = $.Deferred()
 
-      initView() if not view
-      $el.modal 'show'
+      view = new FileApp.FilesSectionView
+        saving: true
 
-      # file
-      # app event?
+      showInModal view
 
-      # no file
-      # modal close event?
+      view.$el.find('.file-name').focus()
 
-      dfd
+      view.on 'save', (store, absolutePath) ->
+        dfd.resolveWith null, [store, absolutePath]
+        view.close()
+
+      view.on 'close', ->
+        dfd.resolve()
+
+      dfd.promise()
 
     promptForFile: ->
       dfd = $.Deferred()
 
-      initView() if not view
-      $el.modal 'show'
+      view = new FileApp.FilesSectionView
+        saving: false
 
-      # file
-      # app event?
+      view.on 'file:selected', (file) ->
+        dfd.resolveWith null, [file]
+        view.close()
 
-      # no file
-      # modal close event?
+      view.on 'close', ->
+        dfd.resolve()
 
-      dfd
+      showInModal view
 
-  App.addInitializer ->
+      dfd.promise()
 
-    App.on 'app:file:list', ->
-      initView() if not view
-      $el.modal 'show'
+  FileApp.promptForFile = API.promptForFile
+  FileApp.promptForNewFileName = API.promptForNewFileName
 
-    FileApp.on 'file:selected', (file) ->
-      $el.modal 'hide'
-      App.trigger 'app:file:selected', file
+#  App.addInitializer ->
+#
+#    FileApp.on 'file:selected', (file) ->
+#      $el.modal 'hide'
+#      App.trigger 'app:file:selected', file

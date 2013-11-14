@@ -77,3 +77,6 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
         options?.error? "Record not found"
 
       dfd
+
+  App.on 'initialize:before', (options) ->
+    Entities.localFileStore = new Entities.LocalFileStore 'gconsole.files'
