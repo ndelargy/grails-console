@@ -62,6 +62,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
         south__onresize_end: (name, $el, state, opts) ->
           App.settings.set 'layout.south.size', state.size
           App.settings.save()
+        south__resizerCursor: 'ns-resize'
         resizable: true
         findNestedContent: true
         fxName: ''

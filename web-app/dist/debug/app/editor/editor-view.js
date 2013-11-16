@@ -4,9 +4,9 @@
       template: 'editor/editor',
       events: {
         'click button.execute': 'onExecuteClick',
-        'click button.save': 'onSaveClick',
-        'click button.fork': 'onForkClick',
-        'click button.help': 'onHelpClick'
+        'click button.new': 'onNewClick',
+        'click button.files': 'onFilesClick',
+        'click button.save': 'onSaveClick'
       },
       initialize: function() {
         var _this = this;
@@ -20,6 +20,14 @@
       },
       resize: function() {
         return this.editor.refresh();
+      },
+      onNewClick: function(event) {
+        event.preventDefault();
+        return App.trigger('app:file:new');
+      },
+      onFilesClick: function(event) {
+        event.preventDefault();
+        return App.trigger('app:file:list');
       },
       initEditor: function() {
         var _this = this;
@@ -62,9 +70,6 @@
       onSaveClick: function() {
         return this.trigger('save', this.editor.getValue());
       },
-      onForkClick: function() {
-        return this.trigger('fork', this.editor.getValue());
-      },
       onExecuteClick: function(event) {
         event.preventDefault();
         return this.executeCode();
@@ -102,10 +107,6 @@
       },
       onShow: function() {
         return this.editor.focus();
-      },
-      onHelpClick: function(event) {
-        event.preventDefault();
-        return App.trigger('help');
       }
     });
   });

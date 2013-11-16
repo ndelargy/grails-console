@@ -56,8 +56,8 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
       view.$el.find('.file-name').focus()
 
-      view.on 'save', (store, absolutePath) ->
-        dfd.resolveWith null, [store, absolutePath]
+      view.on 'save', (store, path, name) ->
+        dfd.resolveWith null, [store, path, name]
         view.close()
 
       view.on 'close', ->

@@ -41,14 +41,14 @@
         return this.$('select[name=store]').val(store);
       },
       onSave: function(event) {
-        var absolutePath;
+        var fileName, path;
         event.preventDefault();
-        absolutePath = this.baseDir.get('path');
-        if (absolutePath[absolutePath.length - 1] !== '/') {
-          absolutePath += '/';
+        fileName = this.$('input.file-name').val();
+        path = this.baseDir.get('path');
+        if (path[path.length - 1] !== '/') {
+          path += '/';
         }
-        absolutePath += this.$('input.file-name').val();
-        return this.trigger('save', this.store, absolutePath);
+        return this.trigger('save', this.store, path, fileName);
       },
       showStore: function(store) {
         var path, _ref,
@@ -66,7 +66,7 @@
           });
           _this.listenTo(_this.fileCollectionView, 'file:selected', function(file) {
             if (file.get('type') === 'dir') {
-              path = file.getPath();
+              path = file.getAbsolutePath();
               this.baseDir.set('path', path);
               collection.path = path;
               collection.fetch({

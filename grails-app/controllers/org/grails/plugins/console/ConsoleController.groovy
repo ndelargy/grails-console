@@ -151,7 +151,7 @@ class ConsoleController {
         def json = request.JSON
         Map result = [:]
         int status = 200
-        File file = new File(json.name)
+        File file = new File(json.path, json.name)
 //        if (file.isDirectory()) {
 //            result.error = "$filename is a directory"
 //            status = 400

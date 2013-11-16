@@ -10,7 +10,7 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
 
     path: '/' # TODO default
 
-    comparator: (file) -> file.get('name') * -1
+    comparator: (file) -> file.get('name')
 
   App.reqres.setHandler 'remote:file:entity', (name) ->
     file = new Entities.File

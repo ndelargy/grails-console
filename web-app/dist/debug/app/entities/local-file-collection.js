@@ -6,7 +6,7 @@
       },
       isLocal: true,
       comparator: function(file) {
-        return file.get('name') * -1;
+        return file.get('name');
       },
       sync: function(method, file, options) {
         return Entities.localFileStore.sync(method, file, options);
@@ -19,10 +19,8 @@
       files.path = '/';
       return files;
     });
-    return App.reqres.setHandler('local:file:entity', function(name) {
-      return new Entities.LocalFileCollection(Entities.localFileStore.fetch()).findWhere({
-        name: name
-      });
+    return App.reqres.setHandler('local:file:entity', function(id) {
+      return new Entities.LocalFileCollection(Entities.localFileStore.fetch()).get(id);
     });
   });
 

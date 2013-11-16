@@ -35,11 +35,7 @@
       var Router, router;
       Router = Marionette.AppRouter.extend({
         showFile: function(file) {
-          if (file.isLocal()) {
-            return this.navigate("local:" + (file.get('name')));
-          } else {
-            return this.navigate("remote:" + file.id);
-          }
+          return this.navigate("" + (file.getStore()) + ":" + file.id);
         }
       });
       router = new Router({

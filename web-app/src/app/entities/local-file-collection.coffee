@@ -6,7 +6,7 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
 
     isLocal: true
 
-    comparator: (file) -> file.get('name') * -1
+    comparator: (file) -> file.get('name')
 
     sync: (method, file, options) ->
       Entities.localFileStore.sync method, file, options
@@ -17,5 +17,5 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
     files.path = '/'
     files
 
-  App.reqres.setHandler 'local:file:entity', (name) ->
-    new Entities.LocalFileCollection(Entities.localFileStore.fetch()).findWhere(name: name) # TODO
+  App.reqres.setHandler 'local:file:entity', (id) ->
+    new Entities.LocalFileCollection(Entities.localFileStore.fetch()).get(id)

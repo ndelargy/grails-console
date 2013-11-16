@@ -7,7 +7,8 @@
         "click .results-wrap": "onResultsWrapClick",
         "click .results-show-script": "onResultsShowScriptClick",
         "click .results-show-stdout": "onResultsShowStdoutClick",
-        "click .theme": "onThemeClick"
+        "click .theme": "onThemeClick",
+        "click .help": "onHelpClick"
       },
       initialize: function() {
         this.model = App.settings;
@@ -70,6 +71,10 @@
         event.stopPropagation();
         this.model.toggle("results.showResult");
         return this.model.save();
+      },
+      onHelpClick: function(event) {
+        event.preventDefault();
+        return App.trigger('help');
       }
     });
   })(App, jQuery);

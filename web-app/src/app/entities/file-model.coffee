@@ -8,13 +8,13 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
     isLocal: ->
       @local is true or @collection?.isLocal is true
 
-    getPath: ->
-      @id
+    getAbsolutePath: -> @id
 
     getDir: ->
-      name = @get('name')
-      index = name.lastIndexOf('/')
-      if index >= 0 then name.substring(0,index) else name
+      @get('path')
+
+    getStore: ->
+      if @isLocal() then 'local' else 'remote' # TODO ?
 
     sync: (method, file, options) ->
       if (file.isLocal())

@@ -16,7 +16,8 @@ body {
   height: 100%;
   padding: 0 20px 20px 20px;
   & > div {
-    border: 1px solid #888;
+    border: 3px solid #444;
+    border-radius: 3px;
   }
 }
 
@@ -88,7 +89,7 @@ body {
     background: transparent url("img/grails.logo.png") no-repeat;
     background-position: 5px center;
     padding-left: 48px;
-    font-size: 23px;
+    font-size: 20px;
     color: #555;
   }
   .saving {
@@ -104,9 +105,9 @@ body {
     line-height: 40px;
   }
   button {
-    height: 32px;
-    font-size: 12px;
-    border-radius: 0;
+//    height: 32px;
+//    font-size: 12px;
+//    border-radius: 0;
   }
 }
 .modal-open .navbar-fixed-top {
@@ -169,22 +170,6 @@ body {
 #code-wrapper {
   overflow: auto;
 }
-
-//label.wrap {
-//  color: #777777;
-//  font-size: 0.75em;
-//  margin-right: 5px;
-//  position: absolute;
-//  right: 5px;
-//  height: 20px;
-//  top: 50%;
-//  margin-top: -10px;
-//}
-//
-//label.wrap input,
-//label.wrap span {
-//  vertical-align: middle;
-//}
 
 .dropdown-menu.settings a i.icon-check {
   visibility: hidden;
@@ -285,31 +270,37 @@ body {
 }
 
 .btn-toolbar {
-  padding: 3px;
-  border-bottom: 1px solid #ddd;
-//  background-color: transparent;
+  border-bottom: 1px solid #444;
+  background-color: #222;
   button {
-    background-color: transparent;
-    background-image: none;
-    border-color: transparent;
-    box-shadow: none;
-    &:active {
-      outline: none;
-      border-color: transparent;
-      background-color: transparent;
+    float: left;
+    border: 0;
+    border-radius: 0;
+    background-color: #222;
+    border-color: #222;
+    color: #fff;
+    .caret {
+      border-top-color: #fff;
     }
-    &:hover {
-      outline: none;
-      border-color: #fff;
-      background-color: transparent;
+    &.btn-sm {
+      padding: 5px 10px;
+      font-size: 13px;
+      line-height: 1.5;
+      border-radius: 0;
     }
-    &:focus {
+    &:hover, &:focus {
+      color: #fff;
+      background-color: #0e0e0e;
+      border-color: #040404;
       outline: none;
-      border-color: transparent;
-      background-color: transparent;
     }
   }
-  &>.btn+.btn {
+  .open .dropdown-toggle.btn-default {
+    color: #fff;
+    background-color: #040404;
+    border-color: #040404;
+  }
+  &>.btn+.btn, &>.btn+.btn-group {
     margin-left: 0;
   }
 }
@@ -351,15 +342,15 @@ body[data-theme="lesser-dark"] {
     //    background-color: #888;
     //    background-color: transparent;
     button {
-      color: #fff;
-      text-shadow: none;
+//      color: #fff;
+//      text-shadow: none;
     }
   }
   #editor {
   }
 
   .script-result-section {
-    background-color: #262626;
+    background-color: #2a2a2a;
     .script-result {
       color: #fff;
       background-color: #333;
@@ -369,7 +360,7 @@ body[data-theme="lesser-dark"] {
     }
   }
   .ui-layout-resizer {
-    background-color: #aaa;
+    background-color: #444;
   }
 
   .ui-layout-toggler {

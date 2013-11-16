@@ -1,11 +1,5 @@
 App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
 
-  S4 = ->
-    (((1 + Math.random()) * 0x10000) | 0).toString(16).substring 1
-
-  guid = ->
-    S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4()
-
   class Entities.LocalFileStore
 
     constructor: (@name) ->
@@ -21,14 +15,14 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
       @data[file.id]
 
     create: (file) ->
-      file.set "lastModified", new Date().getTime()
-      file.id = file.attributes.id = guid() unless file.id
+      file.set 'lastModified', new Date().getTime()
+      file.set 'id', file.get('path') + file.get('name')
       @data[file.id] = file.toJSON()
       @_save()
       file.toJSON()
 
     update: (file) ->
-      file.set "lastModified", new Date().getTime()
+      file.set 'lastModified', new Date().getTime()
       @data[file.id] = file.toJSON()
       @_save()
       file.toJSON()
@@ -49,7 +43,7 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
     _load: ->
       store = localStorage.getItem(@name)
       try
-        @data = JSON.parse(store)
+        @data = JSON.parse(store) ? {}
       catch e
         @data = {}
 
@@ -59,13 +53,13 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
       resp = undefined
 
       switch method
-        when "read"
+        when 'read'
           resp = if file.id then @find(file) else @fetch()
-        when "create"
+        when 'create'
           resp = @create(file) # save
-        when "update"
+        when 'update'
           resp = @update(file) # save
-        when "delete"
+        when 'delete'
           resp = @destroy(file)
 
       dfd = $.Deferred()
@@ -74,7 +68,7 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
       if resp
         options?.success? resp
       else
-        options?.error? "Record not found"
+        options?.error? 'Record not found'
 
       dfd
 

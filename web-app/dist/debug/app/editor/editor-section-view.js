@@ -65,6 +65,7 @@
             App.settings.set('layout.south.size', state.size);
             return App.settings.save();
           },
+          south__resizerCursor: 'ns-resize',
           resizable: true,
           findNestedContent: true,
           fxName: '',

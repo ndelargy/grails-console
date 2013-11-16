@@ -23,10 +23,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
   App.addInitializer ->
     Router = Marionette.AppRouter.extend
       showFile: (file) ->
-        if file.isLocal()
-          @navigate "local:#{file.get('name')}"
-        else
-          @navigate "remote:#{file.id}"
+        @navigate "#{file.getStore()}:#{file.id}"
 
     router = new Router controller: API
 

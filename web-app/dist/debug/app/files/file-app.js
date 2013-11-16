@@ -56,8 +56,8 @@
         });
         showInModal(view);
         view.$el.find('.file-name').focus();
-        view.on('save', function(store, absolutePath) {
-          dfd.resolveWith(null, [store, absolutePath]);
+        view.on('save', function(store, path, name) {
+          dfd.resolveWith(null, [store, path, name]);
           return view.close();
         });
         view.on('close', function() {

@@ -1,12 +1,5 @@
 (function() {
   App.module('Entities', function(Entities, App, Backbone, Marionette, $, _) {
-    var S4, guid;
-    S4 = function() {
-      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-    };
-    guid = function() {
-      return S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4();
-    };
     Entities.LocalFileStore = (function() {
       function LocalFileStore(name) {
         this.name = name;
@@ -26,17 +19,15 @@
       };
 
       LocalFileStore.prototype.create = function(file) {
-        file.set("lastModified", new Date().getTime());
-        if (!file.id) {
-          file.id = file.attributes.id = guid();
-        }
+        file.set('lastModified', new Date().getTime());
+        file.set('id', file.get('path') + file.get('name'));
         this.data[file.id] = file.toJSON();
         this._save();
         return file.toJSON();
       };
 
       LocalFileStore.prototype.update = function(file) {
-        file.set("lastModified", new Date().getTime());
+        file.set('lastModified', new Date().getTime());
         this.data[file.id] = file.toJSON();
         this._save();
         return file.toJSON();
@@ -58,18 +49,18 @@
       };
 
       LocalFileStore.prototype._load = function() {
-        var e, file, store, _i, _len, _ref, _results;
+        var e, file, store, _i, _len, _ref, _ref1, _results;
         store = localStorage.getItem(this.name);
         try {
-          this.data = JSON.parse(store);
+          this.data = (_ref = JSON.parse(store)) != null ? _ref : {};
         } catch (_error) {
           e = _error;
           this.data = {};
         }
-        _ref = this.data;
+        _ref1 = this.data;
         _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          file = _ref[_i];
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          file = _ref1[_i];
           _results.push(file.set('type', 'file'));
         }
         return _results;
@@ -79,16 +70,16 @@
         var dfd, resp;
         resp = void 0;
         switch (method) {
-          case "read":
+          case 'read':
             resp = file.id ? this.find(file) : this.fetch();
             break;
-          case "create":
+          case 'create':
             resp = this.create(file);
             break;
-          case "update":
+          case 'update':
             resp = this.update(file);
             break;
-          case "delete":
+          case 'delete':
             resp = this.destroy(file);
         }
         dfd = $.Deferred();
@@ -102,7 +93,7 @@
         } else {
           if (options != null) {
             if (typeof options.error === "function") {
-              options.error("Record not found");
+              options.error('Record not found');
             }
           }
         }

@@ -8,17 +8,17 @@
         var _ref;
         return this.local === true || ((_ref = this.collection) != null ? _ref.isLocal : void 0) === true;
       },
-      getPath: function() {
+      getAbsolutePath: function() {
         return this.id;
       },
       getDir: function() {
-        var index, name;
-        name = this.get('name');
-        index = name.lastIndexOf('/');
-        if (index >= 0) {
-          return name.substring(0, index);
+        return this.get('path');
+      },
+      getStore: function() {
+        if (this.isLocal()) {
+          return 'local';
         } else {
-          return name;
+          return 'remote';
         }
       },
       sync: function(method, file, options) {

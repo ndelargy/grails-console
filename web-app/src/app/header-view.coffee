@@ -7,10 +7,6 @@
     attributes:
       class: 'navbar navbar-fixed-top'
 
-    triggers:
-      'click button.new': 'new'
-      'click button.files': 'files'
-
     onRender: ->
       new App.SettingsView(el: @$('.dropdown-menu.settings')[0]).render() # TODO move to template
 

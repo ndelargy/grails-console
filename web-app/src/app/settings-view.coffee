@@ -9,6 +9,7 @@
       "click .results-show-script": "onResultsShowScriptClick"
       "click .results-show-stdout": "onResultsShowStdoutClick"
       "click .theme": "onThemeClick"
+      "click .help": "onHelpClick"
 
     initialize: ->
       @model = App.settings
@@ -67,5 +68,9 @@
       event.stopPropagation()
       @model.toggle "results.showResult"
       @model.save()
+
+    onHelpClick: (event) ->
+      event.preventDefault()
+      App.trigger 'help'
 
 ) App, jQuery

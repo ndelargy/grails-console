@@ -20,9 +20,12 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
     save: (text) ->
       @file.set "text", text
       if @file.isNew()
-        App.FileApp.promptForNewFileName().done (store, absolutePath) =>
-          if store and absolutePath
-            @file.set 'name', absolutePath
+        App.FileApp.promptForNewFileName().done (store, path, name) =>
+          if store
+            @file.set
+              name: name
+              path: path
+
             @file.local = store is 'local'
 
             App.savingOn()

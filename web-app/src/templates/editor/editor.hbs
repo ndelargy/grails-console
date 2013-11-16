@@ -1,9 +1,19 @@
 <div class="btn-toolbar">
     <!--<div class="btn-group">-->
-        <button class="execute btn btn-default" title="Execute (Ctrl + Enter)"><i class="icon-play"></i></button>
-        <button class="save btn btn-default" title="Save"><i class="icon-save"></i></button>
-        <button class="fork btn btn-default" title="Fork"><i class="icon-code-fork"></i></button>
-        <button class="help btn btn-default" title="Help"><i class="icon-question"></i></button>
+        <button class="execute btn btn-sm btn-default" title="Execute (Ctrl + Enter)"><i class="icon-play"></i></button>
+        <button class="btn btn-sm btn-default new" title="New" ><i class="icon-file"></i></button>
+        <button class="btn btn-sm btn-default files" title="Open"><i class="icon-folder-open"></i></button>
+        <div class="btn-group">
+            <button class="save btn btn-sm btn-default" title="Save"><i class="icon-save"></i></button>
+            <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Save as...</a></li>
+            </ul>
+        </div>
+        <!--<button class="fork btn btn-default" title="Fork"><i class="icon-code-fork"></i></button>-->
     <!--</div>-->
 </div>
 <div id="code-wrapper" class="ui-layout-content">

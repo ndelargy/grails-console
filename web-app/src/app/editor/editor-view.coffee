@@ -6,9 +6,9 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
 
     events:
       'click button.execute': 'onExecuteClick'
+      'click button.new': 'onNewClick'
+      'click button.files': 'onFilesClick'
       'click button.save': 'onSaveClick'
-      'click button.fork': 'onForkClick'
-      'click button.help': 'onHelpClick'
 
     initialize: ->
       $(window).on "beforeunload", => @onBeforeunload() # TODO unload
@@ -19,6 +19,14 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
 
     resize: ->
       @editor.refresh()
+
+    onNewClick: (event) ->
+      event.preventDefault()
+      App.trigger 'app:file:new'
+
+    onFilesClick: (event) ->
+      event.preventDefault()
+      App.trigger 'app:file:list'
 
     initEditor: ->
       @editor = CodeMirror.fromTextArea(@$("textarea[name=code]")[0],
@@ -58,9 +66,6 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
     onSaveClick: ->
       @trigger 'save', @editor.getValue()
 
-    onForkClick: ->
-      @trigger 'fork', @editor.getValue()
-
     onExecuteClick: (event) ->
       event.preventDefault()
 #      $(event.currentTarget).blur()
@@ -92,7 +97,3 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
 
     onShow: ->
       @editor.focus()
-
-    onHelpClick: (event) ->
-      event.preventDefault()
-      App.trigger 'help'

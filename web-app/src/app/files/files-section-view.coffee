@@ -39,11 +39,11 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
     onSave: (event) ->
       event.preventDefault()
-      absolutePath = @baseDir.get('path')
-      absolutePath += '/' if absolutePath[absolutePath.length - 1] isnt '/'
-      absolutePath += @$('input.file-name').val()
+      fileName = @$('input.file-name').val()
+      path = @baseDir.get('path')
+      path += '/' if path[path.length - 1] isnt '/'
 
-      @trigger 'save', @store, absolutePath
+      @trigger 'save', @store, path, fileName
 
     showStore: (store) ->
       @store = store
@@ -61,7 +61,7 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
           @listenTo @fileCollectionView, 'file:selected', (file) ->
             if file.get('type') is 'dir'
-              path = file.getPath()
+              path = file.getAbsolutePath()
               @baseDir.set 'path', path
               collection.path = path
               collection.fetch reset: true

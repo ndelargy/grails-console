@@ -22,9 +22,12 @@
         var _this = this;
         this.file.set("text", text);
         if (this.file.isNew()) {
-          return App.FileApp.promptForNewFileName().done(function(store, absolutePath) {
-            if (store && absolutePath) {
-              _this.file.set('name', absolutePath);
+          return App.FileApp.promptForNewFileName().done(function(store, path, name) {
+            if (store) {
+              _this.file.set({
+                name: name,
+                path: path
+              });
               _this.file.local = store === 'local';
               App.savingOn();
               return _this.file.save().then(function() {

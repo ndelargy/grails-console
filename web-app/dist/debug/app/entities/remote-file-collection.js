@@ -12,7 +12,7 @@
       isLocal: false,
       path: '/',
       comparator: function(file) {
-        return file.get('name') * -1;
+        return file.get('name');
       }
     });
     App.reqres.setHandler('remote:file:entity', function(name) {
