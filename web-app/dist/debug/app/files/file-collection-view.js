@@ -48,7 +48,7 @@
     });
     return Handlebars.registerHelper('fileIcon', function(file, options) {
       var clazz;
-      clazz = this.type === 'dir' ? 'icon-folder-close' : 'icon-file';
+      clazz = this.type === 'dir' ? 'fa fa-folder-o' : 'fa fa-file-o';
       return new Handlebars.SafeString("<i class='" + clazz + "'></i>");
     });
   });

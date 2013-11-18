@@ -2,9 +2,7 @@
   (function($, _, Backbone, JST, window) {
     var App;
     Handlebars.registerHelper("dateFormatTime", function(context) {
-      var date;
-      date = new Date(context);
-      return "" + (date.toLocaleDateString()) + " " + (date.toLocaleTimeString());
+      return moment(new Date(context)).format('MMM D, YYYY, h:mm a');
     });
     Marionette.Renderer.render = function(template, data) {
       return JST[template](data);

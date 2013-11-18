@@ -37,5 +37,5 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
       files: @collection.toJSON()
 
   Handlebars.registerHelper 'fileIcon', (file, options) ->
-    clazz = if @type is 'dir' then 'icon-folder-close' else 'icon-file'
+    clazz = if @type is 'dir' then 'fa fa-folder-o' else 'fa fa-file-o'
     new Handlebars.SafeString "<i class='#{clazz}'></i>"

@@ -15,7 +15,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"btn-toolbar\">\n    <!--<div class=\"btn-group\">-->\n        <button class=\"execute btn btn-sm btn-default\" title=\"Execute (Ctrl + Enter)\"><i class=\"icon-play\"></i></button>\n        <button class=\"btn btn-sm btn-default new\" title=\"New\" ><i class=\"icon-file\"></i></button>\n        <button class=\"btn btn-sm btn-default files\" title=\"Open\"><i class=\"icon-folder-open\"></i></button>\n        <div class=\"btn-group\">\n            <button class=\"save btn btn-sm btn-default\" title=\"Save\"><i class=\"icon-save\"></i></button>\n            <button type=\"button\" class=\"btn btn-sm btn-default dropdown-toggle\" data-toggle=\"dropdown\">\n                <span class=\"caret\"></span>\n                <span class=\"sr-only\">Toggle Dropdown</span>\n            </button>\n            <ul class=\"dropdown-menu\" role=\"menu\">\n                <li><a href=\"#\">Save as...</a></li>\n            </ul>\n        </div>\n        <!--<button class=\"fork btn btn-default\" title=\"Fork\"><i class=\"icon-code-fork\"></i></button>-->\n    <!--</div>-->\n</div>\n<div id=\"code-wrapper\" class=\"ui-layout-content\">\n    <textarea name=\"code\" rows=\"25\" cols=\"100\"></textarea>\n</div>";
+  return "<div class=\"btn-toolbar\">\n    <button class=\"execute btn btn-sm btn-default\" title=\"Execute (Ctrl + Enter)\"><i class=\"fa fa-play\"></i></button>\n    <button class=\"btn btn-sm btn-default new\" title=\"New\"><i class=\"fa fa-file\"></i></button>\n    <button class=\"btn btn-sm btn-default files\" title=\"Open\"><i class=\"fa fa-folder\"></i></button>\n    <div class=\"btn-group\">\n        <button class=\"save btn btn-sm btn-default\" title=\"Save\"><i class=\"fa fa-save\"></i></button>\n        <button type=\"button\" class=\"btn btn-sm btn-default dropdown-toggle\" data-toggle=\"dropdown\">\n            <span class=\"caret\"></span>\n            <span class=\"sr-only\">Toggle Dropdown</span>\n        </button>\n        <ul class=\"dropdown-menu\" role=\"menu\">\n            <li><a href=\"#\">Save as...</a></li>\n        </ul>\n    </div>\n</div>\n<div id=\"code-wrapper\" class=\"ui-layout-content\">\n    <textarea name=\"code\" rows=\"25\" cols=\"100\"></textarea>\n</div>";
   });
 
 this["JST"]["editor/result"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -26,7 +26,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  return "\n    <div class=\"loading\"><i class=\"icon-refresh icon-spin\"></i></div>\n";
+  return "\n    <div class=\"loading\"><i class=\"fa fa-refresh fa-spin\"></i></div>\n";
   }
 
 function program3(depth0,data) {
@@ -72,7 +72,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"btn-toolbar\">\n    <button class=\"clear btn btn-sm btn-default\" title=\"(Esc)\"><i class=\"icon-eraser\"></i></button>\n</div>\n\n<div class=\"script-result-section\"><div class=\"inner\"></div></div>";
+  return "<div class=\"btn-toolbar\">\n    <button class=\"clear btn btn-sm btn-default\" title=\"(Esc)\"><i class=\"fa fa-eraser\"></i></button>\n</div>\n\n<div class=\"script-result-section\"><div class=\"inner\"></div></div>";
   });
 
 this["JST"]["files/file-list"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -116,7 +116,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
 
-  buffer += "<td><a class=\"delete\" href=\"#\"><i class=\"icon-trash\"></i></a></td>\n<td>\n    ";
+  buffer += "<td><a class=\"delete\" href=\"#\"><i class=\"fa fa-trash\"></i></a></td>\n<td>\n    ";
   if (stack1 = helpers.fileIcon) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.fileIcon; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -164,7 +164,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"loading\"><i class=\"icon-refresh icon-spin\"></i></div>";
+  return "<div class=\"loading\"><i class=\"fa fa-refresh fa-spin\"></i></div>";
   });
 
 this["JST"]["header"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -173,7 +173,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<a class=\"navbar-brand\" href=\"#\">Grails Debug Console</a>\n<p class=\"navbar-text\">Signed in as Mark Otto</p>\n<div class=\"saving\" style=\"display: none\">\n    <i class=\"icon-refresh icon-spin\"></i>\n    <!--<i class=\"icon-spinner icon-spin\"></i>-->\n    Saving\n</div>\n\n<form class=\"navbar-form pull-right\">\n    <div class=\"btn-group\">\n        <button class=\"clear btn-sm btn btn-default dropdown-toggle\" title=\"(Esc)\" data-toggle=\"dropdown\">\n            <i class=\"icon-cog\"></i>\n            <span class=\"caret\"></span>\n        </button>\n        <ul class=\"dropdown-menu pull-right settings\" role=\"menu\">\n            <li role=\"presentation\" class=\"dropdown-header\">Layout</li>\n            <li><a href=\"#\" class=\"orientation-horizontal\"><i class=\"icon-check\"></i> Horizontal</a></li>\n            <li><a href=\"#\" class=\"orientation-vertical\"><i class=\"icon-check\"></i> Vertical</a></li>\n            <li role=\"presentation\" class=\"divider\"></li>\n            <li role=\"presentation\" class=\"dropdown-header\">Results Pane</li>\n            <li><a href=\"#\" class=\"results-wrap\"><i class=\"icon-check\"></i> Wrap text</a></li>\n            <li role=\"presentation\" class=\"divider\"></li>\n            <li role=\"presentation\" class=\"dropdown-header\">Theme</li>\n            <li><a href=\"#\" class=\"theme\" data-theme=\"default\"><i class=\"icon-check\"></i> Light</a></li>\n            <li><a href=\"#\" class=\"theme\" data-theme=\"lesser-dark\"><i class=\"icon-check\"></i> Dark</a></li>\n            <li role=\"presentation\" class=\"divider\"></li>\n            <li><a href=\"#\" class=\"help\"><i class=\"icon-check\"></i> Help</a></li>\n        </ul>\n    </div>\n</form>";
+  return "<a class=\"navbar-brand\" href=\"#\">Grails Debug Console</a>\n<p class=\"navbar-text\">abcdefg.groovy</p>\n<div class=\"saving\" style=\"display: none\">\n    <i class=\"fa fa-refresh fa-spin\"></i>\n    Saving\n</div>\n\n<form class=\"navbar-form pull-right\">\n    <div class=\"btn-group\">\n        <button class=\"clear btn-sm btn btn-default dropdown-toggle\" title=\"(Esc)\" data-toggle=\"dropdown\">\n            <i class=\"fa fa-cog\"></i>\n            <span class=\"caret\"></span>\n        </button>\n        <ul class=\"dropdown-menu pull-right settings\" role=\"menu\">\n            <li role=\"presentation\" class=\"dropdown-header\">Layout</li>\n            <li><a href=\"#\" class=\"orientation-horizontal\"><i class=\"fa fa-check\"></i> Horizontal</a></li>\n            <li><a href=\"#\" class=\"orientation-vertical\"><i class=\"fa fa-check\"></i> Vertical</a></li>\n            <li role=\"presentation\" class=\"divider\"></li>\n            <li role=\"presentation\" class=\"dropdown-header\">Results Pane</li>\n            <li><a href=\"#\" class=\"results-wrap\"><i class=\"fa fa-check\"></i> Wrap text</a></li>\n            <li role=\"presentation\" class=\"divider\"></li>\n            <li role=\"presentation\" class=\"dropdown-header\">Theme</li>\n            <li><a href=\"#\" class=\"theme\" data-theme=\"default\"><i class=\"fa fa-check\"></i> Light</a></li>\n            <li><a href=\"#\" class=\"theme\" data-theme=\"lesser-dark\"><i class=\"fa fa-check\"></i> Dark</a></li>\n            <li role=\"presentation\" class=\"divider\"></li>\n            <li><a href=\"#\" class=\"help\"><i class=\"fa fa-check\"></i> Help</a></li>\n        </ul>\n    </div>\n</form>";
   });
 
 this["JST"]["help-modal"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

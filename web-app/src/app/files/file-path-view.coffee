@@ -23,7 +23,7 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
   Handlebars.registerHelper 'fileBreadcrumbs', (file, options) ->
     folders = @baseDir[1..].split('/')
-    html = '<ol class="breadcrumb"><li><a href="#" data-path="/"><i class="icon-folder-close"></i></a></li>'
+    html = '<ol class="breadcrumb"><li><a href="#" data-path="/"><i class="fa fa-folder"></i></a></li>'
     for folder, i in folders
       path = '/' + folders[0..i].join('/')
       if (i < folders.length - 1)

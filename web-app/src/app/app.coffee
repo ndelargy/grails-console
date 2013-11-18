@@ -1,8 +1,7 @@
 (($, _, Backbone, JST, window) ->
 
   Handlebars.registerHelper "dateFormatTime", (context) ->
-    date = new Date(context)
-    "#{date.toLocaleDateString()} #{date.toLocaleTimeString()}"
+    moment(new Date(context)).format('MMM D, YYYY, h:mm a')
 
   Marionette.Renderer.render = (template, data) -> JST[template] data
 

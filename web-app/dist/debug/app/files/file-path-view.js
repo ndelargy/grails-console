@@ -26,7 +26,7 @@
     return Handlebars.registerHelper('fileBreadcrumbs', function(file, options) {
       var folder, folders, html, i, path, _i, _len;
       folders = this.baseDir.slice(1).split('/');
-      html = '<ol class="breadcrumb"><li><a href="#" data-path="/"><i class="icon-folder-close"></i></a></li>';
+      html = '<ol class="breadcrumb"><li><a href="#" data-path="/"><i class="fa fa-folder"></i></a></li>';
       for (i = _i = 0, _len = folders.length; _i < _len; i = ++_i) {
         folder = folders[i];
         path = '/' + folders.slice(0, +i + 1 || 9e9).join('/');

@@ -13,6 +13,7 @@ module.exports = (grunt) ->
       "web-app/vendor/js/libs/backbone-min.js"
       "web-app/vendor/js/libs/backbone.marionette.min.js"
       "web-app/vendor/js/libs/handlebars.runtime.js"
+      "web-app/vendor/js/libs/moment.min.js"
       "web-app/vendor/jquery-layout/js/jquery.layout-latest.min.js"
       "web-app/vendor/js/plugins/jquery.hotkeys.js"
       "web-app/vendor/codemirror-3.18/lib/codemirror.js"
@@ -37,7 +38,7 @@ module.exports = (grunt) ->
     cssSrc: [
       "web-app/vendor/bootstrap/css/bootstrap.min.css"
 #      "web-app/vendor/bootstrap/css/bootstrap-theme.min.css"
-      "web-app/vendor/font-awesome/css/font-awesome.min.css"
+      "web-app/vendor/font-awesome-4.0.3/css/font-awesome.min.css"
       "web-app/vendor/codemirror-3.18/lib/codemirror.css"
       "web-app/vendor/codemirror-3.18/theme/lesser-dark.css"
       "web-app/vendor/jquery-layout/css/jquery.layout.css"
