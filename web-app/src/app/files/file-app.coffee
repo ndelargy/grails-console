@@ -45,48 +45,41 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
     $el
 
-  API =
-    promptForNewFileName: ->
-      dfd = $.Deferred()
+  FileApp.promptForNewFileName = ->
+    dfd = $.Deferred()
 
-      view = new FileApp.FilesSectionView
-        saving: true
+    view = new FileApp.FilesSectionView
+      saving: true
 
-      showInModal view
+    showInModal view
 
-      view.$el.find('.file-name').focus()
+    view.$el.find('.file-name').focus()
 
-      view.on 'save', (store, path, name) ->
-        dfd.resolveWith null, [store, path, name]
-        view.close()
+    view.on 'save', (store, path, name) ->
+      dfd.resolveWith null, [store, path, name]
+      view.close()
 
-      view.on 'close', ->
-        dfd.resolve()
+    view.on 'file:selected', (file) ->
+      view.setName file.get('name')
 
-      dfd.promise()
+    view.on 'close', ->
+      dfd.resolve()
 
-    promptForFile: ->
-      dfd = $.Deferred()
+    dfd.promise()
 
-      view = new FileApp.FilesSectionView
-        saving: false
+  FileApp.promptForFile = ->
+    dfd = $.Deferred()
 
-      view.on 'file:selected', (file) ->
-        dfd.resolveWith null, [file]
-        view.close()
+    view = new FileApp.FilesSectionView
+      saving: false
 
-      view.on 'close', ->
-        dfd.resolve()
+    view.on 'file:selected', (file) ->
+      dfd.resolveWith null, [file]
+      view.close()
 
-      showInModal view
+    view.on 'close', ->
+      dfd.resolve()
 
-      dfd.promise()
+    showInModal view
 
-  FileApp.promptForFile = API.promptForFile
-  FileApp.promptForNewFileName = API.promptForNewFileName
-
-#  App.addInitializer ->
-#
-#    FileApp.on 'file:selected', (file) ->
-#      $el.modal 'hide'
-#      App.trigger 'app:file:selected', file
+    dfd.promise()

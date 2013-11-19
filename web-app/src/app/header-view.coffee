@@ -7,6 +7,10 @@
     attributes:
       class: 'navbar navbar-fixed-top'
 
+    initialize: ->
+      @listenTo App, 'file:show', (file) -> # TODO
+        @$('.title').html(file.get('name') ? '')
+
     onRender: ->
       new App.SettingsView(el: @$('.dropdown-menu.settings')[0]).render() # TODO move to template
 

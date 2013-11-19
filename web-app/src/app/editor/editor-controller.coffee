@@ -5,14 +5,10 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
     initialize: (options) ->
       @view = new EditorApp.EditorSectionView
       @listenTo @view, 'save', @save
-      @listenTo @view, 'fork', (text) ->
-        # TODO check dirty
-        @showFile new App.FileApp.File
-          text: text
-        # TODO
-        App.router.navigate "new", trigger: false # TODO event
 
     showFile: (file) ->
+      console.log 'showfile ' + file.get('name')
+      App.trigger 'file:show', file
       @file = file
       @view.refresh()
       @view.setValue file.get('text')

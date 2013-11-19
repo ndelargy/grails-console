@@ -1,6 +1,6 @@
 (function() {
   App.module('FileApp', function(FileApp, App, Backbone, Marionette, $, _) {
-    var API, showInModal;
+    var showInModal;
     showInModal = function(view) {
       var $el, sizeContent;
       $el = $('<div class="modal" data-backdrop="false"></div>').appendTo('body').html(view.render().el);
@@ -47,43 +47,42 @@
       $el.modal('show');
       return $el;
     };
-    API = {
-      promptForNewFileName: function() {
-        var dfd, view;
-        dfd = $.Deferred();
-        view = new FileApp.FilesSectionView({
-          saving: true
-        });
-        showInModal(view);
-        view.$el.find('.file-name').focus();
-        view.on('save', function(store, path, name) {
-          dfd.resolveWith(null, [store, path, name]);
-          return view.close();
-        });
-        view.on('close', function() {
-          return dfd.resolve();
-        });
-        return dfd.promise();
-      },
-      promptForFile: function() {
-        var dfd, view;
-        dfd = $.Deferred();
-        view = new FileApp.FilesSectionView({
-          saving: false
-        });
-        view.on('file:selected', function(file) {
-          dfd.resolveWith(null, [file]);
-          return view.close();
-        });
-        view.on('close', function() {
-          return dfd.resolve();
-        });
-        showInModal(view);
-        return dfd.promise();
-      }
+    FileApp.promptForNewFileName = function() {
+      var dfd, view;
+      dfd = $.Deferred();
+      view = new FileApp.FilesSectionView({
+        saving: true
+      });
+      showInModal(view);
+      view.$el.find('.file-name').focus();
+      view.on('save', function(store, path, name) {
+        dfd.resolveWith(null, [store, path, name]);
+        return view.close();
+      });
+      view.on('file:selected', function(file) {
+        return view.setName(file.get('name'));
+      });
+      view.on('close', function() {
+        return dfd.resolve();
+      });
+      return dfd.promise();
     };
-    FileApp.promptForFile = API.promptForFile;
-    return FileApp.promptForNewFileName = API.promptForNewFileName;
+    return FileApp.promptForFile = function() {
+      var dfd, view;
+      dfd = $.Deferred();
+      view = new FileApp.FilesSectionView({
+        saving: false
+      });
+      view.on('file:selected', function(file) {
+        dfd.resolveWith(null, [file]);
+        return view.close();
+      });
+      view.on('close', function() {
+        return dfd.resolve();
+      });
+      showInModal(view);
+      return dfd.promise();
+    };
   });
 
 }).call(this);

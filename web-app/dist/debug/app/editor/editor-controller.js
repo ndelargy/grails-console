@@ -3,17 +3,11 @@
     return EditorApp.Controller = Marionette.Controller.extend({
       initialize: function(options) {
         this.view = new EditorApp.EditorSectionView;
-        this.listenTo(this.view, 'save', this.save);
-        return this.listenTo(this.view, 'fork', function(text) {
-          this.showFile(new App.FileApp.File({
-            text: text
-          }));
-          return App.router.navigate("new", {
-            trigger: false
-          });
-        });
+        return this.listenTo(this.view, 'save', this.save);
       },
       showFile: function(file) {
+        console.log('showfile ' + file.get('name'));
+        App.trigger('file:show', file);
         this.file = file;
         this.view.refresh();
         return this.view.setValue(file.get('text'));

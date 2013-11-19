@@ -45,6 +45,9 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
       @trigger 'save', @store, path, fileName
 
+    setName: (name) ->
+      @$('input.file-name').val name
+
     showStore: (store) ->
       @store = store
       @storeRegion.show new FileApp.LoadingView

@@ -50,6 +50,9 @@
         }
         return this.trigger('save', this.store, path, fileName);
       },
+      setName: function(name) {
+        return this.$('input.file-name').val(name);
+      },
       showStore: function(store) {
         var path, _ref,
           _this = this;

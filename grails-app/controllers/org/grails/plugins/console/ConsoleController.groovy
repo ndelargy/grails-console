@@ -9,8 +9,6 @@ class ConsoleController {
 
     def consoleService
 
-    String baseDir = '/Users/mattsheehan/test' // TODO config
-
     def index = {
         [
             json: [
@@ -21,8 +19,7 @@ class ConsoleController {
                     request: 'the HTTP request',
                     session: 'the HTTP session',
                 ],
-                baseUrl: resource(plugin: 'none'),
-                baseDir: baseDir
+                baseUrl: resource(plugin: 'none')
             ]
         ]
     }
