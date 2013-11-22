@@ -3,7 +3,8 @@
     return EditorApp.Controller = Marionette.Controller.extend({
       initialize: function(options) {
         this.view = new EditorApp.EditorSectionView;
-        return this.listenTo(this.view, 'save', this.save);
+        this.listenTo(this.view, 'save', this.save);
+        return this.listenTo(this.view, 'saveAs', this.saveAs);
       },
       showFile: function(file) {
         console.log('showfile ' + file.get('name'));
@@ -14,27 +15,34 @@
       },
       save: function(text) {
         var _this = this;
-        this.file.set("text", text);
+        this.file.set('text', text);
         if (this.file.isNew()) {
-          return App.FileApp.promptForNewFileName().done(function(store, path, name) {
-            if (store) {
-              _this.file.set({
-                name: name,
-                path: path
-              });
-              _this.file.local = store === 'local';
-              App.savingOn();
-              return _this.file.save().then(function() {
-                App.savingOff();
-                return App.EditorApp.router.showFile(_this.file);
-              });
-            }
-          });
+          return this.saveAs(text);
         } else {
           App.savingOn();
-          this.file.save();
-          return App.savingOff();
+          return this.file.save().then(function() {
+            return App.savingOff();
+          });
         }
+      },
+      saveAs: function(text) {
+        var _this = this;
+        return App.FileApp.promptForNewFileName().done(function(store, path, name) {
+          var file;
+          if (store) {
+            file = new App.Entities.File({
+              text: text,
+              name: name,
+              path: path
+            });
+            file.local = store === 'local';
+            App.savingOn();
+            return file.save().then(function() {
+              App.savingOff();
+              return App.EditorApp.router.showFile(file);
+            });
+          }
+        });
       },
       isDirty: function() {
         return this.file.get("text") !== this.editor.getValue();

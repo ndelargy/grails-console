@@ -25,8 +25,8 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
       @listenTo @editorView, 'save', (text) ->
         @trigger 'save', text
 
-      @listenTo @editorView, 'fork', (text) ->
-        @trigger 'fork', text
+      @listenTo @editorView, 'saveAs', (text) ->
+        @trigger 'saveAs', text
 
       @listenTo @editorView, 'clear', @clearResults
 

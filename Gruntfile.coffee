@@ -3,82 +3,133 @@ module.exports = (grunt) ->
   # Project configuration.
   grunt.initConfig
 
-    pkg: grunt.file.readJSON "package.json"
+    pkg: grunt.file.readJSON 'package.json'
 
-    jsSrc: [
-      "web-app/vendor/js/libs/jquery-1.7.1.min.js"
-      "web-app/vendor/jquery-ui-1.10.3/jquery-ui.min.js"
-      "web-app/vendor/bootstrap/js/bootstrap.min.js"
-      "web-app/vendor/js/libs/underscore-min.js"
-      "web-app/vendor/js/libs/backbone-min.js"
-      "web-app/vendor/js/libs/backbone.marionette.min.js"
-      "web-app/vendor/js/libs/handlebars.runtime.js"
-      "web-app/vendor/js/libs/moment.min.js"
-      "web-app/vendor/jquery-layout/js/jquery.layout-latest.min.js"
-      "web-app/vendor/js/plugins/jquery.hotkeys.js"
-      "web-app/vendor/codemirror-3.18/lib/codemirror.js"
-      "web-app/vendor/codemirror-3.18/mode/groovy/groovy.js"
-      "web-app/vendor/DataTables-1.9.4/media/js/jquery.dataTables.js"
-      "web-app/dist/debug/jst.js"
-      "web-app/dist/debug/app/app.js"
-      "web-app/dist/debug/app/item-view.js"
-      "web-app/dist/debug/app/router.js"
-      "web-app/dist/debug/app/header-view.js"
-      "web-app/dist/debug/app/settings-model.js"
-      "web-app/dist/debug/app/settings-view.js"
-      "web-app/dist/debug/app/main-view.js"
-      "web-app/dist/debug/app/help-view.js"
-      "web-app/dist/debug/app/dom-utils.js"
+    app:
+      js:
+        debug: [
+          'web-app/dist/debug/jst.js'
+          'web-app/dist/debug/app/app.js'
+          'web-app/dist/debug/app/item-view.js'
+          'web-app/dist/debug/app/router.js'
+          'web-app/dist/debug/app/header-view.js'
+          'web-app/dist/debug/app/settings-model.js'
+          'web-app/dist/debug/app/settings-view.js'
+          'web-app/dist/debug/app/main-view.js'
+          'web-app/dist/debug/app/help-view.js'
+          'web-app/dist/debug/app/dom-utils.js'
 
-      "web-app/dist/debug/app/entities/**/*.js"
-      "web-app/dist/debug/app/editor/**/*.js"
-      "web-app/dist/debug/app/files/**/*.js"
-    ]
+          'web-app/dist/debug/app/entities/**/*.js'
+          'web-app/dist/debug/app/editor/**/*.js'
+          'web-app/dist/debug/app/files/**/*.js'
+        ]
 
-    cssSrc: [
-      "web-app/vendor/bootstrap/css/bootstrap.min.css"
-#      "web-app/vendor/bootstrap/css/bootstrap-theme.min.css"
-      "web-app/vendor/font-awesome-4.0.3/css/font-awesome.min.css"
-      "web-app/vendor/codemirror-3.18/lib/codemirror.css"
-      "web-app/vendor/codemirror-3.18/theme/lesser-dark.css"
-      "web-app/vendor/jquery-layout/css/jquery.layout.css"
-      "web-app/vendor/jquery-ui-1.10.3/jquery-ui.min.css"
-      "web-app/dist/debug/app.css"
-    ]
+        release: 'web-app/dist/release/app.js'
 
-#    uglify:
-#      options:
-#        banner: "/*! <%= pkg.name %> <%= grunt.template.today(\"yyyy-mm-dd\") %> */\n"
-#
-#      build:
-#        src: "src/<%= pkg.name %>.js"
-#        dest: "build/<%= pkg.name %>.min.js"
+      css:
+        debug:
+          'web-app/dist/debug/app.css'
+
+        release:
+          'web-app/dist/release/app.css'
+
+    vendor:
+      js: [
+        'web-app/vendor/js/libs/jquery-1.7.1.min.js'
+        'web-app/vendor/jquery-ui-1.10.3/jquery-ui.min.js'
+        'web-app/vendor/bootstrap/js/bootstrap.min.js'
+        'web-app/vendor/js/libs/underscore-min.js'
+        'web-app/vendor/js/libs/backbone-min.js'
+        'web-app/vendor/js/libs/backbone.marionette.min.js'
+        'web-app/vendor/js/libs/handlebars.runtime.js'
+        'web-app/vendor/js/libs/moment.min.js'
+        'web-app/vendor/jquery-layout/js/jquery.layout-latest.min.js'
+        'web-app/vendor/js/plugins/jquery.hotkeys.js'
+        'web-app/vendor/codemirror-3.18/lib/codemirror.js'
+        'web-app/vendor/codemirror-3.18/mode/groovy/groovy.js'
+      ]
+      css: [
+        'web-app/vendor/bootstrap/css/bootstrap.min.css'
+        #      'web-app/vendor/bootstrap/css/bootstrap-theme.min.css'
+        'web-app/vendor/font-awesome-4.0.3/css/font-awesome.min.css'
+        'web-app/vendor/codemirror-3.18/lib/codemirror.css'
+        'web-app/vendor/codemirror-3.18/theme/lesser-dark.css'
+        'web-app/vendor/jquery-layout/css/jquery.layout.css'
+        'web-app/vendor/jquery-ui-1.10.3/jquery-ui.min.css'
+      ]
+
+    jsSrc:
+      vendor: [
+        'web-app/vendor/js/libs/jquery-1.7.1.min.js'
+        'web-app/vendor/jquery-ui-1.10.3/jquery-ui.min.js'
+        'web-app/vendor/bootstrap/js/bootstrap.min.js'
+        'web-app/vendor/js/libs/underscore-min.js'
+        'web-app/vendor/js/libs/backbone-min.js'
+        'web-app/vendor/js/libs/backbone.marionette.min.js'
+        'web-app/vendor/js/libs/handlebars.runtime.js'
+        'web-app/vendor/js/libs/moment.min.js'
+        'web-app/vendor/jquery-layout/js/jquery.layout-latest.min.js'
+        'web-app/vendor/js/plugins/jquery.hotkeys.js'
+        'web-app/vendor/codemirror-3.18/lib/codemirror.js'
+        'web-app/vendor/codemirror-3.18/mode/groovy/groovy.js'
+      ]
+      app: [
+        'web-app/dist/debug/jst.js'
+        'web-app/dist/debug/app/app.js'
+        'web-app/dist/debug/app/item-view.js'
+        'web-app/dist/debug/app/router.js'
+        'web-app/dist/debug/app/header-view.js'
+        'web-app/dist/debug/app/settings-model.js'
+        'web-app/dist/debug/app/settings-view.js'
+        'web-app/dist/debug/app/main-view.js'
+        'web-app/dist/debug/app/help-view.js'
+        'web-app/dist/debug/app/dom-utils.js'
+
+        'web-app/dist/debug/app/entities/**/*.js'
+        'web-app/dist/debug/app/editor/**/*.js'
+        'web-app/dist/debug/app/files/**/*.js'
+      ]
+
+
+    cssSrc:
+      vendor: [
+        'web-app/vendor/bootstrap/css/bootstrap.min.css'
+  #      'web-app/vendor/bootstrap/css/bootstrap-theme.min.css'
+        'web-app/vendor/font-awesome-4.0.3/css/font-awesome.min.css'
+        'web-app/vendor/codemirror-3.18/lib/codemirror.css'
+        'web-app/vendor/codemirror-3.18/theme/lesser-dark.css'
+        'web-app/vendor/jquery-layout/css/jquery.layout.css'
+        'web-app/vendor/jquery-ui-1.10.3/jquery-ui.min.css'
+      ]
+      app: [
+        'web-app/dist/debug/app.css'
+      ]
 
     concat:
       css:
         files: [
-          src: "<%= cssSrc %>"
-          dest: "web-app/build/gconsole.css"
+          src: '<%= cssSrc %>'
+          dest: 'web-app/build/gconsole.css'
         ]
       js:
         files: [
-          src: "<%= jsSrc %>"
-          dest: "web-app/build/gconsole.js"
+          src: '<%= jsSrc.app %>'
+          dest: 'web-app/dist/release/app.js'
         ]
 
     handlebars:
       compile:
         options:
-          namespace: "JST"
+          namespace: 'JST'
           processName: (filePath) ->
-            filePath.replace(/^.*\/templates\//, "").replace(/\.hbs$/, "")
+            filePath.replace(/^.*\/templates\//, '').replace(/\.hbs$/, '')
 
         files:
-          "web-app/dist/debug/jst.js": "web-app/src/templates/**/*.hbs"
+          'web-app/dist/debug/jst.js': 'web-app/src/templates/**/*.hbs'
 
     jasmine:
       test:
-        src: "<%= jsSrc %>"
+        src: ['<%= jsSrc.vendor %>', '<%= jsSrc.app %>']
         options:
           specs: 'web-app/target/spec/*spec.*'
           helpers: 'web-app/spec/*helper.js'
@@ -88,16 +139,16 @@ module.exports = (grunt) ->
     coffee:
       app:
         expand: true
-        cwd: "web-app/src/app"
-        src: ["**/*.coffee"]
-        dest: "web-app/dist/debug/app"
-        ext: ".js"
+        cwd: 'web-app/src/app'
+        src: ['**/*.coffee']
+        dest: 'web-app/dist/debug/app'
+        ext: '.js'
       spec:
         expand: true
-        cwd: "web-app/spec"
-        src: ["**/*.coffee"]
-        dest: "web-app/target/spec/"
-        ext: ".js"
+        cwd: 'web-app/spec'
+        src: ['**/*.coffee']
+        dest: 'web-app/target/spec/'
+        ext: '.js'
 
     less:
       app:
@@ -110,17 +161,22 @@ module.exports = (grunt) ->
         cwd: 'web-app/src/app'
         src: '**/*.js'
         dest: 'web-app/dist/debug/app'
-      img:
+      debug:
         expand: true,
         cwd: 'web-app/src/img'
         src: '**/*'
         dest: 'web-app/dist/debug/img'
-
+      release:
+        files: [
+          { expand: true, cwd: 'web-app/src/img', src: '**/*', dest: 'web-app/dist/release/img' }
+          { expand: true, cwd: 'web-app/vendor', src: '**/*', dest: 'web-app/dist/release/vendor' }
+          { src: 'web-app/dist/debug/app.css', dest: 'web-app/dist/release/app.css' }
+        ]
 
     clean:
       dist: ['web-app/dist']
       spec: 'web-app/target/spec/'
-#      release: ["path/to/another/dir/one", "path/to/another/dir/two"]
+#      release: ['path/to/another/dir/one', 'path/to/another/dir/two']
 
     watch:
       jst:
@@ -139,23 +195,37 @@ module.exports = (grunt) ->
         files: 'Gruntfile.coffee'
         tasks: ['debug']
 
-  grunt.loadNpmTasks "grunt-contrib-concat"
-  grunt.loadNpmTasks "grunt-contrib-copy"
-  grunt.loadNpmTasks "grunt-contrib-handlebars"
-  grunt.loadNpmTasks "grunt-contrib-watch"
-  grunt.loadNpmTasks "grunt-contrib-jasmine"
-  grunt.loadNpmTasks "grunt-contrib-coffee"
-  grunt.loadNpmTasks "grunt-contrib-clean"
-  grunt.loadNpmTasks "grunt-contrib-less"
-  grunt.loadNpmTasks "grunt-notify"
+  grunt.loadNpmTasks 'grunt-contrib-concat'
+  grunt.loadNpmTasks 'grunt-contrib-copy'
+  grunt.loadNpmTasks 'grunt-contrib-handlebars'
+  grunt.loadNpmTasks 'grunt-contrib-watch'
+  grunt.loadNpmTasks 'grunt-contrib-jasmine'
+  grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-contrib-clean'
+  grunt.loadNpmTasks 'grunt-contrib-less'
 
-  grunt.registerTask "json", "Write resource config to file", ->
+  grunt.registerTask 'json', 'Write resource config to file', ->
     json =
-      jsSrc: grunt.file.expand(grunt.config.get('jsSrc'))
-      cssSrc: grunt.file.expand(grunt.config.get('cssSrc'))
+      jsSrc: grunt.file.expand(grunt.config.get('jsSrc').vendor).concat grunt.file.expand(grunt.config.get('jsSrc').app)
+      cssSrc: grunt.file.expand(grunt.config.get('cssSrc').vendor).concat grunt.file.expand(grunt.config.get('cssSrc').app)
     grunt.file.write 'grails-app/conf/resources.json', JSON.stringify(json, undefined, 2)
-#    grunt.log.writeln JSON.stringify(json)
+  #    grunt.log.writeln JSON.stringify(json)
 
-  grunt.registerTask "default", ["debug"]
-  grunt.registerTask "test", ["debug", "clean:spec", "coffee:spec", "jasmine"]
-  grunt.registerTask "debug", ["clean:dist", "handlebars:compile", "coffee:app", "copy:img", "less:app", "json"]
+  grunt.registerTask 'json2', 'Write resource config to file', ->
+    app = grunt.config.get('app')
+    vendor = grunt.config.get('vendor')
+
+    json =
+      debug:
+        js: grunt.file.expand(vendor.js).concat grunt.file.expand(app.js.debug)
+        css: grunt.file.expand(vendor.css).concat grunt.file.expand(app.css.debug)
+      release:
+        js: grunt.file.expand(vendor.js).concat grunt.file.expand(app.js.release)
+        css: grunt.file.expand(vendor.css).concat grunt.file.expand(app.css.release)
+    grunt.file.write 'web-app/resources.json', JSON.stringify(json, undefined, 2)
+  #    grunt.log.writeln JSON.stringify(json)
+
+  grunt.registerTask 'default', ['debug']
+  grunt.registerTask 'test', ['debug', 'clean:spec', 'coffee:spec', 'jasmine']
+  grunt.registerTask 'debug', ['clean:dist', 'handlebars:compile', 'coffee:app', 'copy:debug', 'less:app', 'json']
+  grunt.registerTask 'release', ['debug', 'copy:release', 'concat:js']

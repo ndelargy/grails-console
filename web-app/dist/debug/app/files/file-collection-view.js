@@ -3,7 +3,7 @@
     FileApp.FileCollectionView = Marionette.CompositeView.extend({
       template: 'files/file-list',
       attributes: {
-        "class": 'remote-files-view'
+        "class": 'full-height'
       },
       events: {
         'click a.name': 'onNameClick',

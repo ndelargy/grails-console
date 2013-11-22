@@ -12,34 +12,22 @@ class ConsoleTagLib {
     static namespace = 'con'
 
     def resources = { attrs ->
-        boolean hasResourcesPlugin = PluginManagerHolder.pluginManager.hasGrailsPlugin('resources')
-
-        if (hasResourcesPlugin) {
-            r.require(module: 'console')
-            out << r.layoutResources()
-        } else {
-            config.cssSrc.each {
-                out << """<link rel='stylesheet' media="screen" href='${resource(file: it - 'web-app/', plugin: 'console')}' />"""
-            }
+        config.debug.css.each {
+            out << """<link rel='stylesheet' media="screen" href='${resource(file: it - 'web-app/', plugin: 'console')}' />"""
         }
     }
 
     def layoutResources = { attrs ->
-        boolean hasResourcesPlugin = PluginManagerHolder.pluginManager.hasGrailsPlugin('resources')
-
-        if (hasResourcesPlugin) {
-            out << r.layoutResources()
-        } else {
-            config.jsSrc.each {
-                out << """<script type="text/javascript" src='${resource(file: it - 'web-app/', plugin: 'console')}' ></script>"""
-            }
+        config.debug.js.each {
+            out << """<script type="text/javascript" src='${resource(file: it - 'web-app/', plugin: 'console')}' ></script>"""
         }
     }
 
     Map getConfig() {
 //        String json = Thread.currentThread().contextClassLoader.getResource('resources.json').openStream().text
 
-        String json = Holders.applicationContext.parent.getResource('classpath:resources.json').file.text
+//        String json = Holders.applicationContext.parent.getResource('classpath:resources.json').file.text
+        String json = Holders.grailsApplication.mainContext.getResource('/resources.json').file.text
 //        URL res = Thread.currentThread().contextClassLoader.getResource('resources.json')
 //        URLConnection resConn = res.openConnection()
 //        resConn.useCaches = false

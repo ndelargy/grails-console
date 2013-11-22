@@ -6,7 +6,8 @@
         'click button.execute': 'onExecuteClick',
         'click button.new': 'onNewClick',
         'click button.files': 'onFilesClick',
-        'click button.save': 'onSaveClick'
+        'click button.save': 'onSaveClick',
+        'click a.save-as': 'onSaveAsClick'
       },
       initialize: function() {
         var _this = this;
@@ -69,6 +70,10 @@
       },
       onSaveClick: function() {
         return this.trigger('save', this.editor.getValue());
+      },
+      onSaveAsClick: function(event) {
+        event.preventDefault();
+        return this.trigger('saveAs', this.editor.getValue());
       },
       onExecuteClick: function(event) {
         event.preventDefault();

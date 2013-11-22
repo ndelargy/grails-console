@@ -9,6 +9,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
       'click button.new': 'onNewClick'
       'click button.files': 'onFilesClick'
       'click button.save': 'onSaveClick'
+      'click a.save-as': 'onSaveAsClick'
 
     initialize: ->
       $(window).on "beforeunload", => @onBeforeunload() # TODO unload
@@ -65,6 +66,10 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
 
     onSaveClick: ->
       @trigger 'save', @editor.getValue()
+
+    onSaveAsClick: (event) ->
+      event.preventDefault()
+      @trigger 'saveAs', @editor.getValue()
 
     onExecuteClick: (event) ->
       event.preventDefault()

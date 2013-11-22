@@ -5,6 +5,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
     initialize: (options) ->
       @view = new EditorApp.EditorSectionView
       @listenTo @view, 'save', @save
+      @listenTo @view, 'saveAs', @saveAs
 
     showFile: (file) ->
       console.log 'showfile ' + file.get('name')
@@ -14,24 +15,28 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
       @view.setValue file.get('text')
 
     save: (text) ->
-      @file.set "text", text
+      @file.set 'text', text
       if @file.isNew()
-        App.FileApp.promptForNewFileName().done (store, path, name) =>
-          if store
-            @file.set
-              name: name
-              path: path
-
-            @file.local = store is 'local'
-
-            App.savingOn()
-            @file.save().then =>
-              App.savingOff()
-              App.EditorApp.router.showFile @file
+        @saveAs text
       else
         App.savingOn()
-        @file.save()
-        App.savingOff()
+        @file.save().then =>
+          App.savingOff()
+
+    saveAs: (text) ->
+      App.FileApp.promptForNewFileName().done (store, path, name) =>
+        if store
+          file = new App.Entities.File
+            text: text
+            name: name
+            path: path
+
+          file.local = store is 'local'
+
+          App.savingOn()
+          file.save().then =>
+            App.savingOff()
+            App.EditorApp.router.showFile file
 
     isDirty: ->
       @file.get("text") isnt @editor.getValue() #TODO

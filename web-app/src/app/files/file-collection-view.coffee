@@ -5,7 +5,7 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
     template: 'files/file-list'
 
     attributes:
-      class: 'remote-files-view'
+      class: 'full-height'
 
     events:
       'click a.name': 'onNameClick'
