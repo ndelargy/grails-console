@@ -1,6 +1,6 @@
 App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
 
-  EditorApp.EditorView = App.ItemView.extend
+  EditorApp.EditorView = Marionette.ItemView.extend
 
     template: 'editor/editor'
 

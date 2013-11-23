@@ -1,6 +1,6 @@
 (function() {
   App.module('EditorApp', function(EditorApp, App, Backbone, Marionette, $, _) {
-    return EditorApp.EditorSectionView = App.ItemView.extend({
+    return EditorApp.EditorSectionView = Marionette.ItemView.extend({
       template: 'editor/editor-section',
       attributes: {
         "class": 'full-height'
@@ -16,7 +16,6 @@
         this.editorView.render();
         this.layout.initContent('center');
         this.editorView.resize();
-        this.subviews.push(this.editorView);
         this.resultCollection = new EditorApp.ResultCollection();
         this.resultsView = new EditorApp.ResultCollectionView({
           collection: this.resultCollection

@@ -1,6 +1,6 @@
 (function() {
   App.module('EditorApp', function(EditorApp, App, Backbone, Marionette, $, _) {
-    return EditorApp.EditorView = App.ItemView.extend({
+    return EditorApp.EditorView = Marionette.ItemView.extend({
       template: 'editor/editor',
       events: {
         'click button.execute': 'onExecuteClick',
