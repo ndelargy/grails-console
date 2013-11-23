@@ -12,6 +12,7 @@
         file = App.request('local:file:entity', name);
         if (!file) {
           alert('no find file');
+          this.newFile();
           return;
         }
         return this.showFile(file);
@@ -24,7 +25,8 @@
           return _this.showFile(file);
         });
         return dfd.fail(function() {
-          return alert('no find file');
+          alert('no find file');
+          return _this.newFile();
         });
       },
       showFile: function(file) {
@@ -47,6 +49,7 @@
       router.appRoute(/^remote:(.*?)$/, 'openRemoteFile');
       EditorApp.router = router;
       EditorApp.controller = new EditorApp.Controller;
+      App.Files.controller = new App.Files.Controller;
       return App.mainRegion.show(EditorApp.controller.view);
     });
     return App.on('app:file:new', function(file) {

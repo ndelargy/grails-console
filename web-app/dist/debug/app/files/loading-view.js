@@ -1,6 +1,6 @@
 (function() {
-  App.module('FileApp', function(FileApp, App, Backbone, Marionette, $, _) {
-    return FileApp.LoadingView = Marionette.ItemView.extend({
+  App.module('Files', function(Files, App, Backbone, Marionette, $, _) {
+    return Files.LoadingView = Marionette.ItemView.extend({
       template: 'files/loading',
       attributes: {
         'class': 'loading-view'

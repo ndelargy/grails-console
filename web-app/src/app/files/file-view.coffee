@@ -1,6 +1,6 @@
-App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
+App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
-  FileApp.FileView = Marionette.ItemView.extend
+  Files.FileView = Marionette.ItemView.extend
 
     tagName: 'tr'
 

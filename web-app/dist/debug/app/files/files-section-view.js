@@ -1,8 +1,8 @@
 (function() {
-  App.module('FileApp', function(FileApp, App, Backbone, Marionette, $, _) {
+  App.module('Files', function(Files, App, Backbone, Marionette, $, _) {
     var BaseDir;
     BaseDir = Backbone.Model.extend();
-    return FileApp.FilesSectionView = Marionette.Layout.extend({
+    return Files.FilesSectionView = Marionette.Layout.extend({
       template: 'files/files-section',
       regions: {
         filePathRegion: '.file-path-region',
@@ -23,7 +23,7 @@
         this.baseDir = new BaseDir({
           path: '/'
         });
-        filePathView = new FileApp.FilePathView({
+        filePathView = new Files.FilePathView({
           model: this.baseDir
         });
         this.filePathRegion.show(filePathView);
@@ -57,14 +57,14 @@
         var path, _ref,
           _this = this;
         this.store = store;
-        this.storeRegion.show(new FileApp.LoadingView);
+        this.storeRegion.show(new Files.LoadingView);
         if (store === 'remote') {
           path = (_ref = App.settings.get('files.remote.lastDir')) != null ? _ref : '/';
         } else {
           path = '/';
         }
         $.when(this.getCollection(store, path)).done(function(collection) {
-          _this.fileCollectionView = new FileApp.FileCollectionView({
+          _this.fileCollectionView = new Files.FileCollectionView({
             collection: collection
           });
           _this.listenTo(_this.fileCollectionView, 'file:selected', function(file) {

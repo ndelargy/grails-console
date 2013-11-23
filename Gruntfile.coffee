@@ -58,62 +58,15 @@ module.exports = (grunt) ->
         'web-app/vendor/jquery-ui-1.10.3/jquery-ui.min.css'
       ]
 
-    jsSrc:
-      vendor: [
-        'web-app/vendor/js/libs/jquery-1.7.1.min.js'
-        'web-app/vendor/jquery-ui-1.10.3/jquery-ui.min.js'
-        'web-app/vendor/bootstrap/js/bootstrap.min.js'
-        'web-app/vendor/js/libs/underscore-min.js'
-        'web-app/vendor/js/libs/backbone-min.js'
-        'web-app/vendor/js/libs/backbone.marionette.min.js'
-        'web-app/vendor/js/libs/handlebars.runtime.js'
-        'web-app/vendor/js/libs/moment.min.js'
-        'web-app/vendor/jquery-layout/js/jquery.layout-latest.min.js'
-        'web-app/vendor/js/plugins/jquery.hotkeys.js'
-        'web-app/vendor/codemirror-3.18/lib/codemirror.js'
-        'web-app/vendor/codemirror-3.18/mode/groovy/groovy.js'
-      ]
-      app: [
-        'web-app/dist/debug/jst.js'
-        'web-app/dist/debug/app/app.js'
-        'web-app/dist/debug/app/item-view.js'
-        'web-app/dist/debug/app/router.js'
-        'web-app/dist/debug/app/header-view.js'
-        'web-app/dist/debug/app/settings-model.js'
-        'web-app/dist/debug/app/settings-view.js'
-        'web-app/dist/debug/app/main-view.js'
-        'web-app/dist/debug/app/help-view.js'
-        'web-app/dist/debug/app/dom-utils.js'
-
-        'web-app/dist/debug/app/entities/**/*.js'
-        'web-app/dist/debug/app/editor/**/*.js'
-        'web-app/dist/debug/app/files/**/*.js'
-      ]
-
-
-    cssSrc:
-      vendor: [
-        'web-app/vendor/bootstrap/css/bootstrap.min.css'
-  #      'web-app/vendor/bootstrap/css/bootstrap-theme.min.css'
-        'web-app/vendor/font-awesome-4.0.3/css/font-awesome.min.css'
-        'web-app/vendor/codemirror-3.18/lib/codemirror.css'
-        'web-app/vendor/codemirror-3.18/theme/lesser-dark.css'
-        'web-app/vendor/jquery-layout/css/jquery.layout.css'
-        'web-app/vendor/jquery-ui-1.10.3/jquery-ui.min.css'
-      ]
-      app: [
-        'web-app/dist/debug/app.css'
-      ]
-
     concat:
       css:
         files: [
-          src: '<%= cssSrc %>'
+          src: '<%= app.css.debug %>'
           dest: 'web-app/build/gconsole.css'
         ]
       js:
         files: [
-          src: '<%= jsSrc.app %>'
+          src: '<%= app.js.debug %>'
           dest: 'web-app/dist/release/app.js'
         ]
 
@@ -129,7 +82,7 @@ module.exports = (grunt) ->
 
     jasmine:
       test:
-        src: ['<%= jsSrc.vendor %>', '<%= jsSrc.app %>']
+        src: ['<%= vendor.js %>', '<%= app.js.debug %>']
         options:
           specs: 'web-app/target/spec/*spec.*'
           helpers: 'web-app/spec/*helper.js'
@@ -205,13 +158,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-less'
 
   grunt.registerTask 'json', 'Write resource config to file', ->
-    json =
-      jsSrc: grunt.file.expand(grunt.config.get('jsSrc').vendor).concat grunt.file.expand(grunt.config.get('jsSrc').app)
-      cssSrc: grunt.file.expand(grunt.config.get('cssSrc').vendor).concat grunt.file.expand(grunt.config.get('cssSrc').app)
-    grunt.file.write 'grails-app/conf/resources.json', JSON.stringify(json, undefined, 2)
-  #    grunt.log.writeln JSON.stringify(json)
-
-  grunt.registerTask 'json2', 'Write resource config to file', ->
     app = grunt.config.get('app')
     vendor = grunt.config.get('vendor')
 
@@ -222,7 +168,7 @@ module.exports = (grunt) ->
       release:
         js: grunt.file.expand(vendor.js).concat grunt.file.expand(app.js.release)
         css: grunt.file.expand(vendor.css).concat grunt.file.expand(app.css.release)
-    grunt.file.write 'web-app/resources.json', JSON.stringify(json, undefined, 2)
+    grunt.file.write 'grails-app/conf/resources.json', JSON.stringify(json, undefined, 2)
   #    grunt.log.writeln JSON.stringify(json)
 
   grunt.registerTask 'default', ['debug']

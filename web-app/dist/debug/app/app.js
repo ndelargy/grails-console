@@ -72,7 +72,7 @@
       });
     });
     App.on('app:file:list', function() {
-      return App.FileApp.promptForFile().done(function(file) {
+      return App.Files.controller.promptForFile().done(function(file) {
         if (file) {
           return file.fetch().done(function() {
             App.EditorApp.router.showFile(file);

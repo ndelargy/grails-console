@@ -2,6 +2,7 @@ package org.grails.plugins.console
 
 import grails.converters.JSON
 import grails.util.Holders
+import org.codehaus.groovy.grails.plugins.GrailsPluginUtils
 import org.codehaus.groovy.grails.plugins.PluginManagerHolder
 
 /**
@@ -11,27 +12,29 @@ class ConsoleTagLib {
 
     static namespace = 'con'
 
+    boolean debugEnabled = true // TODO
+
     def resources = { attrs ->
-        config.debug.css.each {
+        config.css.each {
             out << """<link rel='stylesheet' media="screen" href='${resource(file: it - 'web-app/', plugin: 'console')}' />"""
         }
     }
 
     def layoutResources = { attrs ->
-        config.debug.js.each {
+        config.js.each {
             out << """<script type="text/javascript" src='${resource(file: it - 'web-app/', plugin: 'console')}' ></script>"""
         }
     }
 
     Map getConfig() {
-//        String json = Thread.currentThread().contextClassLoader.getResource('resources.json').openStream().text
-
-//        String json = Holders.applicationContext.parent.getResource('classpath:resources.json').file.text
-        String json = Holders.grailsApplication.mainContext.getResource('/resources.json').file.text
-//        URL res = Thread.currentThread().contextClassLoader.getResource('resources.json')
-//        URLConnection resConn = res.openConnection()
-//        resConn.useCaches = false
-//        String json = resConn.inputStream.text
-        JSON.parse(json) as Map
+        String jsonText
+        if (debugEnabled) {
+            File consolePluginDir = GrailsPluginUtils.getPluginDirForName('console').file
+            jsonText = new File(consolePluginDir, 'grails-app/conf/resources.json').text
+        } else {
+            jsonText = Holders.applicationContext.parent.getResource('classpath:resources.json').file.text
+        }
+        Map json = JSON.parse(jsonText) as Map
+        debugEnabled ? json.debug : json.release
     }
 }

@@ -1,6 +1,6 @@
-App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
+App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
-  FileApp.LoadingView = Marionette.ItemView.extend
+  Files.LoadingView = Marionette.ItemView.extend
 
     template: 'files/loading'
 

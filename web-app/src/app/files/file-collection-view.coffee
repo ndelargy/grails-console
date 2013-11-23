@@ -1,6 +1,6 @@
-App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
+App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
-  FileApp.FileCollectionView = Marionette.CompositeView.extend
+  Files.FileCollectionView = Marionette.CompositeView.extend
 
     template: 'files/file-list'
 
@@ -19,7 +19,7 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
     itemViewContainer: 'tbody'
 
-    getItemView: (item) -> FileApp.FileView
+    getItemView: (item) -> Files.FileView
 
     onNameClick: (event) ->
       event.preventDefault()

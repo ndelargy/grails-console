@@ -1,6 +1,6 @@
 (function() {
-  App.module('FileApp', function(FileApp, App, Backbone, Marionette, $, _) {
-    FileApp.FilePathView = Marionette.ItemView.extend({
+  App.module('Files', function(Files, App, Backbone, Marionette, $, _) {
+    Files.FilePathView = Marionette.ItemView.extend({
       template: 'files/file-path',
       attributes: {
         'class': 'breadcrumb-section'

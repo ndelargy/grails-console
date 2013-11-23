@@ -64,7 +64,7 @@
       $('.modal-backdrop').remove()
 
   App.on 'app:file:list', ->
-    App.FileApp.promptForFile()
+    App.Files.controller.promptForFile()
       .done (file) ->
         if file
           file.fetch().done ->

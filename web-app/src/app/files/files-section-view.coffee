@@ -1,8 +1,8 @@
-App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
+App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
   BaseDir = Backbone.Model.extend()
 
-  FileApp.FilesSectionView = Marionette.Layout.extend
+  Files.FilesSectionView = Marionette.Layout.extend
 
     template: 'files/files-section'
 
@@ -23,7 +23,7 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
     onRender: ->
       @baseDir = new BaseDir(path: '/')
 
-      filePathView = new FileApp.FilePathView(model: @baseDir)
+      filePathView = new Files.FilePathView(model: @baseDir)
       @filePathRegion.show filePathView
 
       @listenTo filePathView, 'path:selected', (path) ->
@@ -50,7 +50,7 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
     showStore: (store) ->
       @store = store
-      @storeRegion.show new FileApp.LoadingView
+      @storeRegion.show new Files.LoadingView
 
       if store is 'remote'
         path = App.settings.get('files.remote.lastDir') ? '/'
@@ -59,7 +59,7 @@ App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
 
       $.when(@getCollection(store, path))
         .done (collection) =>
-          @fileCollectionView = new FileApp.FileCollectionView
+          @fileCollectionView = new Files.FileCollectionView
             collection: collection
 
           @listenTo @fileCollectionView, 'file:selected', (file) ->

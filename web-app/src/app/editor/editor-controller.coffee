@@ -8,7 +8,6 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
       @listenTo @view, 'saveAs', @saveAs
 
     showFile: (file) ->
-      console.log 'showfile ' + file.get('name')
       App.trigger 'file:show', file
       @file = file
       @view.refresh()
@@ -24,7 +23,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
           App.savingOff()
 
     saveAs: (text) ->
-      App.FileApp.promptForNewFileName().done (store, path, name) =>
+      App.Files.controller.promptForNewFileName().done (store, path, name) =>
         if store
           file = new App.Entities.File
             text: text

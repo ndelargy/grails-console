@@ -1,6 +1,6 @@
 (function() {
-  App.module('FileApp', function(FileApp, App, Backbone, Marionette, $, _) {
-    return FileApp.FileView = Marionette.ItemView.extend({
+  App.module('Files', function(Files, App, Backbone, Marionette, $, _) {
+    return Files.FileView = Marionette.ItemView.extend({
       tagName: 'tr',
       template: 'files/file',
       onRender: function() {

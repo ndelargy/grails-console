@@ -1,6 +1,6 @@
 (function() {
-  App.module('FileApp', function(FileApp, App, Backbone, Marionette, $, _) {
-    FileApp.FileCollectionView = Marionette.CompositeView.extend({
+  App.module('Files', function(Files, App, Backbone, Marionette, $, _) {
+    Files.FileCollectionView = Marionette.CompositeView.extend({
       template: 'files/file-list',
       attributes: {
         "class": 'full-height'
@@ -18,7 +18,7 @@
       },
       itemViewContainer: 'tbody',
       getItemView: function(item) {
-        return FileApp.FileView;
+        return Files.FileView;
       },
       onNameClick: function(event) {
         var file, fileId;

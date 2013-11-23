@@ -7,7 +7,6 @@
         return this.listenTo(this.view, 'saveAs', this.saveAs);
       },
       showFile: function(file) {
-        console.log('showfile ' + file.get('name'));
         App.trigger('file:show', file);
         this.file = file;
         this.view.refresh();
@@ -27,7 +26,7 @@
       },
       saveAs: function(text) {
         var _this = this;
-        return App.FileApp.promptForNewFileName().done(function(store, path, name) {
+        return App.Files.controller.promptForNewFileName().done(function(store, path, name) {
           var file;
           if (store) {
             file = new App.Entities.File({

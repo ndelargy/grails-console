@@ -1,6 +1,6 @@
-App.module 'FileApp', (FileApp, App, Backbone, Marionette, $, _) ->
+App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
-  FileApp.FilePathView = Marionette.ItemView.extend
+  Files.FilePathView = Marionette.ItemView.extend
 
     template: 'files/file-path'
 
