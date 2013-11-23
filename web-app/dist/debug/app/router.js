@@ -10,14 +10,17 @@
       showFile: function(file) {
         return this.navigate("" + (file.getStore()) + ":" + file.id);
       },
+      showNew: function() {
+        return this.navigate('new');
+      },
       newFile: function() {
-        return App.EditorApp.controller.newFile();
+        return App.Editor.controller.newFile();
       },
       openLocalFile: function(name) {
-        return App.EditorApp.controller.openLocalFile(name);
+        return App.Editor.controller.openLocalFile(name);
       },
       openRemoteFile: function(name) {
-        return App.EditorApp.controller.openRemoteFile(name);
+        return App.Editor.controller.openRemoteFile(name);
       }
     });
   })(App, Backbone);

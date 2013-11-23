@@ -11,13 +11,16 @@
     showFile: (file) ->
       @navigate "#{file.getStore()}:#{file.id}"
 
+    showNew: ->
+      @navigate 'new'
+
     newFile: ->
-      App.EditorApp.controller.newFile()
+      App.Editor.controller.newFile()
 
     openLocalFile: (name) ->
-      App.EditorApp.controller.openLocalFile name
+      App.Editor.controller.openLocalFile name
 
     openRemoteFile: (name) ->
-      App.EditorApp.controller.openRemoteFile name
+      App.Editor.controller.openRemoteFile name
 
 ) App, Backbone

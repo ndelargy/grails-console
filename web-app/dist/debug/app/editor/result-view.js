@@ -1,6 +1,6 @@
 (function() {
-  App.module('EditorApp', function(EditorApp, App, Backbone, Marionette, $, _) {
-    return EditorApp.ResultView = Marionette.ItemView.extend({
+  App.module('Editor', function(Editor, App, Backbone, Marionette, $, _) {
+    return Editor.ResultView = Marionette.ItemView.extend({
       template: 'editor/result',
       attributes: {
         "class": 'script-result'

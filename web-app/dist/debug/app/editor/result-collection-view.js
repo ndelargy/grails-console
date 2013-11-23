@@ -1,13 +1,13 @@
 (function() {
-  App.module('EditorApp', function(EditorApp, App, Backbone, Marionette, $, _) {
-    return EditorApp.ResultCollectionView = Marionette.CompositeView.extend({
+  App.module('Editor', function(Editor, App, Backbone, Marionette, $, _) {
+    return Editor.ResultCollectionView = Marionette.CompositeView.extend({
       template: 'editor/results',
       itemViewContainer: '.inner',
       events: {
         'click button.clear': 'clear'
       },
       getItemView: function(item) {
-        return EditorApp.ResultView;
+        return Editor.ResultView;
       },
       onAfterItemAdded: function(itemView) {
         return this.scrollToResultView(itemView);

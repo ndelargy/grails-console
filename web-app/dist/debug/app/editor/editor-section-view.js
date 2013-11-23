@@ -1,6 +1,6 @@
 (function() {
-  App.module('EditorApp', function(EditorApp, App, Backbone, Marionette, $, _) {
-    return EditorApp.EditorSectionView = Marionette.ItemView.extend({
+  App.module('Editor', function(Editor, App, Backbone, Marionette, $, _) {
+    return Editor.EditorSectionView = Marionette.ItemView.extend({
       template: 'editor/editor-section',
       attributes: {
         "class": 'full-height'
@@ -10,14 +10,14 @@
       },
       onRender: function() {
         this.initLayout();
-        this.editorView = new EditorApp.EditorView({
+        this.editorView = new Editor.EditorView({
           el: this.$('#editor')[0]
         });
         this.editorView.render();
         this.layout.initContent('center');
         this.editorView.resize();
-        this.resultCollection = new EditorApp.ResultCollection();
-        this.resultsView = new EditorApp.ResultCollectionView({
+        this.resultCollection = new Editor.ResultCollection();
+        this.resultsView = new Editor.ResultCollectionView({
           collection: this.resultCollection
         }).render();
         this.listenTo(this.editorView, 'execute', function(result) {

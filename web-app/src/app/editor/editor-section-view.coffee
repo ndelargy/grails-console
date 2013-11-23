@@ -1,6 +1,6 @@
-App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
+App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
-  EditorApp.EditorSectionView = Marionette.ItemView.extend
+  Editor.EditorSectionView = Marionette.ItemView.extend
 
     template: 'editor/editor-section'
 
@@ -13,13 +13,13 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
     onRender: ->
       @initLayout()
 
-      @editorView = new EditorApp.EditorView(el: @$('#editor')[0]) # TODO el
+      @editorView = new Editor.EditorView(el: @$('#editor')[0]) # TODO el
       @editorView.render()
       @layout.initContent 'center'
       @editorView.resize()
 
-      @resultCollection = new EditorApp.ResultCollection()
-      @resultsView = new EditorApp.ResultCollectionView(collection: @resultCollection).render()
+      @resultCollection = new Editor.ResultCollection()
+      @resultsView = new Editor.ResultCollectionView(collection: @resultCollection).render()
 
       @listenTo @editorView, 'execute', (result) ->
         @resultCollection.add result

@@ -1,6 +1,6 @@
-App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
+App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
-  EditorApp.ResultView = Marionette.ItemView.extend
+  Editor.ResultView = Marionette.ItemView.extend
   
     template: 'editor/result'
 

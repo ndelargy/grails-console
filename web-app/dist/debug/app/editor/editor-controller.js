@@ -1,8 +1,8 @@
 (function() {
-  App.module('EditorApp', function(EditorApp, App, Backbone, Marionette, $, _) {
-    return EditorApp.Controller = Marionette.Controller.extend({
+  App.module('Editor', function(Editor, App, Backbone, Marionette, $, _) {
+    return Editor.Controller = Marionette.Controller.extend({
       initialize: function(options) {
-        this.view = new EditorApp.EditorSectionView;
+        this.view = new Editor.EditorSectionView;
         this.listenTo(this.view, 'save', this.save);
         return this.listenTo(this.view, 'saveAs', this.saveAs);
       },
@@ -65,7 +65,7 @@
             App.savingOn();
             return file.save().then(function() {
               App.savingOff();
-              return App.EditorApp.router.showFile(file);
+              return App.router.showFile(file);
             });
           }
         });

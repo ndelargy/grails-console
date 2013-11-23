@@ -1,6 +1,6 @@
 (function() {
-  App.module('EditorApp', function(EditorApp, App, Backbone, Marionette, $, _) {
-    return EditorApp.EditorView = Marionette.ItemView.extend({
+  App.module('Editor', function(Editor, App, Backbone, Marionette, $, _) {
+    return Editor.EditorView = Marionette.ItemView.extend({
       template: 'editor/editor',
       events: {
         'click button.execute': 'onExecuteClick',
@@ -81,7 +81,7 @@
       },
       executeCode: function() {
         var jqxhr, result;
-        result = new EditorApp.Result({
+        result = new Editor.Result({
           loading: true,
           input: this.getValue()
         });

@@ -54,16 +54,14 @@
       return App.settings = App.request('settings:entity');
     });
     App.addInitializer(function() {
-      App.EditorApp.controller = new App.EditorApp.Controller;
+      App.Editor.controller = new App.Editor.Controller;
       App.Files.controller = new App.Files.Controller;
-      App.EditorApp.router = new App.Router();
-      return App.mainRegion.show(App.EditorApp.controller.view);
+      App.router = new App.Router();
+      return App.mainRegion.show(App.Editor.controller.view);
     });
     App.on('app:file:new', function(file) {
-      EditorApp.router.navigate("new", {
-        trigger: true
-      });
-      return API.newFile();
+      App.router.showNew();
+      return App.Editor.controller.newFile();
     });
     App.on('help', function() {
       var $el, view;
@@ -79,8 +77,8 @@
       return App.Files.controller.promptForFile().done(function(file) {
         if (file) {
           return file.fetch().done(function() {
-            App.EditorApp.router.showFile(file);
-            return App.EditorApp.controller.showFile(file);
+            App.router.showFile(file);
+            return App.Editor.controller.showFile(file);
           });
         }
       }).fail(function() {

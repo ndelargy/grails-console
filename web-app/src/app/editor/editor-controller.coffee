@@ -1,9 +1,9 @@
-App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
+App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
-  EditorApp.Controller = Marionette.Controller.extend
+  Editor.Controller = Marionette.Controller.extend
 
     initialize: (options) ->
-      @view = new EditorApp.EditorSectionView
+      @view = new Editor.EditorSectionView
       @listenTo @view, 'save', @save
       @listenTo @view, 'saveAs', @saveAs
 
@@ -54,7 +54,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
           App.savingOn()
           file.save().then =>
             App.savingOff()
-            App.EditorApp.router.showFile file
+            App.router.showFile file
 
     isDirty: ->
       @file.get("text") isnt @editor.getValue() #TODO

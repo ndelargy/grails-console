@@ -1,8 +1,8 @@
 (function() {
-  App.module('EditorApp', function(EditorApp, App, Backbone, Marionette, $, _) {
-    return EditorApp.ResultCollection = Backbone.Collection.extend({
+  App.module('Editor', function(Editor, App, Backbone, Marionette, $, _) {
+    return Editor.ResultCollection = Backbone.Collection.extend({
       model: function(attrs, options) {
-        return new EditorApp.Result(attrs, options);
+        return new Editor.Result(attrs, options);
       }
     });
   });

@@ -1,6 +1,6 @@
-App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
+App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
-  EditorApp.Result = Backbone.Model.extend
+  Editor.Result = Backbone.Model.extend
 
     isSuccess: ->
       not @get("exception") and not @get("error")

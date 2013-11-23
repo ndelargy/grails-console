@@ -47,16 +47,15 @@
 
   App.addInitializer ->
 
-    App.EditorApp.controller = new App.EditorApp.Controller
+    App.Editor.controller = new App.Editor.Controller
     App.Files.controller = new App.Files.Controller
-    App.EditorApp.router = new App.Router()
+    App.router = new App.Router()
 
-    App.mainRegion.show App.EditorApp.controller.view
+    App.mainRegion.show App.Editor.controller.view
 
   App.on 'app:file:new', (file) ->
-    EditorApp.router.navigate "new", trigger: true
-
-    API.newFile()
+    App.router.showNew()
+    App.Editor.controller.newFile()
 
   App.on 'help', ->
     # TODO modal region
@@ -72,8 +71,8 @@
       .done (file) ->
         if file
           file.fetch().done ->
-            App.EditorApp.router.showFile file
-            App.EditorApp.controller.showFile file
+            App.router.showFile file
+            App.Editor.controller.showFile file
       .fail ->
         alert 'Couldnt load file!' # TODO
 
