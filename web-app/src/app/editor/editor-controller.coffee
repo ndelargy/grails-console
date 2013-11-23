@@ -7,6 +7,25 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
       @listenTo @view, 'save', @save
       @listenTo @view, 'saveAs', @saveAs
 
+    newFile: ->
+      file = new App.Entities.File
+      @showFile file
+
+    openLocalFile: (name) ->
+      file = App.request 'local:file:entity', name
+      unless file
+        alert 'no find file' # TODO
+        @newFile()
+        return
+      @showFile file
+
+    openRemoteFile: (name) ->
+      dfd = App.request 'remote:file:entity', name
+      dfd.done (file) => @showFile file
+      dfd.fail =>
+        alert 'no find file' # TODO parse response?
+        @newFile()
+
     showFile: (file) ->
       App.trigger 'file:show', file
       @file = file

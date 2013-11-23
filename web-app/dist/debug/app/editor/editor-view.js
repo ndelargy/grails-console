@@ -86,7 +86,7 @@
           input: this.getValue()
         });
         this.trigger("execute", result);
-        jqxhr = $.post("" + App.data.baseUrl + "/console/execute", {
+        jqxhr = $.post(App.createLink('execute'), {
           code: this.getValue()
         });
         jqxhr.done(function(response) {

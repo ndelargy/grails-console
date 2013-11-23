@@ -82,7 +82,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
         input: @getValue()
 
       @trigger "execute", result
-      jqxhr = $.post "#{App.data.baseUrl}/console/execute", code: @getValue() # TODO App.createLink
+      jqxhr = $.post App.createLink('execute'), code: @getValue()
 
       jqxhr.done (response) ->
         result.set

@@ -23,12 +23,7 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
       result: @model.get('exception') or @model.get('error') or @model.get('result')
 
     formattedInput: ->
-      lines = @model.get('input').trim().split('\n')
-      _.map(lines, (line) ->
-        '> ' + line
-      ).join '\n'
+      @model.get('input').replace(/^/gm, '> ')
+
     formattedOutput: ->
-      lines = @model.get('output')?.trim()?.split('\n')
-      _.map(lines, (line) ->
-        '  ' + line
-      ).join '\n'
+      if @model.get('output') then @model.get('output').replace(/^/gm, '  ') else null

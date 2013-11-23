@@ -1,6 +1,5 @@
 module.exports = (grunt) ->
 
-  # Project configuration.
   grunt.initConfig
 
     pkg: grunt.file.readJSON 'package.json'
@@ -10,6 +9,7 @@ module.exports = (grunt) ->
         debug: [
           'web-app/dist/debug/jst.js'
           'web-app/dist/debug/app/app.js'
+          'web-app/dist/debug/app/router.js'
           'web-app/dist/debug/app/item-view.js'
           'web-app/dist/debug/app/router.js'
           'web-app/dist/debug/app/header-view.js'
@@ -17,7 +17,6 @@ module.exports = (grunt) ->
           'web-app/dist/debug/app/settings-view.js'
           'web-app/dist/debug/app/main-view.js'
           'web-app/dist/debug/app/help-view.js'
-          'web-app/dist/debug/app/dom-utils.js'
 
           'web-app/dist/debug/app/entities/**/*.js'
           'web-app/dist/debug/app/editor/**/*.js'

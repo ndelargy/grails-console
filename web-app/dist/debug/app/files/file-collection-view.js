@@ -1,5 +1,13 @@
 (function() {
   App.module('Files', function(Files, App, Backbone, Marionette, $, _) {
+    var FileView;
+    FileView = Marionette.ItemView.extend({
+      tagName: 'tr',
+      template: 'files/file',
+      onRender: function() {
+        return this.$el.data('fileId', this.model.id);
+      }
+    });
     Files.FileCollectionView = Marionette.CompositeView.extend({
       template: 'files/file-list',
       attributes: {
@@ -17,9 +25,7 @@
         }
       },
       itemViewContainer: 'tbody',
-      getItemView: function(item) {
-        return Files.FileView;
-      },
+      getItemView: FileView,
       onNameClick: function(event) {
         var file, fileId;
         event.preventDefault();

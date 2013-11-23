@@ -1,5 +1,14 @@
 App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
+  FileView = Marionette.ItemView.extend
+
+    tagName: 'tr'
+
+    template: 'files/file'
+
+    onRender: ->
+      @$el.data 'fileId', @model.id
+
   Files.FileCollectionView = Marionette.CompositeView.extend
 
     template: 'files/file-list'
@@ -19,7 +28,7 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
     itemViewContainer: 'tbody'
 
-    getItemView: (item) -> Files.FileView
+    getItemView: FileView
 
     onNameClick: (event) ->
       event.preventDefault()

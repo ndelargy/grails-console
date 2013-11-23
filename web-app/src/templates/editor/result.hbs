@@ -5,6 +5,8 @@
       <span class="result-time label label-default pull-right">{{totalTime}} ms</span>
       <div class="input">{{input}}</div>
     {{/if}}
-    <div class="output">{{output}}</div>
+    {{#if output}}
+      <div class="output">{{output}}</div>
+    {{/if}}
     <div class="result">≫ {{result}}</div>
 {{/if}}

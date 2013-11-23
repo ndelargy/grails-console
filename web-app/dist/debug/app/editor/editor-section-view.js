@@ -5,6 +5,9 @@
       attributes: {
         "class": 'full-height'
       },
+      initialize: function() {
+        return this.listenTo(App.settings, 'change:orientation', this.showOrientation);
+      },
       onRender: function() {
         this.initLayout();
         this.editorView = new EditorApp.EditorView({
@@ -28,8 +31,7 @@
           return this.trigger('saveAs', text);
         });
         this.listenTo(this.editorView, 'clear', this.clearResults);
-        this.showOrientation();
-        return this.listenTo(App.settings, 'change:orientation', this.showOrientation);
+        return this.showOrientation();
       },
       onVisible: function() {
         this.log('onVisible');

@@ -9,15 +9,7 @@
     };
     App = new (Backbone.Marionette.Application.extend({
       onStart: function(data) {
-        var headerView;
-        headerView = new App.HeaderView;
-        headerView.on('new', function() {
-          return App.trigger('app:file:new');
-        });
-        headerView.on('files', function() {
-          return App.trigger('app:file:list');
-        });
-        App.headerRegion.show(headerView);
+        App.headerRegion.show(new App.HeaderView);
         $(document).bind('keydown', 'Ctrl+return', function() {
           return App.trigger('app:editor:execute');
         });
@@ -60,6 +52,18 @@
     App.on('initialize:before', function(options) {
       App.data = options;
       return App.settings = App.request('settings:entity');
+    });
+    App.addInitializer(function() {
+      App.EditorApp.controller = new App.EditorApp.Controller;
+      App.Files.controller = new App.Files.Controller;
+      App.EditorApp.router = new App.Router();
+      return App.mainRegion.show(App.EditorApp.controller.view);
+    });
+    App.on('app:file:new', function(file) {
+      EditorApp.router.navigate("new", {
+        trigger: true
+      });
+      return API.newFile();
     });
     App.on('help', function() {
       var $el, view;

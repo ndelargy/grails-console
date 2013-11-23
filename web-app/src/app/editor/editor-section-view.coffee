@@ -7,6 +7,9 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
     attributes:
       class: 'full-height'
 
+    initialize: ->
+      @listenTo App.settings, 'change:orientation', @showOrientation
+
     onRender: ->
       @initLayout()
 
@@ -31,7 +34,6 @@ App.module 'EditorApp', (EditorApp, App, Backbone, Marionette, $, _) ->
       @listenTo @editorView, 'clear', @clearResults
 
       @showOrientation()
-      @listenTo App.settings, 'change:orientation', @showOrientation
 
     onVisible: ->
       @log 'onVisible'

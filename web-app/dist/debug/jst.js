@@ -35,11 +35,10 @@ function program3(depth0,data) {
   buffer += "\n    ";
   stack1 = helpers['if'].call(depth0, depth0.input, {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n    <div class=\"output\">";
-  if (stack1 = helpers.output) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.output; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "</div>\n    <div class=\"result\">≫ ";
+  buffer += "\n    ";
+  stack1 = helpers['if'].call(depth0, depth0.output, {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n    <div class=\"result\">≫ ";
   if (stack1 = helpers.result) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.result; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -56,6 +55,17 @@ function program4(depth0,data) {
     + " ms</span>\n      <div class=\"input\">";
   if (stack1 = helpers.input) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.input; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</div>\n    ";
+  return buffer;
+  }
+
+function program6(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\n      <div class=\"output\">";
+  if (stack1 = helpers.output) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.output; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + "</div>\n    ";
   return buffer;

@@ -8,16 +8,7 @@
   App = new (Backbone.Marionette.Application.extend
 
     onStart: (data) ->
-      headerView = new App.HeaderView
-      headerView.on 'new', ->
-        # TODO check if file needs to be saved
-        App.trigger 'app:file:new'
-
-      headerView.on 'files', ->
-        # TODO check if file needs to be saved
-        App.trigger 'app:file:list'
-
-      App.headerRegion.show headerView
+      App.headerRegion.show new App.HeaderView
 
       $(document).bind 'keydown', 'Ctrl+return', -> App.trigger 'app:editor:execute'
       $(document).bind 'keydown', 'esc', -> App.trigger 'app:editor:clear'
@@ -39,7 +30,7 @@
       theme = App.settings.get('theme')
       $('body').attr 'data-theme', theme
 
-    savingOn: -> # TODO
+    savingOn: -> # TODO events, view
       $('.navbar .saving').fadeIn(100)
 
     savingOff: ->
@@ -53,6 +44,19 @@
   App.on 'initialize:before', (options) ->
     App.data = options
     App.settings = App.request 'settings:entity'
+
+  App.addInitializer ->
+
+    App.EditorApp.controller = new App.EditorApp.Controller
+    App.Files.controller = new App.Files.Controller
+    App.EditorApp.router = new App.Router()
+
+    App.mainRegion.show App.EditorApp.controller.view
+
+  App.on 'app:file:new', (file) ->
+    EditorApp.router.navigate "new", trigger: true
+
+    API.newFile()
 
   App.on 'help', ->
     # TODO modal region

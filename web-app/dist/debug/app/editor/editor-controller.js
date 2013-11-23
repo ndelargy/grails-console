@@ -6,6 +6,33 @@
         this.listenTo(this.view, 'save', this.save);
         return this.listenTo(this.view, 'saveAs', this.saveAs);
       },
+      newFile: function() {
+        var file;
+        file = new App.Entities.File;
+        return this.showFile(file);
+      },
+      openLocalFile: function(name) {
+        var file;
+        file = App.request('local:file:entity', name);
+        if (!file) {
+          alert('no find file');
+          this.newFile();
+          return;
+        }
+        return this.showFile(file);
+      },
+      openRemoteFile: function(name) {
+        var dfd,
+          _this = this;
+        dfd = App.request('remote:file:entity', name);
+        dfd.done(function(file) {
+          return _this.showFile(file);
+        });
+        return dfd.fail(function() {
+          alert('no find file');
+          return _this.newFile();
+        });
+      },
       showFile: function(file) {
         App.trigger('file:show', file);
         this.file = file;
