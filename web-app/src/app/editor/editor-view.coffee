@@ -15,11 +15,11 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       $(window).on "beforeunload", => @onBeforeunload() # TODO unload
       @listenTo App, 'app:editor:execute', @executeCode
 
+    attributes:
+      id: 'editor'
+
     onRender: ->
       @initEditor()
-
-    resize: ->
-      @editor.refresh()
 
     onNewClick: (event) ->
       event.preventDefault()

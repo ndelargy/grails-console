@@ -1,25 +1,16 @@
 (function() {
   App.module('Editor', function(Editor, App, Backbone, Marionette, $, _) {
-    return Editor.EditorSectionView = Marionette.ItemView.extend({
+    return Editor.EditorSectionView = Marionette.Layout.extend({
       template: 'editor/editor-section',
       attributes: {
         "class": 'full-height'
       },
-      initialize: function() {
-        return this.listenTo(App.settings, 'change:orientation', this.showOrientation);
+      regions: {
+        centerRegion: '.center'
       },
-      onRender: function() {
-        this.initLayout();
-        this.editorView = new Editor.EditorView({
-          el: this.$('#editor')[0]
-        });
-        this.editorView.render();
-        this.layout.initContent('center');
-        this.editorView.resize();
-        this.resultCollection = new Editor.ResultCollection();
-        this.resultsView = new Editor.ResultCollectionView({
-          collection: this.resultCollection
-        }).render();
+      initialize: function() {
+        this.listenTo(App.settings, 'change:orientation', this.showOrientation);
+        this.editorView = new Editor.EditorView();
         this.listenTo(this.editorView, 'execute', function(result) {
           return this.resultCollection.add(result);
         });
@@ -30,11 +21,18 @@
           return this.trigger('saveAs', text);
         });
         this.listenTo(this.editorView, 'clear', this.clearResults);
-        return this.showOrientation();
+        this.resultCollection = new Editor.ResultCollection();
+        return this.resultsView = new Editor.ResultCollectionView({
+          collection: this.resultCollection
+        });
       },
-      onVisible: function() {
-        this.log('onVisible');
-        return this.refresh();
+      onRender: function() {
+        this.initLayout();
+        this.centerRegion.show(this.editorView);
+        this.layout.initContent('center');
+        this.editorView.refresh();
+        this.resultsView.render();
+        return this.showOrientation();
       },
       refresh: function() {
         this.editorView.refresh();
@@ -44,7 +42,7 @@
       initLayout: function() {
         var _this = this;
         return this.layout = this.$el.layout({
-          center__paneSelector: '#editor',
+          center__paneSelector: '.center',
           center__contentSelector: '#code-wrapper',
           center__onresize: function() {
             return _this.editorView.refresh();

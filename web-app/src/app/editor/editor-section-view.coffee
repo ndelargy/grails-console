@@ -1,25 +1,19 @@
 App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
-  Editor.EditorSectionView = Marionette.ItemView.extend
+  Editor.EditorSectionView = Marionette.Layout.extend
 
     template: 'editor/editor-section'
 
     attributes:
       class: 'full-height'
 
+    regions:
+      centerRegion: '.center'
+
     initialize: ->
       @listenTo App.settings, 'change:orientation', @showOrientation
 
-    onRender: ->
-      @initLayout()
-
-      @editorView = new Editor.EditorView(el: @$('#editor')[0]) # TODO el
-      @editorView.render()
-      @layout.initContent 'center'
-      @editorView.resize()
-
-      @resultCollection = new Editor.ResultCollection()
-      @resultsView = new Editor.ResultCollectionView(collection: @resultCollection).render()
+      @editorView = new Editor.EditorView()
 
       @listenTo @editorView, 'execute', (result) ->
         @resultCollection.add result
@@ -32,11 +26,20 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
       @listenTo @editorView, 'clear', @clearResults
 
-      @showOrientation()
+      @resultCollection = new Editor.ResultCollection()
+      @resultsView = new Editor.ResultCollectionView(collection: @resultCollection)
 
-    onVisible: ->
-      @log 'onVisible'
-      @refresh()
+    onRender: ->
+      @initLayout()
+
+      @centerRegion.show @editorView
+
+      @layout.initContent 'center'
+      @editorView.refresh()
+
+      @resultsView.render() # TODO region?
+
+      @showOrientation()
 
     refresh: ->
       @editorView.refresh()
@@ -45,7 +48,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
     initLayout: ->
       @layout = @$el.layout
-        center__paneSelector: '#editor'
+        center__paneSelector: '.center'
         center__contentSelector: '#code-wrapper'
         center__onresize: => @editorView.refresh()
         east__paneSelector: '.east'

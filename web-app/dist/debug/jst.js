@@ -6,7 +6,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div id=\"editor\" style=\"display: none\"></div>\n<div class=\"east results\" style=\"display: none\"></div>\n<div class=\"south\" style=\"display: none\"></div>";
+  return "<div class=\"center\"><div id=\"editor\"></div></div>\n<div class=\"east results\"></div>\n<div class=\"south\"></div>";
   });
 
 this["JST"]["editor/editor"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

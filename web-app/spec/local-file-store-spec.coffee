@@ -1,8 +1,8 @@
-describe 'App.LocalFileStore', ->
+describe 'App.Entities.LocalFileStore', ->
 
   beforeEach ->
-    @store = new App.LocalFileStore('test')
-    App.localFileStore = @store
+    @store = new App.Entities.LocalFileStore('test')
+    App.Entities.localFileStore = @store
     @store.destroyAll()
 
 
@@ -11,17 +11,17 @@ describe 'App.LocalFileStore', ->
 
 
   it 'should persist to localStorage', ->
-    file = new App.Files.File(name: 'test-name', text: 'test-text')
+    file = new App.Entities.File(name: 'test-name', text: 'test-text')
     @store.create file
 
     expect(@store.list().length).toBe 1
 
-    @store = new App.LocalFileStore('test')
+    @store = new App.Entities.LocalFileStore('test')
     expect(@store.list().length).toBe 1
 
 
   it 'should work with sync', ->
-    file = new App.Files.File(name: 'test-name', text: 'test-text')
+    file = new App.Entities.File(name: 'test-name', text: 'test-text')
     file.local = true
 
     expect(file.id).not.toBeDefined()

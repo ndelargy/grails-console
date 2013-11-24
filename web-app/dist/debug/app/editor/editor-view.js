@@ -16,11 +16,11 @@
         });
         return this.listenTo(App, 'app:editor:execute', this.executeCode);
       },
+      attributes: {
+        id: 'editor'
+      },
       onRender: function() {
         return this.initEditor();
-      },
-      resize: function() {
-        return this.editor.refresh();
       },
       onNewClick: function(event) {
         event.preventDefault();

@@ -1,7 +1,7 @@
-describe 'App.Settings', ->
+describe 'App.Entities.Settings', ->
 
   beforeEach ->
-    @settings = new App.Settings
+    @settings = new App.Entities.Settings
 
   it 'can toggle booleans', ->
     expect(@settings.get('results.wrapText')).toBe(true)
@@ -39,7 +39,7 @@ describe 'App.Settings', ->
 
     @settings.save()
 
-    @settings = new App.Settings
+    @settings = new App.Entities.Settings
     @settings.load()
     expect(@settings.get('orientation')).toBe 'horizontal'
     expect(@settings.get('layout.east.size')).toBe '20%'
@@ -50,7 +50,7 @@ describe 'App.Settings', ->
 
     @settings.save()
 
-    @settings = new App.Settings
+    @settings = new App.Entities.Settings
     @settings.load()
     expect(@settings.get('orientation')).toBe 'vertical'
     expect(@settings.get('layout.east.size')).toBe '30%'
