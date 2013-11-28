@@ -86,6 +86,9 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
         @layout.initContent 'south'
       @editorView.refresh()
 
+    getValue: (text) ->
+      @editorView.getValue text
+
     setValue: (text) ->
       @editorView.setValue text
 

@@ -10,10 +10,6 @@
         'click a.save-as': 'onSaveAsClick'
       },
       initialize: function() {
-        var _this = this;
-        $(window).on("beforeunload", function() {
-          return _this.onBeforeunload();
-        });
         return this.listenTo(App, 'app:editor:execute', this.executeCode);
       },
       attributes: {
@@ -104,11 +100,6 @@
             error: "An error occurred."
           });
         });
-      },
-      onBeforeunload: function(event) {
-        if (this.editorView.isDirty()) {
-          return "You have unsaved changes.";
-        }
       },
       onShow: function() {
         return this.editor.focus();

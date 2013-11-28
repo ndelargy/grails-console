@@ -2,9 +2,15 @@
   App.module('Editor', function(Editor, App, Backbone, Marionette, $, _) {
     return Editor.Controller = Marionette.Controller.extend({
       initialize: function(options) {
+        var _this = this;
         this.view = new Editor.EditorSectionView;
         this.listenTo(this.view, 'save', this.save);
-        return this.listenTo(this.view, 'saveAs', this.saveAs);
+        this.listenTo(this.view, 'saveAs', this.saveAs);
+        return $(window).on("beforeunload", function(event) {
+          if (_this.isDirty()) {
+            return "You have unsaved changes.";
+          }
+        });
       },
       newFile: function() {
         var file;
@@ -71,7 +77,7 @@
         });
       },
       isDirty: function() {
-        return this.file.get("text") !== this.editor.getValue();
+        return this.file.get('text') !== this.view.getValue();
       }
     });
   });

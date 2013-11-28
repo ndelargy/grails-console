@@ -87,6 +87,9 @@
         }
         return this.editorView.refresh();
       },
+      getValue: function(text) {
+        return this.editorView.getValue(text);
+      },
       setValue: function(text) {
         return this.editorView.setValue(text);
       },

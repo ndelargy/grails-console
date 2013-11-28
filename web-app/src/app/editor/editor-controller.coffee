@@ -7,6 +7,9 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       @listenTo @view, 'save', @save
       @listenTo @view, 'saveAs', @saveAs
 
+      $(window).on "beforeunload", (event) =>
+        "You have unsaved changes." if @isDirty()
+
     newFile: ->
       file = new App.Entities.File
       @showFile file
@@ -57,5 +60,5 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
             App.router.showFile file
 
     isDirty: ->
-      @file.get("text") isnt @editor.getValue() #TODO
+      @file.get('text') isnt @view.getValue()
 

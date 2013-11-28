@@ -12,7 +12,6 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       'click a.save-as': 'onSaveAsClick'
 
     initialize: ->
-      $(window).on "beforeunload", => @onBeforeunload() # TODO unload
       @listenTo App, 'app:editor:execute', @executeCode
 
     attributes:
@@ -96,9 +95,6 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
         result.set
           loading: false
           error: "An error occurred."
-
-    onBeforeunload: (event) ->
-      "You have unsaved changes." if @editorView.isDirty()
 
     onShow: ->
       @editor.focus()
