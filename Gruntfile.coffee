@@ -106,11 +106,6 @@ module.exports = (grunt) ->
           'web-app/dist/debug/app.css': 'web-app/src/styles/app.less'
 
     copy:
-      js:
-        expand: true,
-        cwd: 'web-app/src/app'
-        src: '**/*.js'
-        dest: 'web-app/dist/debug/app'
       debug:
         expand: true,
         cwd: 'web-app/src/img'
@@ -126,7 +121,6 @@ module.exports = (grunt) ->
     clean:
       dist: ['web-app/dist']
       spec: 'web-app/target/spec/'
-#      release: ['path/to/another/dir/one', 'path/to/another/dir/two']
 
     watch:
       jst:
@@ -135,9 +129,6 @@ module.exports = (grunt) ->
       less:
         files: 'web-app/src/styles/**/*.less'
         tasks: ['less:app']
-      js:
-        files: 'web-app/src/app/**/*.js'
-        tasks: ['copy:js']
       coffee:
         files: 'web-app/src/app/**/*.coffee'
         tasks: ['coffee:app']
