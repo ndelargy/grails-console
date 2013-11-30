@@ -25,7 +25,9 @@
         }
       },
       itemViewContainer: 'tbody',
-      getItemView: FileView,
+      getItemView: function(item) {
+        return FileView;
+      },
       onNameClick: function(event) {
         var file, fileId;
         event.preventDefault();
@@ -54,7 +56,7 @@
     });
     return Handlebars.registerHelper('fileIcon', function(file, options) {
       var clazz;
-      clazz = this.type === 'dir' ? 'fa fa-folder-o' : 'fa fa-file-o';
+      clazz = this.type === 'dir' ? 'fa fa-folder' : 'fa fa-file';
       return new Handlebars.SafeString("<i class='" + clazz + "'></i>");
     });
   });

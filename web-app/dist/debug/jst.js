@@ -93,7 +93,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  return "\n      <table class=\"table table-striped table-hover\">\n          <thead>\n          <tr>\n              <th></th>\n              <th>Name</th>\n              <th>Date Modified</th>\n          </tr>\n          </thead>\n          <tbody></tbody>\n      </table>\n  ";
+  return "\n      <table class=\"table table-striped table-hover\">\n          <thead>\n          <tr>\n              <th>Name</th>\n              <th>Date Modified</th>\n              <th></th>\n          </tr>\n          </thead>\n          <tbody></tbody>\n      </table>\n  ";
   }
 
 function program3(depth0,data) {
@@ -126,7 +126,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
 
-  buffer += "<td><a class=\"delete\" href=\"#\"><i class=\"fa fa-trash-o\"></i></a></td>\n<td>\n    ";
+  buffer += "\n<td class=\"name\">\n    ";
   if (stack1 = helpers.fileIcon) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.fileIcon; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -134,10 +134,10 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</a>\n</td>\n<td>";
+    + "</a>\n</td>\n<td class=\"modified\">";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.dateFormatTime || depth0.dateFormatTime),stack1 ? stack1.call(depth0, depth0.lastModified, options) : helperMissing.call(depth0, "dateFormatTime", depth0.lastModified, options)))
-    + "</td>";
+    + "</td>\n<td class=\"delete\"><a class=\"delete\" href=\"#\"><i class=\"fa fa-trash-o\"></i></a></td>";
   return buffer;
   });
 

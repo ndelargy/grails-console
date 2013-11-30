@@ -60,8 +60,10 @@
       return App.mainRegion.show(App.Editor.controller.view);
     });
     App.on('app:file:new', function(file) {
-      App.router.showNew();
-      return App.Editor.controller.newFile();
+      if (!App.Editor.controller.isDirty() || confirm('Are you sure? You have unsaved changes.')) {
+        App.router.showNew();
+        return App.Editor.controller.newFile();
+      }
     });
     App.on('help', function() {
       var $el, view;
@@ -76,10 +78,12 @@
     App.on('app:file:list', function() {
       return App.Files.controller.promptForFile().done(function(file) {
         if (file) {
-          return file.fetch().done(function() {
-            App.router.showFile(file);
-            return App.Editor.controller.showFile(file);
-          });
+          if (!App.Editor.controller.isDirty() || confirm('Are you sure? You have unsaved changes.')) {
+            return file.fetch().done(function() {
+              App.router.showFile(file);
+              return App.Editor.controller.showFile(file);
+            });
+          }
         }
       }).fail(function() {
         return alert('Couldnt load file!');

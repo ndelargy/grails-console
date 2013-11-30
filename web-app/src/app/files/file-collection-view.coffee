@@ -28,7 +28,7 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
     itemViewContainer: 'tbody'
 
-    getItemView: FileView
+    getItemView: (item) -> FileView
 
     onNameClick: (event) ->
       event.preventDefault()
@@ -46,5 +46,5 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       files: @collection.toJSON()
 
   Handlebars.registerHelper 'fileIcon', (file, options) ->
-    clazz = if @type is 'dir' then 'fa fa-folder-o' else 'fa fa-file-o'
+    clazz = if @type is 'dir' then 'fa fa-folder' else 'fa fa-file'
     new Handlebars.SafeString "<i class='#{clazz}'></i>"
