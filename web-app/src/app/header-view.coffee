@@ -9,7 +9,12 @@
 
     initialize: ->
       @listenTo App, 'file:show', (file) -> # TODO
-        @$('.title').html(file.get('name') ? '')
+        console.log 'file:show'
+        name = file.get('name')
+        if name
+          @$('.title').html(file.get('name')).show()
+        else
+          @$('.title').hide()
 
     onRender: ->
       new App.SettingsView(el: @$('.dropdown-menu.settings')[0]).render() # TODO move to template

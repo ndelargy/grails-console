@@ -71,6 +71,7 @@
             App.savingOn();
             return file.save().then(function() {
               App.savingOff();
+              _this.showFile(file);
               return App.router.showFile(file);
             });
           }

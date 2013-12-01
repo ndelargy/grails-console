@@ -57,6 +57,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
           App.savingOn()
           file.save().then =>
             App.savingOff()
+            @showFile file
             App.router.showFile file
 
     isDirty: ->

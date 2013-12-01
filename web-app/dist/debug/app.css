@@ -83,6 +83,11 @@ body {
   padding-left: 48px;
   font-size: 18px;
 }
+.navbar .title {
+  border-left: 1px dotted;
+  padding-left: 10px;
+  margin-left: 0px;
+}
 .navbar .saving {
   position: absolute;
   color: #fff;
@@ -112,9 +117,6 @@ body {
 .ui-layout-content {
   padding: 0;
 }
-/*.results {*/
-/*height: 100%;*/
-/*}*/
 .CodeMirror {
   height: 100%;
   font-size: 14px;
@@ -201,19 +203,18 @@ body {
 .btn-toolbar {
   border-bottom: 1px solid #444;
 }
-.btn-toolbar button {
+.btn-toolbar .btn {
   float: left;
   border: 0;
   border-radius: 0;
 }
-.btn-toolbar button.btn-sm {
+.btn-toolbar .btn.btn-sm {
   padding: 5px 10px;
-  font-size: 15px;
   line-height: 1.5;
   border-radius: 0;
 }
-.btn-toolbar button:hover,
-.btn-toolbar button:focus {
+.btn-toolbar .btn:hover,
+.btn-toolbar .btn:focus {
   outline: none;
 }
 .modal-dialog .modal-footer {
@@ -246,16 +247,16 @@ body[data-theme="default"] .btn-toolbar {
   border-color: #ccc;
   background-color: #e9e9e7;
 }
-body[data-theme="default"] .btn-toolbar button {
+body[data-theme="default"] .btn-toolbar .btn {
   background-color: #e9e9e7;
   border-color: #e9e9e7;
   color: #333;
 }
-body[data-theme="default"] .btn-toolbar button .caret {
+body[data-theme="default"] .btn-toolbar .btn .caret {
   border-top-color: #333;
 }
-body[data-theme="default"] .btn-toolbar button:hover,
-body[data-theme="default"] .btn-toolbar button:focus {
+body[data-theme="default"] .btn-toolbar .btn:hover,
+body[data-theme="default"] .btn-toolbar .btn:focus {
   color: #333;
   background-color: #ccc;
   border-color: #040404;
@@ -348,16 +349,16 @@ body[data-theme="lesser-dark"] .btn-toolbar {
   border-color: #444;
   background-color: #222;
 }
-body[data-theme="lesser-dark"] .btn-toolbar button {
+body[data-theme="lesser-dark"] .btn-toolbar .btn {
   background-color: #222;
   border-color: #222;
   color: #fff;
 }
-body[data-theme="lesser-dark"] .btn-toolbar button .caret {
+body[data-theme="lesser-dark"] .btn-toolbar .btn .caret {
   border-top-color: #fff;
 }
-body[data-theme="lesser-dark"] .btn-toolbar button:hover,
-body[data-theme="lesser-dark"] .btn-toolbar button:focus {
+body[data-theme="lesser-dark"] .btn-toolbar .btn:hover,
+body[data-theme="lesser-dark"] .btn-toolbar .btn:focus {
   color: #fff;
   background-color: #0e0e0e;
   border-color: #040404;

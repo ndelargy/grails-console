@@ -7,8 +7,14 @@
       },
       initialize: function() {
         return this.listenTo(App, 'file:show', function(file) {
-          var _ref;
-          return this.$('.title').html((_ref = file.get('name')) != null ? _ref : '');
+          var name;
+          console.log('file:show');
+          name = file.get('name');
+          if (name) {
+            return this.$('.title').html(file.get('name')).show();
+          } else {
+            return this.$('.title').hide();
+          }
         });
       },
       onRender: function() {
