@@ -4,10 +4,6 @@
       defaults: {
         text: ''
       },
-      isLocal: function() {
-        var _ref;
-        return this.local === true || ((_ref = this.collection) != null ? _ref.isLocal : void 0) === true;
-      },
       getAbsolutePath: function() {
         return this.id;
       },
@@ -15,7 +11,7 @@
         return this.get('path');
       },
       getStore: function() {
-        if (this.isLocal()) {
+        if (this.local) {
           return 'local';
         } else {
           return 'remote';
@@ -23,7 +19,7 @@
       },
       sync: function(method, file, options) {
         var url;
-        if (file.isLocal()) {
+        if (file.local) {
           return Entities.localFileStore.sync(method, file, options);
         } else {
           url = file.isNew() ? App.createLink('file') : App.createLink('file', {

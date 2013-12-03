@@ -68,12 +68,9 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
               @baseDir.set 'path', path
               collection.path = path
               collection.fetch reset: true
-              App.settings.set 'files.remote.lastDir', path
-              App.settings.save()
+              App.settings.set('files.remote.lastDir', path).save()
             else
               @trigger 'file:selected', file
-#              file.fetch().done ->
-#                FileApp.trigger 'file:selected', file
 
           @storeRegion.show @fileCollectionView
 
@@ -88,12 +85,7 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       @showStore @$(event.currentTarget).val()
 
     getCollection: (store, path) ->
-      collection = undefined
-
-      if store is 'local'
-        collection = App.request('local:file:entities')
-      else
-        collection = App.request('remote:file:entities', path)
+      App.request('file:entities', store, path)
 
     serializeData: ->
       saving: @saving

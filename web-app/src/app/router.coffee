@@ -18,9 +18,9 @@
       App.Editor.controller.newFile()
 
     openLocalFile: (name) ->
-      App.Editor.controller.openLocalFile name
+      App.Editor.controller.openFile 'local', name
 
     openRemoteFile: (name) ->
-      App.Editor.controller.openRemoteFile name
+      App.Editor.controller.openFile 'remote', name
 
 ) App, Backbone

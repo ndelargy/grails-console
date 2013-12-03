@@ -81,7 +81,7 @@ module.exports = (grunt) ->
       test:
         src: ['<%= vendor.js %>', '<%= app.js.debug %>']
         options:
-          specs: 'web-app/target/spec/*spec.*'
+          specs: 'web-app/target/spec/**/*spec.*'
           helpers: 'web-app/spec/*helper.js'
           keepRunner: true
           outfile: 'web-app/target/spec/SpecRunner.html'

@@ -3,7 +3,6 @@ package org.grails.plugins.console
 import grails.converters.JSON
 import grails.util.Holders
 import org.codehaus.groovy.grails.plugins.GrailsPluginUtils
-import org.codehaus.groovy.grails.plugins.PluginManagerHolder
 
 /**
  * @author <a href='mailto:burt@burtbeckwith.com'>Burt Beckwith</a>
@@ -14,15 +13,15 @@ class ConsoleTagLib {
 
     boolean debugEnabled = true // TODO
 
-    def resources = { attrs ->
+    def css = { attrs ->
         config.css.each {
-            out << """<link rel='stylesheet' media="screen" href='${resource(file: it - 'web-app/', plugin: 'console')}' />"""
+            out << "<link rel='stylesheet' media='screen' href='${resource(file: it - 'web-app/', plugin: 'console')}' />"
         }
     }
 
-    def layoutResources = { attrs ->
+    def js = { attrs ->
         config.js.each {
-            out << """<script type="text/javascript" src='${resource(file: it - 'web-app/', plugin: 'console')}' ></script>"""
+            out << "<script type='text/javascript' src='${resource(file: it - 'web-app/', plugin: 'console')}' ></script>"
         }
     }
 

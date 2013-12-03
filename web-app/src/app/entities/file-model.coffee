@@ -5,19 +5,16 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
     defaults:
       text: ''
 
-    isLocal: ->
-      @local is true or @collection?.isLocal is true
-
     getAbsolutePath: -> @id
 
     getDir: ->
       @get('path')
 
     getStore: ->
-      if @isLocal() then 'local' else 'remote' # TODO ?
+      if @local then 'local' else 'remote' # TODO ?
 
     sync: (method, file, options) ->
-      if (file.isLocal())
+      if (file.local)
         Entities.localFileStore.sync method, file, options
       else
         url = if file.isNew() then App.createLink 'file' else App.createLink 'file', path: file.get('id')

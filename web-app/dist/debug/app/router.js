@@ -17,10 +17,10 @@
         return App.Editor.controller.newFile();
       },
       openLocalFile: function(name) {
-        return App.Editor.controller.openLocalFile(name);
+        return App.Editor.controller.openFile('local', name);
       },
       openRemoteFile: function(name) {
-        return App.Editor.controller.openRemoteFile(name);
+        return App.Editor.controller.openFile('remote', name);
       }
     });
   })(App, Backbone);

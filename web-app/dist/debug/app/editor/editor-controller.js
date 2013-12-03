@@ -17,20 +17,10 @@
         file = new App.Entities.File;
         return this.showFile(file);
       },
-      openLocalFile: function(name) {
-        var file;
-        file = App.request('local:file:entity', name);
-        if (!file) {
-          alert('no find file');
-          this.newFile();
-          return;
-        }
-        return this.showFile(file);
-      },
-      openRemoteFile: function(name) {
+      openFile: function(store, name) {
         var dfd,
           _this = this;
-        dfd = App.request('remote:file:entity', name);
+        dfd = App.request("file:entity", store, name);
         dfd.done(function(file) {
           return _this.showFile(file);
         });

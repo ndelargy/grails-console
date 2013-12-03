@@ -75,8 +75,7 @@
               collection.fetch({
                 reset: true
               });
-              App.settings.set('files.remote.lastDir', path);
-              return App.settings.save();
+              return App.settings.set('files.remote.lastDir', path).save();
             } else {
               return this.trigger('file:selected', file);
             }
@@ -93,13 +92,7 @@
         return this.showStore(this.$(event.currentTarget).val());
       },
       getCollection: function(store, path) {
-        var collection;
-        collection = void 0;
-        if (store === 'local') {
-          return collection = App.request('local:file:entities');
-        } else {
-          return collection = App.request('remote:file:entities', path);
-        }
+        return App.request('file:entities', store, path);
       },
       serializeData: function() {
         return {

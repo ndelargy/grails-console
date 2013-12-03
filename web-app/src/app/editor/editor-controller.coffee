@@ -14,16 +14,8 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       file = new App.Entities.File
       @showFile file
 
-    openLocalFile: (name) ->
-      file = App.request 'local:file:entity', name
-      unless file
-        alert 'no find file' # TODO
-        @newFile()
-        return
-      @showFile file
-
-    openRemoteFile: (name) ->
-      dfd = App.request 'remote:file:entity', name
+    openFile: (store, name) ->
+      dfd = App.request "file:entity", store, name
       dfd.done (file) => @showFile file
       dfd.fail =>
         alert 'no find file' # TODO parse response?
@@ -45,7 +37,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
           App.savingOff()
 
     saveAs: (text) ->
-      App.Files.controller.promptForNewFileName().done (store, path, name) =>
+      App.Files.controller.promptForNewFileName().done (store, path, name) => # TODO cmd?
         if store
           file = new App.Entities.File
             text: text

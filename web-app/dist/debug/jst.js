@@ -93,7 +93,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  return "\n      <table class=\"table table-striped table-hover\">\n          <thead>\n          <tr>\n              <th>Name</th>\n              <th>Date Modified</th>\n              <th></th>\n          </tr>\n          </thead>\n          <tbody></tbody>\n      </table>\n  ";
+  return "\n      <table class=\"table table-hover\">\n          <thead>\n          <tr>\n              <th>Name</th>\n              <th>Date Modified</th>\n              <th></th>\n          </tr>\n          </thead>\n          <tbody></tbody>\n      </table>\n  ";
   }
 
 function program3(depth0,data) {
