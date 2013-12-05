@@ -16,29 +16,37 @@
         'click button.save': 'onSave'
       },
       initialize: function(options) {
-        return this.saving = options.saving;
-      },
-      onRender: function() {
-        var filePathView, store, _ref;
+        var path, store, _ref, _ref1;
+        this.saving = options.saving;
+        store = (_ref = App.settings.get('files.lastStore')) != null ? _ref : 'local';
+        path = (_ref1 = App.settings.get("files." + store + ".lastDir")) != null ? _ref1 : '/';
         this.baseDir = new BaseDir({
-          path: '/'
+          path: path,
+          store: store
         });
-        filePathView = new Files.FilePathView({
+        this.listenTo(this.baseDir, 'change', this.showCollection);
+        this.collection = new App.Entities.FileCollection();
+        this.filePathView = new Files.FilePathView({
           model: this.baseDir
         });
-        this.filePathRegion.show(filePathView);
-        this.listenTo(filePathView, 'path:selected', function(path) {
-          var collection;
-          this.baseDir.set('path', path);
-          collection = this.fileCollectionView.collection;
-          collection.path = path;
-          return collection.fetch({
-            reset: true
-          });
-        });
-        store = (_ref = App.settings.get('files.lastStore')) != null ? _ref : 'local';
-        this.showStore(store);
-        return this.$('select[name=store]').val(store);
+        return this.listenTo(this.filePathView, 'path:selected', this.onPathSelected);
+      },
+      onRender: function() {
+        this.filePathRegion.show(this.filePathView);
+        this.showCollection();
+        return this.$('select[name=store]').val(this.baseDir.get('store'));
+      },
+      onFileSelected: function(file) {
+        var path;
+        if (file.get('type') === 'dir') {
+          path = file.getAbsolutePath();
+          return this.baseDir.set('path', path);
+        } else {
+          return this.trigger('file:selected', file);
+        }
+      },
+      onPathSelected: function(path) {
+        return this.baseDir.set('path', path);
       },
       onSave: function(event) {
         var fileName, path;
@@ -53,46 +61,37 @@
       setName: function(name) {
         return this.$('input.file-name').val(name);
       },
-      showStore: function(store) {
-        var path, _ref,
+      showCollection: function() {
+        var path, store,
           _this = this;
-        this.store = store;
         this.storeRegion.show(new Files.LoadingView);
-        if (store === 'remote') {
-          path = (_ref = App.settings.get('files.remote.lastDir')) != null ? _ref : '/';
-        } else {
-          path = '/';
-        }
-        $.when(this.getCollection(store, path)).done(function(collection) {
-          _this.fileCollectionView = new Files.FileCollectionView({
-            collection: collection
+        store = this.baseDir.get('store');
+        path = this.baseDir.get('path');
+        this.collection.store = store;
+        this.collection.path = path;
+        this.collection.fetch().done(function() {
+          var fileCollectionView;
+          fileCollectionView = new Files.FileCollectionView({
+            collection: _this.collection
           });
-          _this.listenTo(_this.fileCollectionView, 'file:selected', function(file) {
-            if (file.get('type') === 'dir') {
-              path = file.getAbsolutePath();
-              this.baseDir.set('path', path);
-              collection.path = path;
-              collection.fetch({
-                reset: true
-              });
-              return App.settings.set('files.remote.lastDir', path).save();
-            } else {
-              return this.trigger('file:selected', file);
-            }
-          });
-          return _this.storeRegion.show(_this.fileCollectionView);
+          _this.listenTo(fileCollectionView, 'file:selected', _this.onFileSelected);
+          return _this.storeRegion.show(fileCollectionView);
         }).fail(function() {
           return alert('Failed to load remote files.');
         });
-        this.baseDir.set('path', path);
-        App.settings.set('files.lastStore', store);
-        return App.settings.save();
+        App.settings.set({
+          'files.lastStore': store
+        });
+        return App.settings.set("files." + store + ".lastDir", path).save();
       },
       onStoreChange: function(event) {
-        return this.showStore(this.$(event.currentTarget).val());
-      },
-      getCollection: function(store, path) {
-        return App.request('file:entities', store, path);
+        var path, store, _ref;
+        store = this.$(event.currentTarget).val();
+        path = (_ref = App.settings.get("files." + store + ".lastDir")) != null ? _ref : '/';
+        return this.baseDir.set({
+          store: store,
+          path: path
+        });
       },
       serializeData: function() {
         return {

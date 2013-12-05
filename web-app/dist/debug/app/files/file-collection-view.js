@@ -18,11 +18,9 @@
         'click a.delete': 'onDeleteClick'
       },
       _initialEvents: function() {
-        if (this.collection) {
-          this.listenTo(this.collection, 'add', this.addChildView);
-          this.listenTo(this.collection, 'remove', this.removeItemView);
-          return this.listenTo(this.collection, 'reset', this.render);
-        }
+        this.listenTo(this.collection, 'add', this.addChildView);
+        this.listenTo(this.collection, 'remove', this.removeItemView);
+        return this.listenTo(this.collection, 'reset', this.render);
       },
       itemViewContainer: 'tbody',
       getItemView: function(item) {

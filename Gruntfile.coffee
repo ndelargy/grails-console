@@ -79,12 +79,13 @@ module.exports = (grunt) ->
 
     jasmine:
       test:
-        src: ['<%= vendor.js %>', '<%= app.js.debug %>']
+        src: ['<%= app.js.debug %>']
         options:
           specs: 'web-app/target/spec/**/*spec.*'
           helpers: 'web-app/spec/*helper.js'
           keepRunner: true
           outfile: 'web-app/target/spec/SpecRunner.html'
+          vendor: ['<%= vendor.js %>', 'web-app/vendor/js/plugins/jasmine-jquery.js']
 
     coffee:
       app:

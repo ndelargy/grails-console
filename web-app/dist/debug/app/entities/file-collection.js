@@ -2,14 +2,17 @@
   App.module('Entities', function(Entities, App, Backbone, Marionette, $, _) {
     Entities.FileCollection = Backbone.Collection.extend({
       model: function(attrs, options) {
-        return new Entities.File(attrs, options);
+        var file;
+        file = new Entities.File(attrs, options);
+        file.store = options.collection.store;
+        return file;
       },
       comparator: function(file) {
         return file.get('name');
       },
       sync: function(method, file, options) {
         var url;
-        if (this.local) {
+        if (this.store === 'local') {
           return Entities.localFileStore.sync(method, file, options);
         } else {
           url = App.createLink('listFiles', {
@@ -21,30 +24,12 @@
         }
       }
     });
-    App.reqres.setHandler('file:entities', function(store, path) {
-      var files, local;
-      local = store === 'local';
-      files = new App.Entities.FileCollection;
-      files.local = local;
-      files.path = path;
-      return files.fetch({
-        reset: true
-      }).pipe(function() {
-        var file, _i, _len, _ref;
-        _ref = files.models;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          file = _ref[_i];
-          file.local = local;
-        }
-        return files;
-      });
-    });
     return App.reqres.setHandler('file:entity', function(store, path) {
       var file;
       file = new Entities.File({
         id: path
       });
-      file.local = store === 'local';
+      file.store = store;
       return file.fetch().pipe(function() {
         return file;
       });

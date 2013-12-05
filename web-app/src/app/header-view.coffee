@@ -9,10 +9,9 @@
 
     initialize: ->
       @listenTo App, 'file:show', (file) -> # TODO
-        console.log 'file:show'
         name = file.get('name')
         if name
-          @$('.title').html(file.get('name')).show()
+          @$('.title').html(name).show()
         else
           @$('.title').hide()
 

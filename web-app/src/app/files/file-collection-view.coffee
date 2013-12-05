@@ -21,10 +21,9 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       'click a.delete': 'onDeleteClick'
 
     _initialEvents: ->
-      if @collection
-        @listenTo @collection, 'add', @addChildView
-        @listenTo @collection, 'remove', @removeItemView
-        @listenTo @collection, 'reset', @render
+      @listenTo @collection, 'add', @addChildView
+      @listenTo @collection, 'remove', @removeItemView
+      @listenTo @collection, 'reset', @render
 
     itemViewContainer: 'tbody'
 

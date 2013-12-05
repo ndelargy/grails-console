@@ -20,7 +20,7 @@
       openFile: function(store, name) {
         var dfd,
           _this = this;
-        dfd = App.request("file:entity", store, name);
+        dfd = App.request('file:entity', store, name);
         dfd.done(function(file) {
           return _this.showFile(file);
         });
@@ -57,7 +57,7 @@
               name: name,
               path: path
             });
-            file.local = store === 'local';
+            file.store = store;
             App.savingOn();
             return file.save().then(function() {
               App.savingOff();

@@ -20,22 +20,32 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
     initialize: (options) ->
       @saving = options.saving
 
-    onRender: ->
-      @baseDir = new BaseDir(path: '/')
-
-      filePathView = new Files.FilePathView(model: @baseDir)
-      @filePathRegion.show filePathView
-
-      @listenTo filePathView, 'path:selected', (path) ->
-        @baseDir.set 'path', path
-        collection = @fileCollectionView.collection
-        collection.path = path
-        collection.fetch reset: true
-
       store = App.settings.get('files.lastStore') ? 'local'
-      @showStore store
+      path = App.settings.get("files.#{store}.lastDir") ? '/'
 
-      @$('select[name=store]').val store
+      @baseDir = new BaseDir(path: path, store: store)
+      @listenTo @baseDir, 'change', @showCollection
+
+      @collection = new App.Entities.FileCollection()
+
+      @filePathView = new Files.FilePathView(model: @baseDir)
+      @listenTo @filePathView, 'path:selected', @onPathSelected
+
+    onRender: ->
+      @filePathRegion.show @filePathView
+
+      @showCollection()
+      @$('select[name=store]').val @baseDir.get('store')
+
+    onFileSelected: (file) ->
+      if file.get('type') is 'dir'
+        path = file.getAbsolutePath()
+        @baseDir.set 'path', path
+      else
+        @trigger 'file:selected', file
+
+    onPathSelected: (path) ->
+      @baseDir.set 'path', path
 
     onSave: (event) ->
       event.preventDefault()
@@ -48,44 +58,34 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
     setName: (name) ->
       @$('input.file-name').val name
 
-    showStore: (store) ->
-      @store = store
+    showCollection: ->
       @storeRegion.show new Files.LoadingView
 
-      if store is 'remote'
-        path = App.settings.get('files.remote.lastDir') ? '/'
-      else
-        path = '/'
+      store = @baseDir.get('store')
+      path = @baseDir.get('path')
 
-      $.when(@getCollection(store, path))
-        .done (collection) =>
-          @fileCollectionView = new Files.FileCollectionView
-            collection: collection
+      @collection.store = store
+      @collection.path = path
 
-          @listenTo @fileCollectionView, 'file:selected', (file) ->
-            if file.get('type') is 'dir'
-              path = file.getAbsolutePath()
-              @baseDir.set 'path', path
-              collection.path = path
-              collection.fetch reset: true
-              App.settings.set('files.remote.lastDir', path).save()
-            else
-              @trigger 'file:selected', file
+      @collection.fetch()
+        .done =>
+          fileCollectionView = new Files.FileCollectionView
+            collection: @collection
 
-          @storeRegion.show @fileCollectionView
+          @listenTo fileCollectionView, 'file:selected', @onFileSelected
+#
+          @storeRegion.show fileCollectionView
 
-        .fail -> alert 'Failed to load remote files.' # TODO
+        .fail -> alert 'Failed to load remote files.' # TODO error view
 
-      @baseDir.set 'path', path
-
-      App.settings.set 'files.lastStore', store
-      App.settings.save()
+      App.settings.set('files.lastStore': store)
+      App.settings.set("files.#{store}.lastDir", path).save()
 
     onStoreChange: (event) ->
-      @showStore @$(event.currentTarget).val()
+      store = @$(event.currentTarget).val()
+      path = App.settings.get("files.#{store}.lastDir") ? '/'
 
-    getCollection: (store, path) ->
-      App.request('file:entities', store, path)
+      @baseDir.set(store: store, path: path)
 
     serializeData: ->
       saving: @saving

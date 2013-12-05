@@ -19,11 +19,10 @@
       Backbone.history.start(pushState: false) if Backbone?.history
       $('body').css 'visibility', 'visible'  # TODO still have FOUC
 
+
     createLink: (action, params) ->
       link = "#{@data.baseUrl}/console/#{action}"
-      if params
-        link += '?' + $.param params, true
-
+      link += '?' + $.param(params, true) if params
       link
 
     showTheme: ->

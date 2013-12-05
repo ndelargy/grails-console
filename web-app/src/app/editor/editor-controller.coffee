@@ -15,7 +15,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       @showFile file
 
     openFile: (store, name) ->
-      dfd = App.request "file:entity", store, name
+      dfd = App.request 'file:entity', store, name
       dfd.done (file) => @showFile file
       dfd.fail =>
         alert 'no find file' # TODO parse response?
@@ -44,7 +44,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
             name: name
             path: path
 
-          file.local = store is 'local'
+          file.store = store
 
           App.savingOn()
           file.save().then =>

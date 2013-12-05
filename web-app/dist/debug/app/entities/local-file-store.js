@@ -7,7 +7,7 @@
       }
 
       LocalFileStore.prototype.list = function() {
-        return new Entities.LocalFileCollection(this.fetch());
+        return new Entities.FileCollection(this.fetch());
       };
 
       LocalFileStore.prototype.fetch = function() {

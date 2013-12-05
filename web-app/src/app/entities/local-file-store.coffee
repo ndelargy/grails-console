@@ -6,7 +6,7 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
       @_load()
 
     list: ->
-      new Entities.LocalFileCollection(@fetch())
+      new Entities.FileCollection(@fetch())
 
     fetch: ->
       _.values @data

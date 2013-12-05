@@ -7,14 +7,12 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
 
     getAbsolutePath: -> @id
 
-    getDir: ->
-      @get('path')
+    getDir: -> @get('path')
 
-    getStore: ->
-      if @local then 'local' else 'remote' # TODO ?
+    getStore: -> @store
 
     sync: (method, file, options) ->
-      if (file.local)
+      if (file.store is 'local')
         Entities.localFileStore.sync method, file, options
       else
         url = if file.isNew() then App.createLink 'file' else App.createLink 'file', path: file.get('id')

@@ -22,7 +22,7 @@ describe 'App.Entities.LocalFileStore', ->
 
   it 'should work with sync', ->
     file = new App.Entities.File(name: 'test-name', text: 'test-text')
-    file.local = true
+    file.store = 'local'
 
     expect(file.id).not.toBeDefined()
     spyOn(@store, 'create').andCallThrough()

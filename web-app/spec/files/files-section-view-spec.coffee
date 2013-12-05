@@ -1,7 +1,24 @@
 describe 'App.Files.FilesSectionView', ->
 
   beforeEach ->
+    App.settings = new App.Entities.Settings()
 
-  it 'should start with empty list', ->
-    @view = new App.Files.FilesSectionView()
-    expect(@store.list().length).toBe 0
+    @$el = $('<div></div>').appendTo('body')
+    @view = new App.Files.FilesSectionView saving: false
+
+  afterEach ->
+    @view.close()
+    @$el.remove()
+
+  it 'should serialize correctly', ->
+    expect(@view.serializeData()).toEqual saving: false
+
+  it 'should render', ->
+    @$el.append @view.render().$el
+    expect(@view.$el).toBe 'div.modal-dialog.files-section-view'
+
+
+
+
+
+

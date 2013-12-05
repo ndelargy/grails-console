@@ -72,7 +72,6 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
     onExecuteClick: (event) ->
       event.preventDefault()
-#      $(event.currentTarget).blur()
       @executeCode()
 
     executeCode: ->
