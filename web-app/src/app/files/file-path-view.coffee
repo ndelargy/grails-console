@@ -27,8 +27,8 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
     for folder, i in folders
       path = '/' + folders[0..i].join('/')
       if (i < folders.length - 1)
-        html += '<li><a href="#" data-path="' + path + '">' + folder + '</a></li>'
+        html += "<li><a href='#' data-path='#{path}'>#{folder}</a></li>"
       else
-        html += '<li class="active">' + folder + '</li>'
+        html += "<li class='active'>#{folder}</li>"
     html += '</ol>'
     new Handlebars.SafeString html

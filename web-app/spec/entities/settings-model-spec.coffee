@@ -3,7 +3,7 @@ describe 'App.Entities.Settings', ->
   beforeEach ->
     @settings = new App.Entities.Settings
 
-  it 'can toggle booleans', ->
+  it 'should toggle booleans', ->
     expect(@settings.get('results.wrapText')).toBe(true)
 
     @settings.toggle('results.wrapText')
@@ -32,7 +32,7 @@ describe 'App.Entities.Settings', ->
     @settings.save()
     expect(localStorage.setItem).toHaveBeenCalled()
 
-  it 'can save and load multiple times', ->
+  it 'should be able to save and load multiple times', ->
     @settings.set
       'orientation': 'horizontal'
       'layout.east.size': '20%'

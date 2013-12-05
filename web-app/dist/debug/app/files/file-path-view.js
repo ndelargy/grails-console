@@ -31,9 +31,9 @@
         folder = folders[i];
         path = '/' + folders.slice(0, +i + 1 || 9e9).join('/');
         if (i < folders.length - 1) {
-          html += '<li><a href="#" data-path="' + path + '">' + folder + '</a></li>';
+          html += "<li><a href='#' data-path='" + path + "'>" + folder + "</a></li>";
         } else {
-          html += '<li class="active">' + folder + '</li>';
+          html += "<li class='active'>" + folder + "</li>";
         }
       }
       html += '</ol>';
