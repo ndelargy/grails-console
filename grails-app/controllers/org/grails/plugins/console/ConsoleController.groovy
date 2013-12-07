@@ -10,7 +10,7 @@ class ConsoleController {
     def consoleService
 
     def index = {
-        [
+        Map model = [
             json: [
                 implicitVars: [
                     ctx: 'the Spring application context',
@@ -22,6 +22,7 @@ class ConsoleController {
                 baseUrl: resource(plugin: 'none')
             ]
         ]
+        render view: 'index', model: model
     }
 
     def execute = {
@@ -43,17 +44,10 @@ class ConsoleController {
         render results as JSON
     }
 
-    def listFiles = {
+    def listFiles = { // TODO error handling
         File baseDir = new File(params.path)
         List result
-        result = baseDir.listFiles().findAll { !it.hidden }.collect { File file ->
-            [
-                id: file.absolutePath,
-                name: file.name,
-                type: file.isDirectory() ? 'dir' : 'file',
-                lastModified: file.lastModified()
-            ]
-        }
+        result = baseDir.listFiles().findAll { !it.hidden }.sort { it.name }.collect { fileToJson it, false }
         render result as JSON
     }
 
@@ -148,7 +142,7 @@ class ConsoleController {
         def json = request.JSON
         Map result = [:]
         int status = 200
-        File file = new File(json.path, json.name)
+        File file = new File(json.path.toString(), json.name.toString())
 //        if (file.isDirectory()) {
 //            result.error = "$filename is a directory"
 //            status = 400
@@ -167,31 +161,16 @@ class ConsoleController {
         render contentType: 'application/json', text: (result as JSON).toString(), status: status
     }
 
-    private fileToJson(File file) {
-        [
+    private Map fileToJson(File file, boolean includeText = true) {
+        Map json = [
             id: file.absolutePath,
             name: file.name,
-            lastModified: file.lastModified(),
-            text: file.text
+            type: file.isDirectory() ? 'dir' : 'file',
+            lastModified: file.lastModified()
         ]
-    }
-
-    def saveFile = {
-        String filename = params.filename
-        String text = params.text
-        Map results = [:]
-        if (filename) {
-            log.info "Opening File $filename"
-            def file = new File(filename)
-            file.text = text
-//            if (file.isDirectory()) {
-//                results.error = "$filename is a directory"
-//            } else if (!file.exists() || !file.canRead()) {
-//                results.error = "File $filename doesn't exist or cannot be read"
-//            } else {
-//                results.text = file.text
-//            }
+        if (includeText) {
+            json.text = file.text
         }
-        render results as JSON
+        json
     }
 }
