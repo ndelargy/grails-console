@@ -10,9 +10,15 @@ import spock.lang.Specification
 class ConsoleControllerSpec extends Specification {
 
     ConsoleService consoleService = Mock(ConsoleService)
+    File tempDir
 
     void setup() {
         controller.consoleService = consoleService
+        tempDir = createTempDir()
+    }
+
+    void cleanup() {
+        FileUtils.deleteDirectory tempDir
     }
 
     void 'index'() {
@@ -64,7 +70,6 @@ class ConsoleControllerSpec extends Specification {
 
     void 'listFiles'() {
         given:
-        File tempDir = createTempDir()
         File testFile1 = new File(tempDir, 'test1')
         testFile1.createNewFile()
         File testFile2 = new File(tempDir, 'test2')
@@ -91,14 +96,10 @@ class ConsoleControllerSpec extends Specification {
         response.json[2].name == testFile2.name
         response.json[2].type == 'file'
         response.json[2].lastModified == testFile2.lastModified()
-
-        cleanup:
-        FileUtils.deleteDirectory(tempDir)
     }
 
     void 'file get'() {
         given:
-        File tempDir = createTempDir()
         File testFile1 = new File(tempDir, 'test1')
         testFile1.createNewFile()
         request.method = 'GET'
@@ -117,9 +118,24 @@ class ConsoleControllerSpec extends Specification {
         response.json.lastModified == testFile1.lastModified()
     }
 
+    void 'file get - file doesnt exist'() {
+        given:
+        File testFile1 = new File(tempDir, 'test1')
+        request.method = 'GET'
+
+        params.path = testFile1.absolutePath
+
+        when:
+        controller.file()
+
+        then:
+        response.contentType.contains 'application/json'
+        response.status == 400
+        response.json.error.contains 'doesn\'t exist or cannot be read'
+    }
+
     void 'file delete'() {
         given:
-        File tempDir = createTempDir()
         File testFile1 = new File(tempDir, 'test1')
         testFile1.createNewFile()
         request.method = 'DELETE'
@@ -134,9 +150,24 @@ class ConsoleControllerSpec extends Specification {
         !testFile1.exists()
     }
 
+    void 'file delete - file doesnt exist'() {
+        given:
+        File testFile1 = new File(tempDir, 'test1')
+        request.method = 'DELETE'
+
+        params.path = testFile1.absolutePath
+
+        when:
+        controller.file()
+
+        then:
+        response.contentType.contains 'application/json'
+        response.status == 400
+        response.json.error.contains 'doesn\'t exist or cannot be deleted'
+    }
+
     void 'file put'() {
         given:
-        File tempDir = createTempDir()
         File testFile1 = new File(tempDir, 'test1')
         testFile1.createNewFile()
         request.method = 'PUT'
@@ -152,9 +183,25 @@ class ConsoleControllerSpec extends Specification {
         testFile1.text == 'testing'
     }
 
+    void 'file put - file doesnt exist'() {
+        given:
+        File testFile1 = new File(tempDir, 'test1')
+        request.method = 'PUT'
+
+        params.path = testFile1.absolutePath
+        request.json = [text: 'testing'] as JSON
+
+        when:
+        controller.file()
+
+        then:
+        response.contentType.contains 'application/json'
+        response.status == 400
+        response.json.error.contains 'doesn\'t exist or cannot be modified'
+    }
+
     void 'file post'() {
         given:
-        File tempDir = createTempDir()
         request.method = 'POST'
 
         request.json = [

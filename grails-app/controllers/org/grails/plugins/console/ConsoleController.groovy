@@ -73,8 +73,7 @@ class ConsoleController {
         Map result = [:]
         int status = 200
         if (filename) {
-            log.info "Opening File $filename"
-            def file = new File(filename)
+            File file = new File(filename)
             file.path
             if (file.isDirectory()) {
                 result.error = "$filename is a directory"
@@ -94,8 +93,7 @@ class ConsoleController {
         Map result = [:]
         int status = 200
         if (filename) {
-            log.info "Opening File $filename"
-            def file = new File(filename)
+            File file = new File(filename)
             if (file.isDirectory()) {
                 result.error = "$filename is a directory"
                 status = 400
@@ -118,8 +116,7 @@ class ConsoleController {
         Map result = [:]
         int status = 200
         if (filename) {
-            log.info "Opening File $filename"
-            def file = new File(filename)
+            File file = new File(filename)
             if (file.isDirectory()) {
                 result.error = "$filename is a directory"
                 status = 400
@@ -143,21 +140,13 @@ class ConsoleController {
         Map result = [:]
         int status = 200
         File file = new File(json.path.toString(), json.name.toString())
-//        if (file.isDirectory()) {
-//            result.error = "$filename is a directory"
-//            status = 400
-//        } else if (!file.exists() || !file.canWrite()) {
-//            result.error = "File $filename doesn't exist or cannot be modified"
-//            status = 400
-//        } else {
-            try {
-                file.write json.text
-                result = fileToJson(file)
-            } catch (e) {
-                result.error = "File $json.name could not be modified"
-                status = 400
-            }
-//        }
+        try {
+            file.write json.text
+            result = fileToJson(file)
+        } catch (e) {
+            result.error = "File $json.name could not be created"
+            status = 400
+        }
         render contentType: 'application/json', text: (result as JSON).toString(), status: status
     }
 
