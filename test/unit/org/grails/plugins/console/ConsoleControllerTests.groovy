@@ -4,7 +4,9 @@ import grails.test.ControllerUnitTestCase
 import grails.util.Metadata
 
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsHttpSession
+import org.junit.Ignore
 
+@Ignore('switching to spock')
 class ConsoleControllerTests extends ControllerUnitTestCase {
 
 	private Map sessionData = [:]
