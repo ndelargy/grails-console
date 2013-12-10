@@ -17,9 +17,14 @@
         });
       },
       onRender: function() {
-        return new App.SettingsView({
-          el: this.$('.dropdown-menu.settings')[0]
-        }).render();
+        this.settingsView = new App.SettingsView({
+          model: App.settings
+        });
+        this.$('.settings-btn-group').append(this.settingsView.render().$el);
+        return this.settingsView.render();
+      },
+      onClose: function() {
+        return this.settingsView.close();
       }
     });
   })(App, Backbone);

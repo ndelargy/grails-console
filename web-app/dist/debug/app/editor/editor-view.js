@@ -24,7 +24,7 @@
       },
       onFilesClick: function(event) {
         event.preventDefault();
-        return App.trigger('app:file:list');
+        return App.trigger('app:file:open');
       },
       initEditor: function() {
         var _this = this;

@@ -26,7 +26,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
     onFilesClick: (event) ->
       event.preventDefault()
-      App.trigger 'app:file:list'
+      App.trigger 'app:file:open'
 
     initEditor: ->
       @editor = CodeMirror.fromTextArea(@$("textarea[name=code]")[0],

@@ -16,6 +16,11 @@
           @$('.title').hide()
 
     onRender: ->
-      new App.SettingsView(el: @$('.dropdown-menu.settings')[0]).render() # TODO move to template
+      @settingsView = new App.SettingsView(model: App.settings)
+      @$('.settings-btn-group').append @settingsView.render().$el
+      @settingsView.render()
+
+    onClose: ->
+      @settingsView.close()
 
 ) App, Backbone

@@ -45,7 +45,6 @@
     App.settings = App.request 'settings:entity'
 
   App.addInitializer ->
-
     App.Editor.controller = new App.Editor.Controller
     App.Files.controller = new App.Files.Controller
     App.router = new App.Router()
@@ -66,7 +65,7 @@
       $el.remove()
       $('.modal-backdrop').remove()
 
-  App.on 'app:file:list', -> # TODO change name to 'app:file:open'
+  App.on 'app:file:open', ->
     App.Files.controller.promptForFile()
       .done (file) ->
         if file

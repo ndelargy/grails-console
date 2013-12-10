@@ -75,7 +75,7 @@
         return $('.modal-backdrop').remove();
       });
     });
-    App.on('app:file:list', function() {
+    App.on('app:file:open', function() {
       return App.Files.controller.promptForFile().done(function(file) {
         if (file) {
           if (!App.Editor.controller.isDirty() || confirm('Are you sure? You have unsaved changes.')) {

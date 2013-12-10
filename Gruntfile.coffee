@@ -47,7 +47,6 @@ module.exports = (grunt) ->
       ]
       css: [
         'web-app/vendor/bootstrap/css/bootstrap.min.css'
-        #      'web-app/vendor/bootstrap/css/bootstrap-theme.min.css'
         'web-app/vendor/font-awesome-4.0.3/css/font-awesome.min.css'
         'web-app/vendor/codemirror-3.18/lib/codemirror.css'
         'web-app/vendor/codemirror-3.18/theme/lesser-dark.css'
