@@ -28,7 +28,6 @@
     onSettingClick: (event) ->
       event.preventDefault()
       event.stopPropagation() # TODO not stopping
-      console.log 'wh'
       $el = $(event.currentTarget)
       switch
         when $el.is '.orientation-horizontal' then @model.set 'orientation', 'horizontal'

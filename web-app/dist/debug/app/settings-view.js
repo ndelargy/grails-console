@@ -29,7 +29,6 @@
         var $el;
         event.preventDefault();
         event.stopPropagation();
-        console.log('wh');
         $el = $(event.currentTarget);
         switch (false) {
           case !$el.is('.orientation-horizontal'):

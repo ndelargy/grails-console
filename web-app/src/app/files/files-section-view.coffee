@@ -50,10 +50,11 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
     onSave: (event) ->
       event.preventDefault()
       fileName = @$('input.file-name').val()
+      store = @baseDir.get('store')
       path = @baseDir.get('path')
       path += '/' if path[path.length - 1] isnt '/'
 
-      @trigger 'save', @store, path, fileName
+      @trigger 'save', store, path, fileName
 
     setName: (name) ->
       @$('input.file-name').val name

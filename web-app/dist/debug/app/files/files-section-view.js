@@ -49,14 +49,15 @@
         return this.baseDir.set('path', path);
       },
       onSave: function(event) {
-        var fileName, path;
+        var fileName, path, store;
         event.preventDefault();
         fileName = this.$('input.file-name').val();
+        store = this.baseDir.get('store');
         path = this.baseDir.get('path');
         if (path[path.length - 1] !== '/') {
           path += '/';
         }
-        return this.trigger('save', this.store, path, fileName);
+        return this.trigger('save', store, path, fileName);
       },
       setName: function(name) {
         return this.$('input.file-name').val(name);
