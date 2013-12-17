@@ -18,6 +18,7 @@
       initialize: function(options) {
         var path, store, _ref, _ref1;
         this.saving = options.saving;
+        this.title = options.title;
         store = (_ref = App.settings.get('files.lastStore')) != null ? _ref : 'local';
         path = (_ref1 = App.settings.get("files." + store + ".lastDir")) != null ? _ref1 : '/';
         this.baseDir = new BaseDir({
@@ -96,6 +97,7 @@
       },
       serializeData: function() {
         return {
+          title: this.title,
           saving: this.saving
         };
       }

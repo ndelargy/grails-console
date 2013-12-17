@@ -19,6 +19,7 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
     initialize: (options) ->
       @saving = options.saving
+      @title = options.title
 
       store = App.settings.get('files.lastStore') ? 'local'
       path = App.settings.get("files.#{store}.lastDir") ? '/'
@@ -89,4 +90,5 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       @baseDir.set(store: store, path: path)
 
     serializeData: ->
+      title: @title
       saving: @saving

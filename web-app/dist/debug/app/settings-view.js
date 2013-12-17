@@ -12,7 +12,7 @@
         'role': 'menu'
       },
       initialize: function() {
-        return this.listenTo(this.model, 'change', this.render, this);
+        return this.listenTo(this.model, 'change', this.render);
       },
       onRender: function() {
         var _this = this;

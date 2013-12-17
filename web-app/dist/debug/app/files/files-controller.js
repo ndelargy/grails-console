@@ -52,6 +52,7 @@
         var dfd, view;
         dfd = $.Deferred();
         view = new Files.FilesSectionView({
+          title: 'Save',
           saving: true
         });
         showInModal(view);
@@ -72,6 +73,7 @@
         var dfd, view;
         dfd = $.Deferred();
         view = new Files.FilesSectionView({
+          title: 'Open',
           saving: false
         });
         view.on('file:selected', function(file) {

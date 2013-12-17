@@ -51,6 +51,7 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       dfd = $.Deferred()
 
       view = new Files.FilesSectionView
+        title: 'Save'
         saving: true
 
       showInModal view
@@ -73,6 +74,7 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       dfd = $.Deferred()
 
       view = new Files.FilesSectionView
+        title: 'Open'
         saving: false
 
       view.on 'file:selected', (file) ->

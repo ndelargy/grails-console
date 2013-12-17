@@ -15,7 +15,7 @@
       'role': 'menu'
 
     initialize: ->
-      @listenTo @model, 'change', @render, this
+      @listenTo @model, 'change', @render
 
     onRender: ->
       @$('.orientation-horizontal').toggleClass 'selected', @model.get('orientation') is 'horizontal'

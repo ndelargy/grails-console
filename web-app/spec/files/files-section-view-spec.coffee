@@ -7,14 +7,18 @@ describe 'App.Files.FilesSectionView', ->
       App.settings = new App.Entities.Settings()
 
       @$el = $('<div></div>').appendTo('body')
-      @view = new App.Files.FilesSectionView saving: false
+      @view = new App.Files.FilesSectionView
+        saving: false
+        title: 'Open'
 
     afterEach ->
       @view.close()
       @$el.remove()
 
     it 'should serialize correctly', ->
-      expect(@view.serializeData()).toEqual saving: false
+      expect(@view.serializeData()).toEqual
+        saving: false
+        title: 'Open'
 
 
   describe 'save-as mode', ->
@@ -23,14 +27,18 @@ describe 'App.Files.FilesSectionView', ->
       App.settings = new App.Entities.Settings()
 
       @$el = $('<div></div>').appendTo('body')
-      @view = new App.Files.FilesSectionView saving: true
+      @view = new App.Files.FilesSectionView
+        saving: true
+        title: 'Save'
 
     afterEach ->
       @view.close()
       @$el.remove()
 
     it 'should serialize correctly', ->
-      expect(@view.serializeData()).toEqual saving: true
+      expect(@view.serializeData()).toEqual
+        saving: true
+        title: 'Save'
 
     it 'should render', ->
       @$el.append @view.render().$el

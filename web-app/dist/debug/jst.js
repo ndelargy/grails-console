@@ -144,7 +144,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 this["JST"]["files/files-section"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, self=this;
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
@@ -158,7 +158,11 @@ function program3(depth0,data) {
   return "\n          <button type=\"button\" class=\"save btn btn-primary\">Save</button>\n        ";
   }
 
-  buffer += "<div class=\"modal-content\">\n    <div class=\"modal-header\">\n        <button type=\"button\" class=\"close\" aria-hidden=\"true\">&times;</button>\n        <h4 class=\"modal-title\">Files</h4>\n    </div>\n\n    <div class=\"modal-body\">\n        <div class=\"files-header\">\n            <div class=\"section\">\n                <form class=\"form-horizontal file-info\">\n                    ";
+  buffer += "<div class=\"modal-content\">\n    <div class=\"modal-header\">\n        <button type=\"button\" class=\"close\" aria-hidden=\"true\">&times;</button>\n        <h4 class=\"modal-title\">";
+  if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</h4>\n    </div>\n\n    <div class=\"modal-body\">\n        <div class=\"files-header\">\n            <div class=\"section\">\n                <form class=\"form-horizontal file-info\">\n                    ";
   stack1 = helpers['if'].call(depth0, depth0.saving, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n                    <div class=\"form-group\">\n                        <label class=\"col-sm-2 control-label\">File store</label>\n\n                        <div class=\"col-sm-10\">\n                            <select class=\"form-control\" name=\"store\">\n                                <option value=\"local\">Local</option>\n                                <option value=\"remote\">Remote</option>\n                            </select>\n                        </div>\n                    </div>\n                </form>\n            </div>\n            <div class=\"file-path-region section\"></div>\n        </div>\n        <div class=\"files-body\">\n            <div class=\"store full-height\">\n            </div>\n        </div>\n\n    </div>\n\n    <div class=\"modal-footer\">\n        <button type=\"button\" class=\"cancel btn btn-primary\">Cancel</button>\n        ";
