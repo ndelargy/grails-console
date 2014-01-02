@@ -8,7 +8,7 @@
         return this.route(/^remote:(.*?)$/, 'openRemoteFile');
       },
       showFile: function(file) {
-        return this.navigate("" + (file.getStore()) + ":" + file.id);
+        return this.navigate("" + file.store + ":" + file.id);
       },
       showNew: function() {
         return this.navigate('new');

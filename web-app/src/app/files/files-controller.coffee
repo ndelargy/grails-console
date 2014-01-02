@@ -70,21 +70,3 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
       dfd.promise()
 
-    promptForFile: ->
-      dfd = $.Deferred()
-
-      view = new Files.FilesSectionView
-        title: 'Open'
-        saving: false
-
-      view.on 'file:selected', (file) ->
-        dfd.resolveWith null, [file]
-        view.close()
-
-      view.on 'close', ->
-        dfd.resolve()
-
-      showInModal view
-
-      dfd.promise()
-

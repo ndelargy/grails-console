@@ -68,23 +68,6 @@
           return dfd.resolve();
         });
         return dfd.promise();
-      },
-      promptForFile: function() {
-        var dfd, view;
-        dfd = $.Deferred();
-        view = new Files.FilesSectionView({
-          title: 'Open',
-          saving: false
-        });
-        view.on('file:selected', function(file) {
-          dfd.resolveWith(null, [file]);
-          return view.close();
-        });
-        view.on('close', function() {
-          return dfd.resolve();
-        });
-        showInModal(view);
-        return dfd.promise();
       }
     });
   });

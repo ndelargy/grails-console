@@ -1,0 +1,29 @@
+<div class="btn-toolbar">
+    <div class="btn-group">
+        <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+          {{store}}
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu store" role="menu">
+            <li><a href="#" data-store="local">Local Storage</a></li>
+            <li><a href="#" data-store="remote">Remote Storage</a></li>
+        </ul>
+    </div>
+</div>
+<div class="folder ">
+    <!--<button class="btn btn-sm btn-default up">..</button>-->
+  {{#if hasUp}}<a href="#" class="up">../</a>{{/if}}<span title="{{path}}">{{currentDir}}/</span>
+
+</div>
+<div class="files-wrapper">
+<ul class="files">
+  {{#each files}}
+      <li data-file-id="{{id}}">
+        {{scriptsFileIcon}}
+          <a class="name" href="#">{{name}}</a>
+          <!--<a class="delete" href="#"><i class="fa fa-trash-o"></i></a>-->
+          <a class="delete" href="#">×</a>
+      </li>
+  {{/each}}
+</ul>
+</div>

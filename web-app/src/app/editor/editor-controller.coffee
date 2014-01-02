@@ -16,7 +16,9 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
     openFile: (store, name) ->
       dfd = App.request 'file:entity', store, name
-      dfd.done (file) => @showFile file
+      dfd.done (file) =>
+        @showFile file
+        App.trigger 'file:opened', file
       dfd.fail =>
         alert 'no find file' # TODO parse response?
         @newFile()
@@ -24,6 +26,8 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
     showFile: (file) ->
       App.trigger 'file:show', file
       @file = file
+      console.log 'hi'
+      console.log file
       @view.refresh()
       @view.setValue file.get('text')
 

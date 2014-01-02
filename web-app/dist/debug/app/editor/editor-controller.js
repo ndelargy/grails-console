@@ -22,7 +22,8 @@
           _this = this;
         dfd = App.request('file:entity', store, name);
         dfd.done(function(file) {
-          return _this.showFile(file);
+          _this.showFile(file);
+          return App.trigger('file:opened', file);
         });
         return dfd.fail(function() {
           alert('no find file');
@@ -32,6 +33,8 @@
       showFile: function(file) {
         App.trigger('file:show', file);
         this.file = file;
+        console.log('hi');
+        console.log(file);
         this.view.refresh();
         return this.view.setValue(file.get('text'));
       },

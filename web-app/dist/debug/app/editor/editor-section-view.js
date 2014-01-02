@@ -6,9 +6,11 @@
         "class": 'full-height'
       },
       regions: {
-        centerRegion: '.center'
+        centerRegion: '.center',
+        westRegion: '.west'
       },
       initialize: function() {
+        var _this = this;
         this.listenTo(App.settings, 'change:orientation', this.showOrientation);
         this.editorView = new Editor.EditorView();
         this.listenTo(this.editorView, 'execute', function(result) {
@@ -22,13 +24,18 @@
         });
         this.listenTo(this.editorView, 'clear', this.clearResults);
         this.resultCollection = new Editor.ResultCollection();
-        return this.resultsView = new Editor.ResultCollectionView({
+        this.resultsView = new Editor.ResultCollectionView({
           collection: this.resultCollection
+        });
+        this.scriptsView = new Editor.ScriptsView();
+        return this.listenTo(this.scriptsView, 'render', function() {
+          return _this.layout.initContent('west');
         });
       },
       onRender: function() {
         this.initLayout();
         this.centerRegion.show(this.editorView);
+        this.westRegion.show(this.scriptsView);
         this.layout.initContent('center');
         this.editorView.refresh();
         this.resultsView.render();
@@ -47,6 +54,9 @@
           center__onresize: function() {
             return _this.editorView.refresh();
           },
+          west__paneSelector: '.west',
+          west__contentSelector: '.files-wrapper',
+          west__size: 250,
           east__paneSelector: '.east',
           east__contentSelector: '.script-result-section',
           east__initHidden: App.settings.get('orientation') !== 'vertical',

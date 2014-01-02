@@ -6,7 +6,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"center\"><div id=\"editor\"></div></div>\n<div class=\"east results\"></div>\n<div class=\"south\"></div>";
+  return "<div class=\"center\"><div id=\"editor\"></div></div>\n<div class=\"west\"></div>\n<div class=\"east results\"></div>\n<div class=\"south\"></div>";
   });
 
 this["JST"]["editor/editor"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -15,7 +15,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"btn-toolbar\">\n    <button class=\"execute btn btn-sm btn-default\" title=\"Execute (Ctrl + Enter)\"><i class=\"fa fa-play fa-lg\"></i></button>\n    <button class=\"btn btn-sm btn-default new\" title=\"New\"><i class=\"fa fa-file fa-lg\"></i></button>\n    <button class=\"btn btn-sm btn-default files\" title=\"Open\"><i class=\"fa fa-folder fa-lg\"></i></button>\n    <div class=\"btn-group\">\n        <button class=\"save btn btn-sm btn-default\" title=\"Save\"><i class=\"fa fa-save fa-lg\"></i></button>\n        <button type=\"button\" class=\"btn btn-sm btn-default dropdown-toggle\" data-toggle=\"dropdown\">\n            <span class=\"caret\"></span>\n            <span class=\"sr-only\">Toggle Dropdown</span>\n        </button>\n        <ul class=\"dropdown-menu\" role=\"menu\">\n            <li><a href=\"#\" class=\"save-as\">Save as...</a></li>\n        </ul>\n    </div>\n</div>\n<div id=\"code-wrapper\" class=\"ui-layout-content\">\n    <textarea name=\"code\" rows=\"25\" cols=\"100\"></textarea>\n</div>";
+  return "<div class=\"btn-toolbar\">\n    <button class=\"execute btn btn-sm btn-default\" title=\"Execute (Ctrl + Enter)\"><i class=\"fa fa-play fa-lg\"></i></button>\n    <button class=\"btn btn-sm btn-default new\" title=\"New\"><i class=\"fa fa-file fa-lg\"></i></button>\n    <!--<button class=\"btn btn-sm btn-default files\" title=\"Open\"><i class=\"fa fa-folder fa-lg\"></i></button>-->\n    <div class=\"btn-group\">\n        <button class=\"save btn btn-sm btn-default\" title=\"Save\"><i class=\"fa fa-save fa-lg\"></i></button>\n        <button type=\"button\" class=\"btn btn-sm btn-default dropdown-toggle\" data-toggle=\"dropdown\">\n            <span class=\"caret\"></span>\n            <span class=\"sr-only\">Toggle Dropdown</span>\n        </button>\n        <ul class=\"dropdown-menu\" role=\"menu\">\n            <li><a href=\"#\" class=\"save-as\">Save as...</a></li>\n        </ul>\n    </div>\n</div>\n<div id=\"code-wrapper\" class=\"ui-layout-content\">\n    <textarea name=\"code\" rows=\"25\" cols=\"100\"></textarea>\n</div>";
   });
 
 this["JST"]["editor/result"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -83,6 +83,58 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
 
   return "<div class=\"btn-toolbar\">\n    <a class=\"clear btn btn-sm btn-default\" href=\"#\" title=\"Clear (Esc)\"><i class=\"fa fa-eraser fa-lg\"></i></a>\n</div>\n\n<div class=\"script-result-section\"><div class=\"inner\"></div></div>";
+  });
+
+this["JST"]["editor/scripts"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  
+  return "<a href=\"#\" class=\"up\">../</a>";
+  }
+
+function program3(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\n      <li data-file-id=\"";
+  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">\n        ";
+  if (stack1 = helpers.scriptsFileIcon) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.scriptsFileIcon; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\n          <a class=\"name\" href=\"#\">";
+  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</a>\n          <!--<a class=\"delete\" href=\"#\"><i class=\"fa fa-trash-o\"></i></a>-->\n          <a class=\"delete\" href=\"#\">×</a>\n      </li>\n  ";
+  return buffer;
+  }
+
+  buffer += "<div class=\"btn-toolbar\">\n    <div class=\"btn-group\">\n        <button type=\"button\" class=\"btn btn-sm dropdown-toggle\" data-toggle=\"dropdown\">\n          ";
+  if (stack1 = helpers.store) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.store; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\n            <span class=\"caret\"></span>\n        </button>\n        <ul class=\"dropdown-menu store\" role=\"menu\">\n            <li><a href=\"#\" data-store=\"local\">Local Storage</a></li>\n            <li><a href=\"#\" data-store=\"remote\">Remote Storage</a></li>\n        </ul>\n    </div>\n</div>\n<div class=\"folder \">\n    <!--<button class=\"btn btn-sm btn-default up\">..</button>-->\n  ";
+  stack1 = helpers['if'].call(depth0, depth0.hasUp, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "<span title=\"";
+  if (stack1 = helpers.path) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.path; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">";
+  if (stack1 = helpers.currentDir) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.currentDir; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "/</span>\n\n</div>\n<div class=\"files-wrapper\">\n<ul class=\"files\">\n  ";
+  stack1 = helpers.each.call(depth0, depth0.files, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n</ul>\n</div>";
+  return buffer;
   });
 
 this["JST"]["files/file-list"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

@@ -65,17 +65,6 @@
       $el.remove()
       $('.modal-backdrop').remove()
 
-  App.on 'app:file:open', ->
-    App.Files.controller.promptForFile()
-      .done (file) ->
-        if file
-          if not App.Editor.controller.isDirty() or confirm 'Are you sure? You have unsaved changes.'
-            file.fetch().done ->
-              App.router.showFile file
-              App.Editor.controller.showFile file
-      .fail ->
-        alert 'Couldnt load file!' # TODO
-
   window.App = App
 
 ) jQuery, _, Backbone, JST, window

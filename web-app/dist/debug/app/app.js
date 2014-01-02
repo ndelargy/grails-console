@@ -75,20 +75,6 @@
         return $('.modal-backdrop').remove();
       });
     });
-    App.on('app:file:open', function() {
-      return App.Files.controller.promptForFile().done(function(file) {
-        if (file) {
-          if (!App.Editor.controller.isDirty() || confirm('Are you sure? You have unsaved changes.')) {
-            return file.fetch().done(function() {
-              App.router.showFile(file);
-              return App.Editor.controller.showFile(file);
-            });
-          }
-        }
-      }).fail(function() {
-        return alert('Couldnt load file!');
-      });
-    });
     return window.App = App;
   })(jQuery, _, Backbone, JST, window);
 

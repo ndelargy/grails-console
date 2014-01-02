@@ -9,6 +9,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
     regions:
       centerRegion: '.center'
+      westRegion: '.west'
 
     initialize: ->
       @listenTo App.settings, 'change:orientation', @showOrientation
@@ -29,10 +30,16 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       @resultCollection = new Editor.ResultCollection()
       @resultsView = new Editor.ResultCollectionView(collection: @resultCollection)
 
+      @scriptsView = new Editor.ScriptsView()
+      @listenTo @scriptsView, 'render', =>
+        @layout.initContent 'west'
+
+
     onRender: ->
       @initLayout()
 
       @centerRegion.show @editorView
+      @westRegion.show @scriptsView
 
       @layout.initContent 'center'
       @editorView.refresh()
@@ -51,6 +58,10 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
         center__paneSelector: '.center'
         center__contentSelector: '#code-wrapper'
         center__onresize: => @editorView.refresh()
+        west__paneSelector: '.west'
+        west__contentSelector: '.files-wrapper'
+#        west__initHidden: App.settings.get('orientation') isnt 'vertical'
+        west__size: 250
         east__paneSelector: '.east'
         east__contentSelector: '.script-result-section'
         east__initHidden: App.settings.get('orientation') isnt 'vertical'

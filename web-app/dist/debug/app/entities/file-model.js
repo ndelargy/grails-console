@@ -7,11 +7,12 @@
       getAbsolutePath: function() {
         return this.id;
       },
-      getDir: function() {
-        return this.get('path');
-      },
-      getStore: function() {
-        return this.store;
+      getParent: function() {
+        var parent, tokens;
+        tokens = this.id.split('/');
+        console.log(tokens.slice(0, tokens.length - 1));
+        parent = tokens.slice(0, tokens.length - 1).join('/');
+        return parent;
       },
       sync: function(method, file, options) {
         var url;

@@ -363,3 +363,29 @@ body[data-theme="lesser-dark"] .btn-toolbar .btn:focus {
   background-color: #0e0e0e;
   border-color: #040404;
 }
+.west {
+  background-color: #f1f1f1;
+}
+.west .scripts .folder {
+  padding: 5px 15px;
+  border-bottom: 1px solid #ccc;
+}
+.west .scripts .files-wrapper {
+  overflow: auto;
+}
+.west .scripts .files-wrapper ul.files {
+  padding: 0;
+}
+.west .scripts .files-wrapper ul.files li {
+  position: relative;
+  display: block;
+  padding: 5px 15px;
+  font-size: 12px;
+}
+.west .scripts .files-wrapper ul.files li a.delete {
+  opacity: 1;
+  float: right;
+}
+.west .scripts .files-wrapper ul.files li:hover a.delete {
+  opacity: 1;
+}

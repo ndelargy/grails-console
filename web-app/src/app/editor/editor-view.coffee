@@ -7,7 +7,6 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
     events:
       'click button.execute': 'onExecuteClick'
       'click button.new': 'onNewClick'
-      'click button.files': 'onFilesClick'
       'click button.save': 'onSaveClick'
       'click a.save-as': 'onSaveAsClick'
 
@@ -23,10 +22,6 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
     onNewClick: (event) ->
       event.preventDefault()
       App.trigger 'app:file:new'
-
-    onFilesClick: (event) ->
-      event.preventDefault()
-      App.trigger 'app:file:open'
 
     initEditor: ->
       @editor = CodeMirror.fromTextArea(@$("textarea[name=code]")[0],

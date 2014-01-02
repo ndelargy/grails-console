@@ -5,7 +5,6 @@
       events: {
         'click button.execute': 'onExecuteClick',
         'click button.new': 'onNewClick',
-        'click button.files': 'onFilesClick',
         'click button.save': 'onSaveClick',
         'click a.save-as': 'onSaveAsClick'
       },
@@ -21,10 +20,6 @@
       onNewClick: function(event) {
         event.preventDefault();
         return App.trigger('app:file:new');
-      },
-      onFilesClick: function(event) {
-        event.preventDefault();
-        return App.trigger('app:file:open');
       },
       initEditor: function() {
         var _this = this;

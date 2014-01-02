@@ -9,6 +9,13 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
 
     comparator: (file) -> file.get('name')
 
+    getParent: ->
+      tokens = @path.split('/')
+      newPath = tokens[0...tokens.length - 1].join('/')
+      newPath = '/' if not newPath
+      # TODO null if no parent
+      newPath
+
     sync: (method, file, options) ->
       if (@store is 'local')
         Entities.localFileStore.sync method, file, options

@@ -9,7 +9,7 @@
       @route /^remote:(.*?)$/, 'openRemoteFile'
 
     showFile: (file) ->
-      @navigate "#{file.getStore()}:#{file.id}"
+      @navigate "#{file.store}:#{file.id}"
 
     showNew: ->
       @navigate 'new'

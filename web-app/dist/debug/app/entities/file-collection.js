@@ -10,6 +10,15 @@
       comparator: function(file) {
         return file.get('name');
       },
+      getParent: function() {
+        var newPath, tokens;
+        tokens = this.path.split('/');
+        newPath = tokens.slice(0, tokens.length - 1).join('/');
+        if (!newPath) {
+          newPath = '/';
+        }
+        return newPath;
+      },
       sync: function(method, file, options) {
         var url;
         if (this.store === 'local') {

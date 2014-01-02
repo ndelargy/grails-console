@@ -7,9 +7,12 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
 
     getAbsolutePath: -> @id
 
-    getDir: -> @get('path')
-
-    getStore: -> @store
+    getParent: ->
+      tokens = @id.split('/')
+      console.log tokens[0...tokens.length - 1]
+      parent = tokens[0...tokens.length - 1].join('/')
+      # TODO null if root
+      parent
 
     sync: (method, file, options) ->
       if (file.store is 'local')
