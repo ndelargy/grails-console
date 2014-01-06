@@ -1,7 +1,7 @@
 (function() {
   App.module('Files', function(Files, App, Backbone, Marionette, $, _) {
     Files.ScriptsView = Marionette.ItemView.extend({
-      template: 'editor/scripts',
+      template: 'files/scripts',
       attributes: {
         "class": 'scripts'
       },

@@ -1,7 +1,7 @@
 (function() {
   (function(App, Backbone) {
     return App.ContentView = Backbone.Marionette.Layout.extend({
-      template: 'editor/editor-section',
+      template: 'content',
       attributes: {
         "class": 'full-height'
       },
@@ -15,6 +15,9 @@
         this.editorView = options.editorView;
         this.resultsView = options.resultsView;
         this.scriptsView = options.scriptsView;
+        this.listenTo(this.editorView, 'render', function() {
+          return _this.layout.initContent('center');
+        });
         return this.listenTo(this.scriptsView, 'render', function() {
           return _this.layout.initContent('west');
         });
@@ -23,7 +26,6 @@
         this.initLayout();
         this.centerRegion.show(this.editorView);
         this.westRegion.show(this.scriptsView);
-        this.layout.initContent('center');
         this.editorView.refresh();
         this.resultsView.render();
         return this.showOrientation();
@@ -43,7 +45,11 @@
           },
           west__paneSelector: '.west',
           west__contentSelector: '.files-wrapper',
-          west__size: 250,
+          west__size: App.settings.get('layout.west.size'),
+          west__onresize_end: function(name, $el, state, opts) {
+            App.settings.set('layout.west.size', state.size);
+            return App.settings.save();
+          },
           east__paneSelector: '.east',
           east__contentSelector: '.script-result-section',
           east__initHidden: App.settings.get('orientation') !== 'vertical',

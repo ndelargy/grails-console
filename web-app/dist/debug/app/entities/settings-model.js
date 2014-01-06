@@ -5,6 +5,7 @@
     Entities.Settings = Backbone.Model.extend({
       defaults: {
         'orientation': 'vertical',
+        'layout.west.size': 250,
         'layout.east.size': '50%',
         'layout.south.size': '50%',
         'results.wrapText': true,

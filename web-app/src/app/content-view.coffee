@@ -2,7 +2,7 @@
 
   App.ContentView = Backbone.Marionette.Layout.extend
 
-    template: 'editor/editor-section'
+    template: 'content'
 
     attributes:
       class: 'full-height'
@@ -16,8 +16,9 @@
 
       @editorView = options.editorView
       @resultsView = options.resultsView
-
       @scriptsView = options.scriptsView
+
+      @listenTo @editorView, 'render', => @layout.initContent 'center'
       @listenTo @scriptsView, 'render', => @layout.initContent 'west'
 
 
@@ -27,7 +28,6 @@
       @centerRegion.show @editorView
       @westRegion.show @scriptsView
 
-      @layout.initContent 'center'
       @editorView.refresh()
 
       @resultsView.render()
@@ -46,8 +46,10 @@
         center__onresize: => @editorView.refresh()
         west__paneSelector: '.west'
         west__contentSelector: '.files-wrapper'
-#        west__initHidden: App.settings.get('orientation') isnt 'vertical'
-        west__size: 250
+        west__size: App.settings.get('layout.west.size')
+        west__onresize_end: (name, $el, state, opts) ->
+          App.settings.set 'layout.west.size', state.size
+          App.settings.save()
         east__paneSelector: '.east'
         east__contentSelector: '.script-result-section'
         east__initHidden: App.settings.get('orientation') isnt 'vertical'
