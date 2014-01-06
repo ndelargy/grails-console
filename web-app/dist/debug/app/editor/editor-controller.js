@@ -3,13 +3,21 @@
     return Editor.Controller = Marionette.Controller.extend({
       initialize: function(options) {
         var _this = this;
-        this.view = new Editor.EditorSectionView;
-        this.listenTo(this.view, 'save', this.save);
-        this.listenTo(this.view, 'saveAs', this.saveAs);
-        return $(window).on("beforeunload", function(event) {
+        $(window).on("beforeunload", function(event) {
           if (_this.isDirty()) {
             return "You have unsaved changes.";
           }
+        });
+        this.editorView = new Editor.EditorView();
+        this.listenTo(this.editorView, 'execute', function(result) {
+          return this.resultCollection.add(result);
+        });
+        this.listenTo(this.editorView, 'save', this.save);
+        this.listenTo(this.editorView, 'saveAs', this.saveAs);
+        this.listenTo(this.editorView, 'clear', this.clearResults);
+        this.resultCollection = new Editor.ResultCollection();
+        return this.resultsView = new Editor.ResultCollectionView({
+          collection: this.resultCollection
         });
       },
       newFile: function() {
@@ -33,10 +41,8 @@
       showFile: function(file) {
         App.trigger('file:show', file);
         this.file = file;
-        console.log('hi');
-        console.log(file);
-        this.view.refresh();
-        return this.view.setValue(file.get('text'));
+        this.editorView.refresh();
+        return this.editorView.setValue(file.get('text'));
       },
       save: function(text) {
         var _this = this;
@@ -65,13 +71,14 @@
             return file.save().then(function() {
               App.savingOff();
               _this.showFile(file);
-              return App.router.showFile(file);
+              App.router.showFile(file);
+              return App.trigger('file:created', _this.file);
             });
           }
         });
       },
       isDirty: function() {
-        return this.file.get('text') !== this.view.getValue();
+        return this.file.get('text') !== this.editorView.getValue();
       }
     });
   });

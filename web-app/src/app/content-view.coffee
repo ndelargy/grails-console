@@ -1,6 +1,6 @@
-App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
+((App, Backbone) ->
 
-  Editor.EditorSectionView = Marionette.Layout.extend
+  App.ContentView = Backbone.Marionette.Layout.extend
 
     template: 'editor/editor-section'
 
@@ -11,28 +11,14 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       centerRegion: '.center'
       westRegion: '.west'
 
-    initialize: ->
+    initialize: (options) ->
       @listenTo App.settings, 'change:orientation', @showOrientation
 
-      @editorView = new Editor.EditorView()
+      @editorView = options.editorView
+      @resultsView = options.resultsView
 
-      @listenTo @editorView, 'execute', (result) ->
-        @resultCollection.add result
-
-      @listenTo @editorView, 'save', (text) ->
-        @trigger 'save', text
-
-      @listenTo @editorView, 'saveAs', (text) ->
-        @trigger 'saveAs', text
-
-      @listenTo @editorView, 'clear', @clearResults
-
-      @resultCollection = new Editor.ResultCollection()
-      @resultsView = new Editor.ResultCollectionView(collection: @resultCollection)
-
-      @scriptsView = new Editor.ScriptsView()
-      @listenTo @scriptsView, 'render', =>
-        @layout.initContent 'west'
+      @scriptsView = options.scriptsView
+      @listenTo @scriptsView, 'render', => @layout.initContent 'west'
 
 
     onRender: ->
@@ -44,7 +30,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       @layout.initContent 'center'
       @editorView.refresh()
 
-      @resultsView.render() # TODO region?
+      @resultsView.render()
 
       @showOrientation()
 
@@ -85,23 +71,19 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
     showOrientation: ->
       orientation = App.settings.get('orientation')
+      console.log 'hi'
+      console.log @resultsView.el
       if orientation is 'vertical'
-        $('.east').append @resultsView.el
+        @$('.east').append @resultsView.el
+        console.log @$('.east').length
         @layout.hide 'south'
         @layout.show 'east'
         @layout.initContent 'east'
       else
-        $('.south').append @resultsView.el
+        @$('.south').append @resultsView.el
         @layout.hide 'east'
         @layout.show 'south'
         @layout.initContent 'south'
       @editorView.refresh()
 
-    getValue: (text) ->
-      @editorView.getValue text
-
-    setValue: (text) ->
-      @editorView.setValue text
-
-    clearResults: ->
-      @resultsView.clear()
+) App, Backbone

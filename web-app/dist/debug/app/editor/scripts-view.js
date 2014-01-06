@@ -7,6 +7,7 @@
       },
       events: {
         'click li a.name': 'onNameClick',
+        'click li a.delete': 'onDeleteClick',
         'click .store a': 'onStoreClick',
         'click .up': 'onUpClick'
       },
@@ -20,12 +21,23 @@
         this.collection.store = 'local';
         this.collection.path = '/';
         this.collection.fetch();
-        return this.listenTo(App, 'file:opened', function(file) {
+        this.listenTo(App, 'file:opened', function(file) {
           _this.collection.store = file.store;
           _this.collection.path = file.getParent();
           return _this.collection.fetch().done(function() {
             return _this.render();
           });
+        });
+        return this.listenTo(App, 'file:created', function(file) {
+          var collection,
+            _this = this;
+          file = App.Editor.controller.file;
+          collection = this.collection;
+          if (file.getParent() === collection.path && file.store === collection.store) {
+            return collection.fetch().done(function() {
+              return _this.render();
+            });
+          }
         });
       },
       onNameClick: function(event) {
@@ -70,6 +82,21 @@
         return this.collection.fetch().done(function() {
           return _this.render();
         });
+      },
+      onDeleteClick: function(event) {
+        var file, fileId,
+          _this = this;
+        event.preventDefault();
+        fileId = $(event.currentTarget).closest('li').data('fileId');
+        file = this.collection.findWhere({
+          id: fileId
+        });
+        if (confirm('Are you sure you want to delete this file?')) {
+          return file.destroy().done(function() {
+            App.trigger('file:deleted', file);
+            return _this.render();
+          });
+        }
       },
       serializeData: function() {
         var currentDir, tokens;

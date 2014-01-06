@@ -3,12 +3,22 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
   Editor.Controller = Marionette.Controller.extend
 
     initialize: (options) ->
-      @view = new Editor.EditorSectionView
-      @listenTo @view, 'save', @save
-      @listenTo @view, 'saveAs', @saveAs
-
       $(window).on "beforeunload", (event) =>
         "You have unsaved changes." if @isDirty()
+
+      @editorView = new Editor.EditorView()
+
+      @listenTo @editorView, 'execute', (result) ->
+        @resultCollection.add result
+
+      @listenTo @editorView, 'save', @save
+
+      @listenTo @editorView, 'saveAs', @saveAs
+
+      @listenTo @editorView, 'clear', @clearResults
+
+      @resultCollection = new Editor.ResultCollection()
+      @resultsView = new Editor.ResultCollectionView(collection: @resultCollection)
 
     newFile: ->
       file = new App.Entities.File
@@ -26,10 +36,8 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
     showFile: (file) ->
       App.trigger 'file:show', file
       @file = file
-      console.log 'hi'
-      console.log file
-      @view.refresh()
-      @view.setValue file.get('text')
+      @editorView.refresh()
+      @editorView.setValue file.get('text')
 
     save: (text) ->
       @file.set 'text', text
@@ -55,7 +63,8 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
             App.savingOff()
             @showFile file
             App.router.showFile file
+            App.trigger 'file:created', @file # TODO move to file-model
 
     isDirty: ->
-      @file.get('text') isnt @view.getValue()
+      @file.get('text') isnt @editorView.getValue()
 

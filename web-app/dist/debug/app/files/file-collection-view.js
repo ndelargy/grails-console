@@ -14,8 +14,7 @@
         "class": 'full-height'
       },
       events: {
-        'click a.name': 'onNameClick',
-        'click a.delete': 'onDeleteClick'
+        'click a.name': 'onNameClick'
       },
       _initialEvents: function() {
         this.listenTo(this.collection, 'add', this.addChildView);
@@ -34,17 +33,6 @@
           id: fileId
         });
         return this.trigger('file:selected', file);
-      },
-      onDeleteClick: function(event) {
-        var file, fileId;
-        event.preventDefault();
-        fileId = $(event.currentTarget).closest('tr').data("fileId");
-        file = this.collection.findWhere({
-          id: fileId
-        });
-        if (confirm('Are you sure you want to delete this file?')) {
-          return file.destroy();
-        }
       },
       serializeData: function() {
         return {

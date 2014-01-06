@@ -74,7 +74,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
         loading: true
         input: @getValue()
 
-      @trigger "execute", result
+      @trigger 'execute', result
       jqxhr = $.post App.createLink('execute'), code: @getValue()
 
       jqxhr.done (response) ->
@@ -88,7 +88,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       jqxhr.fail ->
         result.set
           loading: false
-          error: "An error occurred."
+          error: 'An error occurred.'
 
     onShow: ->
       @editor.focus()

@@ -10,7 +10,6 @@
       getParent: function() {
         var parent, tokens;
         tokens = this.id.split('/');
-        console.log(tokens.slice(0, tokens.length - 1));
         parent = tokens.slice(0, tokens.length - 1).join('/');
         return parent;
       },

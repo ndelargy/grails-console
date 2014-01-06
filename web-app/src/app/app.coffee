@@ -49,10 +49,21 @@
     App.Files.controller = new App.Files.Controller
     App.router = new App.Router()
 
-    App.mainRegion.show App.Editor.controller.view
+    contentView = new App.ContentView
+      editorView: App.Editor.controller.editorView
+      resultsView: App.Editor.controller.resultsView
+      scriptsView: new App.Editor.ScriptsView()
+
+    App.mainRegion.show contentView
+    contentView.refresh()
 
   App.on 'app:file:new', (file) ->
     if not App.Editor.controller.isDirty() or confirm 'Are you sure? You have unsaved changes.'
+      App.router.showNew()
+      App.Editor.controller.newFile()
+
+  App.on 'file:deleted', (file) ->
+    if App.Editor.controller.file.id is file.id
       App.router.showNew()
       App.Editor.controller.newFile()
 

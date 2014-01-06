@@ -76,7 +76,7 @@
           loading: true,
           input: this.getValue()
         });
-        this.trigger("execute", result);
+        this.trigger('execute', result);
         jqxhr = $.post(App.createLink('execute'), {
           code: this.getValue()
         });
@@ -92,7 +92,7 @@
         return jqxhr.fail(function() {
           return result.set({
             loading: false,
-            error: "An error occurred."
+            error: 'An error occurred.'
           });
         });
       },

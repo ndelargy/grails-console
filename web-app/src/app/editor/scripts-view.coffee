@@ -9,8 +9,12 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
     events:
       'click li a.name': 'onNameClick'
+      'click li a.delete': 'onDeleteClick'
       'click .store a': 'onStoreClick'
       'click .up': 'onUpClick'
+
+      # TODO editor listen for delete
+      # TODO no find file
 
     initialize: ->
       @listenTo App.settings, 'change:results.wrapText', @setWrap
@@ -30,6 +34,12 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
         @collection.path = file.getParent()
 
         @collection.fetch().done => @render()
+
+      @listenTo App, 'file:created', (file) -> # TODO this is whack
+        file = App.Editor.controller.file
+        collection = @collection
+        if file.getParent() is collection.path and file.store is collection.store
+          collection.fetch().done => @render()
 
 
     onNameClick: (event) ->
@@ -62,6 +72,16 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       event.preventDefault()
       @collection.path = @collection.getParent()
       @collection.fetch().done => @render()
+
+
+    onDeleteClick: (event) ->
+      event.preventDefault()
+      fileId = $(event.currentTarget).closest('li').data('fileId')
+      file = @collection.findWhere(id: fileId)
+      if confirm 'Are you sure you want to delete this file?'
+        file.destroy().done =>
+          App.trigger 'file:deleted', file
+          @render()
 
     serializeData: ->
       tokens = @collection.path.split('/')

@@ -145,7 +145,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  return "\n      <table class=\"table table-hover\">\n          <thead>\n          <tr>\n              <th>Name</th>\n              <th>Date Modified</th>\n              <th></th>\n          </tr>\n          </thead>\n          <tbody></tbody>\n      </table>\n  ";
+  return "\n      <table class=\"table table-hover\">\n          <thead>\n          <tr>\n              <th>Name</th>\n              <th>Date Modified</th>\n          </tr>\n          </thead>\n          <tbody></tbody>\n      </table>\n  ";
   }
 
 function program3(depth0,data) {
@@ -189,7 +189,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
     + "</a>\n</td>\n<td class=\"modified\">";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers.dateFormatTime || depth0.dateFormatTime),stack1 ? stack1.call(depth0, depth0.lastModified, options) : helperMissing.call(depth0, "dateFormatTime", depth0.lastModified, options)))
-    + "</td>\n<td class=\"delete\"><a class=\"delete\" href=\"#\"><i class=\"fa fa-trash-o\"></i></a></td>";
+    + "</td>";
   return buffer;
   });
 

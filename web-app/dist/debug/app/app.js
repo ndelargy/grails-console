@@ -54,13 +54,26 @@
       return App.settings = App.request('settings:entity');
     });
     App.addInitializer(function() {
+      var contentView;
       App.Editor.controller = new App.Editor.Controller;
       App.Files.controller = new App.Files.Controller;
       App.router = new App.Router();
-      return App.mainRegion.show(App.Editor.controller.view);
+      contentView = new App.ContentView({
+        editorView: App.Editor.controller.editorView,
+        resultsView: App.Editor.controller.resultsView,
+        scriptsView: new App.Editor.ScriptsView()
+      });
+      App.mainRegion.show(contentView);
+      return contentView.refresh();
     });
     App.on('app:file:new', function(file) {
       if (!App.Editor.controller.isDirty() || confirm('Are you sure? You have unsaved changes.')) {
+        App.router.showNew();
+        return App.Editor.controller.newFile();
+      }
+    });
+    App.on('file:deleted', function(file) {
+      if (App.Editor.controller.file.id === file.id) {
         App.router.showNew();
         return App.Editor.controller.newFile();
       }
