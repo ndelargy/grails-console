@@ -1,6 +1,6 @@
-App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
+App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
-  Editor.ScriptsView = Marionette.ItemView.extend
+  Files.ScriptsView = Marionette.ItemView.extend
 
     template: 'editor/scripts'
 
@@ -17,29 +17,21 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       # TODO no find file
 
     initialize: ->
-      @listenTo App.settings, 'change:results.wrapText', @setWrap
-      @listenTo @, 'itemview:complete', @scrollToResultView
-      @listenTo App, 'app:editor:clear', @clear
-
       @lastPaths = {}
 
-      @collection = new App.Entities.FileCollection()
-      @collection.store = 'local'
-      @collection.path = '/'
-
-      @collection.fetch()
+      @listenTo @collection, 'add remove reset', => @render()
 
       @listenTo App, 'file:opened', (file) =>
         @collection.store = file.store
         @collection.path = file.getParent()
 
-        @collection.fetch().done => @render()
+        @collection.fetch()
 
       @listenTo App, 'file:created', (file) -> # TODO this is whack
         file = App.Editor.controller.file
         collection = @collection
         if file.getParent() is collection.path and file.store is collection.store
-          collection.fetch().done => @render()
+          collection.fetch()
 
 
     onNameClick: (event) ->
@@ -50,7 +42,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       if file.get('type') is 'dir'
         path = file.getAbsolutePath()
         @collection.path = path
-        @collection.fetch().done => @render()
+        @collection.fetch()
 
       else
         if not App.Editor.controller.isDirty() or confirm 'Are you sure? You have unsaved changes.'
@@ -66,12 +58,12 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       @collection.store = store
 
       @collection.path = @lastPaths[@collection.store] ? '/'
-      @collection.fetch().done => @render()
+      @collection.fetch()
 
     onUpClick: (event) ->
       event.preventDefault()
       @collection.path = @collection.getParent()
-      @collection.fetch().done => @render()
+      @collection.fetch()
 
 
     onDeleteClick: (event) ->
@@ -81,7 +73,6 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       if confirm 'Are you sure you want to delete this file?'
         file.destroy().done =>
           App.trigger 'file:deleted', file
-          @render()
 
     serializeData: ->
       tokens = @collection.path.split('/')

@@ -71,11 +71,8 @@
       showOrientation: function() {
         var orientation;
         orientation = App.settings.get('orientation');
-        console.log('hi');
-        console.log(this.resultsView.el);
         if (orientation === 'vertical') {
           this.$('.east').append(this.resultsView.el);
-          console.log(this.$('.east').length);
           this.layout.hide('south');
           this.layout.show('east');
           this.layout.initContent('east');

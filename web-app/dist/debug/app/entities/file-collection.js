@@ -10,6 +10,8 @@
       comparator: function(file) {
         return file.get('name');
       },
+      store: 'local',
+      path: '/',
       getParent: function() {
         var newPath, tokens;
         tokens = this.path.split('/');

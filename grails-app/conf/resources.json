@@ -25,18 +25,17 @@
       "web-app/dist/debug/app/entities/local-file-store.js",
       "web-app/dist/debug/app/entities/settings-model.js",
       "web-app/dist/debug/app/editor/editor-controller.js",
-      "web-app/dist/debug/app/editor/editor-section-view.js",
       "web-app/dist/debug/app/editor/editor-view.js",
       "web-app/dist/debug/app/editor/result-collection-view.js",
       "web-app/dist/debug/app/editor/result-collection.js",
       "web-app/dist/debug/app/editor/result-model.js",
       "web-app/dist/debug/app/editor/result-view.js",
-      "web-app/dist/debug/app/editor/scripts-view.js",
       "web-app/dist/debug/app/files/file-collection-view.js",
       "web-app/dist/debug/app/files/file-path-view.js",
       "web-app/dist/debug/app/files/files-controller.js",
       "web-app/dist/debug/app/files/files-section-view.js",
-      "web-app/dist/debug/app/files/loading-view.js"
+      "web-app/dist/debug/app/files/loading-view.js",
+      "web-app/dist/debug/app/files/scripts-view.js"
     ],
     "css": [
       "web-app/vendor/bootstrap/css/bootstrap.min.css",

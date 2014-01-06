@@ -9,6 +9,10 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
 
     comparator: (file) -> file.get('name')
 
+    store: 'local'
+
+    path: '/'
+
     getParent: ->
       tokens = @path.split('/')
       newPath = tokens[0...tokens.length - 1].join('/')

@@ -71,11 +71,8 @@
 
     showOrientation: ->
       orientation = App.settings.get('orientation')
-      console.log 'hi'
-      console.log @resultsView.el
       if orientation is 'vertical'
         @$('.east').append @resultsView.el
-        console.log @$('.east').length
         @layout.hide 'south'
         @layout.show 'east'
         @layout.initContent 'east'

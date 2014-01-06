@@ -61,7 +61,7 @@
       contentView = new App.ContentView({
         editorView: App.Editor.controller.editorView,
         resultsView: App.Editor.controller.resultsView,
-        scriptsView: new App.Editor.ScriptsView()
+        scriptsView: App.Files.controller.scriptsView
       });
       App.mainRegion.show(contentView);
       return contentView.refresh();

@@ -48,6 +48,13 @@
       return $el;
     };
     return Files.Controller = Marionette.Controller.extend({
+      initialize: function() {
+        this.collection = new App.Entities.FileCollection();
+        this.collection.fetch();
+        return this.scriptsView = new Files.ScriptsView({
+          collection: this.collection
+        });
+      },
       promptForNewFileName: function() {
         var dfd, view;
         dfd = $.Deferred();

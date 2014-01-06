@@ -47,6 +47,13 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
   Files.Controller = Marionette.Controller.extend
 
+    initialize: ->
+      @collection = new App.Entities.FileCollection()
+      @collection.fetch() # TODO router init
+
+      @scriptsView = new Files.ScriptsView
+        collection: @collection
+
     promptForNewFileName: ->
       dfd = $.Deferred()
 
