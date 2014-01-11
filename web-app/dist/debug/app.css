@@ -162,19 +162,6 @@ body {
   overflow: auto;
   position: relative;
 }
-.files-section-view .files-body .store table {
-  margin-bottom: 0;
-}
-.files-section-view .files-body .store table td {
-  line-height: 28px;
-}
-.files-section-view .files-body .store table td.name i {
-  font-size: 18px;
-  padding: 5px 10px 5px 5px;
-}
-.files-section-view .files-body .store table td.delete {
-  width: 40px;
-}
 .files-section-view .files-body .store .loading-view {
   height: 100%;
   position: relative;

@@ -85,59 +85,6 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   return "<div class=\"btn-toolbar\">\n    <a class=\"clear btn btn-sm btn-default\" href=\"#\" title=\"Clear (Esc)\"><i class=\"fa fa-eraser fa-lg\"></i></a>\n</div>\n\n<div class=\"script-result-section\"><div class=\"inner\"></div></div>";
   });
 
-this["JST"]["files/file-list"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, self=this;
-
-function program1(depth0,data) {
-  
-  
-  return "\n      <div class=\"files-wrapper\">\n          <ul class=\"files\">\n          </ul>\n      </div>\n  ";
-  }
-
-function program3(depth0,data) {
-  
-  
-  return "\n      <div class=\"message\">No files</div>\n  ";
-  }
-
-  buffer += "<div class=\"files-page-body full-height\">\n  ";
-  stack1 = helpers['if'].call(depth0, depth0.files, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n</div>";
-  return buffer;
-  });
-
-this["JST"]["files/file-path"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var stack1, functionType="function", escapeExpression=this.escapeExpression;
-
-
-  if (stack1 = helpers.fileBreadcrumbs) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.fileBreadcrumbs; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  return escapeExpression(stack1);
-  });
-
-this["JST"]["files/file"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
-
-
-  buffer += "<div class=\"name\">\n  ";
-  if (stack1 = helpers.scriptsFileIcon) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.scriptsFileIcon; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "\n    <a class=\"name\" href=\"#\">";
-  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "</a>\n</div>\n<a class=\"delete\" href=\"#\">×</a>";
-  return buffer;
-  });
-
 this["JST"]["files/files-section"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};

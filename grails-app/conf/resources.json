@@ -30,8 +30,6 @@
       "web-app/dist/debug/app/editor/result-collection.js",
       "web-app/dist/debug/app/editor/result-model.js",
       "web-app/dist/debug/app/editor/result-view.js",
-      "web-app/dist/debug/app/files/file-collection-view.js",
-      "web-app/dist/debug/app/files/file-path-view.js",
       "web-app/dist/debug/app/files/files-controller.js",
       "web-app/dist/debug/app/files/files-section-view.js",
       "web-app/dist/debug/app/files/loading-view.js",
