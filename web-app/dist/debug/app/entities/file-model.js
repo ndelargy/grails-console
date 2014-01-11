@@ -13,6 +13,12 @@
         parent = tokens.slice(0, tokens.length - 1).join('/');
         return parent;
       },
+      isDirectory: function() {
+        return this.get('type') === 'dir';
+      },
+      isFile: function() {
+        return this.get('type') === 'file';
+      },
       sync: function(method, file, options) {
         var url;
         if (file.store === 'local') {

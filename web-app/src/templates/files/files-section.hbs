@@ -1,38 +1,19 @@
 <div class="modal-content">
     <div class="modal-header">
         <button type="button" class="close" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">{{title}}</h4>
+        <h4 class="modal-title">Save as</h4>
     </div>
 
     <div class="modal-body">
         <div class="files-header">
             <div class="section">
                 <form class="form-horizontal file-info">
-                    {{#if saving}}
-                      <div class="form-group">
-                          <label class="col-sm-2 control-label">Save as</label>
-
-                          <div class="col-sm-10">
-                              <input class="file-name form-control" type="text"/>
-                          </div>
-                      </div>
-                    {{/if}}
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">File store</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="store">
-                                <option value="local">Local</option>
-                                <option value="remote">Remote</option>
-                            </select>
-                        </div>
-                    </div>
+                    <input class="file-name form-control" type="text" placeholder="File name"/>
                 </form>
             </div>
-            <div class="file-path-region section"></div>
         </div>
         <div class="files-body">
-            <div class="store full-height">
+            <div class="store">
             </div>
         </div>
 
@@ -40,9 +21,6 @@
 
     <div class="modal-footer">
         <button type="button" class="cancel btn btn-primary">Cancel</button>
-        {{#if saving}}
-          <button type="button" class="save btn btn-primary">Save</button>
-        {{/if}}
+        <button type="button" class="save btn btn-primary">Save</button>
     </div>
 </div>
-<!-- /.modal-content -->

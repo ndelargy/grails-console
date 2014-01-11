@@ -93,7 +93,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   
-  return "\n      <table class=\"table table-hover\">\n          <thead>\n          <tr>\n              <th>Name</th>\n              <th>Date Modified</th>\n          </tr>\n          </thead>\n          <tbody></tbody>\n      </table>\n  ";
+  return "\n      <div class=\"files-wrapper\">\n          <ul class=\"files\">\n          </ul>\n      </div>\n  ";
   }
 
 function program3(depth0,data) {
@@ -123,53 +123,28 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 this["JST"]["files/file"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "\n<td class=\"name\">\n    ";
-  if (stack1 = helpers.fileIcon) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.fileIcon; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += "<div class=\"name\">\n  ";
+  if (stack1 = helpers.scriptsFileIcon) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.scriptsFileIcon; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + "\n    <a class=\"name\" href=\"#\">";
   if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</a>\n</td>\n<td class=\"modified\">";
-  options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.dateFormatTime || depth0.dateFormatTime),stack1 ? stack1.call(depth0, depth0.lastModified, options) : helperMissing.call(depth0, "dateFormatTime", depth0.lastModified, options)))
-    + "</td>";
+    + "</a>\n</div>\n<a class=\"delete\" href=\"#\">×</a>";
   return buffer;
   });
 
 this["JST"]["files/files-section"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+  
 
-function program1(depth0,data) {
-  
-  
-  return "\n                      <div class=\"form-group\">\n                          <label class=\"col-sm-2 control-label\">Save as</label>\n\n                          <div class=\"col-sm-10\">\n                              <input class=\"file-name form-control\" type=\"text\"/>\n                          </div>\n                      </div>\n                    ";
-  }
 
-function program3(depth0,data) {
-  
-  
-  return "\n          <button type=\"button\" class=\"save btn btn-primary\">Save</button>\n        ";
-  }
-
-  buffer += "<div class=\"modal-content\">\n    <div class=\"modal-header\">\n        <button type=\"button\" class=\"close\" aria-hidden=\"true\">&times;</button>\n        <h4 class=\"modal-title\">";
-  if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "</h4>\n    </div>\n\n    <div class=\"modal-body\">\n        <div class=\"files-header\">\n            <div class=\"section\">\n                <form class=\"form-horizontal file-info\">\n                    ";
-  stack1 = helpers['if'].call(depth0, depth0.saving, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                    <div class=\"form-group\">\n                        <label class=\"col-sm-2 control-label\">File store</label>\n\n                        <div class=\"col-sm-10\">\n                            <select class=\"form-control\" name=\"store\">\n                                <option value=\"local\">Local</option>\n                                <option value=\"remote\">Remote</option>\n                            </select>\n                        </div>\n                    </div>\n                </form>\n            </div>\n            <div class=\"file-path-region section\"></div>\n        </div>\n        <div class=\"files-body\">\n            <div class=\"store full-height\">\n            </div>\n        </div>\n\n    </div>\n\n    <div class=\"modal-footer\">\n        <button type=\"button\" class=\"cancel btn btn-primary\">Cancel</button>\n        ";
-  stack1 = helpers['if'].call(depth0, depth0.saving, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n    </div>\n</div>\n<!-- /.modal-content -->";
-  return buffer;
+  return "<div class=\"modal-content\">\n    <div class=\"modal-header\">\n        <button type=\"button\" class=\"close\" aria-hidden=\"true\">&times;</button>\n        <h4 class=\"modal-title\">Save as</h4>\n    </div>\n\n    <div class=\"modal-body\">\n        <div class=\"files-header\">\n            <div class=\"section\">\n                <form class=\"form-horizontal file-info\">\n                    <input class=\"file-name form-control\" type=\"text\" placeholder=\"File name\"/>\n                </form>\n            </div>\n        </div>\n        <div class=\"files-body\">\n            <div class=\"store\">\n            </div>\n        </div>\n\n    </div>\n\n    <div class=\"modal-footer\">\n        <button type=\"button\" class=\"cancel btn btn-primary\">Cancel</button>\n        <button type=\"button\" class=\"save btn btn-primary\">Save</button>\n    </div>\n</div>";
   });
 
 this["JST"]["files/loading"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -195,27 +170,42 @@ function program1(depth0,data) {
 function program3(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\n      <li data-file-id=\"";
+  buffer += "\n      <ul class=\"files\">\n        ";
+  stack1 = helpers.each.call(depth0, depth0.files, {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n      </ul>\n  ";
+  return buffer;
+  }
+function program4(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\n            <li data-file-id=\"";
   if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\">\n        ";
+    + "\">\n                <div class=\"name\">\n                  ";
   if (stack1 = helpers.scriptsFileIcon) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.scriptsFileIcon; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\n          <a class=\"name\" href=\"#\">";
+    + "\n                    <a class=\"name\" href=\"#\">";
   if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</a>\n          <a class=\"delete\" href=\"#\">×</a>\n      </li>\n  ";
+    + "</a>\n                </div>\n                <a class=\"delete\" href=\"#\">×</a>\n            </li>\n        ";
   return buffer;
+  }
+
+function program6(depth0,data) {
+  
+  
+  return "\n      <div class=\"message\">No files</div>\n  ";
   }
 
   buffer += "<div class=\"btn-toolbar\">\n    <div class=\"btn-group\">\n        <button type=\"button\" class=\"btn btn-sm dropdown-toggle\" data-toggle=\"dropdown\">\n          ";
   if (stack1 = helpers.store) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.store; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\n            <span class=\"caret\"></span>\n        </button>\n        <ul class=\"dropdown-menu store\" role=\"menu\">\n            <li><a href=\"#\" data-store=\"local\">Local Storage</a></li>\n            <li><a href=\"#\" data-store=\"remote\">Remote Storage</a></li>\n        </ul>\n    </div>\n</div>\n<div class=\"folder \">\n    <!--<button class=\"btn btn-sm btn-default up\">..</button>-->\n  ";
+    + "\n            <span class=\"caret\"></span>\n        </button>\n        <ul class=\"dropdown-menu store\" role=\"menu\">\n            <li><a href=\"#\" data-store=\"local\">Local Storage</a></li>\n            <li><a href=\"#\" data-store=\"remote\">Remote Storage</a></li>\n        </ul>\n    </div>\n</div>\n<div class=\"folder \">\n  ";
   stack1 = helpers['if'].call(depth0, depth0.hasUp, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "<span title=\"";
@@ -226,10 +216,10 @@ function program3(depth0,data) {
   if (stack1 = helpers.currentDir) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.currentDir; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "/</span>\n\n</div>\n<div class=\"files-wrapper\">\n<ul class=\"files\">\n  ";
-  stack1 = helpers.each.call(depth0, depth0.files, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+    + "/</span>\n</div>\n<div class=\"files-wrapper\">\n  ";
+  stack1 = helpers['if'].call(depth0, depth0.files, {hash:{},inverse:self.program(6, program6, data),fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n</ul>\n</div>";
+  buffer += "\n</div>";
   return buffer;
   });
 

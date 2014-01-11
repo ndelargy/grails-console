@@ -26,7 +26,6 @@
         this.initLayout();
         this.centerRegion.show(this.editorView);
         this.westRegion.show(this.scriptsView);
-        this.editorView.refresh();
         this.resultsView.render();
         return this.showOrientation();
       },
@@ -71,7 +70,8 @@
           resizable: true,
           findNestedContent: true,
           fxName: '',
-          spacing_open: 3
+          spacing_open: 3,
+          spacing_closed: 3
         });
       },
       showOrientation: function() {

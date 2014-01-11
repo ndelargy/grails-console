@@ -2,20 +2,13 @@
   App.module('Files', function(Files, App, Backbone, Marionette, $, _) {
     var showInModal;
     showInModal = function(view) {
-      var $el, sizeContent;
+      var $el;
       $el = $('<div class="modal" data-backdrop="false"></div>').appendTo('body').html(view.render().el);
       $el.modal({
         show: false
       });
-      sizeContent = function() {
-        var filesBodyHeight, modalBodyHeight;
-        modalBodyHeight = $el.find('.modal-content').height() - $el.find('.modal-header').outerHeight() - $el.find('.modal-footer').outerHeight();
-        $el.find('.modal-body').height(modalBodyHeight);
-        filesBodyHeight = modalBodyHeight - $el.find('.files-header').outerHeight();
-        return $el.find('.files-body').height(filesBodyHeight);
-      };
       $el.on('shown.bs.modal', function() {
-        return sizeContent();
+        return view.resize();
       });
       $el.find('.modal-content').draggable({
         handle: '.modal-header',
@@ -25,11 +18,10 @@
       $el.find('.modal-content').resizable({
         addClasses: false,
         resize: function(event, ui) {
-          return sizeContent();
+          return view.resize();
         },
         stop: function(event, ui) {}
       });
-      sizeContent();
       $el.find('.modal-header .close').on('click', function(event) {
         event.preventDefault();
         return view.close();
@@ -49,18 +41,47 @@
     };
     return Files.Controller = Marionette.Controller.extend({
       initialize: function() {
+        var _this = this;
         this.collection = new App.Entities.FileCollection();
         this.collection.fetch();
-        return this.scriptsView = new Files.ScriptsView({
+        this.listenTo(App, 'file:opened', function(file) {
+          _this.collection.store = file.store;
+          _this.collection.path = file.getParent();
+          return _this.collection.fetch();
+        });
+        this.listenTo(App, 'file:created', function(file) {
+          var collection;
+          file = App.Editor.controller.file;
+          collection = this.collection;
+          if (file.getParent() === collection.path && file.store === collection.store) {
+            return collection.fetch();
+          }
+        });
+        this.scriptsView = new Files.ScriptsView({
           collection: this.collection
+        });
+        return this.listenTo(this.scriptsView, 'file:selected', function(file) {
+          if (!App.Editor.controller.isDirty() || confirm('Are you sure? You have unsaved changes.')) {
+            return file.fetch().done(function() {
+              App.Editor.controller.showFile(file);
+              return App.router.showFile(file);
+            });
+          }
         });
       },
       promptForNewFileName: function() {
-        var dfd, view;
+        var dfd, path, store, view;
         dfd = $.Deferred();
+        if (App.Editor.controller.file.isNew()) {
+          store = App.Files.controller.scriptsView.collection.store;
+          path = App.Files.controller.scriptsView.collection.path;
+        } else {
+          store = App.Editor.controller.file.store;
+          path = App.Editor.controller.file.getParent();
+        }
         view = new Files.FilesSectionView({
-          title: 'Save',
-          saving: true
+          store: store,
+          path: path
         });
         showInModal(view);
         view.$el.find('.file-name').focus();

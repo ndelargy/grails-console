@@ -2,7 +2,7 @@
   App.module('Files', function(Files, App, Backbone, Marionette, $, _) {
     var FileView;
     FileView = Marionette.ItemView.extend({
-      tagName: 'tr',
+      tagName: 'li',
       template: 'files/file',
       onRender: function() {
         return this.$el.data('fileId', this.model.id);
@@ -17,11 +17,9 @@
         'click a.name': 'onNameClick'
       },
       _initialEvents: function() {
-        this.listenTo(this.collection, 'add', this.addChildView);
-        this.listenTo(this.collection, 'remove', this.removeItemView);
         return this.listenTo(this.collection, 'reset', this.render);
       },
-      itemViewContainer: 'tbody',
+      itemViewContainer: 'ul',
       getItemView: function(item) {
         return FileView;
       },

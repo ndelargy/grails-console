@@ -2,7 +2,7 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
   FileView = Marionette.ItemView.extend
 
-    tagName: 'tr'
+    tagName: 'li'
 
     template: 'files/file'
 
@@ -20,11 +20,9 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       'click a.name': 'onNameClick'
 
     _initialEvents: ->
-      @listenTo @collection, 'add', @addChildView
-      @listenTo @collection, 'remove', @removeItemView
       @listenTo @collection, 'reset', @render
 
-    itemViewContainer: 'tbody'
+    itemViewContainer: 'ul'
 
     getItemView: (item) -> FileView
 

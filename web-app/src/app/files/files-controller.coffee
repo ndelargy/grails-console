@@ -4,15 +4,7 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
     $el = $('<div class="modal" data-backdrop="false"></div>').appendTo('body').html view.render().el
     $el.modal show: false
 
-    sizeContent = ->
-      modalBodyHeight = $el.find('.modal-content').height() - $el.find('.modal-header').outerHeight() - $el.find('.modal-footer').outerHeight()
-      $el.find('.modal-body').height modalBodyHeight
-
-      filesBodyHeight = modalBodyHeight - $el.find('.files-header').outerHeight()
-      $el.find('.files-body').height filesBodyHeight
-
-    $el.on 'shown.bs.modal', ->
-      sizeContent()
+    $el.on 'shown.bs.modal', -> view.resize()
 
     $el.find('.modal-content').draggable
       handle: '.modal-header'
@@ -22,11 +14,8 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
     $el.find('.modal-content').resizable
       addClasses: false
-      resize: (event, ui) -> sizeContent()
+      resize: (event, ui) -> view.resize()
       stop: (event, ui) ->
-
-    sizeContent()
-    # TODO modal region
 
     $el.find('.modal-header .close').on 'click', (event) ->
       event.preventDefault()
@@ -51,15 +40,41 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       @collection = new App.Entities.FileCollection()
       @collection.fetch() # TODO router init
 
+      @listenTo App, 'file:opened', (file) =>
+        @collection.store = file.store
+        @collection.path = file.getParent()
+
+        @collection.fetch()
+
+      @listenTo App, 'file:created', (file) -> # TODO this is whack
+        file = App.Editor.controller.file
+        collection = @collection
+        if file.getParent() is collection.path and file.store is collection.store
+          collection.fetch()
+
       @scriptsView = new Files.ScriptsView
         collection: @collection
+
+      @listenTo @scriptsView, 'file:selected', (file) ->
+        # TODO pass through
+        if not App.Editor.controller.isDirty() or confirm 'Are you sure? You have unsaved changes.'
+          file.fetch().done ->
+            App.Editor.controller.showFile file
+            App.router.showFile file
 
     promptForNewFileName: ->
       dfd = $.Deferred()
 
+      if App.Editor.controller.file.isNew()
+        store = App.Files.controller.scriptsView.collection.store # TODO
+        path = App.Files.controller.scriptsView.collection.path
+      else
+        store = App.Editor.controller.file.store
+        path = App.Editor.controller.file.getParent()
+
       view = new Files.FilesSectionView
-        title: 'Save'
-        saving: true
+        store: store
+        path: path
 
       showInModal view
 

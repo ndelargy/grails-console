@@ -6,29 +6,16 @@
         "class": 'scripts'
       },
       events: {
-        'click li a.name': 'onNameClick',
+        'click li .name a': 'onNameClick',
         'click li a.delete': 'onDeleteClick',
-        'click .store a': 'onStoreClick',
+        'click ul.store a': 'onStoreClick',
         'click .up': 'onUpClick'
       },
       initialize: function() {
         var _this = this;
         this.lastPaths = {};
-        this.listenTo(this.collection, 'add remove reset', function() {
+        return this.listenTo(this.collection, 'add remove reset', function() {
           return _this.render();
-        });
-        this.listenTo(App, 'file:opened', function(file) {
-          _this.collection.store = file.store;
-          _this.collection.path = file.getParent();
-          return _this.collection.fetch();
-        });
-        return this.listenTo(App, 'file:created', function(file) {
-          var collection;
-          file = App.Editor.controller.file;
-          collection = this.collection;
-          if (file.getParent() === collection.path && file.store === collection.store) {
-            return collection.fetch();
-          }
         });
       },
       onNameClick: function(event) {
@@ -38,17 +25,12 @@
         file = this.collection.findWhere({
           id: fileId
         });
-        if (file.get('type') === 'dir') {
+        if (file.isDirectory()) {
           path = file.getAbsolutePath();
           this.collection.path = path;
           return this.collection.fetch();
         } else {
-          if (!App.Editor.controller.isDirty() || confirm('Are you sure? You have unsaved changes.')) {
-            return file.fetch().done(function() {
-              App.Editor.controller.showFile(file);
-              return App.router.showFile(file);
-            });
-          }
+          return this.trigger('file:selected', file);
         }
       },
       onStoreClick: function(event) {
@@ -62,7 +44,9 @@
       },
       onUpClick: function(event) {
         event.preventDefault();
+        console.log("old: " + this.collection.path);
         this.collection.path = this.collection.getParent();
+        console.log("new: " + this.collection.path);
         return this.collection.fetch();
       },
       onDeleteClick: function(event) {

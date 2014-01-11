@@ -12,49 +12,51 @@
         'class': 'modal-dialog files-section-view'
       },
       events: {
-        'change select[name=store]': 'onStoreChange',
         'click button.save': 'onSave'
       },
       initialize: function(options) {
-        var path, store, _ref, _ref1;
-        this.saving = options.saving;
-        this.title = options.title;
-        store = (_ref = App.settings.get('files.lastStore')) != null ? _ref : 'local';
-        path = (_ref1 = App.settings.get("files." + store + ".lastDir")) != null ? _ref1 : '/';
-        this.baseDir = new BaseDir({
-          path: path,
-          store: store
-        });
+        this.baseDir = new BaseDir();
         this.listenTo(this.baseDir, 'change', this.showCollection);
         this.collection = new App.Entities.FileCollection();
-        this.filePathView = new Files.FilePathView({
-          model: this.baseDir
+        this.collection.store = options.store;
+        this.collection.path = options.path;
+        this.collection.fetch();
+        this.scriptsView = new Files.ScriptsView({
+          collection: this.collection
         });
-        return this.listenTo(this.filePathView, 'path:selected', this.onPathSelected);
+        return this.listenTo(this.scriptsView, 'render', this.resize);
       },
       onRender: function() {
-        this.filePathRegion.show(this.filePathView);
-        this.showCollection();
-        return this.$('select[name=store]').val(this.baseDir.get('store'));
+        return this.storeRegion.show(this.scriptsView);
       },
       onFileSelected: function(file) {
         var path;
-        if (file.get('type') === 'dir') {
+        if (file.isDirectory()) {
           path = file.getAbsolutePath();
           return this.baseDir.set('path', path);
         } else {
           return this.trigger('file:selected', file);
         }
       },
-      onPathSelected: function(path) {
-        return this.baseDir.set('path', path);
+      resize: function() {
+        var filesBodyHeight, filesWrapperHeight, modalBodyHeight;
+        if (this.$el.is(':visible')) {
+          modalBodyHeight = this.$('.modal-content').height() - this.$('.modal-header').outerHeight() - this.$('.modal-footer').outerHeight();
+          this.$('.modal-body').height(modalBodyHeight);
+          filesBodyHeight = modalBodyHeight - this.$('.files-header').outerHeight();
+          this.$('.files-body').height(filesBodyHeight);
+          this.$('.files-body div.store').height(filesBodyHeight);
+          this.$('.files-body div.store .scripts').height(filesBodyHeight);
+          filesWrapperHeight = filesBodyHeight - this.$('.files-body div.store .scripts > .btn-toolbar').outerHeight() - this.$('.files-body div.store .scripts > .folder').outerHeight();
+          return this.$('.files-body div.store .scripts > .files-wrapper').height(filesWrapperHeight);
+        }
       },
       onSave: function(event) {
         var fileName, path, store;
         event.preventDefault();
         fileName = this.$('input.file-name').val();
-        store = this.baseDir.get('store');
-        path = this.baseDir.get('path');
+        store = this.collection.store;
+        path = this.collection.path;
         if (path[path.length - 1] !== '/') {
           path += '/';
         }
@@ -64,14 +66,11 @@
         return this.$('input.file-name').val(name);
       },
       showCollection: function() {
-        var path, store,
-          _this = this;
+        var _this = this;
         this.storeRegion.show(new Files.LoadingView);
-        store = this.baseDir.get('store');
-        path = this.baseDir.get('path');
         this.collection.store = store;
         this.collection.path = path;
-        this.collection.fetch().done(function() {
+        return this.collection.fetch().done(function() {
           var fileCollectionView;
           fileCollectionView = new Files.FileCollectionView({
             collection: _this.collection
@@ -81,25 +80,6 @@
         }).fail(function() {
           return alert('Failed to load remote files.');
         });
-        App.settings.set({
-          'files.lastStore': store
-        });
-        return App.settings.set("files." + store + ".lastDir", path).save();
-      },
-      onStoreChange: function(event) {
-        var path, store, _ref;
-        store = this.$(event.currentTarget).val();
-        path = (_ref = App.settings.get("files." + store + ".lastDir")) != null ? _ref : '/';
-        return this.baseDir.set({
-          store: store,
-          path: path
-        });
-      },
-      serializeData: function() {
-        return {
-          title: this.title,
-          saving: this.saving
-        };
       }
     });
   });

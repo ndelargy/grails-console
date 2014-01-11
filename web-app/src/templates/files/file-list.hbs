@@ -1,14 +1,9 @@
 <div class="files-page-body full-height">
   {{#if files}}
-      <table class="table table-hover">
-          <thead>
-          <tr>
-              <th>Name</th>
-              <th>Date Modified</th>
-          </tr>
-          </thead>
-          <tbody></tbody>
-      </table>
+      <div class="files-wrapper">
+          <ul class="files">
+          </ul>
+      </div>
   {{else}}
       <div class="message">No files</div>
   {{/if}}

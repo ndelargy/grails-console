@@ -8,47 +8,26 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       class: 'scripts'
 
     events:
-      'click li a.name': 'onNameClick'
+      'click li .name a': 'onNameClick'
       'click li a.delete': 'onDeleteClick'
-      'click .store a': 'onStoreClick'
+      'click ul.store a': 'onStoreClick'
       'click .up': 'onUpClick'
-
-      # TODO editor listen for delete
-      # TODO no find file
 
     initialize: ->
       @lastPaths = {}
-
       @listenTo @collection, 'add remove reset', => @render()
-
-      @listenTo App, 'file:opened', (file) =>
-        @collection.store = file.store
-        @collection.path = file.getParent()
-
-        @collection.fetch()
-
-      @listenTo App, 'file:created', (file) -> # TODO this is whack
-        file = App.Editor.controller.file
-        collection = @collection
-        if file.getParent() is collection.path and file.store is collection.store
-          collection.fetch()
-
 
     onNameClick: (event) ->
       event.preventDefault()
       fileId = $(event.currentTarget).closest('li').data('fileId')
       file = @collection.findWhere(id: fileId)
 
-      if file.get('type') is 'dir'
+      if file.isDirectory()
         path = file.getAbsolutePath()
         @collection.path = path
         @collection.fetch()
-
       else
-        if not App.Editor.controller.isDirty() or confirm 'Are you sure? You have unsaved changes.'
-          file.fetch().done ->
-            App.Editor.controller.showFile file
-            App.router.showFile file
+        @trigger 'file:selected', file
 
     onStoreClick: (event) ->
       event.preventDefault()
@@ -62,9 +41,10 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
     onUpClick: (event) ->
       event.preventDefault()
+      console.log "old: #{@collection.path}"
       @collection.path = @collection.getParent()
+      console.log "new: #{@collection.path}"
       @collection.fetch()
-
 
     onDeleteClick: (event) ->
       event.preventDefault()

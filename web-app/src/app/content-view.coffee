@@ -28,7 +28,7 @@
       @centerRegion.show @editorView
       @westRegion.show @scriptsView
 
-      @editorView.refresh()
+#      @editorView.refresh()
 
       @resultsView.render()
 
@@ -70,6 +70,7 @@
         findNestedContent: true
         fxName: ''
         spacing_open: 3
+        spacing_closed: 3
 
     showOrientation: ->
       orientation = App.settings.get('orientation')

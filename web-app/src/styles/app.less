@@ -154,11 +154,12 @@ body {
 }
 
 .files-section-view {
-  width: 700px;
-  .modal-body {
-    height: 500px;
+  width: 350px;
+
+  .modal-header {
   }
   .modal-body {
+    height: 450px;
     padding: 0;
   }
   .modal-footer {
@@ -222,14 +223,6 @@ body {
           margin-top: -10px;
         }
       }
-      .message {
-        position: absolute;
-        top: 50%;
-        width: 100%;
-        text-align: center;
-        line-height: 16px;
-        margin-top: -8px;
-      }
     }
   }
 }
@@ -239,30 +232,48 @@ body {
     padding: 5px 15px;
     border-bottom: 1px solid #ccc;
   }
-  .files-wrapper {
-    overflow: auto;
-    ul.files {
-      padding: 0;
-      li {
-        position: relative;
-        display: block;
-        padding: 5px 15px;
-        font-size: 12px;
-        i {
-          padding-right: 3px;
-        }
+}
+
+.files-wrapper {
+  overflow: auto;
+  position: relative;
+  ul.files {
+    padding: 0;
+    li {
+      position: relative;
+      display: block;
+      padding: 5px 15px;
+      font-size: 12px;
+      .name {
+        white-space: nowrap;
+        overflow: hidden;
+        margin-right: 25px;
+      }
+      i {
+        padding-right: 3px;
+      }
+      a.delete {
+        opacity: 1;
+        position: absolute;
+        right: 9px;
+        top: 0;
+        height: inherit;
+        line-height: 25px;
+      }
+      &:hover {
         a.delete {
           opacity: 1;
-          float: right;
-        }
-        &:hover {
-          a.delete {
-            opacity: 1;
-          }
         }
       }
-
     }
+  }
+  .message {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    line-height: 16px;
+    margin-top: -8px;
   }
 }
 

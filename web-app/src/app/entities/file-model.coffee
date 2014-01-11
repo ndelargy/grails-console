@@ -13,6 +13,12 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
       # TODO null if root
       parent
 
+    isDirectory: ->
+      @get('type') is 'dir'
+
+    isFile: ->
+      @get('type') is 'file'
+
     sync: (method, file, options) ->
       if (file.store is 'local')
         Entities.localFileStore.sync method, file, options

@@ -67,6 +67,11 @@
       App.router.showNew()
       App.Editor.controller.newFile()
 
+  App.on 'file:created', (file) ->
+    App.Files.controller.scriptsView.collection.store = file.store
+    App.Files.controller.scriptsView.collection.path = file.getParent()
+    App.Files.controller.scriptsView.collection.fetch()
+
   App.on 'help', ->
     # TODO modal region
     view = new App.HelpView

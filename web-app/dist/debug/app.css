@@ -131,12 +131,10 @@ body {
   visibility: visible;
 }
 .files-section-view {
-  width: 700px;
+  width: 350px;
 }
 .files-section-view .modal-body {
-  height: 500px;
-}
-.files-section-view .modal-body {
+  height: 450px;
   padding: 0;
 }
 .files-section-view .modal-footer {
@@ -189,39 +187,49 @@ body {
   width: 100%;
   margin-top: -10px;
 }
-.files-section-view .files-body .store .message {
+.scripts .folder {
+  padding: 5px 15px;
+  border-bottom: 1px solid #ccc;
+}
+.files-wrapper {
+  overflow: auto;
+  position: relative;
+}
+.files-wrapper ul.files {
+  padding: 0;
+}
+.files-wrapper ul.files li {
+  position: relative;
+  display: block;
+  padding: 5px 15px;
+  font-size: 12px;
+}
+.files-wrapper ul.files li .name {
+  white-space: nowrap;
+  overflow: hidden;
+  margin-right: 25px;
+}
+.files-wrapper ul.files li i {
+  padding-right: 3px;
+}
+.files-wrapper ul.files li a.delete {
+  opacity: 1;
+  position: absolute;
+  right: 9px;
+  top: 0;
+  height: inherit;
+  line-height: 25px;
+}
+.files-wrapper ul.files li:hover a.delete {
+  opacity: 1;
+}
+.files-wrapper .message {
   position: absolute;
   top: 50%;
   width: 100%;
   text-align: center;
   line-height: 16px;
   margin-top: -8px;
-}
-.scripts .folder {
-  padding: 5px 15px;
-  border-bottom: 1px solid #ccc;
-}
-.scripts .files-wrapper {
-  overflow: auto;
-}
-.scripts .files-wrapper ul.files {
-  padding: 0;
-}
-.scripts .files-wrapper ul.files li {
-  position: relative;
-  display: block;
-  padding: 5px 15px;
-  font-size: 12px;
-}
-.scripts .files-wrapper ul.files li i {
-  padding-right: 3px;
-}
-.scripts .files-wrapper ul.files li a.delete {
-  opacity: 1;
-  float: right;
-}
-.scripts .files-wrapper ul.files li:hover a.delete {
-  opacity: 1;
 }
 .full-height {
   height: 100%;

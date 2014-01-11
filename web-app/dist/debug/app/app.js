@@ -78,6 +78,11 @@
         return App.Editor.controller.newFile();
       }
     });
+    App.on('file:created', function(file) {
+      App.Files.controller.scriptsView.collection.store = file.store;
+      App.Files.controller.scriptsView.collection.path = file.getParent();
+      return App.Files.controller.scriptsView.collection.fetch();
+    });
     App.on('help', function() {
       var $el, view;
       view = new App.HelpView;
