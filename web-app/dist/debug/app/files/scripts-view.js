@@ -11,43 +11,44 @@
         'click ul.store a': 'onStoreClick',
         'click .up': 'onUpClick'
       },
-      initialize: function() {
-        var _this = this;
+      initialize: function(options) {
+        var _ref,
+          _this = this;
         this.lastPaths = {};
+        this.showDelete = (_ref = options.showDelete) != null ? _ref : true;
+        this.listenTo(this.collection, 'request', function() {
+          _this.loading = true;
+          return _this.render();
+        });
         return this.listenTo(this.collection, 'add remove reset', function() {
+          _this.loading = false;
           return _this.render();
         });
       },
       onNameClick: function(event) {
-        var file, fileId, path;
+        var file, fileId;
         event.preventDefault();
         fileId = $(event.currentTarget).closest('li').data('fileId');
         file = this.collection.findWhere({
           id: fileId
         });
         if (file.isDirectory()) {
-          path = file.getAbsolutePath();
-          this.collection.path = path;
-          return this.collection.fetch();
+          return this.collection.fetchByStoreAndPath(file.store, file.getAbsolutePath());
         } else {
           return this.trigger('file:selected', file);
         }
       },
       onStoreClick: function(event) {
-        var store, _ref;
+        var path, store, _ref;
         event.preventDefault();
         this.lastPaths[this.collection.store] = this.collection.path;
         store = $(event.currentTarget).data('store');
-        this.collection.store = store;
-        this.collection.path = (_ref = this.lastPaths[this.collection.store]) != null ? _ref : '/';
-        return this.collection.fetch();
+        path = (_ref = this.lastPaths[store]) != null ? _ref : '/';
+        return this.collection.fetchByStoreAndPath(store, path);
       },
       onUpClick: function(event) {
         event.preventDefault();
-        console.log("old: " + this.collection.path);
-        this.collection.path = this.collection.getParent();
-        console.log("new: " + this.collection.path);
-        return this.collection.fetch();
+        return this.collection.up();
       },
       onDeleteClick: function(event) {
         var file, fileId,
@@ -72,14 +73,26 @@
           path: this.collection.path,
           currentDir: currentDir,
           hasUp: this.collection.path.length > 1,
-          store: this.collection.store === 'local' ? 'Local Storage' : 'Remote Storage'
+          store: this.collection.store === 'local' ? 'Local Storage' : 'Remote Storage',
+          showDelete: this.showDelete,
+          loading: this.loading
         };
       }
     });
-    return Handlebars.registerHelper('scriptsFileIcon', function(file, options) {
+    Handlebars.registerHelper('scriptsFileIcon', function(file, options) {
       var clazz;
       clazz = this.type === 'dir' ? 'fa fa-folder-o' : 'fa fa-file-o';
       return new Handlebars.SafeString("<i class='" + clazz + "'></i>");
+    });
+    return Handlebars.registerHelper('scriptsFileItem', function(file, options) {
+      var html, iconClass, showDelete;
+      showDelete = options.hash.showDelete;
+      iconClass = this.type === 'dir' ? 'fa fa-folder-o' : 'fa fa-file-o';
+      html = "<div class='name'><i class='" + iconClass + "'></i><a class='name' href='#'>" + file.name + "</a></div>";
+      if (showDelete) {
+        html += '<a class="delete" href="#">×</a>';
+      }
+      return new Handlebars.SafeString(html);
     });
   });
 

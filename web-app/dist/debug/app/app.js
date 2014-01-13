@@ -79,9 +79,7 @@
       }
     });
     App.on('file:created', function(file) {
-      App.Files.controller.scriptsView.collection.store = file.store;
-      App.Files.controller.scriptsView.collection.path = file.getParent();
-      return App.Files.controller.scriptsView.collection.fetch();
+      return App.Files.controller.scriptsView.collection.fetchByStoreAndPath(file.store, file.getParent());
     });
     App.on('help', function() {
       var $el, view;

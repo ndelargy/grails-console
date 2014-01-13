@@ -14,19 +14,19 @@
   {{#if hasUp}}<a href="#" class="up">../</a>{{/if}}<span title="{{path}}">{{currentDir}}/</span>
 </div>
 <div class="files-wrapper">
-  {{#if files}}
-      <ul class="files">
-        {{#each files}}
-            <li data-file-id="{{id}}">
-                <div class="name">
-                  {{scriptsFileIcon}}
-                    <a class="name" href="#">{{name}}</a>
-                </div>
-                <a class="delete" href="#">×</a>
-            </li>
-        {{/each}}
-      </ul>
+  {{#if loading}}
+      <div class="loading"><i class="fa fa-refresh fa-spin"></i></div>
   {{else}}
-      <div class="message">No files</div>
+    {{#if files}}
+        <ul class="files">
+          {{#each files}}
+              <li data-file-id="{{id}}">
+                {{scriptsFileItem this linkFiles=../linkFiles showDelete=../showDelete}}
+              </li>
+          {{/each}}
+        </ul>
+    {{else}}
+        <div class="message">No files</div>
+    {{/if}}
   {{/if}}
 </div>

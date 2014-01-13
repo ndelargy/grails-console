@@ -162,11 +162,7 @@ body {
   overflow: auto;
   position: relative;
 }
-.files-section-view .files-body .store .loading-view {
-  height: 100%;
-  position: relative;
-}
-.files-section-view .files-body .store .loading-view .loading {
+.loading {
   text-align: center;
   height: 20px;
   top: 50%;
@@ -197,7 +193,7 @@ body {
   margin-right: 25px;
 }
 .files-wrapper ul.files li i {
-  padding-right: 3px;
+  padding-right: 5px;
 }
 .files-wrapper ul.files li a.delete {
   opacity: 1;

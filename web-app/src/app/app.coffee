@@ -68,9 +68,8 @@
       App.Editor.controller.newFile()
 
   App.on 'file:created', (file) ->
-    App.Files.controller.scriptsView.collection.store = file.store
-    App.Files.controller.scriptsView.collection.path = file.getParent()
-    App.Files.controller.scriptsView.collection.fetch()
+    # TODO file controller
+    App.Files.controller.scriptsView.collection.fetchByStoreAndPath file.store, file.getParent()
 
   App.on 'help', ->
     # TODO modal region

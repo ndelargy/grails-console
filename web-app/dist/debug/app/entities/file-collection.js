@@ -21,6 +21,19 @@
         }
         return newPath;
       },
+      fetchByStoreAndPath: function(store, path) {
+        this.store = store;
+        this.path = path;
+        return this.fetch({
+          reset: true
+        });
+      },
+      up: function() {
+        this.path = this.getParent();
+        return this.fetch({
+          reset: true
+        });
+      },
       sync: function(method, file, options) {
         var url;
         if (this.store === 'local') {

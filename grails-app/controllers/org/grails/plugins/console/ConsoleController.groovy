@@ -32,7 +32,7 @@ class ConsoleController {
 
         Map results = consoleService.eval(code, true, request)
         if (results.exception) {
-            def sw = new StringWriter()
+            StringWriter sw = new StringWriter()
             new PrintWriter(sw).withWriter { GrailsUtil.deepSanitize(results.exception).printStackTrace(it) }
             results.exception = sw.toString()
         } else {

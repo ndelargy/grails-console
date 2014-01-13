@@ -20,6 +20,13 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
       # TODO null if no parent
       newPath
 
+    fetchByStoreAndPath: (@store, @path) ->
+      @fetch reset: true
+
+    up: ->
+      @path = @getParent()
+      @fetch reset: true
+
     sync: (method, file, options) ->
       if (@store is 'local')
         Entities.localFileStore.sync method, file, options

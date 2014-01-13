@@ -22,21 +22,17 @@
         this.collection.path = options.path;
         this.collection.fetch();
         this.scriptsView = new Files.ScriptsView({
-          collection: this.collection
+          collection: this.collection,
+          showDelete: false
         });
-        return this.listenTo(this.scriptsView, 'render', this.resize);
+        this.listenTo(this.scriptsView, 'render', this.resize);
+        return this.listenTo(this.scriptsView, 'file:selected', this.onFileSelected);
       },
       onRender: function() {
         return this.storeRegion.show(this.scriptsView);
       },
       onFileSelected: function(file) {
-        var path;
-        if (file.isDirectory()) {
-          path = file.getAbsolutePath();
-          return this.baseDir.set('path', path);
-        } else {
-          return this.trigger('file:selected', file);
-        }
+        return this.setName(file.get('name'));
       },
       resize: function() {
         var filesBodyHeight, filesWrapperHeight, modalBodyHeight;

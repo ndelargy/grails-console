@@ -27,18 +27,16 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
       @scriptsView = new Files.ScriptsView
         collection: @collection
+        showDelete: false
 
       @listenTo @scriptsView, 'render', @resize
+      @listenTo @scriptsView, 'file:selected', @onFileSelected
 
     onRender: ->
       @storeRegion.show @scriptsView
 
     onFileSelected: (file) ->
-      if file.isDirectory()
-        path = file.getAbsolutePath()
-        @baseDir.set 'path', path
-      else
-        @trigger 'file:selected', file
+      @setName file.get('name')
 
     resize: ->
       if (@$el.is ':visible')

@@ -13,9 +13,18 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       'click ul.store a': 'onStoreClick'
       'click .up': 'onUpClick'
 
-    initialize: ->
+    initialize: (options) ->
       @lastPaths = {}
-      @listenTo @collection, 'add remove reset', => @render()
+
+      @showDelete = options.showDelete ? true
+
+      @listenTo @collection, 'request', =>
+        @loading = true
+        @render()
+
+      @listenTo @collection, 'add remove reset', =>
+        @loading = false
+        @render()
 
     onNameClick: (event) ->
       event.preventDefault()
@@ -23,9 +32,7 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       file = @collection.findWhere(id: fileId)
 
       if file.isDirectory()
-        path = file.getAbsolutePath()
-        @collection.path = path
-        @collection.fetch()
+        @collection.fetchByStoreAndPath file.store, file.getAbsolutePath()
       else
         @trigger 'file:selected', file
 
@@ -34,17 +41,13 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       @lastPaths[@collection.store] = @collection.path
 
       store = $(event.currentTarget).data('store')
-      @collection.store = store
+      path = @lastPaths[store] ? '/'
 
-      @collection.path = @lastPaths[@collection.store] ? '/'
-      @collection.fetch()
+      @collection.fetchByStoreAndPath store, path
 
     onUpClick: (event) ->
       event.preventDefault()
-      console.log "old: #{@collection.path}"
-      @collection.path = @collection.getParent()
-      console.log "new: #{@collection.path}"
-      @collection.fetch()
+      @collection.up()
 
     onDeleteClick: (event) ->
       event.preventDefault()
@@ -63,7 +66,16 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       currentDir: currentDir
       hasUp: @collection.path.length > 1
       store: if @collection.store is 'local' then 'Local Storage' else 'Remote Storage'
+      showDelete: @showDelete
+      loading: @loading
 
   Handlebars.registerHelper 'scriptsFileIcon', (file, options) ->
     clazz = if @type is 'dir' then 'fa fa-folder-o' else 'fa fa-file-o'
     new Handlebars.SafeString "<i class='#{clazz}'></i>"
+
+  Handlebars.registerHelper 'scriptsFileItem', (file, options) ->
+    showDelete = options.hash.showDelete
+    iconClass = if @type is 'dir' then 'fa fa-folder-o' else 'fa fa-file-o'
+    html = "<div class='name'><i class='#{iconClass}'></i><a class='name' href='#'>#{file.name}</a></div>"
+    html += '<a class="delete" href="#">×</a>' if showDelete
+    new Handlebars.SafeString html
