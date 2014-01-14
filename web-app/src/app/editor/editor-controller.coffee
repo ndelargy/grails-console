@@ -15,10 +15,11 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
       @listenTo @editorView, 'saveAs', @saveAs
 
-      @listenTo @editorView, 'clear', @clearResults
-
       @resultCollection = new Editor.ResultCollection()
       @resultsView = new Editor.ResultCollectionView(collection: @resultCollection)
+
+      @listenTo App, 'app:editor:clear', ->
+        @resultCollection.reset()
 
     newFile: ->
       file = new App.Entities.File

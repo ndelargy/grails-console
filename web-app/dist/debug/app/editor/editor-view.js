@@ -32,7 +32,7 @@
               return _this.executeCode();
             },
             'Esc': function() {
-              return _this.trigger("clear");
+              return App.trigger('app:editor:clear');
             }
           },
           theme: "lesser-dark"

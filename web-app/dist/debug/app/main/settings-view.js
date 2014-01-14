@@ -1,7 +1,7 @@
 (function() {
-  (function(App, Backbone, $) {
-    return App.SettingsView = Backbone.Marionette.ItemView.extend({
-      template: 'settings',
+  App.module('Main', function(Main, App, Backbone, Marionette, $, _) {
+    return Main.SettingsView = Backbone.Marionette.ItemView.extend({
+      template: 'main/settings',
       events: {
         'click .setting': 'onSettingClick',
         'click .help': 'onHelpClick'
@@ -50,6 +50,6 @@
         return App.trigger('help');
       }
     });
-  })(App, Backbone, jQuery);
+  });
 
 }).call(this);

@@ -1,6 +1,6 @@
 (function() {
-  (function(App, Backbone) {
-    return App.Router = Backbone.Router.extend({
+  App.module('Main', function(Main, App, Backbone, Marionette, $, _) {
+    return Main.Router = Backbone.Router.extend({
       initialize: function() {
         this.route('*path', 'newFile');
         this.route('new', 'newFile');
@@ -23,6 +23,6 @@
         return App.Editor.controller.openFile('remote', name);
       }
     });
-  })(App, Backbone);
+  });
 
 }).call(this);

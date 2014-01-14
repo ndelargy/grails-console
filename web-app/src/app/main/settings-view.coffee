@@ -1,8 +1,8 @@
-((App, Backbone, $) ->
+App.module 'Main', (Main, App, Backbone, Marionette, $, _) ->
 
-  App.SettingsView = Backbone.Marionette.ItemView.extend
+  Main.SettingsView = Backbone.Marionette.ItemView.extend
 
-    template: 'settings'
+    template: 'main/settings'
 
     events:
       'click .setting': 'onSettingClick'
@@ -39,5 +39,3 @@
     onHelpClick: (event) ->
       event.preventDefault()
       App.trigger 'help'
-
-) App, Backbone, jQuery

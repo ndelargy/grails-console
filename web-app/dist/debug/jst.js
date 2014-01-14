@@ -1,14 +1,5 @@
 this["JST"] = this["JST"] || {};
 
-this["JST"]["content"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
-
-
-  return "<div class=\"center\"><div id=\"editor\"></div></div>\n<div class=\"west\"></div>\n<div class=\"east results\"></div>\n<div class=\"south\"></div>";
-  });
-
 this["JST"]["editor/editor"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -183,7 +174,16 @@ function program9(depth0,data) {
   return buffer;
   });
 
-this["JST"]["header"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+this["JST"]["main/content"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<div class=\"outer-west\"></div>\n<div class=\"outer-center full-height\">\n  <div class=\"center\"><div id=\"editor\"></div></div>\n  <div class=\"east results\"></div>\n  <div class=\"south\"></div>\n</div>";
+  });
+
+this["JST"]["main/header"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
@@ -192,7 +192,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   return "<span class=\"navbar-brand\">Grails Debug Console</span>\n<p class=\"navbar-text title\"></p>\n<div class=\"saving\" style=\"display: none\">\n    <i class=\"fa fa-refresh fa-spin\"></i>\n    Saving\n</div>\n\n<form class=\"navbar-form pull-right\">\n    <div class=\"btn-group settings-btn-group\">\n        <button class=\"clear btn-sm btn btn-default dropdown-toggle\" title=\"(Esc)\" data-toggle=\"dropdown\">\n            <i class=\"fa fa-cog\"></i>\n            <span class=\"caret\"></span>\n        </button>\n    </div>\n</form>";
   });
 
-this["JST"]["help-modal"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+this["JST"]["main/help-modal"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
@@ -215,7 +215,7 @@ function program1(depth0,data) {
   return buffer;
   });
 
-this["JST"]["settings"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+this["JST"]["main/settings"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   

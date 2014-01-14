@@ -24,15 +24,13 @@
       fetchByStoreAndPath: function(store, path) {
         this.store = store;
         this.path = path;
+        this.trigger('fetching');
         return this.fetch({
           reset: true
         });
       },
       up: function() {
-        this.path = this.getParent();
-        return this.fetch({
-          reset: true
-        });
+        return this.fetchByStoreAndPath(this.store, this.getParent());
       },
       sync: function(method, file, options) {
         var url;

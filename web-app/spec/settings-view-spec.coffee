@@ -1,4 +1,4 @@
-describe 'App.SettingsView', ->
+describe 'App.Main.SettingsView', ->
 
   beforeEach ->
     @settings = new App.Entities.Settings
@@ -6,7 +6,7 @@ describe 'App.SettingsView', ->
       'results.wrapText': true
       'theme': 'lesser-dark'
 
-    @view = new App.SettingsView model: @settings
+    @view = new App.Main.SettingsView model: @settings
 
     @$el = $('<div></div>').appendTo('body')
 

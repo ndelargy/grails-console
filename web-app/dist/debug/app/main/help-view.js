@@ -1,7 +1,7 @@
 (function() {
-  (function(App, Backbone) {
-    return App.HelpView = Backbone.Marionette.ItemView.extend({
-      template: 'help-modal',
+  App.module('Main', function(Main, App, Backbone, Marionette, $, _) {
+    return Main.HelpView = Backbone.Marionette.ItemView.extend({
+      template: 'main/help-modal',
       className: 'modal-dialog',
       serializeData: function() {
         return {
@@ -9,6 +9,6 @@
         };
       }
     });
-  })(App, Backbone);
+  });
 
 }).call(this);

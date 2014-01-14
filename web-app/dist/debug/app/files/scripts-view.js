@@ -16,7 +16,7 @@
           _this = this;
         this.lastPaths = {};
         this.showDelete = (_ref = options.showDelete) != null ? _ref : true;
-        this.listenTo(this.collection, 'request', function() {
+        this.listenTo(this.collection, 'fetching', function() {
           _this.loading = true;
           return _this.render();
         });

@@ -1,7 +1,7 @@
 (function() {
-  (function(App, Backbone) {
-    return App.HeaderView = Backbone.Marionette.ItemView.extend({
-      template: 'header',
+  App.module('Main', function(Main, App, Backbone, Marionette, $, _) {
+    return Main.HeaderView = Backbone.Marionette.ItemView.extend({
+      template: 'main/header',
       attributes: {
         "class": 'navbar navbar-fixed-top'
       },
@@ -17,7 +17,7 @@
         });
       },
       onRender: function() {
-        this.settingsView = new App.SettingsView({
+        this.settingsView = new Main.SettingsView({
           model: App.settings
         });
         this.$('.settings-btn-group').append(this.settingsView.render().$el);
@@ -27,6 +27,6 @@
         return this.settingsView.close();
       }
     });
-  })(App, Backbone);
+  });
 
 }).call(this);

@@ -1,15 +1,15 @@
-((App, Backbone) ->
+App.module 'Main', (Main, App, Backbone, Marionette, $, _) ->
 
-  App.ContentView = Backbone.Marionette.Layout.extend
+  Main.ContentView = Backbone.Marionette.Layout.extend
 
-    template: 'content'
+    template: 'main/content'
 
     attributes:
       class: 'full-height'
 
     regions:
       centerRegion: '.center'
-      westRegion: '.west'
+      westRegion: '.outer-west'
 
     initialize: (options) ->
       @listenTo App.settings, 'change:orientation', @showOrientation
@@ -19,7 +19,7 @@
       @scriptsView = options.scriptsView
 
       @listenTo @editorView, 'render', => @layout.initContent 'center'
-      @listenTo @scriptsView, 'render', => @layout.initContent 'west'
+      @listenTo @scriptsView, 'render', => @layoutOuter.initContent 'west'
 
 
     onRender: ->
@@ -28,28 +28,36 @@
       @centerRegion.show @editorView
       @westRegion.show @scriptsView
 
-#      @editorView.refresh()
-
       @resultsView.render()
 
       @showOrientation()
 
     refresh: ->
       @editorView.refresh()
+      @layoutOuter.resizeAll()
       @layout.resizeAll()
       @showOrientation()
 
     initLayout: ->
-      @layout = @$el.layout
-        center__paneSelector: '.center'
-        center__contentSelector: '#code-wrapper'
-        center__onresize: => @editorView.refresh()
-        west__paneSelector: '.west'
+      @layoutOuter = @$el.layout
+        center__paneSelector: '.outer-center'
+        west__paneSelector: '.outer-west'
         west__contentSelector: '.files-wrapper'
         west__size: App.settings.get('layout.west.size')
         west__onresize_end: (name, $el, state, opts) ->
           App.settings.set 'layout.west.size', state.size
           App.settings.save()
+        resizable: true
+        findNestedContent: true
+        fxName: ''
+        spacing_open: 3
+        spacing_closed: 3
+        slidable: false
+
+      @layout = @$('.outer-center').layout
+        center__paneSelector: '.center'
+        center__contentSelector: '#code-wrapper'
+        center__onresize: => @editorView.refresh()
         east__paneSelector: '.east'
         east__contentSelector: '.script-result-section'
         east__initHidden: App.settings.get('orientation') isnt 'vertical'
@@ -71,6 +79,7 @@
         fxName: ''
         spacing_open: 3
         spacing_closed: 3
+        slidable: false
 
     showOrientation: ->
       orientation = App.settings.get('orientation')
@@ -85,5 +94,3 @@
         @layout.show 'south'
         @layout.initContent 'south'
       @editorView.refresh()
-
-) App, Backbone

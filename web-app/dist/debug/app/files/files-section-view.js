@@ -1,7 +1,5 @@
 (function() {
   App.module('Files', function(Files, App, Backbone, Marionette, $, _) {
-    var BaseDir;
-    BaseDir = Backbone.Model.extend();
     return Files.FilesSectionView = Marionette.Layout.extend({
       template: 'files/files-section',
       regions: {
@@ -15,8 +13,6 @@
         'click button.save': 'onSave'
       },
       initialize: function(options) {
-        this.baseDir = new BaseDir();
-        this.listenTo(this.baseDir, 'change', this.showCollection);
         this.collection = new App.Entities.FileCollection();
         this.collection.store = options.store;
         this.collection.path = options.path;
@@ -60,22 +56,6 @@
       },
       setName: function(name) {
         return this.$('input.file-name').val(name);
-      },
-      showCollection: function() {
-        var _this = this;
-        this.storeRegion.show(new Files.LoadingView);
-        this.collection.store = store;
-        this.collection.path = path;
-        return this.collection.fetch().done(function() {
-          var fileCollectionView;
-          fileCollectionView = new Files.FileCollectionView({
-            collection: _this.collection
-          });
-          _this.listenTo(fileCollectionView, 'file:selected', _this.onFileSelected);
-          return _this.storeRegion.show(fileCollectionView);
-        }).fail(function() {
-          return alert('Failed to load remote files.');
-        });
       }
     });
   });

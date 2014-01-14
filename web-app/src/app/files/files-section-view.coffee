@@ -1,7 +1,5 @@
 App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
-  BaseDir = Backbone.Model.extend()
-
   Files.FilesSectionView = Marionette.Layout.extend
 
     template: 'files/files-section'
@@ -17,9 +15,6 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       'click button.save': 'onSave'
 
     initialize: (options) ->
-      @baseDir = new BaseDir()
-      @listenTo @baseDir, 'change', @showCollection
-
       @collection = new App.Entities.FileCollection()
       @collection.store = options.store
       @collection.path = options.path
@@ -62,20 +57,3 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
     setName: (name) ->
       @$('input.file-name').val name
-
-    showCollection: ->
-      @storeRegion.show new Files.LoadingView
-
-      @collection.store = store
-      @collection.path = path
-
-      @collection.fetch()
-        .done =>
-          fileCollectionView = new Files.FileCollectionView
-            collection: @collection
-
-          @listenTo fileCollectionView, 'file:selected', @onFileSelected
-#
-          @storeRegion.show fileCollectionView
-
-        .fail -> alert 'Failed to load remote files.' # TODO error view

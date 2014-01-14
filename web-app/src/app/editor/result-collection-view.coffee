@@ -7,7 +7,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
     itemViewContainer: '.inner'
 
     events:
-      'click button.clear': 'clear'
+      'click .clear': 'onClearClick'
 
     getItemView: (item) -> Editor.ResultView
 
@@ -17,7 +17,6 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
     initialize: ->
       @listenTo App.settings, 'change:results.wrapText', @setWrap
       @listenTo @, 'itemview:complete', @scrollToResultView
-      @listenTo App, 'app:editor:clear', @clear
 
     scrollToResultView: (resultView) ->
       scroll = resultView.$el.position().top + @$('.script-result-section').scrollTop()
@@ -29,5 +28,6 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
     onRender: ->
       @setWrap()
 
-    clear: ->
-      @collection.reset()
+    onClearClick: (event) ->
+      event.preventDefault()
+      App.trigger 'app:editor:clear'

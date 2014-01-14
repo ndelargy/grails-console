@@ -1,13 +1,13 @@
 (function() {
-  (function(App, Backbone) {
-    return App.ContentView = Backbone.Marionette.Layout.extend({
-      template: 'content',
+  App.module('Main', function(Main, App, Backbone, Marionette, $, _) {
+    return Main.ContentView = Backbone.Marionette.Layout.extend({
+      template: 'main/content',
       attributes: {
         "class": 'full-height'
       },
       regions: {
         centerRegion: '.center',
-        westRegion: '.west'
+        westRegion: '.outer-west'
       },
       initialize: function(options) {
         var _this = this;
@@ -19,7 +19,7 @@
           return _this.layout.initContent('center');
         });
         return this.listenTo(this.scriptsView, 'render', function() {
-          return _this.layout.initContent('west');
+          return _this.layoutOuter.initContent('west');
         });
       },
       onRender: function() {
@@ -31,23 +31,33 @@
       },
       refresh: function() {
         this.editorView.refresh();
+        this.layoutOuter.resizeAll();
         this.layout.resizeAll();
         return this.showOrientation();
       },
       initLayout: function() {
         var _this = this;
-        return this.layout = this.$el.layout({
-          center__paneSelector: '.center',
-          center__contentSelector: '#code-wrapper',
-          center__onresize: function() {
-            return _this.editorView.refresh();
-          },
-          west__paneSelector: '.west',
+        this.layoutOuter = this.$el.layout({
+          center__paneSelector: '.outer-center',
+          west__paneSelector: '.outer-west',
           west__contentSelector: '.files-wrapper',
           west__size: App.settings.get('layout.west.size'),
           west__onresize_end: function(name, $el, state, opts) {
             App.settings.set('layout.west.size', state.size);
             return App.settings.save();
+          },
+          resizable: true,
+          findNestedContent: true,
+          fxName: '',
+          spacing_open: 3,
+          spacing_closed: 3,
+          slidable: false
+        });
+        return this.layout = this.$('.outer-center').layout({
+          center__paneSelector: '.center',
+          center__contentSelector: '#code-wrapper',
+          center__onresize: function() {
+            return _this.editorView.refresh();
           },
           east__paneSelector: '.east',
           east__contentSelector: '.script-result-section',
@@ -71,7 +81,8 @@
           findNestedContent: true,
           fxName: '',
           spacing_open: 3,
-          spacing_closed: 3
+          spacing_closed: 3,
+          slidable: false
         });
       },
       showOrientation: function() {
@@ -91,6 +102,6 @@
         return this.editorView.refresh();
       }
     });
-  })(App, Backbone);
+  });
 
 }).call(this);

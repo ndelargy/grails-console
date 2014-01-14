@@ -1,8 +1,8 @@
-((App, Backbone) ->
+App.module 'Main', (Main, App, Backbone, Marionette, $, _) ->
 
-  App.HeaderView = Backbone.Marionette.ItemView.extend
+  Main.HeaderView = Backbone.Marionette.ItemView.extend
 
-    template: 'header'
+    template: 'main/header'
 
     attributes:
       class: 'navbar navbar-fixed-top'
@@ -16,11 +16,9 @@
           @$('.title').hide()
 
     onRender: ->
-      @settingsView = new App.SettingsView(model: App.settings)
+      @settingsView = new Main.SettingsView(model: App.settings)
       @$('.settings-btn-group').append @settingsView.render().$el
       @settingsView.render()
 
     onClose: ->
       @settingsView.close()
-
-) App, Backbone

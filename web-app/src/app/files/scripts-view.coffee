@@ -18,7 +18,7 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
       @showDelete = options.showDelete ? true
 
-      @listenTo @collection, 'request', =>
+      @listenTo @collection, 'fetching', =>
         @loading = true
         @render()
 

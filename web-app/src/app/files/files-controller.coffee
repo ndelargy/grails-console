@@ -41,10 +41,7 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       @collection.fetch() # TODO router init
 
       @listenTo App, 'file:opened', (file) =>
-        @collection.store = file.store
-        @collection.path = file.getParent()
-
-        @collection.fetch()
+        @collection.fetchByStoreAndPath file.store, file.getParent()
 
       @listenTo App, 'file:created', (file) -> # TODO this is whack
         file = App.Editor.controller.file

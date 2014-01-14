@@ -1,6 +1,6 @@
-((App, Backbone) ->
+App.module 'Main', (Main, App, Backbone, Marionette, $, _) ->
 
-  App.Router = Backbone.Router.extend
+  Main.Router = Backbone.Router.extend
 
     initialize: ->
       @route '*path', 'newFile'
@@ -22,5 +22,3 @@
 
     openRemoteFile: (name) ->
       App.Editor.controller.openFile 'remote', name
-
-) App, Backbone

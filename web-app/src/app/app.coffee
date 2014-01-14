@@ -1,4 +1,4 @@
-(($, _, Backbone, JST, window) ->
+(($, _, Backbone, window) ->
 
   Handlebars.registerHelper "dateFormatTime", (context) ->
     moment(new Date(context)).format('MMM D, YYYY, h:mm a')
@@ -8,7 +8,7 @@
   App = new (Backbone.Marionette.Application.extend
 
     onStart: (data) ->
-      App.headerRegion.show new App.HeaderView
+      App.headerRegion.show new App.Main.HeaderView
 
       $(document).bind 'keydown', 'Ctrl+return', -> App.trigger 'app:editor:execute'
       $(document).bind 'keydown', 'esc', -> App.trigger 'app:editor:clear'
@@ -47,9 +47,9 @@
   App.addInitializer ->
     App.Editor.controller = new App.Editor.Controller
     App.Files.controller = new App.Files.Controller
-    App.router = new App.Router()
+    App.router = new App.Main.Router()
 
-    contentView = new App.ContentView
+    contentView = new App.Main.ContentView
       editorView: App.Editor.controller.editorView
       resultsView: App.Editor.controller.resultsView
       scriptsView: App.Files.controller.scriptsView
@@ -73,7 +73,7 @@
 
   App.on 'help', ->
     # TODO modal region
-    view = new App.HelpView
+    view = new App.Main.HelpView
     $el = $('<div class="modal fade" data-backdrop="false"></div>').appendTo('body').html view.render().el
     $el.modal()
     $el.on 'hidden.bs.modal', ->
@@ -82,4 +82,4 @@
 
   window.App = App
 
-) jQuery, _, Backbone, JST, window
+) jQuery, _, Backbone, window

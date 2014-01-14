@@ -4,7 +4,7 @@
       template: 'editor/results',
       itemViewContainer: '.inner',
       events: {
-        'click button.clear': 'clear'
+        'click .clear': 'onClearClick'
       },
       getItemView: function(item) {
         return Editor.ResultView;
@@ -14,8 +14,7 @@
       },
       initialize: function() {
         this.listenTo(App.settings, 'change:results.wrapText', this.setWrap);
-        this.listenTo(this, 'itemview:complete', this.scrollToResultView);
-        return this.listenTo(App, 'app:editor:clear', this.clear);
+        return this.listenTo(this, 'itemview:complete', this.scrollToResultView);
       },
       scrollToResultView: function(resultView) {
         var scroll;
@@ -30,8 +29,9 @@
       onRender: function() {
         return this.setWrap();
       },
-      clear: function() {
-        return this.collection.reset();
+      onClearClick: function(event) {
+        event.preventDefault();
+        return App.trigger('app:editor:clear');
       }
     });
   });

@@ -32,7 +32,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
           'Ctrl-Enter': =>
             @executeCode()
           'Esc': =>
-            @trigger "clear"
+            App.trigger 'app:editor:clear'
 
         theme: "lesser-dark"
       )

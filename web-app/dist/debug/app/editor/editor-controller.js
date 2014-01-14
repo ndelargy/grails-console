@@ -14,10 +14,12 @@
         });
         this.listenTo(this.editorView, 'save', this.save);
         this.listenTo(this.editorView, 'saveAs', this.saveAs);
-        this.listenTo(this.editorView, 'clear', this.clearResults);
         this.resultCollection = new Editor.ResultCollection();
-        return this.resultsView = new Editor.ResultCollectionView({
+        this.resultsView = new Editor.ResultCollectionView({
           collection: this.resultCollection
+        });
+        return this.listenTo(App, 'app:editor:clear', function() {
+          return this.resultCollection.reset();
         });
       },
       newFile: function() {

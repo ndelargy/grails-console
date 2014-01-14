@@ -45,9 +45,7 @@
         this.collection = new App.Entities.FileCollection();
         this.collection.fetch();
         this.listenTo(App, 'file:opened', function(file) {
-          _this.collection.store = file.store;
-          _this.collection.path = file.getParent();
-          return _this.collection.fetch();
+          return _this.collection.fetchByStoreAndPath(file.store, file.getParent());
         });
         this.listenTo(App, 'file:created', function(file) {
           var collection;
