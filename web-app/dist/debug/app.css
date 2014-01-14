@@ -162,14 +162,6 @@ body {
   overflow: auto;
   position: relative;
 }
-.loading {
-  text-align: center;
-  height: 20px;
-  top: 50%;
-  position: absolute;
-  width: 100%;
-  margin-top: -10px;
-}
 .scripts .folder {
   padding: 5px 15px;
   border-bottom: 1px solid #ccc;
@@ -213,6 +205,14 @@ body {
   text-align: center;
   line-height: 16px;
   margin-top: -8px;
+}
+.files-wrapper .loading {
+  text-align: center;
+  height: 20px;
+  top: 50%;
+  position: absolute;
+  width: 100%;
+  margin-top: -10px;
 }
 .full-height {
   height: 100%;
