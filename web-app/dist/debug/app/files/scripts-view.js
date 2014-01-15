@@ -89,7 +89,7 @@
       showDelete = options.hash.showDelete;
       iconClass = this.type === 'dir' ? 'fa fa-folder-o' : 'fa fa-file-o';
       html = "<div class='name'><i class='" + iconClass + "'></i><a class='name' href='#'>" + file.name + "</a></div>";
-      if (showDelete) {
+      if (showDelete && this.type === 'file') {
         html += '<a class="delete" href="#">×</a>';
       }
       return new Handlebars.SafeString(html);

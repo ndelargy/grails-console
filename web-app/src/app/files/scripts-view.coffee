@@ -77,5 +77,5 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
     showDelete = options.hash.showDelete
     iconClass = if @type is 'dir' then 'fa fa-folder-o' else 'fa fa-file-o'
     html = "<div class='name'><i class='#{iconClass}'></i><a class='name' href='#'>#{file.name}</a></div>"
-    html += '<a class="delete" href="#">×</a>' if showDelete
+    html += '<a class="delete" href="#">×</a>' if showDelete and @type is 'file'
     new Handlebars.SafeString html

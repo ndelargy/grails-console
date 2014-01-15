@@ -11,9 +11,9 @@ App.module 'Main', (Main, App, Backbone, Marionette, $, _) ->
       @listenTo App, 'file:show', (file) -> # TODO
         name = file.get('name')
         if name
-          @$('.title').html(name).show()
+          @$('.title span').html(name).show()
         else
-          @$('.title').hide()
+          @$('.title span').hide()
 
     onRender: ->
       @settingsView = new Main.SettingsView(model: App.settings)

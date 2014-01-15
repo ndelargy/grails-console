@@ -10,9 +10,9 @@
           var name;
           name = file.get('name');
           if (name) {
-            return this.$('.title').html(name).show();
+            return this.$('.title span').html(name).show();
           } else {
-            return this.$('.title').hide();
+            return this.$('.title span').hide();
           }
         });
       },

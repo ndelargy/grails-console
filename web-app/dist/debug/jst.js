@@ -180,7 +180,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<span class=\"navbar-brand\">Grails Debug Console</span>\n<p class=\"navbar-text title\"></p>\n<div class=\"saving\" style=\"display: none\">\n    <i class=\"fa fa-refresh fa-spin\"></i>\n    Saving\n</div>\n\n<form class=\"navbar-form pull-right\">\n    <div class=\"btn-group settings-btn-group\">\n        <button class=\"clear btn-sm btn btn-default dropdown-toggle\" title=\"(Esc)\" data-toggle=\"dropdown\">\n            <i class=\"fa fa-cog\"></i>\n            <span class=\"caret\"></span>\n        </button>\n    </div>\n</form>";
+  return "<span class=\"navbar-brand\">Grails Debug Console</span>\n<p class=\"navbar-text title\"><span></span><i class=\"saving fa fa-refresh fa-spin\" style=\"display: none\"></i></p>\n<form class=\"navbar-form pull-right\">\n    <div class=\"btn-group settings-btn-group\">\n        <button class=\"clear btn-sm btn btn-default dropdown-toggle\" title=\"(Esc)\" data-toggle=\"dropdown\">\n            <i class=\"fa fa-cog\"></i>\n            <span class=\"caret\"></span>\n        </button>\n    </div>\n</form>";
   });
 
 this["JST"]["main/help-modal"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
