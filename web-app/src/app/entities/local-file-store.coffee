@@ -46,8 +46,7 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
         @data = JSON.parse(store) ? {}
       catch e
         @data = {}
-
-      file.set('type', 'file') for file in @data
+      file.type = 'file' for id, file of @data
 
     sync: (method, file, options) ->
       resp = undefined

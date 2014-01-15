@@ -263,12 +263,12 @@ body {
       outline: none;
     }
   }
-  & > .btn + .btn, & > .btn + .btn-group {
-    //    margin-left: 0;
-  }
 }
 
 .modal-dialog {
+  .modal-content {
+    border-width: 4px;
+  }
   .modal-footer {
     padding: 10px;
   }
@@ -323,6 +323,19 @@ body[data-theme="default"] {
     color: #333;
     .folder {
       border-bottom-color: #ccc;
+    }
+  }
+
+
+  .modal-dialog {
+    .modal-content {
+      background-color: #e9e9e7;
+    }
+    .modal-header {
+      border-bottom-color: #ccc;
+    }
+    .modal-footer {
+      border-top-color: #ccc;
     }
   }
 }

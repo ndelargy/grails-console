@@ -49,7 +49,7 @@
       };
 
       LocalFileStore.prototype._load = function() {
-        var e, file, store, _i, _len, _ref, _ref1, _results;
+        var e, file, id, store, _ref, _ref1, _results;
         store = localStorage.getItem(this.name);
         try {
           this.data = (_ref = JSON.parse(store)) != null ? _ref : {};
@@ -59,9 +59,9 @@
         }
         _ref1 = this.data;
         _results = [];
-        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-          file = _ref1[_i];
-          _results.push(file.set('type', 'file'));
+        for (id in _ref1) {
+          file = _ref1[id];
+          _results.push(file.type = 'file');
         }
         return _results;
       };
