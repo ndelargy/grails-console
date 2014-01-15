@@ -56,6 +56,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
             text: text
             name: name
             path: path
+            type: 'file'
 
           file.store = store
 

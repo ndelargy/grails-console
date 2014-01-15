@@ -66,7 +66,8 @@
             file = new App.Entities.File({
               text: text,
               name: name,
-              path: path
+              path: path,
+              type: 'file'
             });
             file.store = store;
             App.savingOn();
