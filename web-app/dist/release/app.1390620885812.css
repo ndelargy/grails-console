@@ -18,11 +18,8 @@ body {
   border-top: 1px solid #444;
   border-radius: 3px;
 }
-.help-section .shortcut-key {
-  color: #fff;
-  background-color: #888;
-  padding: 5px;
-  border-radius: 3px;
+.help-section table td:first-child {
+  width: 220px;
 }
 .script-result-section {
   font-size: 15px;
@@ -35,7 +32,7 @@ body {
 .script-result-section .inner .script-result {
   margin: 0;
   border-bottom: 1px solid #aaa;
-  font-size: 11px;
+  font-size: 12px;
   font-family: monospace;
   padding: 10px;
 }
@@ -396,4 +393,7 @@ body[data-theme="lesser-dark"] .scripts {
 }
 body[data-theme="lesser-dark"] .scripts .folder {
   border-bottom-color: #444;
+}
+body[data-theme="lesser-dark"] .modal-dialog .modal-content {
+  border-color: #333;
 }

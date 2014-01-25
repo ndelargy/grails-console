@@ -32,7 +32,7 @@ body {
 .script-result-section .inner .script-result {
   margin: 0;
   border-bottom: 1px solid #aaa;
-  font-size: 11px;
+  font-size: 12px;
   font-family: monospace;
   padding: 10px;
 }

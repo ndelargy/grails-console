@@ -47,6 +47,7 @@ App.module 'Main', (Main, App, Backbone, Marionette, $, _) ->
         west__onresize_end: (name, $el, state, opts) ->
           App.settings.set 'layout.west.size', state.size
           App.settings.save()
+        west__resizerCursor: 'ew-resize'
         resizable: true
         findNestedContent: true
         fxName: ''

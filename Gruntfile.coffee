@@ -1,5 +1,7 @@
 module.exports = (grunt) ->
 
+  timestamp = new Date().getTime()
+
   grunt.initConfig
 
     pkg: grunt.file.readJSON 'package.json'
@@ -16,14 +18,14 @@ module.exports = (grunt) ->
           'web-app/dist/debug/app/files/**/*.js'
         ]
 
-        release: 'web-app/dist/release/app.js'
+        release: "web-app/dist/release/app.#{timestamp}.js"
 
       css:
         debug:
           'web-app/dist/debug/app.css'
 
         release:
-          'web-app/dist/release/app.css'
+          "web-app/dist/release/app.#{timestamp}.css"
 
     vendor:
       js: [
@@ -42,7 +44,7 @@ module.exports = (grunt) ->
       ]
       css: [
         'web-app/vendor/bootstrap/css/bootstrap.min.css'
-        'web-app/vendor/font-awesome-4.0.3/css/font-awesome.min.css'
+        'web-app/vendor/font-awesome-4.0.3/css/font-awesome.css'
         'web-app/vendor/codemirror-3.18/lib/codemirror.css'
         'web-app/vendor/codemirror-3.18/theme/lesser-dark.css'
         'web-app/vendor/jquery-layout/css/jquery.layout.css'
@@ -50,15 +52,10 @@ module.exports = (grunt) ->
       ]
 
     concat:
-      css:
-        files: [
-          src: '<%= app.css.debug %>'
-          dest: 'web-app/build/gconsole.css'
-        ]
       js:
         files: [
-          src: '<%= app.js.debug %>'
-          dest: 'web-app/dist/release/app.js'
+          src: ['<%= vendor.js %>', '<%= app.js.debug %>']
+          dest: '<%= app.js.release %>'
         ]
 
     handlebars:
@@ -110,7 +107,7 @@ module.exports = (grunt) ->
         files: [
           { expand: true, cwd: 'web-app/src/img', src: '**/*', dest: 'web-app/dist/release/img' }
           { expand: true, cwd: 'web-app/vendor', src: '**/*', dest: 'web-app/dist/release/vendor' }
-          { src: 'web-app/dist/debug/app.css', dest: 'web-app/dist/release/app.css' }
+          { src: 'web-app/dist/debug/app.css', dest: '<%= app.css.release %>' }
         ]
 
     clean:
@@ -149,12 +146,14 @@ module.exports = (grunt) ->
         js: grunt.file.expand(vendor.js).concat grunt.file.expand(app.js.debug)
         css: grunt.file.expand(vendor.css).concat grunt.file.expand(app.css.debug)
       release:
-        js: grunt.file.expand(vendor.js).concat grunt.file.expand(app.js.release)
+#        js: grunt.file.expand(vendor.js).concat grunt.file.expand(app.js.release)
+        js: grunt.file.expand(app.js.release)
         css: grunt.file.expand(vendor.css).concat grunt.file.expand(app.css.release)
+#        css: grunt.file.expand(app.css.release)
     grunt.file.write 'grails-app/conf/resources.json', JSON.stringify(json, undefined, 2)
   #    grunt.log.writeln JSON.stringify(json)
 
   grunt.registerTask 'default', ['debug']
   grunt.registerTask 'test', ['debug', 'clean:spec', 'coffee:spec', 'jasmine']
   grunt.registerTask 'debug', ['clean:dist', 'handlebars:compile', 'coffee:app', 'copy:debug', 'less:app', 'json']
-  grunt.registerTask 'release', ['debug', 'copy:release', 'concat:js']
+  grunt.registerTask 'release', ['debug', 'copy:release', 'concat:js', 'json']
