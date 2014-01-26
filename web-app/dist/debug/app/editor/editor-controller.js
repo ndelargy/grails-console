@@ -18,8 +18,14 @@
         this.resultsView = new Editor.ResultCollectionView({
           collection: this.resultCollection
         });
-        return this.listenTo(App, 'app:editor:clear', function() {
+        this.listenTo(App, 'app:editor:clear', function() {
           return this.resultCollection.reset();
+        });
+        this.listenTo(App, 'app:editor:execute', function() {
+          return _this.editorView.executeCode();
+        });
+        return this.listenTo(App, 'app:editor:save', function() {
+          return _this.save(_this.editorView.getValue());
         });
       },
       newFile: function() {

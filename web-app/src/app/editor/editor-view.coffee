@@ -11,7 +11,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       'click a.save-as': 'onSaveAsClick'
 
     initialize: ->
-      @listenTo App, 'app:editor:execute', @executeCode
+      @listenTo App.settings, 'change:theme', @setTheme
 
     attributes:
       id: 'editor'
@@ -24,21 +24,19 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       App.trigger 'app:file:new'
 
     initEditor: ->
-      @editor = CodeMirror.fromTextArea(@$("textarea[name=code]")[0],
+      @editor = CodeMirror.fromTextArea(@$('textarea[name=code]')[0],
         matchBrackets: true
-        mode: "groovy"
+        mode: 'groovy'
         lineNumbers: true
-        extraKeys: # TODO $(document).trigger passthrough?
-          'Ctrl-Enter': =>
-            @executeCode()
-          'Esc': =>
-            App.trigger 'app:editor:clear'
-
-        theme: "lesser-dark"
+        extraKeys:
+          'Ctrl-Enter': -> App.trigger 'app:editor:execute'
+          'Cmd-Enter': -> App.trigger 'app:editor:execute'
+          'Ctrl-S': -> App.trigger 'app:editor:save'
+          'Cmd-S': -> App.trigger 'app:editor:save'
+          'Esc': -> App.trigger 'app:editor:clear'
       )
       @editor.focus()
       @editor.setValue ''
-      @listenTo App.settings, 'change:theme', @setTheme
       @setTheme()
 
     setTheme: ->

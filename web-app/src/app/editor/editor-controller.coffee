@@ -21,6 +21,12 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       @listenTo App, 'app:editor:clear', ->
         @resultCollection.reset()
 
+      @listenTo App, 'app:editor:execute', =>
+        @editorView.executeCode()
+
+      @listenTo App, 'app:editor:save', =>
+        @save @editorView.getValue()
+
     newFile: ->
       file = new App.Entities.File
       @showFile file
@@ -46,8 +52,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
         @saveAs text
       else
         App.savingOn()
-        @file.save().then =>
-          App.savingOff()
+        @file.save().then => App.savingOff()
 
     saveAs: (text) ->
       App.Files.controller.promptForNewFileName().done (store, path, name) => # TODO cmd?

@@ -9,7 +9,7 @@
         'click a.save-as': 'onSaveAsClick'
       },
       initialize: function() {
-        return this.listenTo(App, 'app:editor:execute', this.executeCode);
+        return this.listenTo(App.settings, 'change:theme', this.setTheme);
       },
       attributes: {
         id: 'editor'
@@ -22,24 +22,30 @@
         return App.trigger('app:file:new');
       },
       initEditor: function() {
-        var _this = this;
-        this.editor = CodeMirror.fromTextArea(this.$("textarea[name=code]")[0], {
+        this.editor = CodeMirror.fromTextArea(this.$('textarea[name=code]')[0], {
           matchBrackets: true,
-          mode: "groovy",
+          mode: 'groovy',
           lineNumbers: true,
           extraKeys: {
             'Ctrl-Enter': function() {
-              return _this.executeCode();
+              return App.trigger('app:editor:execute');
+            },
+            'Cmd-Enter': function() {
+              return App.trigger('app:editor:execute');
+            },
+            'Ctrl-S': function() {
+              return App.trigger('app:editor:save');
+            },
+            'Cmd-S': function() {
+              return App.trigger('app:editor:save');
             },
             'Esc': function() {
               return App.trigger('app:editor:clear');
             }
-          },
-          theme: "lesser-dark"
+          }
         });
         this.editor.focus();
         this.editor.setValue('');
-        this.listenTo(App.settings, 'change:theme', this.setTheme);
         return this.setTheme();
       },
       setTheme: function() {

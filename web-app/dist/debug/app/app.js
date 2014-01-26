@@ -13,6 +13,17 @@
         $(document).bind('keydown', 'Ctrl+return', function() {
           return App.trigger('app:editor:execute');
         });
+        $(document).bind('keydown', 'Meta+return', function() {
+          return App.trigger('app:editor:execute');
+        });
+        $(document).bind('keydown', 'Ctrl+s', function(event) {
+          event.stopPropagation();
+          return App.trigger('app:editor:save');
+        });
+        $(document).bind('keydown', 'Meta+s', function(event) {
+          event.stopPropagation();
+          return App.trigger('app:editor:save');
+        });
         $(document).bind('keydown', 'esc', function() {
           return App.trigger('app:editor:clear');
         });

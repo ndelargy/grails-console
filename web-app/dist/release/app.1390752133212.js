@@ -6970,7 +6970,7 @@ function program1(depth0,data) {
   buffer += "<div class=\"modal-content help-section\">\n    <div class=\"modal-header\">\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n        <h4 class=\"modal-title\">Help</h4>\n    </div>\n\n    <div class=\"modal-body\">\n        <h4>Implicit variables</h4>\n        <table class=\"table\">\n            ";
   stack1 = helpers.each.call(depth0, depth0.implicitVars, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n        </table>\n        <h4>Shortcuts</h4>\n        <table class=\"table\">\n            <tr><td><code>Ctrl-Enter</code></td><td>Execute</td></tr>\n            <tr><td><code>Esc</code></td><td>Clear</td></tr>\n        </table>\n    </div>\n\n    <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">Close</button>\n    </div>\n</div>\n\n\n";
+  buffer += "\n        </table>\n        <h4>Shortcuts</h4>\n        <table class=\"table\">\n            <tr><td><code>Ctrl-Enter / Cmd-Enter</code></td><td>Execute</td></tr>\n            <tr><td><code>Ctrl-S / Cmd-S</code></td><td>Save</td></tr>\n            <tr><td><code>Esc</code></td><td>Clear</td></tr>\n        </table>\n    </div>\n\n    <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">Close</button>\n    </div>\n</div>\n\n\n";
   return buffer;
   });
 
@@ -6996,6 +6996,17 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
         App.headerRegion.show(new App.Main.HeaderView);
         $(document).bind('keydown', 'Ctrl+return', function() {
           return App.trigger('app:editor:execute');
+        });
+        $(document).bind('keydown', 'Meta+return', function() {
+          return App.trigger('app:editor:execute');
+        });
+        $(document).bind('keydown', 'Ctrl+s', function(event) {
+          event.stopPropagation();
+          return App.trigger('app:editor:save');
+        });
+        $(document).bind('keydown', 'Meta+s', function(event) {
+          event.stopPropagation();
+          return App.trigger('app:editor:save');
         });
         $(document).bind('keydown', 'esc', function() {
           return App.trigger('app:editor:clear');
@@ -7595,8 +7606,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
         this.resultsView = new Editor.ResultCollectionView({
           collection: this.resultCollection
         });
-        return this.listenTo(App, 'app:editor:clear', function() {
+        this.listenTo(App, 'app:editor:clear', function() {
           return this.resultCollection.reset();
+        });
+        this.listenTo(App, 'app:editor:execute', function() {
+          return _this.editorView.executeCode();
+        });
+        return this.listenTo(App, 'app:editor:save', function() {
+          return _this.save(_this.editorView.getValue());
         });
       },
       newFile: function() {
@@ -7676,7 +7693,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
         'click a.save-as': 'onSaveAsClick'
       },
       initialize: function() {
-        return this.listenTo(App, 'app:editor:execute', this.executeCode);
+        return this.listenTo(App.settings, 'change:theme', this.setTheme);
       },
       attributes: {
         id: 'editor'
@@ -7689,24 +7706,30 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
         return App.trigger('app:file:new');
       },
       initEditor: function() {
-        var _this = this;
-        this.editor = CodeMirror.fromTextArea(this.$("textarea[name=code]")[0], {
+        this.editor = CodeMirror.fromTextArea(this.$('textarea[name=code]')[0], {
           matchBrackets: true,
-          mode: "groovy",
+          mode: 'groovy',
           lineNumbers: true,
           extraKeys: {
             'Ctrl-Enter': function() {
-              return _this.executeCode();
+              return App.trigger('app:editor:execute');
+            },
+            'Cmd-Enter': function() {
+              return App.trigger('app:editor:execute');
+            },
+            'Ctrl-S': function() {
+              return App.trigger('app:editor:save');
+            },
+            'Cmd-S': function() {
+              return App.trigger('app:editor:save');
             },
             'Esc': function() {
               return App.trigger('app:editor:clear');
             }
-          },
-          theme: "lesser-dark"
+          }
         });
         this.editor.focus();
         this.editor.setValue('');
-        this.listenTo(App.settings, 'change:theme', this.setTheme);
         return this.setTheme();
       },
       setTheme: function() {
