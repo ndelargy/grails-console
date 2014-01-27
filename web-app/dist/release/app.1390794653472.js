@@ -6801,17 +6801,17 @@ function program3(depth0,data) {
   if (stack1 = helpers.result) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.result; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</div>\n";
+    + " <span class=\"pull-right\">[";
+  if (stack1 = helpers.totalTime) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.totalTime; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + " ms]</span></div>\n";
   return buffer;
   }
 function program4(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\n      <span class=\"result-time label label-default pull-right\">";
-  if (stack1 = helpers.totalTime) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.totalTime; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + " ms</span>\n      <div class=\"input\">";
+  buffer += "\n      <div class=\"input\">";
   if (stack1 = helpers.input) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.input; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -7001,10 +7001,12 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
           return App.trigger('app:editor:execute');
         });
         $(document).bind('keydown', 'Ctrl+s', function(event) {
+          event.preventDefault();
           event.stopPropagation();
           return App.trigger('app:editor:save');
         });
         $(document).bind('keydown', 'Meta+s', function(event) {
+          event.preventDefault();
           event.stopPropagation();
           return App.trigger('app:editor:save');
         });
@@ -7217,6 +7219,9 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
             return this.$('.title span').hide();
           }
         });
+      },
+      showDirty: function(isDirty) {
+        return this.$('.title span').toggleClass('dirty', isDirty);
       },
       onRender: function() {
         this.settingsView = new Main.SettingsView({

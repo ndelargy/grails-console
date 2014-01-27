@@ -43,6 +43,7 @@ body {
 .script-result-section .inner .script-result .output,
 .script-result-section .inner .script-result .result {
   white-space: pre;
+  overflow: hidden;
 }
 .script-result-section.wrap .inner {
   float: none;
@@ -56,19 +57,6 @@ body {
 .script-result-section.wrap .script-result .result {
   white-space: pre-wrap;
   word-wrap: break-word;
-}
-.script-result-section.hide-input .script-result .input,
-.script-result-section.hide-output .script-result .output,
-.script-result-section.hide-result .script-result .result {
-  display: none;
-}
-.result-time {
-  font-size: 100%;
-  background-color: transparent;
-  box-shadow: 0 0 3px 0px #888 inset;
-  padding: 5px;
-  margin: 0 0 5px 5px;
-  display: none;
 }
 .navbar {
   margin-bottom: 0;

@@ -47,6 +47,7 @@ body {
       }
       .input, .output, .result {
         white-space: pre;
+        overflow: hidden;
       }
     }
   }
@@ -63,20 +64,6 @@ body {
       }
     }
   }
-  &.hide-input .script-result .input,
-  &.hide-output .script-result .output,
-  &.hide-result .script-result .result {
-    display: none;
-  }
-}
-
-.result-time {
-  font-size: 100%;
-  background-color: transparent;
-  box-shadow: 0 0 3px 0px #888 inset;
-  padding: 5px;
-  margin: 0 0 5px 5px;
-  display: none;
 }
 
 .navbar {

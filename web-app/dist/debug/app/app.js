@@ -17,10 +17,12 @@
           return App.trigger('app:editor:execute');
         });
         $(document).bind('keydown', 'Ctrl+s', function(event) {
+          event.preventDefault();
           event.stopPropagation();
           return App.trigger('app:editor:save');
         });
         $(document).bind('keydown', 'Meta+s', function(event) {
+          event.preventDefault();
           event.stopPropagation();
           return App.trigger('app:editor:save');
         });

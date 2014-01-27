@@ -16,6 +16,9 @@
           }
         });
       },
+      showDirty: function(isDirty) {
+        return this.$('.title span').toggleClass('dirty', isDirty);
+      },
       onRender: function() {
         this.settingsView = new Main.SettingsView({
           model: App.settings

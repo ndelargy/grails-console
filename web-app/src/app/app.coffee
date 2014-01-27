@@ -13,9 +13,11 @@
       $(document).bind 'keydown', 'Ctrl+return', -> App.trigger 'app:editor:execute'
       $(document).bind 'keydown', 'Meta+return', -> App.trigger 'app:editor:execute'
       $(document).bind 'keydown', 'Ctrl+s', (event) ->
+        event.preventDefault()
         event.stopPropagation()
         App.trigger 'app:editor:save'
       $(document).bind 'keydown', 'Meta+s', (event) ->
+        event.preventDefault()
         event.stopPropagation()
         App.trigger 'app:editor:save'
       $(document).bind 'keydown', 'esc', -> App.trigger 'app:editor:clear'

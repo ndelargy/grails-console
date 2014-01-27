@@ -15,6 +15,9 @@ App.module 'Main', (Main, App, Backbone, Marionette, $, _) ->
         else
           @$('.title span').hide()
 
+    showDirty: (isDirty ) ->
+      @$('.title span').toggleClass 'dirty', isDirty
+
     onRender: ->
       @settingsView = new Main.SettingsView(model: App.settings)
       @$('.settings-btn-group').append @settingsView.render().$el
