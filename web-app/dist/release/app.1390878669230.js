@@ -6841,7 +6841,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"btn-toolbar\">\n    <a class=\"clear btn btn-sm btn-default\" href=\"#\" title=\"Clear (Esc)\"><i class=\"fa fa-eraser fa-lg\"></i></a>\n</div>\n\n<div class=\"script-result-section\"><div class=\"inner\"></div></div>";
+  return "<div class=\"btn-toolbar\">\n    <button class=\"clear btn btn-sm btn-default\" title=\"Clear (Esc)\"><i class=\"fa fa-eraser fa-lg\"></i></button>\n</div>\n\n<div class=\"script-result-section\"><div class=\"inner\"></div></div>";
   });
 
 this["JST"]["files/files-section"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

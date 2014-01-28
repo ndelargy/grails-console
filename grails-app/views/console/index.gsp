@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <link rel="icon" type="image/png" href="${resource(dir: 'src/img', file: 'grails.logo.png', plugin: 'console')}" />
   <con:css/>
+  <meta name="layout" content="${grailsApplication.config.grails.plugin.console.layout ?: 'console-plugin-layout'}"/>
 </head>
 
 <body style="visibility: hidden">

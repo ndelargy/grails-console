@@ -1,10 +1,9 @@
 package org.grails.plugins.console
 
 import grails.converters.JSON
-import grails.util.Holders
 import grails.util.Metadata
+import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.codehaus.groovy.grails.plugins.GrailsPluginUtils
-import org.springframework.web.context.request.RequestContextHolder
 
 /**
  * @author <a href='mailto:burt@burtbeckwith.com'>Burt Beckwith</a>
@@ -14,6 +13,8 @@ class ConsoleTagLib {
     static namespace = 'con'
 
     Map resourceMap
+
+    GrailsApplication grailsApplication
 
     def css = { attrs ->
         config.css.each {
@@ -28,31 +29,30 @@ class ConsoleTagLib {
     }
 
     Map getConfig() {
-        if (!resourceMap) {
-            resourceMap = getConfAsResource()
-        }
         if (reload && !Metadata.getCurrent().isWarDeployed()) {
-            resourceMap = getConfAsFile()
+            resourceMap = getConfFromFile()
+        } else if (!resourceMap) {
+            resourceMap = getConfFromResource()
         }
         debug ? resourceMap.debug : resourceMap.release
     }
 
     boolean getReload() {
-        RequestContextHolder.currentRequestAttributes()?.params?.reload == 'true'
+        grailsApplication.config.grails.plugin.console.reload == true
     }
 
     boolean getDebug() {
-        RequestContextHolder.currentRequestAttributes()?.params?.debug == 'true'
+        grailsApplication.config.grails.plugin.console.debug == true
     }
 
-    Map getConfAsFile() {
+    Map getConfFromFile() {
         File consolePluginDir = GrailsPluginUtils.getPluginDirForName('console').file
         String jsonText = new File(consolePluginDir, 'grails-app/conf/resources.json').text
         JSON.parse jsonText
     }
 
-    Map getConfAsResource() {
-        String jsonText = Holders.applicationContext.parent.getResource('classpath:resources.json').file.text
+    Map getConfFromResource() { // Note: resources aren't reloadable.
+        String jsonText = grailsApplication.mainContext.parent.getResource('classpath:resources.json').file.text
         JSON.parse jsonText
     }
 }
