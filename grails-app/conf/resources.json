@@ -46,7 +46,7 @@
   },
   "release": {
     "js": [
-      "web-app/dist/release/app.1390878669230.js"
+      "web-app/dist/release/app.1390974980955.js"
     ],
     "css": [
       "web-app/vendor/bootstrap/css/bootstrap.min.css",
@@ -55,7 +55,7 @@
       "web-app/vendor/codemirror-3.18/theme/lesser-dark.css",
       "web-app/vendor/jquery-layout/css/jquery.layout.css",
       "web-app/vendor/jquery-ui-1.10.3/jquery-ui.min.css",
-      "web-app/dist/release/app.1390878669230.css"
+      "web-app/dist/release/app.1390974980955.css"
     ]
   }
 }

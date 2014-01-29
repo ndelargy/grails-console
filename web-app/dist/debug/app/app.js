@@ -67,10 +67,11 @@
       return App.settings = App.request('settings:entity');
     });
     App.addInitializer(function() {
-      var contentView;
+      var contentView, scriptsView;
       App.Editor.controller = new App.Editor.Controller;
       App.Files.controller = new App.Files.Controller;
       App.router = new App.Main.Router();
+      scriptsView = App.Files.controller.scriptsView;
       contentView = new App.Main.ContentView({
         editorView: App.Editor.controller.editorView,
         resultsView: App.Editor.controller.resultsView,

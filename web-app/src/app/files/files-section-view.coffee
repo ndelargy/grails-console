@@ -15,7 +15,7 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       'click button.save': 'onSave'
 
     initialize: (options) ->
-      @collection = new App.Entities.FileCollection()
+      @collection = new App.Entities.FileCollection() # TODO pass this in
       @collection.store = options.store
       @collection.path = options.path
       @collection.fetch()

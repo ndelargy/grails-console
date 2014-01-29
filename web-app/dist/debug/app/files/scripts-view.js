@@ -72,7 +72,7 @@
           files: this.collection.toJSON(),
           path: this.collection.path,
           currentDir: currentDir,
-          hasUp: this.collection.path.length > 1,
+          hasParent: tokens.length > 1 && tokens[1],
           store: this.collection.store === 'local' ? 'Local Storage' : 'Remote Storage',
           showDelete: this.showDelete,
           loading: this.loading

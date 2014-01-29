@@ -2,7 +2,7 @@ package org.grails.plugins.console
 
 import grails.converters.JSON
 import grails.util.GrailsUtil
-
+import org.apache.commons.io.FilenameUtils
 import org.codehaus.groovy.runtime.InvokerHelper
 
 class ConsoleController {
@@ -152,7 +152,7 @@ class ConsoleController {
 
     private Map fileToJson(File file, boolean includeText = true) {
         Map json = [
-            id: file.absolutePath,
+            id: FilenameUtils.normalize(file.absolutePath),
             name: file.name,
             type: file.isDirectory() ? 'dir' : 'file',
             lastModified: file.lastModified()

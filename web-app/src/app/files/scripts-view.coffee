@@ -58,13 +58,13 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
           App.trigger 'file:deleted', file
 
     serializeData: ->
-      tokens = @collection.path.split('/')
+      tokens = @collection.path.split('/') # TODO need to handle Windows paths
       currentDir = tokens[tokens.length - 1]
 
       files: @collection.toJSON()
       path: @collection.path
       currentDir: currentDir
-      hasUp: @collection.path.length > 1
+      hasParent: tokens.length > 1 and tokens[1]
       store: if @collection.store is 'local' then 'Local Storage' else 'Remote Storage'
       showDelete: @showDelete
       loading: @loading

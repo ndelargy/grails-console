@@ -11,7 +11,7 @@
     </div>
 </div>
 <div class="folder ">
-  {{#if hasUp}}<a href="#" class="up">../</a>{{/if}}<span title="{{path}}">{{currentDir}}/</span>
+  {{#if hasParent}}<a href="#" class="up">../</a>{{/if}}<span title="{{path}}">{{currentDir}}/</span>
 </div>
 <div class="files-wrapper">
   {{#if loading}}

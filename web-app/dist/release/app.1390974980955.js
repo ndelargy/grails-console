@@ -6916,7 +6916,7 @@ function program9(depth0,data) {
   else { stack1 = depth0.store; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + "\n            <span class=\"caret\"></span>\n        </button>\n        <ul class=\"dropdown-menu store\" role=\"menu\">\n            <li><a href=\"#\" data-store=\"local\">Local Storage</a></li>\n            <li><a href=\"#\" data-store=\"remote\">Remote Storage</a></li>\n        </ul>\n    </div>\n</div>\n<div class=\"folder \">\n  ";
-  stack1 = helpers['if'].call(depth0, depth0.hasUp, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  stack1 = helpers['if'].call(depth0, depth0.hasParent, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "<span title=\"";
   if (stack1 = helpers.path) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
@@ -7051,10 +7051,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
       return App.settings = App.request('settings:entity');
     });
     App.addInitializer(function() {
-      var contentView;
+      var contentView, scriptsView;
       App.Editor.controller = new App.Editor.Controller;
       App.Files.controller = new App.Files.Controller;
       App.router = new App.Main.Router();
+      scriptsView = App.Files.controller.scriptsView;
       contentView = new App.Main.ContentView({
         editorView: App.Editor.controller.editorView,
         resultsView: App.Editor.controller.resultsView,
@@ -8143,7 +8144,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
           files: this.collection.toJSON(),
           path: this.collection.path,
           currentDir: currentDir,
-          hasUp: this.collection.path.length > 1,
+          hasParent: tokens.length > 1 && tokens[1],
           store: this.collection.store === 'local' ? 'Local Storage' : 'Remote Storage',
           showDelete: this.showDelete,
           loading: this.loading
