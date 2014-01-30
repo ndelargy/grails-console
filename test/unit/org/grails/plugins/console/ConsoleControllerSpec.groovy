@@ -83,19 +83,21 @@ class ConsoleControllerSpec extends Specification {
         controller.listFiles()
 
         then:
-        response.json.size() == 3
-        response.json[0].id == testDir1.absolutePath
-        response.json[0].name == testDir1.name
-        response.json[0].type == 'dir'
-        response.json[0].lastModified == testDir1.lastModified()
-        response.json[1].id == testFile1.absolutePath
-        response.json[1].name == testFile1.name
-        response.json[1].type == 'file'
-        response.json[1].lastModified == testFile1.lastModified()
-        response.json[2].id == testFile2.absolutePath
-        response.json[2].name == testFile2.name
-        response.json[2].type == 'file'
-        response.json[2].lastModified == testFile2.lastModified()
+        with(response.json) {
+            files.size() == 3
+            files[0].id == testDir1.absolutePath
+            files[0].name == testDir1.name
+            files[0].type == 'dir'
+            files[0].lastModified == testDir1.lastModified()
+            files[1].id == testFile1.absolutePath
+            files[1].name == testFile1.name
+            files[1].type == 'file'
+            files[1].lastModified == testFile1.lastModified()
+            files[2].id == testFile2.absolutePath
+            files[2].name == testFile2.name
+            files[2].type == 'file'
+            files[2].lastModified == testFile2.lastModified()
+        }
     }
 
     void 'file get'() {
