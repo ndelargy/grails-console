@@ -43,6 +43,16 @@
 
     savingOff: ->
       $('.navbar .saving').fadeOut(100)
+
+    handleXhrFail: (jqxhr) ->
+      resp = null
+
+      try
+        resp = JSON.parse(jqxhr.responseText)
+      catch ex
+
+      error = resp?.error ? 'An error occurred.'
+      alert error
   )
 
   App.addRegions 

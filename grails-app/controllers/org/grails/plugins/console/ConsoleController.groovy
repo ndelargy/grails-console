@@ -9,7 +9,7 @@ class ConsoleController {
 
     def consoleService
 
-    def index = {
+    def index() {
         Map model = [
             json: [
                 implicitVars: [
@@ -25,10 +25,8 @@ class ConsoleController {
         render view: 'index', model: model
     }
 
-    def execute = {
+    def execute(String code) {
         long startTime = System.currentTimeMillis()
-
-        String code = params.code
 
         Map results = consoleService.eval(code, true, request)
         if (results.exception) {
@@ -44,8 +42,12 @@ class ConsoleController {
         render results as JSON
     }
 
-    def listFiles = { // TODO error handling
-        File baseDir = new File(params.path)
+    def listFiles(String path) { // TODO error handling
+        File baseDir = new File(path)
+
+        if (!baseDir.exists() || !baseDir.canRead()) {
+            return renderError("Directory not found or cannot be read: $path", 400)
+        }
         Map result = [
             path: FilenameUtils.normalize(baseDir.absolutePath, true),
             files: baseDir.listFiles().findAll { !it.hidden }.sort { it.name }.collect { fileToJson it, false }
@@ -53,7 +55,12 @@ class ConsoleController {
         render result as JSON
     }
 
-    def file = {
+    private def renderError(String error, int status) {
+        response.status = status
+        render([error: error] as JSON)
+    }
+
+    def file() {
         switch (request.method) {
             case 'GET':
                 doFileGet()
@@ -72,87 +79,94 @@ class ConsoleController {
 
     private doFileGet() {
         String filename = params.path
-        Map result = [:]
-        int status = 200
-        if (filename) {
-            File file = new File(filename)
-            file.path
-            if (file.isDirectory()) {
-                result.error = "$filename is a directory"
-                status = 400
-            } else if (!file.exists() || !file.canRead()) {
-                result.error = "File $filename doesn't exist or cannot be read"
-                status = 400
-            } else {
-                result = fileToJson(file)
-            }
+
+        if (!filename) {
+            return renderError('param required: path', 400)
         }
-        render contentType: 'application/json', text: (result as JSON).toString(), status: status
+
+        File file = new File(filename)
+
+        if (file.isDirectory()) {
+            return renderError("$filename is a directory", 400)
+        }
+
+        if (!file.exists() || !file.canRead()) {
+            return renderError("File $filename doesn't exist or cannot be read", 400)
+        }
+
+        render(fileToJson(file) as JSON)
     }
 
     private doFileDelete() {
         String filename = params.path
-        Map result = [:]
-        int status = 200
-        if (filename) {
-            File file = new File(filename)
-            if (file.isDirectory()) {
-                result.error = "$filename is a directory"
-                status = 400
-            } else if (!file.exists() || !file.canWrite()) {
-                result.error = "File $filename doesn't exist or cannot be deleted"
-                status = 400
-            } else {
-                if (!file.delete()) {
-                    result.error = "File $filename could not be deleted"
-                    status = 400
-                }
-            }
+
+        if (!filename) {
+            return renderError('param required: path', 400)
         }
-        render contentType: 'application/json', text: (result as JSON).toString(), status: status
+
+        File file = new File(filename)
+
+        if (file.isDirectory()) {
+            return renderError("$filename is a directory", 400)
+        }
+
+        if (!file.exists() || !file.canWrite()) {
+            return renderError("File $filename doesn't exist or cannot be deleted", 400)
+        }
+
+        if (!file.delete()) {
+            return renderError("File $filename could not be deleted", 400)
+        }
+
+        render(fileToJson(file) as JSON)
     }
 
     private doFilePut() {
         String filename = params.path
-        def json = request.JSON
-        Map result = [:]
-        int status = 200
-        if (filename) {
-            File file = new File(filename)
-            if (file.isDirectory()) {
-                result.error = "$filename is a directory"
-                status = 400
-            } else if (!file.exists() || !file.canWrite()) {
-                result.error = "File $filename doesn't exist or cannot be modified"
-                status = 400
-            } else {
-                try {
-                    file.write json.text
-                } catch (e) {
-                    result.error = "File $filename could not be modified"
-                    status = 400
-                }
-            }
+
+        if (!filename) {
+            return renderError('param required: path', 400)
         }
-        render contentType: 'application/json', text: (result as JSON).toString(), status: status
+
+        File file = new File(filename)
+
+        if (file.isDirectory()) {
+            return renderError("$filename is a directory", 400)
+        }
+
+        if (!file.exists() || !file.canWrite()) {
+            return renderError("File $filename doesn't exist or cannot be modified", 400)
+        }
+
+        def json = request.JSON
+        try {
+            file.write json.text
+        } catch (e) {
+            return renderError("File $filename could not be modified", 400)
+        }
+
+        render(fileToJson(file) as JSON)
     }
 
     private doFilePost() {
         def json = request.JSON
-        Map result = [:]
-        int status = 200
+
         File file = new File(json.path.toString(), json.name.toString())
+
+        if (!file.canWrite()) {
+            return renderError("File $filename cannot be created", 400)
+        }
+
         try {
             file.write json.text
-            result = fileToJson(file)
         } catch (e) {
-            result.error = "File $json.name could not be created"
-            status = 400
+            return renderError("File $json.name could not be created", 400)
         }
-        render contentType: 'application/json', text: (result as JSON).toString(), status: status
+
+        render(fileToJson(file) as JSON)
     }
 
-    private Map fileToJson(File file, boolean includeText = true) {
+    private static Map fileToJson(File file, boolean includeText = true) {
         Map json = [
             id: FilenameUtils.normalize(file.absolutePath, true),
             name: file.name,

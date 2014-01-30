@@ -36,8 +36,8 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       dfd.done (file) =>
         @showFile file
         App.trigger 'file:opened', file
-      dfd.fail =>
-        alert 'no find file' # TODO parse response?
+      dfd.fail (jqxhr, status, error) =>
+        App.handleXhrFail jqxhr
         @newFile()
 
     showFile: (file) ->

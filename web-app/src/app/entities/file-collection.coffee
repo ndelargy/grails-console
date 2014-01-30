@@ -7,7 +7,7 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
       file.store = options.collection.store
       file
 
-    comparator: (file) -> file.get('name')
+    comparator: (file) -> file.get('type') + file.get('name')
 
     store: 'local'
 
