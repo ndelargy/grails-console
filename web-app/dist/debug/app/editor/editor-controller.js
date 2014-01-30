@@ -87,7 +87,10 @@
         });
       },
       isDirty: function() {
-        return this.file.get('text') !== this.editorView.getValue();
+        return this.normalizeText(this.file.get('text')) !== this.normalizeText(this.editorView.getValue());
+      },
+      normalizeText: function(text) {
+        return text.replace(/(\r\n|\r)/gm, '\n');
       }
     });
   });

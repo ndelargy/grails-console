@@ -65,24 +65,16 @@
         }
       },
       serializeData: function() {
-        var currentDir, tokens;
-        tokens = this.collection.path.split('/');
-        currentDir = tokens[tokens.length - 1];
         return {
           files: this.collection.toJSON(),
           path: this.collection.path,
-          currentDir: currentDir,
-          hasParent: tokens.length > 1 && tokens[1],
+          currentDir: this.collection.getCurrentDir(),
+          hasParent: this.collection.hasParent(),
           store: this.collection.store === 'local' ? 'Local Storage' : 'Remote Storage',
           showDelete: this.showDelete,
           loading: this.loading
         };
       }
-    });
-    Handlebars.registerHelper('scriptsFileIcon', function(file, options) {
-      var clazz;
-      clazz = this.type === 'dir' ? 'fa fa-folder-o' : 'fa fa-file-o';
-      return new Handlebars.SafeString("<i class='" + clazz + "'></i>");
     });
     return Handlebars.registerHelper('scriptsFileItem', function(file, options) {
       var html, iconClass, showDelete;

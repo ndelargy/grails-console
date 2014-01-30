@@ -58,20 +58,13 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
           App.trigger 'file:deleted', file
 
     serializeData: ->
-      tokens = @collection.path.split('/') # TODO need to handle Windows paths
-      currentDir = tokens[tokens.length - 1]
-
       files: @collection.toJSON()
       path: @collection.path
-      currentDir: currentDir
-      hasParent: tokens.length > 1 and tokens[1]
+      currentDir: @collection.getCurrentDir()
+      hasParent: @collection.hasParent()
       store: if @collection.store is 'local' then 'Local Storage' else 'Remote Storage'
       showDelete: @showDelete
       loading: @loading
-
-  Handlebars.registerHelper 'scriptsFileIcon', (file, options) ->
-    clazz = if @type is 'dir' then 'fa fa-folder-o' else 'fa fa-file-o'
-    new Handlebars.SafeString "<i class='#{clazz}'></i>"
 
   Handlebars.registerHelper 'scriptsFileItem', (file, options) ->
     showDelete = options.hash.showDelete

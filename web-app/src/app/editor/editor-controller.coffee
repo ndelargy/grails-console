@@ -73,5 +73,8 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
             App.trigger 'file:created', @file # TODO move to file-model
 
     isDirty: ->
-      @file.get('text') isnt @editorView.getValue()
+      @normalizeText(@file.get('text')) isnt @normalizeText(@editorView.getValue())
+
+    normalizeText: (text) ->
+      text.replace /(\r\n|\r)/gm, '\n'
 

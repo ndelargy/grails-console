@@ -1,7 +1,5 @@
 module.exports = (grunt) ->
 
-  timestamp = new Date().getTime()
-
   grunt.initConfig
 
     pkg: grunt.file.readJSON 'package.json'
@@ -18,14 +16,14 @@ module.exports = (grunt) ->
           'web-app/dist/debug/app/files/**/*.js'
         ]
 
-        release: "web-app/dist/release/app.#{timestamp}.js"
+        release: "web-app/dist/release/app.js"
 
       css:
         debug:
           'web-app/dist/debug/app.css'
 
         release:
-          "web-app/dist/release/app.#{timestamp}.css"
+          "web-app/dist/release/app.css"
 
     vendor:
       js: [

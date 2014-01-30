@@ -46,8 +46,10 @@ class ConsoleController {
 
     def listFiles = { // TODO error handling
         File baseDir = new File(params.path)
-        List result
-        result = baseDir.listFiles().findAll { !it.hidden }.sort { it.name }.collect { fileToJson it, false }
+        Map result = [
+            path: FilenameUtils.normalize(baseDir.absolutePath, true),
+            files: baseDir.listFiles().findAll { !it.hidden }.sort { it.name }.collect { fileToJson it, false }
+        ]
         render result as JSON
     }
 
@@ -152,7 +154,7 @@ class ConsoleController {
 
     private Map fileToJson(File file, boolean includeText = true) {
         Map json = [
-            id: FilenameUtils.normalize(file.absolutePath),
+            id: FilenameUtils.normalize(file.absolutePath, true),
             name: file.name,
             type: file.isDirectory() ? 'dir' : 'file',
             lastModified: file.lastModified()
