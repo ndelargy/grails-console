@@ -8,21 +8,9 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
       @editorView = new Editor.EditorView()
 
-      @listenTo @editorView, 'execute', (result) ->
-        @resultCollection.add result
-
       @listenTo @editorView, 'save', @save
 
       @listenTo @editorView, 'saveAs', @saveAs
-
-      @resultCollection = new Editor.ResultCollection()
-      @resultsView = new Editor.ResultCollectionView(collection: @resultCollection)
-
-      @listenTo App, 'app:editor:clear', ->
-        @resultCollection.reset()
-
-      @listenTo App, 'app:editor:execute', =>
-        @editorView.executeCode()
 
       @listenTo App, 'app:editor:save', =>
         @save @editorView.getValue()

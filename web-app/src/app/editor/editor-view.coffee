@@ -65,28 +65,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
     onExecuteClick: (event) ->
       event.preventDefault()
-      @executeCode()
-
-    executeCode: ->
-      result = new Editor.Result
-        loading: true
-        input: @getValue()
-
-      @trigger 'execute', result
-      jqxhr = $.post App.createLink('execute'), code: @getValue()
-
-      jqxhr.done (response) ->
-        result.set
-          loading: false
-          totalTime: response.totalTime
-          exception: response.exception
-          result: response.result
-          output: response.output
-
-      jqxhr.fail ->
-        result.set
-          loading: false
-          error: 'An error occurred.'
+      App.trigger 'app:editor:execute'
 
     onShow: ->
       @editor.focus()

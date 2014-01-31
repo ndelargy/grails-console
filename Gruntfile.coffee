@@ -9,21 +9,17 @@ module.exports = (grunt) ->
         debug: [
           'web-app/dist/debug/jst.js'
           'web-app/dist/debug/app/app.js'
-
-          'web-app/dist/debug/app/main/**/*.js'
-          'web-app/dist/debug/app/entities/**/*.js'
-          'web-app/dist/debug/app/editor/**/*.js'
-          'web-app/dist/debug/app/files/**/*.js'
+          'web-app/dist/debug/app/*/**/*.js'
         ]
 
-        release: "web-app/dist/release/app.js"
+        release: 'web-app/dist/release/app.js'
 
       css:
         debug:
           'web-app/dist/debug/app.css'
 
         release:
-          "web-app/dist/release/app.css"
+          'web-app/dist/release/app.css'
 
     vendor:
       js: [
@@ -144,10 +140,8 @@ module.exports = (grunt) ->
         js: grunt.file.expand(vendor.js).concat grunt.file.expand(app.js.debug)
         css: grunt.file.expand(vendor.css).concat grunt.file.expand(app.css.debug)
       release:
-#        js: grunt.file.expand(vendor.js).concat grunt.file.expand(app.js.release)
         js: grunt.file.expand(app.js.release)
         css: grunt.file.expand(vendor.css).concat grunt.file.expand(app.css.release)
-#        css: grunt.file.expand(app.css.release)
     grunt.file.write 'grails-app/conf/resources.json', JSON.stringify(json, undefined, 2)
   #    grunt.log.writeln JSON.stringify(json)
 

@@ -66,17 +66,23 @@
   App.addInitializer ->
     App.Editor.controller = new App.Editor.Controller
     App.Files.controller = new App.Files.Controller
+    App.Result.controller = new App.Result.Controller
     App.router = new App.Main.Router()
-
-    scriptsView = App.Files.controller.scriptsView
 
     contentView = new App.Main.ContentView
       editorView: App.Editor.controller.editorView
-      resultsView: App.Editor.controller.resultsView
+      resultsView: App.Result.controller.resultsView
       scriptsView: App.Files.controller.scriptsView
 
     App.mainRegion.show contentView
     contentView.refresh()
+
+  App.on 'app:editor:execute', ->
+    input = App.Editor.controller.editorView.getValue()
+    App.Result.controller.execute input
+
+  App.on 'app:editor:clear', ->
+    App.Result.controller.resultCollection.reset()
 
   App.on 'app:file:new', (file) ->
     if not App.Editor.controller.isDirty() or confirm 'Are you sure? You have unsaved changes.'

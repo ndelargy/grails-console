@@ -1,15 +1,15 @@
-App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
+App.module 'Result', (Result, App, Backbone, Marionette, $, _) ->
 
-  Editor.ResultCollectionView = Marionette.CompositeView.extend
+  Result.ResultCollectionView = Marionette.CompositeView.extend
   
-    template: 'editor/results'
+    template: 'result/results'
 
     itemViewContainer: '.inner'
 
     events:
       'click .clear': 'onClearClick'
 
-    getItemView: (item) -> Editor.ResultView
+    getItemView: (item) -> Result.ResultView
 
     onAfterItemAdded: (itemView) ->
       @scrollToResultView itemView
