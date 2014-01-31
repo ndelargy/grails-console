@@ -49,11 +49,14 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
     onSave: (event) ->
       event.preventDefault()
       fileName = @$('input.file-name').val()
-      store = @collection.store
-      path = @collection.path
-      path += '/' if path[path.length - 1] isnt '/'
 
-      @trigger 'save', store, path, fileName
+      if not fileName
+        alert 'File name is required.'
+      else
+        store = @collection.store
+        path = @collection.path
+        path += '/' if path[path.length - 1] isnt '/'
+        @trigger 'save', store, path, fileName
 
     setName: (name) ->
       @$('input.file-name').val name
