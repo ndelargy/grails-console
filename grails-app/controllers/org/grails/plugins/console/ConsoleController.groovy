@@ -118,7 +118,7 @@ class ConsoleController {
             return renderError("File $filename could not be deleted", 400)
         }
 
-        render(fileToJson(file) as JSON)
+        render([:] as JSON)
     }
 
     private doFilePut() {
@@ -152,11 +152,6 @@ class ConsoleController {
         def json = request.JSON
 
         File file = new File(json.path.toString(), json.name.toString())
-
-        if (!file.canWrite()) {
-            return renderError("File $filename cannot be created", 400)
-        }
-
         try {
             file.write json.text
         } catch (e) {
