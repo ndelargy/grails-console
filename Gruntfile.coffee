@@ -30,7 +30,6 @@ module.exports = (grunt) ->
         'web-app/vendor/js/libs/backbone-min.js'
         'web-app/vendor/js/libs/backbone.marionette.min.js'
         'web-app/vendor/js/libs/handlebars.runtime.js'
-        'web-app/vendor/js/libs/moment.min.js'
         'web-app/vendor/jquery-layout/js/jquery.layout-latest.min.js'
         'web-app/vendor/js/plugins/jquery.hotkeys.js'
         'web-app/vendor/codemirror-3.18/lib/codemirror.js'

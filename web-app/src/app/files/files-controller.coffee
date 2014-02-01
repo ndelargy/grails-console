@@ -43,11 +43,8 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       @listenTo App, 'file:opened', (file) =>
         @collection.fetchByStoreAndPath file.store, file.getParent()
 
-      @listenTo App, 'file:created', (file) -> # TODO this is whack
-        file = App.Editor.controller.file
-        collection = @collection
-        if file.getParent() is collection.path and file.store is collection.store
-          collection.fetch()
+      @listenTo App, 'file:created', (file) ->
+        @collection.fetchByStoreAndPath file.store, file.getParent()
 
       @scriptsView = new Files.ScriptsView
         collection: @collection
@@ -59,7 +56,7 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
             App.Editor.controller.showFile file
             App.router.showFile file
 
-    promptForNewFileName: ->
+    promptForNewFile: ->
       dfd = $.Deferred()
 
       if App.Editor.controller.file.isNew()
@@ -77,8 +74,8 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
       view.$el.find('.file-name').focus()
 
-      view.on 'save', (store, path, name) ->
-        dfd.resolveWith null, [store, path, name]
+      view.on 'save', (file) ->
+        dfd.resolveWith null, [file]
         view.close()
 
       view.on 'file:selected', (file) ->

@@ -56,7 +56,14 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
         store = @collection.store
         path = @collection.path
         path += '/' if path[path.length - 1] isnt '/'
-        @trigger 'save', store, path, fileName
+
+        file = new App.Entities.File
+          name: fileName
+          path: path
+          type: 'file'
+
+        file.store = store
+        @trigger 'save', file
 
     setName: (name) ->
       @$('input.file-name').val name

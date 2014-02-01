@@ -43,26 +43,17 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
         @file.save().then => App.savingOff()
 
     saveAs: (text) ->
-      App.Files.controller.promptForNewFileName().done (store, path, name) => # TODO cmd?
-        if store
-          file = new App.Entities.File
-            text: text
-            name: name
-            path: path
-            type: 'file'
-
-          file.store = store
-
-          App.savingOn()
-          file.save().then =>
-            App.savingOff()
-            @showFile file
-            App.router.showFile file
-            App.trigger 'file:created', @file # TODO move to file-model
+      App.trigger 'app:file:saveAs'
 
     isDirty: ->
       @normalizeText(@file.get('text')) isnt @normalizeText(@editorView.getValue())
 
-    normalizeText: (text) ->
+    normalizeText: (text) -> # for Windows
       text.replace /(\r\n|\r)/gm, '\n'
+
+    getValue: -> @editorView.getValue()
+
+
+
+
 
