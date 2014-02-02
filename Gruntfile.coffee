@@ -141,7 +141,7 @@ module.exports = (grunt) ->
       release:
         js: grunt.file.expand(app.js.release)
         css: grunt.file.expand(vendor.css).concat grunt.file.expand(app.css.release)
-    grunt.file.write 'grails-app/conf/resources.json', JSON.stringify(json, undefined, 2)
+    grunt.file.write 'grails-app/conf/console.json', JSON.stringify(json, undefined, 2)
   #    grunt.log.writeln JSON.stringify(json)
 
   grunt.registerTask 'default', ['debug']

@@ -47,12 +47,12 @@ class ConsoleTagLib {
 
     Map getConfFromFile() {
         File consolePluginDir = GrailsPluginUtils.getPluginDirForName('console').file
-        String jsonText = new File(consolePluginDir, 'grails-app/conf/resources.json').text
+        String jsonText = new File(consolePluginDir, 'grails-app/conf/console.json').text
         JSON.parse jsonText
     }
 
     Map getConfFromResource() { // Note: resources aren't reloadable.
-        String jsonText = grailsApplication.mainContext.parent.getResource('classpath:resources.json').file.text
+        String jsonText = grailsApplication.mainContext.parent.getResource('classpath:console.json').file.text
         JSON.parse jsonText
     }
 }
