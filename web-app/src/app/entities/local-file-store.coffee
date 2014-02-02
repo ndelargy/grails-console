@@ -71,5 +71,17 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
 
       dfd
 
+    storeName: 'local'
+
+    displayName: 'Local Storage'
+
+    syncFile: (method, file, options) -> @sync method, file, options
+
+    syncCollection: (method, collection, options) ->
+      console.log "syncCollection", arguments
+      @sync method, collection, options
+
+    parseCollection: (collection, response, options) -> response
+
   App.on 'initialize:before', (options) ->
-    Entities.localFileStore = new Entities.LocalFileStore 'gconsole.files'
+    App.addFileStore new Entities.LocalFileStore('gconsole.files')

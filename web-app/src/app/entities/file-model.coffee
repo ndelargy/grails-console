@@ -20,8 +20,9 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
       @get('type') is 'file'
 
     sync: (method, file, options) ->
-      if (file.store is 'local')
-        Entities.localFileStore.sync method, file, options
-      else
-        url = if file.isNew() then App.createLink 'file' else App.createLink 'file', path: file.get('id')
-        Backbone.sync method, file, _.extend({url: url}, options)
+      App.getFileStore(@store).syncFile(method, file, options)
+
+  App.reqres.setHandler 'file:entity', (store, path) ->
+    file = new Entities.File id: path
+    file.store = store
+    file.fetch().pipe -> file

@@ -8,12 +8,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
       @editorView = new Editor.EditorView()
 
-      @listenTo @editorView, 'save', @save
-
-      @listenTo @editorView, 'saveAs', @saveAs
-
-      @listenTo App, 'app:editor:save', =>
-        @save @editorView.getValue()
+      @listenTo App, 'app:editor:save', @save
 
     newFile: ->
       file = new App.Entities.File
@@ -34,16 +29,14 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       @editorView.refresh()
       @editorView.setValue file.get('text')
 
-    save: (text) ->
+    save: ->
+      text = @editorView.getValue()
       @file.set 'text', text
       if @file.isNew()
         @saveAs text
       else
         App.savingOn()
         @file.save().then => App.savingOff()
-
-    saveAs: (text) ->
-      App.trigger 'app:file:saveAs'
 
     isDirty: ->
       @normalizeText(@file.get('text')) isnt @normalizeText(@editorView.getValue())

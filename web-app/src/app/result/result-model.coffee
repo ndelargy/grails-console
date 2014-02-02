@@ -20,4 +20,4 @@ App.module 'Result', (Result, App, Backbone, Marionette, $, _) ->
       jqxhr.fail =>
         @set
           loading: false
-          error: 'An error occurred.' # TODO parse message
+          error: 'An error occurred.'

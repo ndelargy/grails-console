@@ -38,7 +38,7 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
     initialize: ->
       @collection = new App.Entities.FileCollection()
-      @collection.fetch() # TODO router init
+      @collection.fetchByStoreAndPath 'local', '/' # TODO router init
 
       @listenTo App, 'file:opened', (file) =>
         @collection.fetchByStoreAndPath file.store, file.getParent()
@@ -56,20 +56,17 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
             App.Editor.controller.showFile file
             App.router.showFile file
 
-    promptForNewFile: ->
+    promptForNewFile: (store, path) ->
       dfd = $.Deferred()
 
-      if App.Editor.controller.file.isNew()
-        store = App.Files.controller.scriptsView.collection.store # TODO
-        path = App.Files.controller.scriptsView.collection.path
-      else
-        store = App.Editor.controller.file.store
-        path = App.Editor.controller.file.getParent()
+      collection = new App.Entities.FileCollection()
+      collection.store = store
+      collection.path = path
 
       view = new Files.FilesSectionView
-        store: store
-        path: path
+        collection: collection
 
+      collection.fetch()
       showInModal view
 
       view.$el.find('.file-name').focus()
@@ -78,11 +75,7 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
         dfd.resolveWith null, [file]
         view.close()
 
-      view.on 'file:selected', (file) ->
-        view.setName file.get('name')
-
-      view.on 'close', ->
-        dfd.resolve()
+      view.on 'close', -> dfd.resolve()
 
       dfd.promise()
 

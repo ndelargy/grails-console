@@ -14,14 +14,15 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
     path: '/'
 
     getParent: ->
-      tokens = @path.split('/')
-      newPath = '/' + tokens[0...tokens.length - 1].join('/')
-      # TODO null if no parent
-      newPath
+      tokens = @getPathTokens()
+      parent = null
+      if tokens.length > 1
+        parent = tokens[0...tokens.length - 1].join('/') + '/'
+
+      parent
 
     hasParent: ->
-      tokens = @path.split('/')
-      !!(tokens.length > 1 and tokens[1])
+      !!(@getParent())
 
     fetchByStoreAndPath: (@store, @path) ->
       @trigger 'fetching'
@@ -31,30 +32,20 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
       @fetchByStoreAndPath @store, @getParent()
 
     getCurrentDir: ->
+      tokens = @getPathTokens()
+      tokens[tokens.length - 1]
+
+    getPathTokens: ->
+      @getNormalizedPath().split('/')
+
+    getNormalizedPath: ->
       path = @path
       path = path.replace /^\s+|\s+$/gm, '' # trim
       path = path[0...-1] if path[-1..] is '/'
-      tokens = path.split('/')
-      tokens[tokens.length - 1]
+      path
 
-    sync: (method, file, options) ->
-      if @store is 'local'
-        Entities.localFileStore.sync method, file, options
-      else
-        path = @path
-        path = path + '/' if path[-1..] isnt '/'
-        url = App.createLink 'listFiles', path: path
-        Backbone.sync method, file, _.extend({url: url}, options)
+    sync: (method, collection, options) ->
+      App.getFileStore(@store).syncCollection method, collection, options
 
-    parse: (response) ->
-      if @store is 'local'
-        response
-      else
-        @path = response.path
-        response.files
-
-  App.reqres.setHandler 'file:entity', (store, path) ->
-    file = new Entities.File
-      id: path
-    file.store = store
-    file.fetch().pipe -> file
+    parse: (response, options) ->
+      App.getFileStore(@store).parseCollection @, response, options

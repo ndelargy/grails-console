@@ -2,7 +2,7 @@ describe 'App.Entities.LocalFileStore', ->
 
   beforeEach ->
     @store = new App.Entities.LocalFileStore('test')
-    App.Entities.localFileStore = @store
+    App.addFileStore @store
     @store.destroyAll()
 
 

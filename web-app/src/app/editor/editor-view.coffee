@@ -56,12 +56,13 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       @editor.refresh()
       @editor.focus()
 
-    onSaveClick: ->
-      @trigger 'save', @editor.getValue()
+    onSaveClick: (event) ->
+      event.preventDefault()
+      App.trigger 'app:editor:save'
 
     onSaveAsClick: (event) ->
       event.preventDefault()
-      @trigger 'saveAs', @editor.getValue()
+      App.trigger 'app:editor:saveAs'
 
     onExecuteClick: (event) ->
       event.preventDefault()

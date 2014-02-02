@@ -62,9 +62,15 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       path: @collection.path
       currentDir: @collection.getCurrentDir()
       hasParent: @collection.hasParent()
-      store: if @collection.store is 'local' then 'Local Storage' else 'Remote Storage'
+      currentStore: App.getFileStore(@collection.store).displayName
+      fileStores: @getFileStoresJson()
       showDelete: @showDelete
       loading: @loading
+
+    getFileStoresJson: ->
+      _.collect App.fileStores, (fileStore, name) ->
+        name: fileStore.storeName
+        displayName: fileStore.displayName
 
   Handlebars.registerHelper 'scriptsFileItem', (file, options) ->
     showDelete = options.hash.showDelete

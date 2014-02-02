@@ -19,6 +19,7 @@
       "web-app/dist/debug/app/entities/file-collection.js",
       "web-app/dist/debug/app/entities/file-model.js",
       "web-app/dist/debug/app/entities/local-file-store.js",
+      "web-app/dist/debug/app/entities/remote-file-store.js",
       "web-app/dist/debug/app/entities/settings-model.js",
       "web-app/dist/debug/app/files/files-controller.js",
       "web-app/dist/debug/app/files/files-section-view.js",

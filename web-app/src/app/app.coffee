@@ -1,10 +1,22 @@
-Marionette.Renderer.render = (template, data) -> JST[template] data
+Marionette.Renderer.render = (template, data) ->
+  JST[template] data # use compiled templates
 
 App = new (Backbone.Marionette.Application.extend
+
+  fileStores: {}
 
   onStart: (data) ->
     App.headerRegion.show new App.Main.HeaderView
 
+    @_initKeybindings()
+
+    @showTheme()
+    App.settings.on 'change:theme', @showTheme, this
+
+    Backbone.history.start(pushState: false) if Backbone?.history
+    $('body').css 'visibility', 'visible'
+
+  _initKeybindings: ->
     $(document).bind 'keydown', 'Ctrl+return', -> App.trigger 'app:editor:execute'
     $(document).bind 'keydown', 'Meta+return', -> App.trigger 'app:editor:execute'
     $(document).bind 'keydown', 'Ctrl+s', (event) ->
@@ -16,13 +28,6 @@ App = new (Backbone.Marionette.Application.extend
       event.stopPropagation()
       App.trigger 'app:editor:save'
     $(document).bind 'keydown', 'esc', -> App.trigger 'app:editor:clear'
-
-    @showTheme()
-    App.settings.on 'change:theme', @showTheme, this
-
-    Backbone.history.start(pushState: false) if Backbone?.history
-    $('body').css 'visibility', 'visible'
-
 
   createLink: (action, params) ->
     link = "#{@data.baseUrl}/console/#{action}"
@@ -48,6 +53,12 @@ App = new (Backbone.Marionette.Application.extend
 
     error = resp?.error ? 'An error occurred.'
     alert error
+
+  addFileStore: (fileStore) ->
+    @fileStores[fileStore.storeName] = fileStore
+
+  getFileStore: (name) ->
+    @fileStores[name]
 )
 
 App.addRegions
@@ -56,9 +67,9 @@ App.addRegions
 
 App.on 'initialize:before', (options) ->
   App.data = options
-  App.settings = App.request 'settings:entity'
 
 App.addInitializer ->
+  App.settings = App.request 'settings:entity'
   App.Editor.controller = new App.Editor.Controller
   App.Files.controller = new App.Files.Controller
   App.Result.controller = new App.Result.Controller
@@ -73,7 +84,7 @@ App.addInitializer ->
   contentView.refresh()
 
 App.on 'app:editor:execute', ->
-  input = App.Editor.controller.editorView.getValue()
+  input = App.Editor.controller.getValue()
   App.Result.controller.execute input
 
 App.on 'app:file:new', (file) ->
@@ -81,9 +92,17 @@ App.on 'app:file:new', (file) ->
     App.router.showNew()
     App.Editor.controller.newFile()
 
-App.on 'app:file:saveAs', ->
+App.on 'app:editor:saveAs', ->
   text = App.Editor.controller.getValue()
-  App.Files.controller.promptForNewFile().done (file) =>
+
+  if App.Editor.controller.file.isNew()
+    store = App.Files.controller.scriptsView.collection.store # TODO
+    path = App.Files.controller.scriptsView.collection.path
+  else
+    store = App.Editor.controller.file.store
+    path = App.Editor.controller.file.getParent()
+
+  App.Files.controller.promptForNewFile(store, path).done (file) =>
     if file
       file.set 'text', text
 

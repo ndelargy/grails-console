@@ -16,6 +16,20 @@ describe 'App.Entities.FileCollection', ->
       @collection.path = path
       expect(@collection.hasParent()).toBe expected
 
+  it 'should return correct getParent', ->
+    data =
+      '/':            null
+      '/aaa':         '/'
+      '/aaa/':        '/'
+      '/aaa/bbb':     '/aaa/'
+      '/aaa/bbb/ccc': '/aaa/bbb/'
+      'C:/':          null
+      'C:/aaa':       'C:/'
+
+    for path, expected of data
+      @collection.path = path
+      expect(@collection.getParent()).toBe expected
+
   it 'should return correct getCurrentDir', ->
     data =
       '/':          ''
