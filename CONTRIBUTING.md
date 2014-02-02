@@ -4,10 +4,6 @@ This plugin uses [Grunt](http://gruntjs.com/) to build its resources. To install
 
     npm install -g grunt-cli
 
-When developing, include the plugin as an inline dependency in BuildConfig.groovy:
-
-    grails.plugin.location.console = '../path/to/grails-console'
-
 ## Building
 
 1. Change to the project's root directory.
@@ -44,4 +40,17 @@ Structure for front-end resources:
     │   │   └── templates      # handlebars templates
     │   ├── vendor             # vendor libs
     ├── Gruntfile.coffee
+
+## Running
+
+When developing, include the plugin as an inline dependency in BuildConfig.groovy:
+
+    grails.plugin.location.console = '../path/to/grails-console'
+
+Available properties:
+
+| Property | Description |
+| --- | --- |
+| grails.plugin.console.debug  | Use the debug resources. |
+| grails.plugin.console.reload | Always reload the console.json file. |
 
