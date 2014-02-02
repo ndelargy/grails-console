@@ -4,9 +4,7 @@ describe 'App.Files.FilesSectionView', ->
     App.settings = new App.Entities.Settings()
 
     @$el = $('<div></div>').appendTo('body')
-    @view = new App.Files.FilesSectionView
-      store: 'local'
-      path: '/'
+    @view = new App.Files.FilesSectionView collection: new App.Entities.FileCollection()
 
   afterEach ->
     @view.close()
