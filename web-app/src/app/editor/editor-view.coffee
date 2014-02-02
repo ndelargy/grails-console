@@ -19,10 +19,6 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
     onRender: ->
       @initEditor()
 
-    onNewClick: (event) ->
-      event.preventDefault()
-      App.trigger 'app:file:new'
-
     initEditor: ->
       @editor = CodeMirror.fromTextArea(@$('textarea[name=code]')[0],
         matchBrackets: true
@@ -55,6 +51,10 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       @editor.setValue text
       @editor.refresh()
       @editor.focus()
+
+    onNewClick: (event) ->
+      event.preventDefault()
+      App.trigger 'app:file:new'
 
     onSaveClick: (event) ->
       event.preventDefault()

@@ -39,10 +39,10 @@ App = new (Backbone.Marionette.Application.extend
     $('body').attr 'data-theme', theme
 
   savingOn: ->
-    $('.navbar .saving').fadeIn(100)
+    $('.navbar .saving').fadeIn 100
 
   savingOff: ->
-    $('.navbar .saving').fadeOut(100)
+    $('.navbar .saving').fadeOut 100
 
   handleXhrFail: (jqxhr) ->
     resp = null
@@ -57,8 +57,8 @@ App = new (Backbone.Marionette.Application.extend
   addFileStore: (fileStore) ->
     @fileStores[fileStore.storeName] = fileStore
 
-  getFileStore: (name) ->
-    @fileStores[name]
+  getFileStore: (storeName) ->
+    @fileStores[storeName]
 )
 
 App.addRegions

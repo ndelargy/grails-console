@@ -8,15 +8,14 @@ App.module 'Main', (Main, App, Backbone, Marionette, $, _) ->
       class: 'navbar navbar-fixed-top'
 
     initialize: ->
-      @listenTo App, 'file:show', (file) -> # TODO
-        name = file.get('name')
-        if name
-          @$('.title span').html(name).show()
-        else
-          @$('.title span').hide()
+      @listenTo App, 'file:show', @onFileShow
 
-    showDirty: (isDirty ) ->
-      @$('.title span').toggleClass 'dirty', isDirty
+    onFileShow: (file) ->
+      name = file.get('name')
+      if name
+        @$('.title span').html(name).show()
+      else
+        @$('.title span').hide()
 
     onRender: ->
       @settingsView = new Main.SettingsView(model: App.settings)
