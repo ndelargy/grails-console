@@ -8,10 +8,7 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
     getAbsolutePath: -> @id
 
     getParent: ->
-      tokens = @id.split('/')
-      parent = tokens[0...tokens.length - 1].join('/')
-      # TODO null if root
-      parent
+      App.Util.Path.getParent @id
 
     isDirectory: ->
       @get('type') is 'dir'
@@ -20,7 +17,7 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
       @get('type') is 'file'
 
     sync: (method, file, options) ->
-      App.getFileStore(@store).syncFile(method, file, options)
+      App.getFileStore(@store).syncFile method, file, options
 
   App.reqres.setHandler 'file:entity', (store, path) ->
     file = new Entities.File id: path

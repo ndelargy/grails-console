@@ -5,6 +5,16 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
     constructor: (@name) ->
       @_load()
 
+    storeName: 'local'
+
+    displayName: 'Local Storage'
+
+    syncFile: (method, file, options) -> @sync method, file, options
+
+    syncCollection: (method, collection, options) -> @sync method, collection, options
+
+    parseCollection: (collection, response, options) -> response
+
     list: ->
       new Entities.FileCollection(@fetch())
 
@@ -70,18 +80,6 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
         options?.error? 'Record not found'
 
       dfd
-
-    storeName: 'local'
-
-    displayName: 'Local Storage'
-
-    syncFile: (method, file, options) -> @sync method, file, options
-
-    syncCollection: (method, collection, options) ->
-      console.log "syncCollection", arguments
-      @sync method, collection, options
-
-    parseCollection: (collection, response, options) -> response
 
   App.on 'initialize:before', (options) ->
     App.addFileStore new Entities.LocalFileStore('gconsole.files')

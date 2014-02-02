@@ -33,7 +33,8 @@
       "web-app/dist/debug/app/result/result-collection.js",
       "web-app/dist/debug/app/result/result-controller.js",
       "web-app/dist/debug/app/result/result-model.js",
-      "web-app/dist/debug/app/result/result-view.js"
+      "web-app/dist/debug/app/result/result-view.js",
+      "web-app/dist/debug/app/util/path.js"
     ],
     "css": [
       "web-app/vendor/bootstrap/css/bootstrap.min.css",

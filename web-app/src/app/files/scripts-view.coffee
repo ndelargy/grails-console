@@ -63,14 +63,9 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       currentDir: @collection.getCurrentDir()
       hasParent: @collection.hasParent()
       currentStore: App.getFileStore(@collection.store).displayName
-      fileStores: @getFileStoresJson()
+      fileStores: App.fileStores
       showDelete: @showDelete
       loading: @loading
-
-    getFileStoresJson: ->
-      _.collect App.fileStores, (fileStore, name) ->
-        name: fileStore.storeName
-        displayName: fileStore.displayName
 
   Handlebars.registerHelper 'scriptsFileItem', (file, options) ->
     showDelete = options.hash.showDelete

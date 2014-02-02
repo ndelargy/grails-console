@@ -13,17 +13,6 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
 
     path: '/'
 
-    getParent: ->
-      tokens = @getPathTokens()
-      parent = null
-      if tokens.length > 1
-        parent = tokens[0...tokens.length - 1].join('/') + '/'
-
-      parent
-
-    hasParent: ->
-      !!(@getParent())
-
     fetchByStoreAndPath: (@store, @path) ->
       @trigger 'fetching'
       @fetch reset: true
@@ -31,18 +20,17 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
     up: ->
       @fetchByStoreAndPath @store, @getParent()
 
-    getCurrentDir: ->
-      tokens = @getPathTokens()
-      tokens[tokens.length - 1]
+    getParent: ->
+      App.Util.Path.getParent @path
 
-    getPathTokens: ->
-      @getNormalizedPath().split('/')
+    hasParent: ->
+      App.Util.Path.hasParent @path
+
+    getCurrentDir: ->
+      App.Util.Path.getCurrentDir @path
 
     getNormalizedPath: ->
-      path = @path
-      path = path.replace /^\s+|\s+$/gm, '' # trim
-      path = path[0...-1] if path[-1..] is '/'
-      path
+      App.Util.Path.getNormalized @path
 
     sync: (method, collection, options) ->
       App.getFileStore(@store).syncCollection method, collection, options
