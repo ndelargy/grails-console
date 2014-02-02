@@ -38,8 +38,9 @@ Structure for front-end resources:
     │   │   ├── img
     │   │   ├── styles         # less
     │   │   └── templates      # handlebars templates
-    │   ├── vendor             # vendor libs
+    │   └── vendor             # vendor libs
     ├── Gruntfile.coffee
+    └── package.json
 
 ## Running
 
@@ -47,10 +48,9 @@ When developing, include the plugin as an inline dependency in BuildConfig.groov
 
     grails.plugin.location.console = '../path/to/grails-console'
 
-Available properties:
+Configuration:
 
-| Property | Description |
-| --- | --- |
-| grails.plugin.console.debug  | Use the debug resources. |
-| grails.plugin.console.reload | Always reload the console.json file. |
+    grails.plugin.console.debug = true  // use the debug resources
+    grails.plugin.console.reload = true // always reload the console.json file
+
 
