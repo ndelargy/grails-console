@@ -38,4 +38,4 @@ App.module 'Main', (Main, App, Backbone, Marionette, $, _) ->
 
     onHelpClick: (event) ->
       event.preventDefault()
-      App.trigger 'help'
+      App.execute 'help'

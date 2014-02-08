@@ -7,8 +7,6 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
         "You have unsaved changes." if @isDirty()
 
       @editorView = new Editor.EditorView()
-
-      @listenTo App, 'app:editor:save', @save
       @listenTo App, 'app:editor:openFile', @openFile
 
     newFile: ->

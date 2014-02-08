@@ -15,7 +15,7 @@ App.module 'Main', (Main, App, Backbone, Marionette, $, _) ->
       @navigate 'new'
 
     newFile: ->
-      App.trigger 'app:editor:new'
+      App.execute 'new'
 
     openLocalFile: (name) ->
       App.trigger 'app:editor:openFile', 'local', name

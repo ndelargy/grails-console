@@ -30,4 +30,4 @@ App.module 'Result', (Result, App, Backbone, Marionette, $, _) ->
 
     onClearClick: (event) ->
       event.preventDefault()
-      App.trigger 'app:editor:clear'
+      App.execute 'clear'

@@ -25,11 +25,11 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
         mode: 'groovy'
         lineNumbers: true
         extraKeys:
-          'Ctrl-Enter': -> App.trigger 'app:editor:execute'
-          'Cmd-Enter': -> App.trigger 'app:editor:execute'
-          'Ctrl-S': -> App.trigger 'app:editor:save'
-          'Cmd-S': -> App.trigger 'app:editor:save'
-          'Esc': -> App.trigger 'app:editor:clear'
+          'Ctrl-Enter': -> App.execute 'execute'
+          'Cmd-Enter': -> App.execute 'execute'
+          'Ctrl-S': -> App.execute 'save'
+          'Cmd-S': -> App.execute 'save'
+          'Esc': -> App.execute 'clear'
       )
       @editor.focus()
       @editor.setValue ''
@@ -54,19 +54,19 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
     onNewClick: (event) ->
       event.preventDefault()
-      App.trigger 'app:editor:new'
+      App.execute 'new'
 
     onSaveClick: (event) ->
       event.preventDefault()
-      App.trigger 'app:editor:save'
+      App.execute 'save'
 
     onSaveAsClick: (event) ->
       event.preventDefault()
-      App.trigger 'app:editor:saveAs'
+      App.execute 'saveAs'
 
     onExecuteClick: (event) ->
       event.preventDefault()
-      App.trigger 'app:editor:execute'
+      App.execute 'execute'
 
     onShow: ->
       @editor.focus()

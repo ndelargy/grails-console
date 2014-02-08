@@ -26,22 +26,32 @@ Application = Backbone.Marionette.Application.extend
     @mainRegion.show contentView
     contentView.refresh()
 
-    @on 'app:editor:execute', @onExecute
-    @on 'app:editor:new', @onNew
-    @on 'app:editor:saveAs', @onSaveAs
     @on 'file:deleted', @onFileDeleted
     @on 'app:file:selected', @onFileSelected
 
-  onExecute: ->
+    @commands.setHandler 'save', @handleSave, @
+    @commands.setHandler 'saveAs', @handleSaveAs, @
+    @commands.setHandler 'new', @handleNew, @
+    @commands.setHandler 'execute', @handleExecute, @
+    @commands.setHandler 'clear', @handleClear, @
+    @commands.setHandler 'help', @handleHelp, @
+
+  handleExecute: ->
     input = @editorController.getValue()
     @resultController.execute input
 
-  onNew: ->
+  handleClear: ->
+    @resultController.clear()
+
+  handleNew: ->
     if not @editorController.isDirty() or confirm 'Are you sure? You have unsaved changes.'
       @router.showNew()
       @editorController.newFile()
 
-  onSaveAs: ->
+  handleSave: ->
+    @editorController.save()
+
+  handleSaveAs: ->
     text = @editorController.getValue()
 
     if @editorController.file.isNew()
@@ -62,6 +72,15 @@ Application = Backbone.Marionette.Application.extend
           @router.showFile file
           @trigger 'file:created', file # TODO move to file-model
 
+  handleHelp:->
+    # TODO modal region
+    view = new App.Main.HelpView
+    $el = $('<div class="modal fade" data-backdrop="false"></div>').appendTo('body').html view.render().el
+    $el.modal()
+    $el.on 'hidden.bs.modal', ->
+      $el.remove()
+      $('.modal-backdrop').remove()
+
   onFileDeleted: (file) ->
     if @editorController.file.id is file.id
       @router.showNew()
@@ -72,15 +91,6 @@ Application = Backbone.Marionette.Application.extend
       file.fetch().done =>
         @editorController.showFile file
         @router.showFile file
-
-  onHelp:->
-    # TODO modal region
-    view = new App.Main.HelpView
-    $el = $('<div class="modal fade" data-backdrop="false"></div>').appendTo('body').html view.render().el
-    $el.modal()
-    $el.on 'hidden.bs.modal', ->
-      $el.remove()
-      $('.modal-backdrop').remove()
 
   onStart: (data) ->
     @headerRegion.show new App.Main.HeaderView
@@ -94,17 +104,17 @@ Application = Backbone.Marionette.Application.extend
     $('body').css 'visibility', 'visible'
 
   _initKeybindings: ->
-    $(document).bind 'keydown', 'Ctrl+return', => @trigger 'app:editor:execute'
-    $(document).bind 'keydown', 'Meta+return', => @trigger 'app:editor:execute'
+    $(document).bind 'keydown', 'Ctrl+return', => @execute 'execute'
+    $(document).bind 'keydown', 'Meta+return', => @execute 'execute'
     $(document).bind 'keydown', 'Ctrl+s', (event) =>
       event.preventDefault()
       event.stopPropagation()
-      @trigger 'app:editor:save'
+      @execute 'save'
     $(document).bind 'keydown', 'Meta+s', (event) =>
       event.preventDefault()
       event.stopPropagation()
-      @trigger 'app:editor:save'
-    $(document).bind 'keydown', 'esc', => @trigger 'app:editor:clear'
+      @execute 'save'
+    $(document).bind 'keydown', 'esc', => @execute 'clear'
 
   createLink: (action, params) ->
     link = "#{@data.baseUrl}/console/#{action}"
