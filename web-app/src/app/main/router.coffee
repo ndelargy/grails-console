@@ -15,10 +15,10 @@ App.module 'Main', (Main, App, Backbone, Marionette, $, _) ->
       @navigate 'new'
 
     newFile: ->
-      App.Editor.controller.newFile()
+      App.trigger 'app:editor:new'
 
     openLocalFile: (name) ->
-      App.Editor.controller.openFile 'local', name
+      App.trigger 'app:editor:openFile', 'local', name
 
     openRemoteFile: (name) ->
-      App.Editor.controller.openFile 'remote', name
+      App.trigger 'app:editor:openFile', 'remote', name

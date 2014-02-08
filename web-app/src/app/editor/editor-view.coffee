@@ -54,7 +54,7 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
     onNewClick: (event) ->
       event.preventDefault()
-      App.trigger 'app:file:new'
+      App.trigger 'app:editor:new'
 
     onSaveClick: (event) ->
       event.preventDefault()

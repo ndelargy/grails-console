@@ -50,7 +50,7 @@ class ConsoleController {
         }
         Map result = [
             path: FilenameUtils.normalize(baseDir.absolutePath, true),
-            files: baseDir.listFiles().findAll { !it.hidden }.sort { it.name }.collect { fileToJson it, false }
+            files: baseDir.listFiles().sort { it.name }.collect { fileToJson it, false }
         ]
         render result as JSON
     }

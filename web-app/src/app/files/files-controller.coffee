@@ -49,13 +49,6 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       @scriptsView = new Files.ScriptsView
         collection: @collection
 
-      @listenTo @scriptsView, 'file:selected', (file) ->
-        # TODO pass through
-        if not App.Editor.controller.isDirty() or confirm 'Are you sure? You have unsaved changes.'
-          file.fetch().done ->
-            App.Editor.controller.showFile file
-            App.router.showFile file
-
     promptForNewFile: (store, path) ->
       dfd = $.Deferred()
 
