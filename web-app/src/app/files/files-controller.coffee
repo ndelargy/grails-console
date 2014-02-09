@@ -1,39 +1,5 @@
 App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
-  showInModal = (view) ->
-    $el = $('<div class="modal" data-backdrop="false"></div>').appendTo('body').html view.render().el
-    $el.modal show: false
-
-    $el.on 'shown.bs.modal', -> view.resize()
-
-    $el.find('.modal-content').draggable
-      handle: '.modal-header'
-      addClasses: false
-
-    $el.find('.modal-header').css 'cursor', 'move'
-
-    $el.find('.modal-content').resizable
-      addClasses: false
-      resize: (event, ui) -> view.resize()
-      stop: (event, ui) ->
-
-    $el.find('.modal-header .close').on 'click', (event) ->
-      event.preventDefault()
-      view.close()
-
-    $el.find('.modal-footer .cancel').on 'click', (event) ->
-      event.preventDefault()
-      view.close()
-
-    view.on 'close', -> $el.modal 'hide'
-
-    $el.on 'hidden.bs.modal', ->
-      $el.remove()
-
-    $el.modal 'show'
-
-    $el
-
   Files.Controller = Marionette.Controller.extend
 
     initialize: ->
@@ -53,14 +19,15 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       dfd = $.Deferred()
 
       collection = new App.Entities.FileCollection()
-      collection.store = store
-      collection.path = path
 
       view = new Files.FilesSectionView
         collection: collection
 
-      collection.fetch()
-      showInModal view
+      collection.fetchByStoreAndPath store, path
+
+      App.Util.Modal.showInModal view,
+        draggable: true
+        resizable: true
 
       view.$el.find('.file-name').focus()
 

@@ -27,7 +27,6 @@ Application = Backbone.Marionette.Application.extend
     contentView.refresh()
 
     @on 'file:deleted', @onFileDeleted
-    @on 'app:file:selected', @onFileSelected
 
     @commands.setHandler 'save', @handleSave, @
     @commands.setHandler 'saveAs', @handleSaveAs, @
@@ -36,6 +35,7 @@ Application = Backbone.Marionette.Application.extend
     @commands.setHandler 'clear', @handleClear, @
     @commands.setHandler 'help', @handleHelp, @
     @commands.setHandler 'openFile', @handleOpenFile, @
+    @commands.setHandler 'showFile', @handleShowFile, @
 
   handleExecute: ->
     input = @editorController.getValue()
@@ -74,37 +74,33 @@ Application = Backbone.Marionette.Application.extend
           @trigger 'file:created', file # TODO move to file-model
 
   handleHelp:->
-    # TODO modal region
     view = new App.Main.HelpView
-    $el = $('<div class="modal fade" data-backdrop="false"></div>').appendTo('body').html view.render().el
-    $el.modal()
-    $el.on 'hidden.bs.modal', ->
-      $el.remove()
-      $('.modal-backdrop').remove()
+    App.Util.Modal.showInModal view, draggable: true
 
   handleOpenFile: (store, name) ->
     dfd = App.request 'file:entity', store, name
     dfd.done (file) =>
+      console.log file
       if file.isDirectory()
         @filesController.fetchScripts file.store, file.getAbsolutePath()
         @editorController.newFile()
       else
-        @editorController.showFile file
         @filesController.fetchScripts file.store, file.getParent()
-    dfd.fail (jqxhr, status, error) =>
-      @handleXhrFail jqxhr
+        @editorController.showFile file
+    dfd.fail (error) =>
+      alert error
       @editorController.newFile()
+
+  handleShowFile: (file) ->
+    if not @editorController.isDirty() or confirm 'Are you sure? You have unsaved changes.'
+      file.fetch().done =>
+        @editorController.showFile file
+        @router.showFile file
 
   onFileDeleted: (file) ->
     if @editorController.file.id is file.id
       @router.showNew()
       @editorController.newFile()
-
-  onFileSelected: (file) ->
-    if not @editorController.isDirty() or confirm 'Are you sure? You have unsaved changes.'
-      file.fetch().done =>
-        @editorController.showFile file
-        @router.showFile file
 
   onStart: (data) ->
     @headerRegion.show new App.Main.HeaderView
@@ -144,16 +140,6 @@ Application = Backbone.Marionette.Application.extend
 
   savingOff: ->
     $('.navbar .saving').fadeOut 100
-
-  handleXhrFail: (jqxhr) ->
-    resp = null
-
-    try
-      resp = JSON.parse(jqxhr.responseText)
-    catch ex
-
-    error = resp?.error ? 'An error occurred.'
-    alert error
 
   addFileStore: (fileStore) ->
     @fileStores[fileStore.storeName] = fileStore

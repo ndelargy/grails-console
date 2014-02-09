@@ -7,7 +7,6 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
         "You have unsaved changes." if @isDirty()
 
       @editorView = new Editor.EditorView()
-      @listenTo App, 'app:editor:openFile', @openFile
 
     newFile: ->
       file = new App.Entities.File
@@ -23,13 +22,13 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       text = @editorView.getValue()
       @file.set 'text', text
       if @file.isNew()
-        @saveAs text
+        App.execute 'saveAs'
       else
         App.savingOn()
-        @file.save().then => App.savingOff()
+        @file.save().then -> App.savingOff()
 
     isDirty: ->
-      @normalizeText(@file.get('text')) isnt @normalizeText(@editorView.getValue())
+      @file and @normalizeText(@file.get('text')) isnt @normalizeText(@editorView.getValue())
 
     normalizeText: (text) -> # for Windows
       text.replace /(\r\n|\r)/gm, '\n'

@@ -1,5 +1,8 @@
 App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
 
+  ###
+  File store that uses localStorage.
+  ###
   class Entities.LocalFileStore
 
     constructor: (@name) ->
@@ -60,7 +63,7 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
 
     sync: (method, file, options) ->
       resp = undefined
-
+      console.log arguments
       switch method
         when 'read'
           resp = if file.id then @find(file) else @fetch()
@@ -72,12 +75,13 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
           resp = @destroy(file)
 
       dfd = $.Deferred()
-      dfd.resolveWith @, [resp]
 
       if resp
+        dfd.resolveWith @, [resp]
         options?.success? resp
       else
-        options?.error? 'Record not found'
+        dfd.rejectWith @, ['File doesn\'t exist']
+        options?.error? 'File doesn\'t exist'
 
       dfd
 

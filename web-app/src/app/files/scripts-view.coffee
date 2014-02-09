@@ -34,7 +34,7 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       if file.isDirectory()
         @collection.fetchByStoreAndPath file.store, file.getAbsolutePath()
       else
-        App.trigger 'app:file:selected', file
+        App.execute 'showFile', file
 
     onStoreClick: (event) ->
       event.preventDefault()
