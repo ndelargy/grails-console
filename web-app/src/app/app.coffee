@@ -12,7 +12,7 @@ Application = Backbone.Marionette.Application.extend
       headerRegion: '#header'
       mainRegion: '#main-content'
 
-    @settings = App.request 'settings:entity'
+    @settings = @request 'settings:entity'
     @editorController = new App.Editor.Controller
     @filesController = new App.Files.Controller
     @resultController = new App.Result.Controller
@@ -35,6 +35,7 @@ Application = Backbone.Marionette.Application.extend
     @commands.setHandler 'execute', @handleExecute, @
     @commands.setHandler 'clear', @handleClear, @
     @commands.setHandler 'help', @handleHelp, @
+    @commands.setHandler 'openFile', @handleOpenFile, @
 
   handleExecute: ->
     input = @editorController.getValue()
@@ -80,6 +81,19 @@ Application = Backbone.Marionette.Application.extend
     $el.on 'hidden.bs.modal', ->
       $el.remove()
       $('.modal-backdrop').remove()
+
+  handleOpenFile: (store, name) ->
+    dfd = App.request 'file:entity', store, name
+    dfd.done (file) =>
+      if file.isDirectory()
+        @filesController.fetchScripts file.store, file.getAbsolutePath()
+        @editorController.newFile()
+      else
+        @editorController.showFile file
+        @filesController.fetchScripts file.store, file.getParent()
+    dfd.fail (jqxhr, status, error) =>
+      @handleXhrFail jqxhr
+      @editorController.newFile()
 
   onFileDeleted: (file) ->
     if @editorController.file.id is file.id

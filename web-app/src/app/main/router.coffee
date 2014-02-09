@@ -18,7 +18,7 @@ App.module 'Main', (Main, App, Backbone, Marionette, $, _) ->
       App.execute 'new'
 
     openLocalFile: (name) ->
-      App.trigger 'app:editor:openFile', 'local', name
+      App.execute 'openFile', 'local', name # TODO generify
 
     openRemoteFile: (name) ->
-      App.trigger 'app:editor:openFile', 'remote', name
+      App.execute 'openFile', 'remote', name

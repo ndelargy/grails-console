@@ -31,13 +31,13 @@ class ConsoleControllerSpec extends Specification {
 
     void 'execute'() {
         given:
-        params.code = ''
+        String code = ''
 
         when:
-        controller.execute()
+        controller.execute code
 
         then:
-        1 * consoleService.eval(params.code, true, request) >> [
+        1 * consoleService.eval(code, true, request) >> [
             result: 'test-result',
             output: 'test-output'
         ]
@@ -50,13 +50,13 @@ class ConsoleControllerSpec extends Specification {
 
     void 'execute with exception'() {
         given:
-        params.code = ''
+        String code = ''
 
         when:
-        controller.execute()
+        controller.execute code
 
         then:
-        1 * consoleService.eval(params.code, true, request) >> [
+        1 * consoleService.eval(code, true, request) >> [
             result: 'test-result',
             output: 'test-output',
             exception: new RuntimeException()
@@ -77,10 +77,10 @@ class ConsoleControllerSpec extends Specification {
         File testDir1 = new File(tempDir, 'dir1')
         testDir1.mkdir()
 
-        params.path = tempDir.absolutePath
+        String path = tempDir.absolutePath
 
         when:
-        controller.listFiles()
+        controller.listFiles(path)
 
         then:
         with(response.json) {
@@ -98,6 +98,18 @@ class ConsoleControllerSpec extends Specification {
             files[2].type == 'file'
             files[2].lastModified == testFile2.lastModified()
         }
+    }
+
+    void 'listFiles - directory doesnt exist'() {
+        given:
+        String path = tempDir.absolutePath + 'xx'
+
+        when:
+        controller.listFiles(path)
+
+        then:
+        response.status == 400
+        response.json.error.contains 'Directory not found'
     }
 
     void 'file get'() {
@@ -118,6 +130,19 @@ class ConsoleControllerSpec extends Specification {
         response.json.name == testFile1.name
         response.json.type == 'file'
         response.json.lastModified == testFile1.lastModified()
+    }
+
+    void 'file get - no path param'() {
+        given:
+        request.method = 'GET'
+
+        when:
+        controller.file()
+
+        then:
+        response.contentType.contains 'application/json'
+        response.status == 400
+        response.json.error.contains 'param required'
     }
 
     void 'file get - file doesnt exist'() {

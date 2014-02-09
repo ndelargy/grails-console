@@ -7,6 +7,7 @@ describe 'App.Entities.LocalFileStore', ->
 
 
   it 'should start with empty list', ->
+
     expect(@store.list().length).toBe 0
 
 

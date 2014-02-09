@@ -42,7 +42,7 @@ class ConsoleController {
         render results as JSON
     }
 
-    def listFiles(String path) { // TODO error handling
+    def listFiles(String path) {
         File baseDir = new File(path)
 
         if (!baseDir.exists() || !baseDir.canRead()) {
@@ -53,11 +53,6 @@ class ConsoleController {
             files: baseDir.listFiles().sort { it.name }.collect { fileToJson it, false }
         ]
         render result as JSON
-    }
-
-    private def renderError(String error, int status) {
-        response.status = status
-        render([error: error] as JSON)
     }
 
     def file() {
@@ -85,10 +80,6 @@ class ConsoleController {
         }
 
         File file = new File(filename)
-
-        if (file.isDirectory()) {
-            return renderError("$filename is a directory", 400)
-        }
 
         if (!file.exists() || !file.canRead()) {
             return renderError("File $filename doesn't exist or cannot be read", 400)
@@ -161,6 +152,11 @@ class ConsoleController {
         render(fileToJson(file) as JSON)
     }
 
+    private def renderError(String error, int status) {
+        response.status = status
+        render([error: error] as JSON)
+    }
+
     private static Map fileToJson(File file, boolean includeText = true) {
         Map json = [
             id: FilenameUtils.normalize(file.absolutePath, true),
@@ -168,7 +164,7 @@ class ConsoleController {
             type: file.isDirectory() ? 'dir' : 'file',
             lastModified: file.lastModified()
         ]
-        if (includeText) {
+        if (includeText && file.isFile()) {
             json.text = file.text
         }
         json

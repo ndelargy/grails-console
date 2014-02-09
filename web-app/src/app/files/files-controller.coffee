@@ -40,14 +40,14 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       @collection = new App.Entities.FileCollection()
       @collection.fetchByStoreAndPath 'local', '/' # TODO router init
 
-      @listenTo App, 'file:opened', (file) =>
-        @collection.fetchByStoreAndPath file.store, file.getParent()
-
       @listenTo App, 'file:created', (file) ->
-        @collection.fetchByStoreAndPath file.store, file.getParent()
+        @fetchScripts file.store, file.getParent()
 
       @scriptsView = new Files.ScriptsView
         collection: @collection
+
+    fetchScripts: (store, path) ->
+      @collection.fetchByStoreAndPath store, path
 
     promptForNewFile: (store, path) ->
       dfd = $.Deferred()

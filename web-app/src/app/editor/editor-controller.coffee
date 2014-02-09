@@ -13,15 +13,6 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
       file = new App.Entities.File
       @showFile file
 
-    openFile: (store, name) ->
-      dfd = App.request 'file:entity', store, name
-      dfd.done (file) =>
-        @showFile file
-        App.trigger 'file:opened', file
-      dfd.fail (jqxhr, status, error) =>
-        App.handleXhrFail jqxhr
-        @newFile()
-
     showFile: (file) ->
       App.trigger 'file:show', file
       @file = file
