@@ -97,10 +97,6 @@ class ConsoleController {
 
         File file = new File(filename)
 
-        if (file.isDirectory()) {
-            return renderError("$filename is a directory", 400)
-        }
-
         if (!file.exists() || !file.canWrite()) {
             return renderError("File $filename doesn't exist or cannot be deleted", 400)
         }
@@ -120,10 +116,6 @@ class ConsoleController {
         }
 
         File file = new File(filename)
-
-        if (file.isDirectory()) {
-            return renderError("$filename is a directory", 400)
-        }
 
         if (!file.exists() || !file.canWrite()) {
             return renderError("File $filename doesn't exist or cannot be modified", 400)
@@ -146,7 +138,7 @@ class ConsoleController {
         try {
             file.write json.text
         } catch (e) {
-            return renderError("File $json.name could not be created", 400)
+            return renderError("File $json.name could not be created", 500)
         }
 
         render(fileToJson(file) as JSON)

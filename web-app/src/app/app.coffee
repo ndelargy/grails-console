@@ -80,7 +80,6 @@ Application = Backbone.Marionette.Application.extend
   handleOpenFile: (store, name) ->
     dfd = App.request 'file:entity', store, name
     dfd.done (file) =>
-      console.log file
       if file.isDirectory()
         @filesController.fetchScripts file.store, file.getAbsolutePath()
         @editorController.newFile()
@@ -114,13 +113,8 @@ Application = Backbone.Marionette.Application.extend
     $('body').css 'visibility', 'visible'
 
   _initKeybindings: ->
-    $(document).bind 'keydown', 'Ctrl+return', => @execute 'execute'
-    $(document).bind 'keydown', 'Meta+return', => @execute 'execute'
-    $(document).bind 'keydown', 'Ctrl+s', (event) =>
-      event.preventDefault()
-      event.stopPropagation()
-      @execute 'save'
-    $(document).bind 'keydown', 'Meta+s', (event) =>
+    $(document).bind 'keydown', 'Ctrl+return Meta+return', => @execute 'execute'
+    $(document).bind 'keydown', 'Ctrl+s Meta+s', (event) =>
       event.preventDefault()
       event.stopPropagation()
       @execute 'save'
@@ -144,7 +138,13 @@ Application = Backbone.Marionette.Application.extend
   addFileStore: (fileStore) ->
     @fileStores[fileStore.storeName] = fileStore
 
-  getFileStore: (storeName) ->
+  getFileStoreByName: (storeName) ->
     @fileStores[storeName]
+
+  getAllFileStores: ->
+    _.values @fileStores
+
+  removeFileStore: (fileStore) ->
+    delete @fileStores[fileStore.storeName]
 
 window.App = new Application()

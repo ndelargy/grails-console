@@ -62,8 +62,8 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
       path: @collection.path
       currentDir: @collection.getCurrentDir()
       hasParent: @collection.hasParent()
-      currentStore: App.getFileStore(@collection.store).displayName
-      fileStores: App.fileStores
+      currentStore: App.getFileStoreByName(@collection.store).displayName
+      fileStores: App.getAllFileStores()
       showDelete: @showDelete
       loading: @loading
 

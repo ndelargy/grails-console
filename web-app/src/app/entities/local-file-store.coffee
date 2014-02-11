@@ -63,7 +63,6 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
 
     sync: (method, file, options) ->
       resp = undefined
-      console.log arguments
       switch method
         when 'read'
           resp = if file.id then @find(file) else @fetch()

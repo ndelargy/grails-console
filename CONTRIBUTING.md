@@ -18,7 +18,7 @@ This plugin uses [Grunt](http://gruntjs.com/) to build its resources. To install
 | json    | Creates a manifest of project resources in `grails-app/conf/console.json` |
 | test    | Runs all jasmine tests. |
 | debug   | Builds all debug resources to `web-app/dist/debug`.|
-| release | Builds all release resources to `web-app/dist/release` |
+| release | Builds all release resources to `web-app/dist/release`.|
 
 ## File structure
 

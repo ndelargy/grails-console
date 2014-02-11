@@ -3,43 +3,19 @@ describe 'App.Entities.FileCollection', ->
   beforeEach ->
     @collection = new App.Entities.FileCollection()
 
-  it 'should return correct hasParent', ->
-    data =
-      '/':        false
-      '/aaa':     true
-      '/aaa/':    true
-      '/aaa/bbb': true
-      'C:/':      false
-      'C:/aaa':   true
+  it 'should sort correctly', ->
+    @collection.add type: 'file', name: 'aaa'
+    @collection.add type: 'file', name: 'xxx'
+    @collection.add type: 'dir', name: 'bbb'
+    @collection.add type: 'dir', name: 'zzz'
 
-    for path, expected of data
-      @collection.path = path
-      expect(@collection.hasParent()).toBe expected
+    expect(@collection.at(0).get('name')).toBe 'bbb'
+    expect(@collection.at(1).get('name')).toBe 'zzz'
+    expect(@collection.at(2).get('name')).toBe 'aaa'
+    expect(@collection.at(3).get('name')).toBe 'xxx'
 
-  it 'should return correct getParent', ->
-    data =
-      '/':            null
-      '/aaa':         '/'
-      '/aaa/':        '/'
-      '/aaa/bbb':     '/aaa/'
-      '/aaa/bbb/ccc': '/aaa/bbb/'
-      'C:/':          null
-      'C:/aaa':       'C:/'
+  it 'should add store to models', ->
+    @collection.store = 'test'
+    @collection.add type: 'file', name: 'aaa'
 
-    for path, expected of data
-      @collection.path = path
-      expect(@collection.getParent()).toBe expected
-
-  it 'should return correct getCurrentDir', ->
-    data =
-      '/':          ''
-      '/aaa':       'aaa'
-      '/aaa/':      'aaa'
-      '/aaa/bbb':   'bbb'
-      'C:/  ':        'C:'
-      'C:/aaa':     'aaa'
-      'C:/aaa/bbb': 'bbb'
-
-    for path, expected of data
-      @collection.path = path
-      expect(@collection.getCurrentDir()).toBe expected
+    expect(@collection.at(0).store).toBe 'test'

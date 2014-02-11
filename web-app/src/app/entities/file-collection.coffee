@@ -33,7 +33,7 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
       App.Util.Path.getNormalized @path
 
     sync: (method, collection, options) ->
-      App.getFileStore(@store).syncCollection method, collection, options
+      App.getFileStoreByName(@store).syncCollection method, collection, options
 
     parse: (response, options) ->
-      App.getFileStore(@store).parseCollection @, response, options
+      App.getFileStoreByName(@store).parseCollection @, response, options

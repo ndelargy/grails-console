@@ -239,13 +239,30 @@ class ConsoleControllerSpec extends Specification {
 
         when:
         controller.file()
-        println response.json
 
         then:
         response.status == 200
         File testFile1 = new File(tempDir, 'test1')
         testFile1.exists()
         testFile1.text == 'testing'
+    }
+
+    void 'file post - write failure'() {
+        given:
+        request.method = 'POST'
+
+        request.json = [
+            path: tempDir.absolutePath + /xxx/,
+            name: 'test1',
+            text: 'testing'
+        ] as JSON
+
+        when:
+        controller.file()
+
+        then:
+        response.status == 500
+        response.json.error.contains 'could not be created'
     }
 
     private File createTempDir() {

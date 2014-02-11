@@ -5,9 +5,10 @@ describe 'App.Entities.LocalFileStore', ->
     App.addFileStore @store
     @store.destroyAll()
 
+  afterEach ->
+    App.removeFileStore @store
 
   it 'should start with empty list', ->
-
     expect(@store.list().length).toBe 0
 
 

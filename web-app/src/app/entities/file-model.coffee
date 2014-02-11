@@ -17,7 +17,7 @@ App.module 'Entities', (Entities, App, Backbone, Marionette, $, _) ->
       @get('type') is 'file'
 
     sync: (method, file, options) ->
-      App.getFileStore(@store).syncFile method, file, options
+      App.getFileStoreByName(@store).syncFile method, file, options
 
   App.reqres.setHandler 'file:entity', (store, path) ->
     file = new Entities.File id: path

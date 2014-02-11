@@ -28,6 +28,10 @@ class ConsoleTagLib {
         }
     }
 
+    /**
+     * Read from console.json.
+     * @return [js: [], css: []]
+     */
     Map getConfig() {
         if (reload && !Metadata.getCurrent().isWarDeployed()) {
             resourceMap = getConfFromFile()
