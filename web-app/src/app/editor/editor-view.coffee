@@ -25,11 +25,11 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
         mode: 'groovy'
         lineNumbers: true
         extraKeys:
-          'Ctrl-Enter': -> App.execute 'execute'
-          'Cmd-Enter': -> App.execute 'execute'
-          'Ctrl-S': -> App.execute 'save'
-          'Cmd-S': -> App.execute 'save'
-          'Esc': -> App.execute 'clear'
+          'Ctrl-Enter': ->  App.execute 'execute'
+          'Cmd-Enter': ->   App.execute 'execute'
+          'Ctrl-S': ->      App.execute 'save'
+          'Cmd-S': ->       App.execute 'save'
+          'Esc': ->         App.execute 'clear'
       )
       @editor.focus()
       @editor.setValue ''
@@ -40,9 +40,6 @@ App.module 'Editor', (Editor, App, Backbone, Marionette, $, _) ->
 
     getValue: ->
       @editor.getValue()
-
-    setValue: (value) ->
-      @editor.setValue value
 
     refresh: ->
       @editor.refresh()

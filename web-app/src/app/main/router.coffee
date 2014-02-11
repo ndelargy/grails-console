@@ -5,8 +5,7 @@ App.module 'Main', (Main, App, Backbone, Marionette, $, _) ->
     initialize: ->
       @route '*path', 'newFile'
       @route 'new', 'newFile'
-      @route /^local:(.*?)$/, 'openLocalFile'
-      @route /^remote:(.*?)$/, 'openRemoteFile'
+      @route /^(.*?):(.*?)$/, 'openFile'
 
     showFile: (file) ->
       @navigate "#{file.store}:#{file.id}"
@@ -17,8 +16,5 @@ App.module 'Main', (Main, App, Backbone, Marionette, $, _) ->
     newFile: ->
       App.execute 'new'
 
-    openLocalFile: (name) ->
-      App.execute 'openFile', 'local', name # TODO generify
-
-    openRemoteFile: (name) ->
-      App.execute 'openFile', 'remote', name
+    openFile: (store, name) ->
+      App.execute 'openFile', store, name
