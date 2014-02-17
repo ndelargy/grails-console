@@ -56,11 +56,13 @@ Application = Backbone.Marionette.Application.extend
     text = @editorController.getValue()
 
     if @editorController.file.isNew()
-      store = @filesController.collection.store # TODO
-      path = @filesController.collection.path
+      collection = @getActiveCollection()
+      store = collection.store
+      path = collection.path
     else
-      store = @editorController.file.store
-      path = @editorController.file.getParent()
+      file = @getActiveFile()
+      store = file.store
+      path = file.getParent()
 
     @filesController.promptForNewFile(store, path).done (file) =>
       if file
@@ -71,7 +73,11 @@ Application = Backbone.Marionette.Application.extend
           @savingOff()
           @editorController.showFile file
           @router.showFile file
-          @trigger 'file:created', file # TODO move to file-model
+          @trigger 'file:created', file
+
+  getActiveFile: -> @editorController.file
+
+  getActiveCollection: -> @filesController.collection
 
   handleHelp:->
     view = new App.Main.HelpView
@@ -97,7 +103,7 @@ Application = Backbone.Marionette.Application.extend
         @router.showFile file
 
   onFileDeleted: (file) ->
-    if @editorController.file.id is file.id
+    if @getActiveFile().id is file.id
       @router.showNew()
       @editorController.newFile()
 

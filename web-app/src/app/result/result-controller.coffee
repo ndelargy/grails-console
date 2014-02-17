@@ -4,7 +4,7 @@ App.module 'Result', (Result, App, Backbone, Marionette, $, _) ->
 
     initialize: (options) ->
       @collection = new App.Result.ResultCollection()
-      @resultsView = new App.Result.ResultCollectionView(collection: @collection) # TODO rename
+      @resultsView = new App.Result.ResultCollectionView(collection: @collection)
 
     execute: (input) ->
       result = new App.Result.Result

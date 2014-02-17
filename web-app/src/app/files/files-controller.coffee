@@ -4,7 +4,6 @@ App.module 'Files', (Files, App, Backbone, Marionette, $, _) ->
 
     initialize: ->
       @collection = new App.Entities.FileCollection()
-      @collection.fetchByStoreAndPath 'local', '/' # TODO router init
 
       @listenTo App, 'file:created', (file) ->
         @fetchScripts file.store, file.getParent()

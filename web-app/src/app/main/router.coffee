@@ -14,6 +14,7 @@ App.module 'Main', (Main, App, Backbone, Marionette, $, _) ->
       @navigate 'new'
 
     newFile: ->
+      App.getActiveCollection().fetchByStoreAndPath 'local', '/' # default
       App.execute 'new'
 
     openFile: (store, name) ->
