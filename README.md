@@ -12,53 +12,56 @@ Add a dependency in BuildConfig.groovy:
 
 * Run your web application using grails run-app, then use a browser to navigate to the /console page of your app - most likely http://localhost:8080/\<app-name>/console
 * Type any Groovy commands in the console text area, then press "Execute"
-* Keyboard Shortcuts:
-    * Ctrl-Enter / Cmd-Enter - Execute
-    * Ctrl-S / Cmd-S - Save
-    * Esc - Clear output
+* The results area displays the output of println statements and the return value of the last line executed (in blue).
+* Exceptions are also shown in the results area but with a red background
+* Additionally the execution time of your script is shown along with the output or exception
 
-* The following implicit variables are available:
+### Keyboard Shortcuts:
+* Ctrl-Enter / Cmd-Enter - Execute
+* Ctrl-S / Cmd-S - Save
+* Esc - Clear output
 
-    * grailsApplication - [GrailsApplication](http://grails.org/doc/latest/api/org/codehaus/groovy/grails/commons/GrailsApplication.html) instance, e.g.
+### Implicit variables
 
-            grailsApplication.domainClasses.each {
-               println "There are ${it.clazz.count()} instances of $it.clazz.simpleName"
-            }
+The following implicit variables are available:
 
-    * ctx - Spring [ApplicationContext](http://static.springsource.org/spring/docs/3.0.x/javadoc-api/org/springframework/context/ApplicationContext.html), e.g.
+ * grailsApplication - [GrailsApplication](http://grails.org/doc/latest/api/org/codehaus/groovy/grails/commons/GrailsApplication.html) instance, e.g.
 
-            import groovy.sql.Sql
-            def dataSource = ctx.dataSource
-            def sql = Sql.newInstance(dataSource)
-            sql.eachRow("select * from information_schema.system_tables", {
-               println it.TABLE_NAME
-            })
+        grailsApplication.domainClasses.each {
+           println "There are ${it.clazz.count()} instances of $it.clazz.simpleName"
+        }
 
-    * session - the current [HTTP session](http://java.sun.com/products/servlet/2.3/javadoc/javax/servlet/http/HttpSession.html)
+ * ctx - Spring [ApplicationContext](http://static.springsource.org/spring/docs/3.0.x/javadoc-api/org/springframework/context/ApplicationContext.html), e.g.
 
-            session.attributeNames.each { name ->
-               println name.padRight(40) + session.getAttribute(name)
-            }
+        import groovy.sql.Sql
+        def dataSource = ctx.dataSource
+        def sql = Sql.newInstance(dataSource)
+        sql.eachRow("select * from information_schema.system_tables", {
+           println it.TABLE_NAME
+        })
 
-    * request - the current [HTTP request](http://java.sun.com/products/servlet/2.3/javadoc/javax/servlet/http/HttpServletRequest.html), e.g.
+ * session - the current [HTTP session](http://java.sun.com/products/servlet/2.3/javadoc/javax/servlet/http/HttpSession.html)
 
-            def params = ['requestURI', 'requestURL', 'forwardURI']
-            params.each {
-               println it + "\t" + request."$it"
-            }
+        session.attributeNames.each { name ->
+           println name.padRight(40) + session.getAttribute(name)
+        }
 
-    * config - the current Grails config, e.g.
+ * request - the current [HTTP request](http://java.sun.com/products/servlet/2.3/javadoc/javax/servlet/http/HttpServletRequest.html), e.g.
 
-            config.flatten().each { name, value ->
-               println name.padRight(40) + value
-            }
+        def params = ['requestURI', 'requestURL', 'forwardURI']
+        params.each {
+           println it + "\t" + request."$it"
+        }
 
-* Result Area
-    * The results area displays the output of println statements and the return value of the last line executed (in blue).
-    * Exceptions are also shown in the results area but with a red background
-    * Additionally the execution time of your script is shown along with the output or exception
-* GSP layout
-    * As of version 1.3 the GSP uses a layout, but it doesn't make any changes in the GSP. This is to ensure that a default layout isn't automatically applied which might add unwanted elements to the page. If you want to use a different layout you can specify it in Config.groovy - add the "grails.plugin.console.layout" property with the value of the layout you want to use, e.g.
+ * config - the current Grails config, e.g.
+
+        config.flatten().each { name, value ->
+           println name.padRight(40) + value
+        }
+
+### GSP layout
+
+As of version 1.3 the GSP uses a layout, but it doesn't make any changes in the GSP. This is to ensure that a default layout isn't automatically applied which might add unwanted elements to the page. If you want to use a different layout you can specify it in Config.groovy - add the "grails.plugin.console.layout" property with the value of the layout you want to use, e.g.
 
         grails.plugin.console.layout = 'myCoolLayout'
 
